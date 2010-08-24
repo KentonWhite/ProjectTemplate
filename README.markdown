@@ -2,7 +2,7 @@
 
 The ProjectTemplate package provides a single function `create.project()` that automatically builds a directory for a new R project with a clean directory structure and useful utility programs for automating the loading of project data. The hope is that standardized and automated data loading, automatic loading of best practice packages and useful nudges towards keeping cleanly organized code will improve the quality of R coding.
 
-As far as ProjectTemplate, a good project should look like the following:
+As far as ProjectTemplate is concerned, a good project should look like the following:
 
 * project/
     * data/
