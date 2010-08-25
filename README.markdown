@@ -49,24 +49,24 @@ To do work on such a project, enter the main directory, open R and type `source(
     * `stringr`
     * `ggplot2`
     * `testthat`
-* `source('lib/load_data.R')`, which automatically import any CSV or TSV data files inside of the `data/` directory.
+* `source('lib/load_data.R')`, which automatically imports any CSV or TSV data files inside of the `data/` directory.
 * `source('lib/preprocess_data.R')`, which allows you to make any run-time modifications to your data sets automatically. This is blank by default.
 
 # Default Project Layout
 
-Within your project directory, `ProjectTemplate`, creates the following directories and files whose purpose is explained below:
+Within your project directory, `ProjectTemplate` creates the following directories and files whose purpose is explained below:
 
-* `data/`: Store your raw data files here. If they are CSV or TSV files, they will automatically be loaded when you call `load.project()` or `source('lib/boot.R')`, for which `load.project()` is essentially syntactic sugar.
+* `data/`: Store your raw data files here. If they are CSV or TSV files, they will automatically be loaded when you call `load.project()` or `source('lib/boot.R')`, for which `load.project()` is essentially a mnemonic.
 * `diagnostics/`: Store any scripts you use to diagnose your data sets for corruption or problematic data points. You should also put code that globally censors any data points here.
 * `doc/`: Store documentation for your analysis here.
-* `graphs/`: Output any graphs that you produce here, to keep them from cluttering up your main analysis directory.
+* `graphs/`: Store any graphs that you produce here.
 * `lib/`: Store any files that provide useful functionality for your work, but do not constitute a statistical analysis per se here.
 * `lib/boot.R`: This script handles automatically loading the other files in `lib/` automatically. Calling `load.project()` automatically loads this file.
 * `lib/load_data.R`: This script handles the automatic loading of any CSV and TSV files contained in `data/`.
 * `lib/load_libraries.R`: This script handles the automatic loading of the best practice packages, which are `reshape`, `plyr`, `stringr`, `ggplot2` and `testthat`.
 * `lib/run_tests.R`: This script automatically runs any test files contained in the `tests/` directory using the `testthat` package. Calling `run.tests()` automatically runs this script.
-* `lib/utilities.R`: This script should contain quick general purpose code that almost belongs in a package, but hasn't been packaged up yet.
-* `profiling/`: Store any scripts you to benchmark and time your code here.
+* `lib/utilities.R`: This script should contain quick general purpose code that belongs in a package, but hasn't been packaged up yet.
+* `profiling/`: Store any scripts you use to benchmark and time your code here.
 * `reports/`: Store any output reports, such as HTML or LaTeX versions of tables here. Sweave documents should also go here.
 * `tests/`: Store any test cases in this directory. Your test files should use `testthat` style tests.
 * `README`: Write notes to help orient newcomers to your project.
