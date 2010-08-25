@@ -33,6 +33,7 @@ As far as ProjectTemplate is concerned, a good project should look like the foll
         * boot.R
         * load_data.R
         * load_libraries.R
+        * preprocess_data.R
         * run_tests.R
         * utilities.R
     * profiling/
@@ -64,6 +65,7 @@ Within your project directory, `ProjectTemplate` creates the following directori
 * `lib/boot.R`: This script handles automatically loading the other files in `lib/` automatically. Calling `load.project()` automatically loads this file.
 * `lib/load_data.R`: This script handles the automatic loading of any CSV and TSV files contained in `data/`.
 * `lib/load_libraries.R`: This script handles the automatic loading of the best practice packages, which are `reshape`, `plyr`, `stringr`, `ggplot2` and `testthat`.
+* `lib/preprocess_data.R`: This script handles the preprocessing of your data, if you need to add columns at run-time or merge normalized data sets.
 * `lib/run_tests.R`: This script automatically runs any test files contained in the `tests/` directory using the `testthat` package. Calling `run.tests()` automatically runs this script.
 * `lib/utilities.R`: This script should contain quick general purpose code that belongs in a package, but hasn't been packaged up yet.
 * `profiling/`: Store any scripts you use to benchmark and time your code here.

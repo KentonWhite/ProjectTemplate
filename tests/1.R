@@ -19,6 +19,7 @@ expect_that(file.exists(file.path('test_project', 'lib', 'boot.R')), is_true())
 expect_that(file.exists(file.path('test_project', 'lib', 'load_data.R')), is_true())
 expect_that(file.exists(file.path('test_project', 'lib', 'load_libraries.R')), is_true())
 expect_that(file.exists(file.path('test_project', 'lib', 'preprocess_data.R')), is_true())
+expect_that(file.exists(file.path('test_project', 'lib', 'run_tests.R')), is_true())
 expect_that(file.exists(file.path('test_project', 'lib', 'utilities.R')), is_true())
 
 setwd('test_project')

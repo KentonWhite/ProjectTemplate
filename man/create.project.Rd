@@ -18,6 +18,7 @@ create.project(project.name)
 	No value is returned; this function is called for its side effects.
 }
 \examples{
+\dontrun{
 library('ProjectTemplate')
 
-create.project('project_name')}
+create.project('project_name')}}

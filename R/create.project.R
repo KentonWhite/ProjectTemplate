@@ -1,31 +1,20 @@
-create.project <-
-function(project.name)
+create.project <- function(project.name)
 {
-  sub.directories <- c('data', 'diagnostics', 'doc', 'graphs', 'lib', 'profiling', 'reports', 'tests')
-  special.files <- c('README', 'TODO')
-  
-  dir.create(project.name)
-  
-  for (sub.directory in sub.directories)
+  tmp.dir <- paste(project.name, '_tmp', sep = '')
+
+  if (file.exists(project.name) || file.exists(tmp.dir))
   {
-    dir.create(file.path(project.name, sub.directory))
+    stop(paste("Cannot run create.project() from a directory containing", project.name, "or", tmp.dir))
   }
   
-  for (special.file in special.files)
-  {
-    file.create(file.path(project.name, special.file))
-  }
+  dir.create(tmp.dir)
   
-  file.create(file.path(project.name, 'lib', 'preprocess_data.R'))
+  file.copy(system.file('defaults', package = 'ProjectTemplate'),
+            file.path(tmp.dir),
+            recursive = TRUE)
+            
+  file.rename(file.path(tmp.dir, 'defaults'),
+              project.name)
   
-  file.copy(system.file(file.path('defaults', 'boot.R'), package = 'ProjectTemplate'),
-            file.path(project.name, 'lib', 'boot.R'))
-  file.copy(system.file(file.path('defaults', 'load_data.R'), package = 'ProjectTemplate'),
-            file.path(project.name, 'lib', 'load_data.R'))
-  file.copy(system.file(file.path('defaults', 'load_libraries.R'), package = 'ProjectTemplate'),
-            file.path(project.name, 'lib', 'load_libraries.R'))
-  file.copy(system.file(file.path('defaults', 'run_tests.R'), package = 'ProjectTemplate'),
-            file.path(project.name, 'lib', 'run_tests.R'))
-  file.copy(system.file(file.path('defaults', 'utilities.R'), package = 'ProjectTemplate'),
-            file.path(project.name, 'lib', 'utilities.R'))
+  unlink(tmp.dir, recursive = TRUE)
 }
