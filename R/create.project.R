@@ -24,6 +24,8 @@ function(project.name)
             file.path(project.name, 'lib', 'load_data.R'))
   file.copy(system.file(file.path('defaults', 'load_libraries.R'), package = 'ProjectTemplate'),
             file.path(project.name, 'lib', 'load_libraries.R'))
+  file.copy(system.file(file.path('defaults', 'run_tests.R'), package = 'ProjectTemplate'),
+            file.path(project.name, 'lib', 'run_tests.R'))
   file.copy(system.file(file.path('defaults', 'utilities.R'), package = 'ProjectTemplate'),
             file.path(project.name, 'lib', 'utilities.R'))
 }

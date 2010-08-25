@@ -21,4 +21,10 @@ expect_that(file.exists(file.path('test_project', 'lib', 'load_libraries.R')), i
 expect_that(file.exists(file.path('test_project', 'lib', 'preprocess_data.R')), is_true())
 expect_that(file.exists(file.path('test_project', 'lib', 'utilities.R')), is_true())
 
+setwd('test_project')
+
+load.project()
+
+setwd('..')
+
 unlink('test_project', recursive = TRUE)

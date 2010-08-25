@@ -17,9 +17,6 @@ create.project(project.name)
 \value{
 	No value is returned; this function is called for its side effects.
 }
-\author{
-John Myles White
-}
 \examples{
 library('ProjectTemplate')
 
