@@ -28,8 +28,6 @@ Maintainer: John Myles White <jmw@johnmyleswhite.com>
 This code is inspired by Ruby on Rails.
 }
 \keyword{ package }
-\seealso{
-}
 \examples{
 library('ProjectTemplate')
 

@@ -14,20 +14,11 @@ create.project(project.name)
 	A character vector containing the name for this new project. Must be a valid directory name for your file system.
 }
 }
-\details{
-}
 \value{
 	No value is returned; this function is called for its side effects.
 }
-\references{
-}
 \author{
 John Myles White
-}
-\note{
-}
-
-\seealso{
 }
 \examples{
 library('ProjectTemplate')
