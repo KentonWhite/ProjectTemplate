@@ -1,6 +1,5 @@
 library('reshape')
 library('plyr')
-library('lubridate')
 library('stringr')
 library('ggplot2')
 library('testthat')

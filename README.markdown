@@ -25,7 +25,6 @@ To do work on such a project, enter the main directory, open R and type `source(
 * `source('lib/load_libraries.R')`, which automatically loads the CRAN packages currently deemed best practices. At present, this list includes:
     * `reshape`
     * `plyr`
-    * `lubridate`
     * `stringr`
     * `ggplot2`
     * `testthat`
