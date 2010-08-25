@@ -29,5 +29,5 @@ To do work on such a project, enter the main directory, open R and type `source(
     * `stringr`
     * `ggplot2`
     * `testthat`
-* `source(lib/load_data.R')`, which automatically import any CSV or TSV data files inside of the `data/` directory.
+* `source('lib/load_data.R')`, which automatically import any CSV or TSV data files inside of the `data/` directory.
 * `source('lib/preprocess_data.R')`, which allows you to make any run-time modifications to your data sets automatically. This is blank by default.
