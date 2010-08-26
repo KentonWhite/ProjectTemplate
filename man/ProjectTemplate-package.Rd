@@ -6,23 +6,21 @@
 Automates the creation of new R statistical analysis projects.
 }
 \description{
-The ProjectTemplate package provides a single function \code{create.project()} that automatically builds a directory for a new R project with a clean sub-directory structure and automatic data and library loading tools. The hope is that standardized data loading, automatic importing of best practice packages, integrated unit testing and useful nudges towards keeping a cleanly organized codebase will improve the quality of R coding.
-
-Calling \code{create.project()} will automatically create the following directories and files: data, diagnostics, doc, graphs, lib (including boot.R, load_data.R, load_libraries.R, preprocess_data.R, run_tests.R, utilities.R), profiling, reports, tests, README and TODO.
+The ProjectTemplate package provides a function, \code{create.project()}, that automatically builds a directory for a new R project with a clean sub-directory structure and automatic data and library loading tools. The hope is that standardized data loading, automatic importing of best practice packages, integrated unit testing and useful nudges towards keeping a cleanly organized codebase will improve the quality of R coding.
 }
 \details{
 \tabular{ll}{
 Package: \tab ProjectTemplate\cr
 Type: \tab Package\cr
-Version: \tab .1\cr
-Date: \tab 2010-08-24\cr
+Version: \tab 0.1-2\cr
+Date: \tab 2010-08-26\cr
 License: \tab Artistic-2.0\cr
 LazyLoad: \tab yes\cr
 }
 create.project('project_name')
 }
 \references{
-This code is inspired by Ruby on Rails.
+This code is inspired by the skeleton structure used by Ruby on Rails.
 }
 \keyword{ package }
 \examples{

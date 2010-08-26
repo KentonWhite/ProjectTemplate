@@ -20,4 +20,6 @@ create.project('project_name')
 
 setwd('project_name')
 
+load.project()
+
 run.tests()}}

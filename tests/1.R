@@ -25,6 +25,7 @@ expect_that(file.exists(file.path('test_project', 'lib', 'utilities.R')), is_tru
 setwd('test_project')
 
 load.project()
+run.tests()
 
 setwd('..')
 

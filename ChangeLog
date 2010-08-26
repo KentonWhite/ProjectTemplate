@@ -1,0 +1,11 @@
+2010-08-26  John Myles White  <jmw@johnmyleswhite.com>
+
+* v0.1-2
+* Cleaned up documentation.
+* Rewrote backend.
+* Added load.package() and run.tests() functions.
+
+2010-08-24  John Myles White  <jmw@johnmyleswhite.com>
+
+* v0.1-1
+* Initial release.
