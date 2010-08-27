@@ -75,3 +75,10 @@ Within your project directory, `ProjectTemplate` creates the following directori
 * `tests/`: Store any test cases in this directory. Your test files should use `testthat` style tests.
 * `README`: Write notes to help orient newcomers to your project.
 * `TODO`: Write a list of future improvements and bug fixes you have planned.
+
+# Automatic Data Loading
+At present, the system only understands how to autoload comma separated values (CSV) files and tab separated values (TSV) files. For both, it infers the correct delimiter by examining the filename's ending extension: CSV files must end in `.csv` and TSV files must end in `.tsv`.
+
+If the `data/` directory contains a data file `data/choices.csv`, then after automatic loading, you will have a global variable called choices. Using the `clean.variable.name()` function in `lib/utilities.R`, filenames containing underscores, dashes and whitespace are cleaned to use periods instead. For example, `data/image_properties.tsv` creates a global variable called `image.properties`.
+
+In v0.1-3, the ad hoc file extension `.wsv` file will break on any whitespace using the normal interpretation of whitespace in `read.csv(sep = ' ')`.
