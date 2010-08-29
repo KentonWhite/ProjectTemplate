@@ -1,3 +1,5 @@
-(1) May need to deal with R BUILD warnings about empty directories in inst/.
+(1) Need to deal with empty directories in inst/ not going into git.
 
 (2) Integrate log4r and automate its loading.
+
+(3) Need to create a update.project() function that provides a way to merge new defaults into an existing project generated using an earlier version of ProjectTemplate.

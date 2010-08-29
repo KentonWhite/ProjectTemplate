@@ -12,8 +12,8 @@ The ProjectTemplate package provides a function, \code{create.project()}, that a
 \tabular{ll}{
 Package: \tab ProjectTemplate\cr
 Type: \tab Package\cr
-Version: \tab 0.1-2\cr
-Date: \tab 2010-08-26\cr
+Version: \tab 0.1-3\cr
+Date: \tab 2010-08-29\cr
 License: \tab Artistic-2.0\cr
 LazyLoad: \tab yes\cr
 }
