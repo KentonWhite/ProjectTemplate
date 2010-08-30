@@ -1,4 +1,8 @@
+cat('Autoloading utility functions\n')
 source('lib/utilities.R')
+cat('Autoloading libraries\n')
 source('lib/load_libraries.R')
+cat('Autoloading data\n')
 source('lib/load_data.R')
+cat('Preprocessing data\n')
 source('lib/preprocess_data.R')

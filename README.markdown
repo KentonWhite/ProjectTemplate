@@ -10,8 +10,9 @@ This project is now on CRAN and can be installed using a simple call to `install
 
 If you would like access to changes to this package that are not available in the current version on CRAN, please download the contents of this repository and then run,
 
-    R CMD BUILD .
     R CMD INSTALL ProjectTemplate_*.tar.gz
+
+For most users, running the bleeding edge version of this package is probably a mistake. It is generally much less stable than the versions that have been released on CRAN.
 
 # Example Code
 To create a project called `my-project`, open R and type:

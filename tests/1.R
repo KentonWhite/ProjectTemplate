@@ -24,6 +24,8 @@ expect_that(file.exists(file.path('test_project', 'lib', 'utilities.R')), is_tru
 
 setwd('test_project')
 
+# The fact that cat() is called causes this error:
+# Error in find_reporter(reporter) : could not find function "is.mutatr"
 load.project()
 run.tests()
 

@@ -5,3 +5,5 @@
 (3) Need to create a update.project() function that provides a way to merge new defaults into an existing project generated using an earlier version of ProjectTemplate.
 
 (4) Consider renaming run.tests() to test.project() for consistency across names.
+
+(5) Fix bug in tests caused by cat() calls in lib/boot.R
