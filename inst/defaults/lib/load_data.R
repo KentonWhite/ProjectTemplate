@@ -27,4 +27,12 @@ for (data.file in data.files)
     cat(paste("Loading data set: ", variable.name, '\n', sep = ''))
     assign(variable.name, read.csv(filename, header = TRUE, sep = ' '))
   }
+  
+  if (grepl('\\.Rdata$', data.file, ignore.case = TRUE, perl = TRUE))
+  {
+    variable.name <- sub('\\.Rdata$', '', data.file, ignore.case = TRUE, perl = TRUE)
+    variable.name <- clean.variable.name(variable.name)
+    cat(paste("Loading data set: ", variable.name, '\n', sep = ''))
+    load(filename)
+  }
 }

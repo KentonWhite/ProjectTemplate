@@ -7,3 +7,5 @@
 (4) Consider renaming run.tests() to test.project() for consistency across names.
 
 (5) Fix bug in tests caused by cat() calls in lib/boot.R
+
+(6) Get .Rdata automatic loading to work.
