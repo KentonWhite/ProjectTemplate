@@ -1,8 +1,16 @@
-(1) Need to deal with empty directories in inst/ not going into git.
+(1) Debate integrating log4r and automatically loading it.
 
-(2) Integrate log4r and automate its loading.
+(2) Need to create a show.updates() function that provides a way to merge new defaults into an existing project generated using an earlier version of ProjectTemplate. Decide on proper name. update.project conflicts with
+an existing generic method.
 
-(3) Need to create a update.project() function that provides a way to merge new defaults into an existing project generated using an earlier version of ProjectTemplate.
+(3) Debate renaming run.tests() to test.project() permanently.
 
-(4) Consider renaming run.tests() to test.project() for consistency across names.
+(4) Should we automatically run test.project() during load.project()?
 
+(5) show.updates() won't work on Windows systems.
+
+(6) show.updates() should offer to replace file after noticing a change.
+
+(7) All sample .zip files were corrupt. Need proper samples for testing.
+
+(8) Need sample SPSS and Stata files for testing.

@@ -1,5 +1,6 @@
 \name{run.tests}
 \alias{run.tests}
+\alias{test.project}
 \title{
 Automatically run all of the tests cases in the tests directory.
 }

@@ -1,9 +1,20 @@
-2010-08-27  John Myles White  <jmw@johnmyleswhite.com>
+2010-10-02	John Myles White  <jmw@johnmyleswhite.com>
  
 * v0.1-3
+* Many changes to load_data.R.
 * Added notices when data sets are autoloaded.
 * Added autoload support for WSV (whitespace separated values) data files.
 * Added autoload support for RData files.
+* Added autoload support for compressed *SV files.
+* Added autoload support for *SV files available through HTTP.
+* Added autoload support for MySQl database tables.
+* Added autoload support for SPSS and Stata files.
+* Added test.project as an alias for run.tests().
+* Changed list of packages listed as dependencies, so that many are now suggestions.
+* load.project() does not autoload libraries that are not dependencies.
+* Added a sample profiling script.
+* Added a sample test that always passes to the default project.
+* Added a basic show.updates() function for porting projects to newer releases of ProjectTemplate.
 
 2010-08-26  John Myles White  <jmw@johnmyleswhite.com>
 

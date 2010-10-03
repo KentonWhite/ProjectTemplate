@@ -3,17 +3,17 @@
 \alias{ProjectTemplate}
 \docType{package}
 \title{
-Automates the creation of new R statistical analysis projects.
+Automates the creation of new statistical analysis projects.
 }
 \description{
-The ProjectTemplate package provides a function, \code{create.project()}, that automatically builds a directory for a new R project with a clean sub-directory structure and automatic data and library loading tools. The hope is that standardized data loading, automatic importing of best practice packages, integrated unit testing and useful nudges towards keeping a cleanly organized codebase will improve the quality of R coding.
+ProjectTemplate provides functions to automatically build a directory structure for a new R project. Using this structure, ProjectTemplate is able to automate data loading, preprocessing, library importing and unit testing.
 }
 \details{
 \tabular{ll}{
 Package: \tab ProjectTemplate\cr
 Type: \tab Package\cr
 Version: \tab 0.1-3\cr
-Date: \tab 2010-08-29\cr
+Date: \tab 2010-10-02\cr
 License: \tab Artistic-2.0\cr
 LazyLoad: \tab yes\cr
 }

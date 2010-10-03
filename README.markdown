@@ -16,6 +16,7 @@ For most users, running the bleeding edge version of this package is probably a 
 
 # Example Code
 To create a project called `my-project`, open R and type:
+
     library('ProjectTemplate')
     create.project('my-project')
     setwd('my-project')
@@ -39,47 +40,63 @@ As far as ProjectTemplate is concerned, a good project should look like the foll
         * preprocess_data.R
         * run_tests.R
         * utilities.R
+    * logs/
     * profiling/
+        * 1.R
     * reports/
     * tests/
+        * 1.R
     * README
     * TODO
 
 To do work on such a project, enter the main directory, open R and type `source('lib/boot.R')`. This will then automatically perform the following actions:
 
-* `source('lib/load_libraries.R')`, which automatically loads the CRAN packages currently deemed best practices. At present, this list includes:
+* `source('lib/load_libraries.R')`, which automatically load the packages required for ProjectTemplate to function. This includes:
+    * `testthat`
+    * `yaml`
+    * `foreign`
+* You can edit `lib/load_libraries.R` to automatically load the suggested packages as well, which are:
     * `reshape`
     * `plyr`
     * `stringr`
     * `ggplot2`
-    * `testthat`
+    * `log4r`
 * `source('lib/load_data.R')`, which automatically imports any CSV or TSV data files inside of the `data/` directory.
 * `source('lib/preprocess_data.R')`, which allows you to make any run-time modifications to your data sets automatically. This is blank by default.
 
 # Default Project Layout
+Within your project directory, ProjectTemplate creates the following directories and files whose purpose is explained below:
 
-Within your project directory, `ProjectTemplate` creates the following directories and files whose purpose is explained below:
-
-* `data/`: Store your raw data files here. If they are CSV or TSV files, they will automatically be loaded when you call `load.project()` or `source('lib/boot.R')`, for which `load.project()` is essentially a mnemonic.
+* `data/`: Store your raw data files here. If they are a supported file format, they will automatically be loaded when you call `load.project()` or `source('lib/boot.R')`, for which `load.project()` is essentially a mnemonic.
 * `diagnostics/`: Store any scripts you use to diagnose your data sets for corruption or problematic data points. You should also put code that globally censors any data points here.
 * `doc/`: Store documentation for your analysis here.
 * `graphs/`: Store any graphs that you produce here.
 * `lib/`: Store any files that provide useful functionality for your work, but do not constitute a statistical analysis per se here.
 * `lib/boot.R`: This script handles automatically loading the other files in `lib/` automatically. Calling `load.project()` automatically loads this file.
-* `lib/load_data.R`: This script handles the automatic loading of any CSV and TSV files contained in `data/`.
-* `lib/load_libraries.R`: This script handles the automatic loading of the best practice packages, which are `reshape`, `plyr`, `stringr`, `ggplot2` and `testthat`.
-* `lib/preprocess_data.R`: This script handles the preprocessing of your data, if you need to add columns at run-time or merge normalized data sets.
+* `lib/load_data.R`: This script handles the automatic loading of any supported files contained in `data/`.
+* `lib/load_libraries.R`: This script handles the automatic loading of the required packages, which are `testthat`, `yaml` and `foreign`. In addition, you can uncomment the lines that would automatically load the suggested packages, which are `reshape`, `plyr`, `stringr`, `ggplot2` and `log4r`.
+* `lib/preprocess_data.R`: This script handles the preprocessing of your data, if you need to add columns at run-time, merge normalized data sets or perform similar operations.
 * `lib/run_tests.R`: This script automatically runs any test files contained in the `tests/` directory using the `testthat` package. Calling `run.tests()` automatically runs this script.
 * `lib/utilities.R`: This script should contain quick general purpose code that belongs in a package, but hasn't been packaged up yet.
 * `profiling/`: Store any scripts you use to benchmark and time your code here.
-* `reports/`: Store any output reports, such as HTML or LaTeX versions of tables here. Sweave documents should also go here.
+* `reports/`: Store any output reports, such as HTML or LaTeX versions of tables here. Sweave or brew documents should also go here.
 * `tests/`: Store any test cases in this directory. Your test files should use `testthat` style tests.
 * `README`: Write notes to help orient newcomers to your project.
 * `TODO`: Write a list of future improvements and bug fixes you have planned.
 
 # Automatic Data Loading
-At present, the system only understands how to autoload comma separated values (CSV), tab separated values (TSV) files and whitespace separated values (WSV) data files. For all of these, it infers the correct delimiter by examining the filename's ending extension: CSV files must end in `.csv`, TSV files must end in `.tsv` and WSV files must end in `.wsv`.
+One of the major goals for ProjectTemplate is providing fully automatic data loading for R. For example, if your `data/` directory contains a data file called `data/choices.csv`, then ProjectTemplate will automatically load this file and create a global variable called `choices`. Using the `clean.variable.name()` function found in `lib/utilities.R`, filenames that contain underscores, dashes and whitespace are changed to use periods instead. For instance, `data/image_properties.tsv` creates a global variable called `image.properties`.
 
-If the `data/` directory contains a data file `data/choices.csv`, then after automatic loading, you will have a global variable called choices. Using the `clean.variable.name()` function in `lib/utilities.R`, filenames containing underscores, dashes and whitespace are cleaned to use periods instead. For example, `data/image_properties.tsv` creates a global variable called `image.properties`.
+A large and growing number of file formats are supported by the automatic data loading script, including CSV files and related formats, RData files, remote data sets available over HTTP, Stata and SPSS formats and MySQL tables. For further details, read the `file_formats.markdown` file.
 
-As of v0.1-3, `load.project()` will print out the name of every data set being automatically loaded.
+As of v0.1-3, `load.project()` prints out the name of every data set as it is loaded.
+
+# Contributors and Thanks
+Diego Valle-Jones contributed a patch that enabled the autoloading of compressed CSV data files. Inspiration for further extensions to the autoloading system came from reading the documentation for David Edgar Liebke's `get-dataset` function, which is part of the Clojure statistical library Incanter.
+
+Many thanks to anyone who's made suggestions or comments about ProjectTemplate.
+
+# Finding Out More
+* Mailing List: ProjectTemplate has a Google Group, which can be found at http://groups.google.com/group/projecttemplate
+* Website: Updates to ProjectTemplate are announced on http://www.johnmyleswhite.com
+* Twitter: Updates to ProjectTemplate are announced on Twitter using the hashtag #ProjectTemplate.

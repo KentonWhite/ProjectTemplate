@@ -4,7 +4,7 @@
 Automatically creates a new project directory and all of its contents.
 }
 \description{
-create.project() builds a project directory containing several sub-directories and files. The full output is described in the associated README, which can be seen on GitHub.
+\code{create.project()} builds a project directory containing several sub-directories and files. The full output is described in the associated README, which can be seen on GitHub.
 }
 \usage{
 create.project(project.name)
