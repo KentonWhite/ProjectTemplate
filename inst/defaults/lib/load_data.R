@@ -80,20 +80,26 @@ SQLReader <- function(data.file, filename, variable.name)
   # host: localhost
   # dbname: sample_database
   # table: sample_table
+  #
+  # type: sqlite
+  # dbname: /path/to/sample_database
+  # table: sample_table
   
-  library('RMySQL')
   
   database.info <- yaml.load_file(filename)
   
-  if (database.info[['type']] != 'mysql')
+  if (! (database.info[['type']] %in% c('mysql', 'sqlite')))
   {
-    warn('Only databases reachable through RMySQL are currently supported.')
+    warning('Only databases reachable through RMySQL and RSQLite
+             are currently supported.')
     assign(variable.name,
   	       NULL,
   	       envir = .GlobalEnv)
 	 	return()
   }
   
+  if (database.info[['type']] == 'mysql') {
+    library('RMySQL')
   mysql.driver <- dbDriver("MySQL")
   
   connection <- dbConnect(mysql.driver,
@@ -101,6 +107,14 @@ SQLReader <- function(data.file, filename, variable.name)
                           password = database.info[['password']],
                           host = database.info[['host']],
                           dbname = database.info[['dbname']])
+  }
+
+  if (database.info[['type']] == 'sqlite') {
+    library('RSQLite')
+    sqlite.driver <- dbDriver("SQLite")
+    connection <- dbConnect(sqlite.driver,
+                            dbname=database.info[['dbname']])
+  }
   
   sql <- paste("SELECT * FROM `", database.info[['table']], "`", sep = '')
   
@@ -135,6 +149,17 @@ SQLReader <- function(data.file, filename, variable.name)
                    data.parcel),
              envir = .GlobalEnv)
     }
+  }
+  # Free up and disconnect from database resources. Warn if either fails.
+  clearResult.success <- dbClearResult(result.set)
+  if (! clearResult.success) {
+    warning(paste('Unable to clear result set from table:',
+                  database.info[['table']]))
+  }
+  disconnect.success <- dbDisconnect(connection)
+  if (! disconnect.success) {
+    warning(paste('Unable to disconnect database:',
+                  database.info[['dbname']]))
   }
 }
 
