@@ -3,7 +3,9 @@ source('lib/utilities.R')
 cat('Autoloading libraries\n')
 source('lib/load_libraries.R')
 cat('Autoloading data\n')
-source('lib/load_data.R')
+# Execute load_data.R in a throw-away environment so data loading functions
+# do not pollute the global environment.
+local(source('lib/load_data.R', local=TRUE))
 cat('Preprocessing data\n')
 source('lib/preprocess_data.R')
 
