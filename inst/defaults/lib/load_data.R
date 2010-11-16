@@ -85,7 +85,6 @@ SQLReader <- function(data.file, filename, variable.name)
   # dbname: /path/to/sample_database
   # table: sample_table
   
-  
   database.info <- yaml.load_file(filename)
   
   if (! (database.info[['type']] %in% c('mysql', 'sqlite')))
@@ -93,69 +92,55 @@ SQLReader <- function(data.file, filename, variable.name)
     warning('Only databases reachable through RMySQL and RSQLite
              are currently supported.')
     assign(variable.name,
-  	       NULL,
-  	       envir = .GlobalEnv)
-	 	return()
+           NULL,
+           envir = .GlobalEnv)
+    return()
   }
   
-  if (database.info[['type']] == 'mysql') {
+  if (database.info[['type']] == 'mysql')
+  {
     library('RMySQL')
-  mysql.driver <- dbDriver("MySQL")
+    mysql.driver <- dbDriver("MySQL")
   
-  connection <- dbConnect(mysql.driver,
-                          user = database.info[['user']],
-                          password = database.info[['password']],
-                          host = database.info[['host']],
-                          dbname = database.info[['dbname']])
+    connection <- dbConnect(mysql.driver,
+                            user = database.info[['user']],
+                            password = database.info[['password']],
+                            host = database.info[['host']],
+                            dbname = database.info[['dbname']])
   }
 
-  if (database.info[['type']] == 'sqlite') {
+  if (database.info[['type']] == 'sqlite')
+  {
     library('RSQLite')
     sqlite.driver <- dbDriver("SQLite")
     connection <- dbConnect(sqlite.driver,
                             dbname=database.info[['dbname']])
   }
   
-  sql <- paste("SELECT * FROM `", database.info[['table']], "`", sep = '')
-  
-  result.set <- dbSendQuery(connection, sql)
-	
-	parcel.size <- 1000
-	
-  data.parcel <- fetch(result.set,
-                       n = parcel.size)
-  
-	if (nrow(data.parcel) == 0)
-	{
-	 	assign(variable.name,
-  	       NULL,
-  	       envir = .GlobalEnv)
-  	return()
-	}
-	
-	assign(variable.name,
-	       data.parcel,
-	       envir = .GlobalEnv)
-	
-  while (! dbHasCompleted(result.set))
+  if (dbExistsTable(connection, database.info[['table']]))
   {
-    data.parcel <- fetch(result.set, n = parcel.size)
-    
-    if (nrow(data.parcel) > 0)
-    {
-      assign(variable.name,
-             rbind(get(variable.name,
-                       envir = .GlobalEnv),
-                   data.parcel),
-             envir = .GlobalEnv)
-    }
+    data.parcel <- dbReadTable(connection,
+                               database.info[['table']],
+                               row.names=NULL)
+    assign(variable.name,
+           data.parcel,
+           envir = .GlobalEnv)
+  } else
+  {
+    warning(paste('Table not found:', database.info[['table']]))
+    return()
   }
-  # Free up and disconnect from database resources. Warn if either fails.
-  clearResult.success <- dbClearResult(result.set)
-  if (! clearResult.success) {
-    warning(paste('Unable to clear result set from table:',
-                  database.info[['table']]))
+  
+  # If the table exists but is empty, do not create a variable.
+  if (nrow(data.parcel) == 0)
+  {
+    assign(variable.name,
+           NULL,
+           envir = .GlobalEnv)
+    return()
   }
+
+  # Disconnect from database resources. Warn if failure.
   disconnect.success <- dbDisconnect(connection)
   if (! disconnect.success) {
     warning(paste('Unable to disconnect database:',
