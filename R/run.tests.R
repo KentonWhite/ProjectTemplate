@@ -1,6 +1,8 @@
 run.tests <- function()
 {
-  source('lib/run_tests.R')
+  load.project()
+  library('testthat')
+  test_dir('tests', reporter = 'summary')
 }
 
 test.project <- run.tests
