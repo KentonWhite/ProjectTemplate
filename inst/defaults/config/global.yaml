@@ -1,7 +1,7 @@
 data_loading: 'on'
 munging: 'on'
-logging: 'on'
-load_libraries: 'on'
+logging: 'off'
+load_libraries: 'off'
 libraries:
   - 'reshape'
   - 'plyr'

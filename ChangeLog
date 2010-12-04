@@ -1,3 +1,21 @@
+2010-12-03	John Myles White  <jmw@johnmyleswhite.com>
+ 
+* v0.2-1
+* Moved boot.R's logic into functions and configuration files.
+* Added SQLite support using the RSQLite package.
+* Cleaned up the database connection and disconnection code.
+* Changed list of packages listed as dependencies, so that even more are suggestions.
+* Added new configuration settings in config/global.yaml.
+* Data is now loaded from a cache/ directory and then the traditional data/ directory.
+* Added log4r integration, which is configurable and turned off by default.
+* Added a sample preprocessing script.
+* Added a cache/ directory.
+* Added a config/ directory.
+* Added a logs/ directory.
+* Added a munge/ directory.
+* Added a src/ directory.
+* Fixed a bug in clean.variable.name() for variable names that start with numbers.
+
 2010-10-02	John Myles White  <jmw@johnmyleswhite.com>
  
 * v0.1-3
