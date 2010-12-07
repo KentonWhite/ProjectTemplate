@@ -9,4 +9,4 @@ Description: ProjectTemplate provides functions to automatically build a directo
 License: Artistic-2.0
 LazyLoad: yes
 Depends: R (>= 2.7), testthat, yaml
-Suggests: foreign, reshape, plyr, stringr, ggplot2, log4r, RMySQL, RSQLite
+Suggests: foreign, reshape, plyr, stringr, ggplot2, log4r, RMySQL, RSQLite, xlsx

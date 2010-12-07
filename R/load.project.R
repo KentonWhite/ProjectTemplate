@@ -193,6 +193,24 @@ load.project <- function()
            envir = .GlobalEnv)
   }
 
+  XLSXReader <- function(data.file, filename, workbook.name)
+  {
+    library('xlsx')
+    
+    wb <- loadWorkbook(filename)
+    sheets <- getSheets(wb)
+
+    for (sheet.name in names(sheets))
+    {
+      variable.name <- paste(workbook.name, clean.variable.name(sheet.name), sep = ".")
+      assign(variable.name,
+             read.xlsx(filename,
+                       sheetName = sheet.name,
+                       header = TRUE),
+             envir = .GlobalEnv)
+    }
+  }
+
   # Use a list to map file extension detection regular expressions to the
   # appropriate reader functions.
   extensions.dispatch.table <- list("\\.csv$" = CSVReader,
@@ -210,7 +228,8 @@ load.project <- function()
                                     "\\.Rdata$" = RDataReader,
                                     "\\.rda$" = RDataReader,
                                     "\\.url$" = URLReader,
-                                    "\\.sql$" = SQLReader)
+                                    "\\.sql$" = SQLReader,
+                                    "\\.xlsx$" = XLSXReader)
 
   # First, we load everything out of cache/.
   cache.files <- dir('cache')
