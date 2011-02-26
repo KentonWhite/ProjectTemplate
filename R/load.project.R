@@ -101,14 +101,14 @@ load.project <- function()
 			con <- url(url.info[['url']])
 			RDataReader(data.file, con, variable.name)
 
-		} else if(file.type %in% c("\\.xlsx$")) 
+		} else if(file.type %in% c("\\.xlsx$", "\\.sql$", "\\.sav%", "\\.dta$")) 
 		  {
-			download.file(url.info[['url']], paste(tempdir(), "/xlsxtmp.xlsx",sep=""))
-			XLSXReader(date.file, paste(tempdir(), "/xlsxtmp.xlsx",sep=""),variable.name)
-		} else if(file.type %in% c("\\.sql$")) 
-		  {
-			download.file(url.info[['url']], paste(tempdir(), "/sqltmp.sql",sep=""))
-			SQLReader(date.file, paste(tempdir(), "/sqltmp.sql",sep=""),variable.name)
+			tmp <- paste(tmp, Sys.time(), sep="")
+			download.file(url.info[['url']], tmp)
+			do.call(extensions.dispatch.table[[file.type]],
+	                list(data.file,
+	                     tmp,
+	                     variable.name))   
 		} else
 		  {
 			do.call(extensions.dispatch.table[[file.type]],
@@ -279,7 +279,9 @@ load.project <- function()
                                     "\\.url$" = URLReader,
                                     "\\.sql$" = SQLReader,
                                     "\\.xls$" = XLSReader,
-                                    "\\.xlsx$" = XLSXReader)
+                                    "\\.xlsx$" = XLSXReader, 
+									"\\.sav$" = SPSSReader,
+									"\\.dta$" = StataReader)
 
   # First, we load everything out of cache/.
   cache.files <- dir('cache')
