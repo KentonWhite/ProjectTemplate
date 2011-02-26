@@ -1,3 +1,7 @@
+2011-02-25 Noah Lorang <noah@noahhl.com>
+* Added xls reader using gdata
+* Changed URLReader to handle any support format; eliminates need for separator attribute
+
 2010-12-03	John Myles White  <jmw@johnmyleswhite.com>
  
 * v0.2-1
