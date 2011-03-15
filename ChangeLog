@@ -15,6 +15,7 @@
 * Added a munge/ directory.
 * Added a src/ directory.
 * Fixed a bug in clean.variable.name() for variable names that start with numbers.
+* Added XSLX support.
 
 2010-10-02	John Myles White  <jmw@johnmyleswhite.com>
  

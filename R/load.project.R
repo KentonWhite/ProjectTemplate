@@ -106,7 +106,12 @@ load.project <- function()
     # type: sqlite
     # dbname: /path/to/sample_database
     # table: sample_table
-
+    #
+    # type: sqlite
+    # dbname: /path/to/sample_database
+    # query: SELECT * FROM users WHERE user_active == 1
+    #
+    
     database.info <- yaml.load_file(filename)
 
     if (! (database.info[['type']] %in% c('mysql', 'sqlite')))
@@ -140,23 +145,70 @@ load.project <- function()
                               dbname = database.info[['dbname']])
     }
 
-    if (dbExistsTable(connection, database.info[['table']]))
+    # Added support for queries.
+    # User should specify either a table name or a query to execute, but not both.
+    table <- database.info[['table']]
+    query <- database.info[['query']]
+    
+    # If both a table and a query are specified, favor the query.
+    if (!is.null(table) & !is.null(query))
     {
-      data.parcel <- dbReadTable(connection,
-                                 database.info[['table']],
-                                 row.names = NULL)
-
-      assign(variable.name,
-             data.parcel,
-             envir = .GlobalEnv)
+    		warning(paste("'query' parameter in ",
+    		              filename,
+    		              " overrides 'table' parameter.",
+    		              sep = ''))
+    		table <- NULL
+    }
+    
+    # If table is specified, read the whole table.
+    # Othwrwise, execute the specified query.
+    if (!is.null(table))
+    {
+      if (dbExistsTable(connection, table))
+    	{
+        data.parcel <- dbReadTable(connection,
+    	                             table,
+    	                             row.names = NULL)
+    	  
+    	  assign(variable.name,
+    	         data.parcel,
+    	         envir = .GlobalEnv)
+    	}
+    	else
+    	{
+    	  warning(paste('Table not found:', table))
+    	  return()
+    	}
     }
     else
     {
-      warning(paste('Table not found:', database.info[['table']]))
-      return()
+      data.parcel <- try(dbGetQuery(connection, query))
+    	err <- dbGetException(connection)
+      
+    	if (class(data.parcel) == 'data.frame' & err$errorNum == 0)
+    	{
+    		assign(variable.name,
+    					 data.parcel,
+    					 envir = .GlobalEnv)
+    	}
+    	else
+    	{
+    		warning(paste("Error loading '",
+    		              variable.name,
+    		              "' with query '",
+    		              query,
+    							    "'\n    '",
+    							    err$errorNum,
+    							    "-",
+    							    err$errorMsg,
+    							    "'",
+    							    sep = ''))
+    		return()
+    	}
     }
 
     # If the table exists but is empty, do not create a variable.
+    # Or if the query returned no results, do not create a variable.
     if (nrow(data.parcel) == 0)
     {
       assign(variable.name,
