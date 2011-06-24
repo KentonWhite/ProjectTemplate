@@ -1,4 +1,4 @@
 cache <- function(variable)
 {
-  save(variable, file = file.path('cache', variable))
+  save(get(variable), file = file.path('cache', paste(variable, '.RData', sep = '')))
 }

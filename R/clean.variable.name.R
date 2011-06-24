@@ -9,8 +9,3 @@ clean.variable.name <- function(variable.name)
   variable.name <- make.names(variable.name)
   return(variable.name)
 }
-
-cache.name <- function(data.filename)
-{
-  return(gsub('\\..*', '', data.filename, perl = TRUE))
-}

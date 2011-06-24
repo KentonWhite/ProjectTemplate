@@ -1,3 +1,12 @@
+2011-06-24	John Myles White  <jmw@johnmyleswhite.com>
+ 
+* v0.3-1
+* Switched configuration system over to DCF format.
+* Ability to create full projects or minimal projects.
+* Switched print() calls to message() calls.
+* Moved *Reader functionality into separate functions that users can override.
+* Fixed a bug in cache().
+
 2010-12-03	John Myles White  <jmw@johnmyleswhite.com>
  
 * v0.2-1

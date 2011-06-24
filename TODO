@@ -1,16 +1,15 @@
-(1) Debate integrating log4r and automatically loading it.
-
-(2) Need to create a show.updates() function that provides a way to merge new defaults into an existing project generated using an earlier version of ProjectTemplate. Decide on proper name. update.project conflicts with
-an existing generic method.
-
-(3) Debate renaming run.tests() to test.project() permanently.
-
-(4) Should we automatically run test.project() during load.project()?
-
-(5) show.updates() won't work on Windows systems.
-
-(6) show.updates() should offer to replace file after noticing a change.
-
-(7) All sample .zip files were corrupt. Need proper samples for testing.
-
-(8) Need sample SPSS and Stata files for testing.
+- Create unit tests for all `*.reader` functions.
+- Create a `show.updates()` function for showing which files are out of sync with ProjectTemplate rules.
+- Debate renaming `run.tests()` to `test.project()` permanently.
+- Need proper sample `.zip` files for testing.
+- Need sample Stata file for testing.
+- Clean up DB code.
+- Unit test sqlite support.
+- Make a `cache.project()` function?
+- Make a `stub.tests()` function?
+- Document possible data pipelines.
+- Rename `utilities.R` to `helpers.R`
+- Find place for `extensions.dispatch.table` to prevent duplication.
+- Create `run.project` function.
+- Write better documentation.
+- Debate maintaining a record of all data sets as they're loaded.

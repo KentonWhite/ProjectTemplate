@@ -1,0 +1,5 @@
+data_loading: on
+munging: on
+logging: off
+load_libraries: off
+libraries: reshape, plyr, ggplot2, stringr

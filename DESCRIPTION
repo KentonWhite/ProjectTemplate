@@ -1,12 +1,12 @@
 Package: ProjectTemplate
 Type: Package
 Title: Automates the creation of new statistical analysis projects.
-Version: 0.2-1
-Date: 2010-12-03
+Version: 0.3-1
+Date: 2011-06-24
 Author: John Myles White
 Maintainer: John Myles White <jmw@johnmyleswhite.com>
-Description: ProjectTemplate provides functions to automatically build a directory structure for a new R project. Using this structure, ProjectTemplate is able to automate data loading, preprocessing, library importing and unit testing.
+Description: ProjectTemplate provides functions to automatically build a directory structure for a new R project. Using this structure, ProjectTemplate automates data loading, preprocessing, library importing and unit testing.
 License: Artistic-2.0
 LazyLoad: yes
-Depends: R (>= 2.7), testthat, yaml
+Depends: R (>= 2.7), testthat
 Suggests: foreign, reshape, plyr, stringr, ggplot2, log4r, RMySQL, RSQLite, xlsx, gdata
