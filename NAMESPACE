@@ -1,3 +1,4 @@
+export("cache")
 export("create.project")
 export("load.project")
 export("run.tests")
