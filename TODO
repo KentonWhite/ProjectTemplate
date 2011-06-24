@@ -1,5 +1,5 @@
 - Create unit tests for all `*.reader` functions.
-- Create a `show.updates()` function for showing which files are out of sync with ProjectTemplate rules.
+- Create a `show.updates()` function to show which files don't match ProjectTemplate rules.
 - Debate renaming `run.tests()` to `test.project()` permanently.
 - Need proper sample `.zip` files for testing.
 - Need sample Stata file for testing.
@@ -8,7 +8,7 @@
 - Make a `cache.project()` function?
 - Make a `stub.tests()` function?
 - Document possible data pipelines.
-- Rename `utilities.R` to `helpers.R`
+- Rename `utilities.R` to `helpers.R`.
 - Find place for `extensions.dispatch.table` to prevent duplication.
 - Create `run.project` function.
 - Write better documentation.
