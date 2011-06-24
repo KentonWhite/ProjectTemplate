@@ -32,7 +32,7 @@ url.reader <- function(data.file, filename, variable.name)
 
   file.type <- ""
   
-  for (extension in names(ProjectTemplate:::extensions.dispatch.table))
+  for (extension in names(extensions.dispatch.table))
   {
     if(grepl(extension, url.info[['url']], ignore.case = TRUE, perl = TRUE))
     {
@@ -68,7 +68,7 @@ url.reader <- function(data.file, filename, variable.name)
     
     else
     {
-      do.call(ProjectTemplate:::extensions.dispatch.table[[file.type]],
+      do.call(extensions.dispatch.table[[file.type]],
               list(data.file,
                    url.info[['url']],
                    variable.name))

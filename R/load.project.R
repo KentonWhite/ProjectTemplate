@@ -49,7 +49,7 @@ load.project <- function()
 
   for (cache.file in cache.files)
   {
-    for (extension in names(ProjectTemplate:::extensions.dispatch.table))
+    for (extension in names(extensions.dispatch.table))
     {
       filename <- file.path('cache', cache.file)
 
@@ -63,7 +63,7 @@ load.project <- function()
 
         message(paste(" Loading cached data set: ", variable.name, sep = ''))
 
-        do.call(ProjectTemplate:::extensions.dispatch.table[[extension]],
+        do.call(extensions.dispatch.table[[extension]],
                 list(cache.file,
                      filename,
                      variable.name))
@@ -80,7 +80,7 @@ load.project <- function()
 
     for (data.file in data.files)
     {
-      for (extension in names(ProjectTemplate:::extensions.dispatch.table))
+      for (extension in names(extensions.dispatch.table))
       {
         filename <- file.path('data', data.file)
 
@@ -100,7 +100,7 @@ load.project <- function()
 
           message(paste(" Loading data set: ", variable.name, sep = ''))
 
-          do.call(ProjectTemplate:::extensions.dispatch.table[[extension]],
+          do.call(extensions.dispatch.table[[extension]],
                   list(data.file,
                        filename,
                        variable.name))

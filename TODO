@@ -13,3 +13,4 @@
 - Create `run.project` function.
 - Write better documentation.
 - Debate maintaining a record of all data sets as they're loaded.
+- `cache()` doesn't generate clean filenames and still saves `variable`.
