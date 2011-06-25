@@ -1,0 +1,25 @@
+# Changes in ProjectTemplate
+The list of changes below is not necessarily exhaustive. Check the ChangeLog on [GitHub](https://github.com/johnmyleswhite/ProjectTemplate) for more details, but the raw ProjectTemplate source code is always the place to go for ground truth.
+
+# v0.3-1
+
+* Changed the configuration system from YAML to DCF format.
+* Moved the data loading helper functions into separate files. They are no longer nested inside of `load.project()`.
+* Started controlling which functions are exported using a NAMESPACE file.
+* Added the ability to create minimal projects as well as the full projects that existing users will be familiar with.
+* Switched all the `print()` calls to `message()` calls.
+
+# v0.2-1
+
+* Version 0.2-1 adds the following directories:
+  * `cache`
+  * `config`
+  * `logs`
+  * `munge`
+  * `src`
+* Inside the `config` directory, a global configuration file called `config/global.yaml` has been added that uses YAML syntax. This file provides the following configuration options:
+  * `data_loading`: This can be set to 'on' or 'off'. If `data_loading` is on, the system will load data from both the `cache` and `data` directories with `cache` taking precedence in case of name conflict.
+  * `munging`: This can be set to 'on' or 'off'. If `munging` is on, the system will execute the files in the `munge` directory sequentially. If `munging` is off, none of the files in the `munge` directory will be executed.
+  * `logging`: This can be set to 'on' or 'off'. If `logging` is on, a logger object using the `log4r` package is automatically created when you run `load.project()`. This logger will write to the `logs` directory. By default, `logging` is off.
+  * `load_libraries`: This can be set to 'on' or 'off'. If `load_libraries` is on, the system will load all of the R packages listed in the `libraries` field below.
+  * `libraries`: This is a YAML array listing all of the packages that the user wants to automatically load when `load.project()` is called.

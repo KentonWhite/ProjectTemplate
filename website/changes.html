@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>ProjectTemplate</title>
+		<link rel="stylesheet" href="style.css" type="text/css" media="screen" />
+	</head>
+	<body>
+    <h1>Changes in ProjectTemplate</h1>
+
+<p>The list of changes below is not necessarily exhaustive. Check the ChangeLog on <a href="https://github.com/johnmyleswhite/ProjectTemplate">GitHub</a> for more details, but the raw ProjectTemplate source code is always the place to go for ground truth.</p>
+
+<h1>v0.3-1</h1>
+
+<ul>
+<li>Changed the configuration system from YAML to DCF format.</li>
+<li>Moved the data loading helper functions into separate files. They are no longer nested inside of <code>load.project()</code>.</li>
+<li>Started controlling which functions are exported using a NAMESPACE file.</li>
+<li>Added the ability to create minimal projects as well as the full projects that existing users will be familiar with.</li>
+<li>Switched all the <code>print()</code> calls to <code>message()</code> calls.</li>
+</ul>
+
+<h1>v0.2-1</h1>
+
+<ul>
+<li>Version 0.2-1 adds the following directories:
+<ul>
+<li><code>cache</code></li>
+<li><code>config</code></li>
+<li><code>logs</code></li>
+<li><code>munge</code></li>
+<li><code>src</code></li>
+</ul></li>
+<li>Inside the <code>config</code> directory, a global configuration file called <code>config/global.yaml</code> has been added that uses YAML syntax. This file provides the following configuration options:
+<ul>
+<li><code>data_loading</code>: This can be set to 'on' or 'off'. If <code>data_loading</code> is on, the system will load data from both the <code>cache</code> and <code>data</code> directories with <code>cache</code> taking precedence in case of name conflict.</li>
+<li><code>munging</code>: This can be set to 'on' or 'off'. If <code>munging</code> is on, the system will execute the files in the <code>munge</code> directory sequentially. If <code>munging</code> is off, none of the files in the <code>munge</code> directory will be executed.</li>
+<li><code>logging</code>: This can be set to 'on' or 'off'. If <code>logging</code> is on, a logger object using the <code>log4r</code> package is automatically created when you run <code>load.project()</code>. This logger will write to the <code>logs</code> directory. By default, <code>logging</code> is off.</li>
+<li><code>load_libraries</code>: This can be set to 'on' or 'off'. If <code>load_libraries</code> is on, the system will load all of the R packages listed in the <code>libraries</code> field below.</li>
+<li><code>libraries</code>: This is a YAML array listing all of the packages that the user wants to automatically load when <code>load.project()</code> is called.</li>
+</ul></li>
+</ul>
+
+	</body>
+</html>

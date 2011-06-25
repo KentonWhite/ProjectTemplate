@@ -1,0 +1,7 @@
+# Configuring ProjectTemplate
+
+* `data_loading`: This can be set to 'on' or 'off'. If `data_loading` is on, the system will load data from both the `cache` and `data` directories with `cache` taking precedence in case of name conflict. By default, `data_loading` is on.
+* `munging`: This can be set to 'on' or 'off'. If `munging` is on, the system will execute the files in the `munge` directory sequentially. If `munging` is off, none of the files in the `munge` directory will be executed. By default, `munging` is on.
+* `logging`: This can be set to 'on' or 'off'. If `logging` is on, a logger object using the `log4r` package is automatically created when you run `load.project()`. This logger will write to the `logs` directory. By default, `logging` is off.
+* `load_libraries`: This can be set to 'on' or 'off'. If `load_libraries` is on, the system will load all of the R packages listed in the `libraries` field below. By default, `load_libraries` is off.
+* `libraries`: This is a comma separate list of all the R packages that the user wants to automatically load when `load.project()` is called. These packages must already be installed before calling `load.project()`. By default, the reshape, plyr, ggplot2 and stringr packages are included in this list.

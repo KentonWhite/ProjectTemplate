@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>ProjectTemplate</title>
+		<link rel="stylesheet" href="style.css" type="text/css" media="screen" />
+	</head>
+	<body>
+    <h1>ProjectTemplate's Architecture</h1>
+
+<p>ProjectTemplate is based on the idea that you should structure all of your data analysis projects in the same way so that you can exploit conventions instead of writing boilerplate code. Because so much of ProjectTemplate's functionality is based on conventions, it's worth explaining ProjectTemplate's idealized project in some detail.</p>
+
+<h1>Full Project Layout</h1>
+
+<p>As far as ProjectTemplate is concerned, a good statistical analysis project should look like the following:</p>
+
+<ul>
+<li>project/
+<ul>
+<li>cache/</li>
+<li>config/</li>
+<li>data/</li>
+<li>diagnostics/
+<ul>
+<li>1.R</li>
+</ul></li>
+<li>doc/</li>
+<li>graphs/</li>
+<li>lib/
+<ul>
+<li>utilities.R</li>
+</ul></li>
+<li>logs/</li>
+<li>munge/</li>
+<li>profiling/
+<ul>
+<li>1.R</li>
+</ul></li>
+<li>reports/</li>
+<li>src/</li>
+<li>tests/
+<ul>
+<li>1.R</li>
+</ul></li>
+<li>README</li>
+<li>TODO</li>
+</ul></li>
+</ul>
+
+<p>Each of these directories and files serves a specific purpose, which we describe below:</p>
+
+<ul>
+<li><code>cache</code>: Here you'll store any data sets that (a) are generated during a preprocessing step and (b) don't need to be regenerated every single time you analyze your data. You can use the <code>cache()</code> function to store data to this directory automatically. Any data set found in both the <code>cache</code> and <code>data</code> directories will be drawn from <code>cache</code> instead of <code>data</code> based on ProjectTemplate's priority rules.</li>
+<li><code>config</code>: Here you'll store any configurations settings for your project. Use the DCF format that the <code>read.dcf()</code> function parses.</li>
+<li><code>data</code>: Here you'll store your raw data files. If they are encoded in a supported file format, they'll automatically be loaded when you call <code>load.project()</code>.</li>
+<li><code>diagnostics</code>: Here you can store any scripts you use to diagnose your data sets for corruption or problematic data points.</li>
+<li><code>doc</code>: Here you can store any documentation that you've written about your analysis.</li>
+<li><code>graphs</code>: Here you can store any graphs that you produce.</li>
+<li><code>lib</code>: Here you'll store any files that provide useful functionality for your work, but do not constitute a statistical analysis per se. Specifically, you should use the <code>lib/utilities.R</code> script to organize any functions you use in your project that aren't quite general enough to belong in a package.</li>
+<li><code>logs</code>: Here you can store a log file of any work you've done on this project. If you'll be logging your work, we recommend using the <a href="https://github.com/johnmyleswhite/log4r">log4r</a> package, which ProjectTemplate will automatically load for you if you turn the <code>logging</code> configuration setting on.</li>
+<li><code>munge</code>: Here you can store any preprocessing or data munging code for your project. For example, if you need to add columns at runtime, merge normalized data sets or globally censor any data points, that code should be stored in the <code>munge</code> directory. The preprocessing scripts stored in <code>munge</code> will be executed sequentially when you call <code>load.project()</code>, so you should append numbers to the filenames to indicate their sequential order.</li>
+<li><code>profiling</code>: Here you can store any scripts you use to benchmark and time your code.</li>
+<li><code>reports</code>: Here you can store any output reports, such as HTML or LaTeX versions of tables, that you produce. Sweave or brew documents should also go in the <code>reports</code> directory.</li>
+<li><code>src</code>: Here you'll store your final statistical analysis scripts. You should add the following piece of code to the start of each analysis script: <code>library('ProjectTemplate); load.project()</code>. You should also do your best to insure that any code that's shared between the analyses in <code>src</code> is moved into the <code>munge</code> directory; if you do that, you can execute all of the analyses in the <code>src</code> directory in parallel. A future release of ProjectTemplate will provide tools to automatically execute every individual analysis from <code>src</code> in parallel.</li>
+<li><code>tests</code>: Here you can store any test cases for the functions you've written. Your test files should use <code>testthat</code> style tests so that you can call the <code>run.tests()</code> function to automatically execute all of your test code.</li>
+<li><code>README</code>: In this file, you should write some notes to help orient any newcomers to your project.</li>
+<li><code>TODO</code>: In this file, you should write a list of future improvements and bug fixes that you plan to make to your analyses.</li>
+</ul>
+
+<h1>Minimal Project Layout</h1>
+
+<p>A minimal project, which you can create using <code>create.project(minimal = TRUE)</code>, only contains a subset of the full project layout:</p>
+
+<ul>
+<li>project/
+<ul>
+<li>cache/</li>
+<li>config/</li>
+<li>data/</li>
+<li>munge/</li>
+<li>src/</li>
+<li>README</li>
+</ul></li>
+</ul>
+
+<p>This is designed for newcomers who don't need the more advanced sub-directories that ProjectTemplate normally creates.</p>
+
+	</body>
+</html>

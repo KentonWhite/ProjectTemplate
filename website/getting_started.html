@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>ProjectTemplate</title>
+		<link rel="stylesheet" href="style.css" type="text/css" media="screen" />
+	</head>
+	<body>
+    <h1>Getting Started with ProjectTemplate</h1>
+
+<p>Let's set up a new data analysis project using ProjectTemplate.</p>
+
+<p>Before we start, you should make sure that you've <a href="./installing.html">installed</a> ProjectTemplate. You'll also need to download the sample data set we'll use, <a href="./letters.csv">letters.csv</a>.</p>
+
+<p>Once you've got both of those things done, you can open up R and type</p>
+
+<pre><code>    library('ProjectTemplate')
+    create.project('letters')
+</code></pre>
+
+<p>You can now exit R and change into the directory <code>letters</code> that you just set up:</p>
+
+<pre><code>    cd letters
+</code></pre>
+
+<p>Once you're in the <code>letters</code> directory, you can open up your new project in your favorite text editor. I like using TextMate as an editor, since it will show the structure of our entire project in a sidebar:</p>
+
+<pre><code>    mate .
+</code></pre>
+
+<p><img src="./directories.jpg" alt="ProjectTemplate Directories" title="" /></p>
+
+<p>As you can see, <code>create.project()</code> has set up a whole series of sub-directories for us. We'll see what each of these does as we move on. For now, let's just pull in that data file <code>letters.csv</code> that you downloaded earlier. We'll place it into the <code>data</code> directory:</p>
+
+<pre><code>    mv ~/Downloads/letters.csv data
+</code></pre>
+
+<p>With the <code>letters.csv</code> data set in place, we can start to use ProjectTemplate's automated data loading features. Open up R again and type the following:</p>
+
+<pre><code>    library('ProjectTemplate')
+    load.project()
+</code></pre>
+
+<p>You'll see ProjectTemplate print out a bunch of messages:</p>
+
+<p><img src="./loading.jpg" alt="Loading Messages" title="" /></p>
+
+<p>Among the messages above, you'll notice that the <code>letters</code> data set was automatically loaded into memory. How did ProjectTemplate do this?</p>
+
+<p>It's simple: ProjectTemplate searches through the <code>data</code> directory for files. If a file has a name like <code>NAME.EXTENSION</code> with a recognized extension such as <code>.csv</code> or <code>.sql</code>, ProjectTemplate will automatically load the data described in that file into memory. Generally, the automatically loaded data set will end up in an R data frame called <code>NAME</code> that will be placed in R's global environment. If you're not sure if your data set will be automatically loaded by ProjectTemplate, you can check the full list of currently supported filetypes <a href="./file_formats.html">here</a>.</p>
+
+<p>The <code>letters</code> data set takes a few seconds to load into R because it contains 233,614 rows. You can get a feel for it by looking at the <code>head()</code> of the data:</p>
+
+<pre><code>    head(letters)
+</code></pre>
+
+<p><img src="./head.jpg" alt="head() Output" title="" /></p>
+
+<p>As you can see, we've got a data frame that contains 233,614 words along with the first and second letter of each word in a separate column. For our current analysis, we're interested in the total number of occurrences of each letter in the first and second letter positions and not the words themselves. For that reason, we can generate aggregate letter counts using the <code>ddply()</code> function from the plyr package. Wanting to work with aggregate counts instead of the raw data set we stored in <code>data</code> naturally leads us to ProjectTemplate's automatic package loading and data munging tools.</p>
+
+<p>To use <code>plyr</code>, we need to load the package. ProjectTemplate makes it easy to automate this step. First, we have to edit the <code>config/global.dcf</code> file to make sure that the <code>load_libraries</code> setting is turned on:</p>
+
+<pre><code>    load_libraries: on
+</code></pre>
+
+<p>Second, we need to make sure that the <code>plyr</code> package will be loaded automatically when we run <code>load.project()</code>. To do that, we check that the value of the <code>libraries</code> configuration setting contains plyr. We see that it does list plyr, along with reshape, ggplot2 and stringr:</p>
+
+<pre><code>    libraries: reshape, plyr, ggplot2, stringr
+</code></pre>
+
+<p>After checking these things, we know that we have the proper tools in place to compute aggregates. To make sure that this aggregation preprocessing step takes place as soon we run <code>load.project()</code>, we edit the <code>munge/01-A.R</code> script so that it contains the following two lines of code:</p>
+
+<pre><code>    first.letter.counts &lt;- ddply(letters, c('FirstLetter'), nrow)
+    second.letter.counts &lt;- ddply(letters, c('SecondLetter'), nrow)
+</code></pre>
+
+<p>Now that we've edited this munging script, our aggregation preprocessing step will take place every time we run <code>load.project()</code>. Indeed, you'll see that preprocessing take place if you close R, open it again and rerun <code>load.project()</code>:</p>
+
+<pre><code>    library('ProjectTemplate')
+    load.project()
+</code></pre>
+
+<p><img src="./munging.jpg" alt="Munging Messages" title="" /></p>
+
+<p>Since our new call to <code>ddply()</code> involves a fairly long computation that produces very simple output, it makes sense to <code>cache()</code> the output of our aggregation step rather than rerun it every time. To do that, we use the <code>cache()</code> function:</p>
+
+<pre><code>    cache('first.letter.counts')
+    cache('second.letter.counts')
+</code></pre>
+
+<p>Now when we reload our project we see the following:</p>
+
+<pre><code>    library('ProjectTemplate')
+    load.project()
+</code></pre>
+
+<p><img src="./caching.jpg" alt="Cache Loading Messages" title="" /></p>
+
+<p>Unfortunately, the preprocessing step still seems to go slowly. That's because, even though we're pulling <code>first.letter.counts</code> and <code>second.letter.counts</code> from <code>cache</code>, we're also still running the munging steps to create those variables. To stop recomputing work we've already cached, we edit our configuration file and turn <code>munging</code> off:</p>
+
+<pre><code>    munging: off
+</code></pre>
+
+<p>After doing that, we load our project again and see that things run a lot faster because the munging step is skipped:</p>
+
+<pre><code>    library('ProjectTemplate')
+    load.project()
+</code></pre>
+
+<p><img src="./munging_off.jpg" alt="Munging Off Messages" title="" /></p>
+
+<p>Now that we've got interesting data in our hands, let's produce some simple density plots to see the shape of the first and second letter counts. To do that, we'll code up an analysis that we'll store inside of <code>src/generate_plots.R</code>. In general, you'll use the <code>src</code> directory to store any analyses that you run. The convention is that every analysis starts with the familiar two lines:</p>
+
+<pre><code>    library('ProjectTemplate')
+    load.project()
+</code></pre>
+
+<p>And then goes on to do something original with the data:</p>
+
+<pre><code>    plot1 &lt;- ggplot(first.letter.counts, aes(x = V1)) + geom_density()
+    ggsave(file.path('graphs', 'plot1.pdf'))
+
+    plot2 &lt;- ggplot(second.letter.counts, aes(x = V1)) + geom_density()
+    ggsave(file.path('graphs', 'plot2.pdf'))
+</code></pre>
+
+<p>Once we've saved our analysis in the <code>src</code> directory, we can run the analysis by opening R and typing the single line:</p>
+
+<pre><code>    source('src/generate_plots.R')
+</code></pre>
+
+<p>As you'll notice, the code we put in <code>src/generate_plots.R</code> saved our plots to the <code>graphs</code> directory, which ProjectTemplate created automatically for us when we ran <code>create.project()</code>. We can see the plots we made by opening the <code>graphs</code> directory and looking inside:</p>
+
+<p><img src="./plot1.png" alt="Plot 1" title="" />
+<img src="./plot2.png" alt="Plot 2" title="" /></p>
+
+<p>After looking at our new density plots, we see that both the first and second letter distributions are very skewed. To make a note of this for posterity, we can write up our discovery in a text file that we store in the <code>reports</code> directory. Like the <code>graphs</code> directory, the <code>reports</code> directory is generated by ProjectTemplate automatically when we run <code>create.project()</code>. It's meant to contain the sort of written descriptions of the results of your analyses that you'd publish in a scientific paper.</p>
+
+<p>With that report written and stored in the <code>reports</code> directory, we've gone through the simplest sort of analysis you might run with ProjectTemplate. Along the way, we've shown some of ProjectTemplate's basic and intermediate features. In a future piece of documentation, we'll describe some of the more advanced features that ProjectTemplate offers.</p>
+
+	</body>
+</html>
