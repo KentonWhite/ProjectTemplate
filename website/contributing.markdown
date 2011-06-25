@@ -1,6 +1,6 @@
 # Contributing to ProjectTemplate
 
-If you have changes you'd like to make to ProjectTemplate, we'd love to see them. We'd prefer that you fork ProjectTemplate through GitHub and submit a pull request. If that's not possible, please e-mail a patch to the [mailing list](./mailing_list.html) and we'll incorporate your changes.
+If you have changes you'd like to make to ProjectTemplate, we'd love to see them. We'd prefer that you fork ProjectTemplate through GitHub and submit a pull request. If that's not possible, please e-mail a patch to the [mailing list](./mailing_list.html) so that we can manually incorporate your changes.
 
 # Commit Team
 
@@ -18,7 +18,8 @@ If you have changes you'd like to make to ProjectTemplate, we'd love to see them
 # Idea Contributors and Inspiration
 
 * Hadley Wickham
-* Jamie Olsen
+* Mike Dewar
+* Jamie Olson
 * The Ruby on Rails Developers
 
 If you've contributed code or ideas to ProjectTemplate and we left you off the various thanks list, please let us know so that we can correct our mistake.
