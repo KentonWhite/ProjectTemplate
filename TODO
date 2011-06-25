@@ -10,7 +10,5 @@
 - Document possible data pipelines.
 - Rename `utilities.R` to `helpers.R`.
 - Find place for `extensions.dispatch.table` to prevent duplication.
-- Create `run.project` function.
-- Write better documentation.
 - Debate maintaining a record of all data sets as they're loaded.
 - `cache()` doesn't generate clean filenames and still saves `variable`.
