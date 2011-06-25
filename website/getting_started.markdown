@@ -42,7 +42,7 @@ The `letters` data set takes a few seconds to load into R because it contains 23
 
 ![head() Output](./head.jpg)
 
-As you can see, we've got a data frame that contains 233,614 words along with the first and second letter of each word in a separate column. For our current analysis, we're interested in the total number of occurrences of each letter in the first and second letter positions and not the words themselves. For that reason, we can generate aggregate letter counts using the `ddply()` function from the plyr package. Wanting to work with aggregate counts instead of the raw data set we stored in `data` naturally leads us to ProjectTemplate's automatic package loading and data munging tools.
+As you can see, we've got a data frame that contains 233,614 words along with the first and second letter of each word in a separate column. For our current analysis, we're interested in the total number of occurrences of each letter in the first and second letter positions and not in the words themselves. For that reason, we can generate aggregate letter counts using the `ddply()` function from the plyr package. Wanting to work with aggregate counts instead of the raw data set we stored in `data` naturally leads us to ProjectTemplate's automatic package loading and data munging tools.
 
 To use `plyr`, we need to load the package. ProjectTemplate makes it easy to automate this step. First, we have to edit the `config/global.dcf` file to make sure that the `load_libraries` setting is turned on:
 
@@ -52,7 +52,7 @@ Second, we need to make sure that the `plyr` package will be loaded automaticall
 
 		libraries: reshape, plyr, ggplot2, stringr
 
-After checking these things, we know that we have the proper tools in place to compute aggregates. To make sure that this aggregation preprocessing step takes place as soon we run `load.project()`, we edit the `munge/01-A.R` script so that it contains the following two lines of code:
+After checking these settings, we know that we have the proper tools in place to compute aggregates. To make sure that this aggregation preprocessing step takes place as soon we run `load.project()`, we edit the `munge/01-A.R` script so that it contains the following two lines of code:
 
 		first.letter.counts <- ddply(letters, c('FirstLetter'), nrow)
 		second.letter.counts <- ddply(letters, c('SecondLetter'), nrow)
@@ -64,7 +64,7 @@ Now that we've edited this munging script, our aggregation preprocessing step wi
 
 ![Munging Messages](./munging.jpg)
 
-Since our new call to `ddply()` involves a fairly long computation that produces very simple output, it makes sense to `cache()` the output of our aggregation step rather than rerun it every time. To do that, we use the `cache()` function:
+Since our new call to `ddply()` involves a fairly long computation that produces very simple output, it makes sense to cache the output of our aggregation step rather than rerun it every time. To do that, we use the `cache()` function:
 
 		cache('first.letter.counts')
 		cache('second.letter.counts')
@@ -76,7 +76,7 @@ Now when we reload our project we see the following:
 
 ![Cache Loading Messages](./caching.jpg)
 
-Unfortunately, the preprocessing step still seems to go slowly. That's because, even though we're pulling `first.letter.counts` and `second.letter.counts` from `cache`, we're also still running the munging steps to create those variables. To stop recomputing work we've already cached, we edit our configuration file and turn `munging` off:
+Unfortunately, the preprocessing step still seems to go slowly. That's because, even though we're pulling `first.letter.counts` and `second.letter.counts` from `cache`, we're also still running the munging steps to create those variables at runtime. To stop recomputing work we've already cached, we edit our configuration file and turn `munging` off:
 
 		munging: off
 
