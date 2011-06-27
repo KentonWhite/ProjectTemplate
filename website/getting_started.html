@@ -31,7 +31,7 @@
 
 <p><img src="./directories.jpg" alt="ProjectTemplate Directories" title="" /></p>
 
-<p>As you can see, <code>create.project()</code> has set up a whole series of sub-directories for us. We'll see what each of these does as we move on. For now, let's just pull in that data file <code>letters.csv</code> that you downloaded earlier. We'll place it into the <code>data</code> directory:</p>
+<p>As you can see, <code>create.project()</code> has set up a whole series of subdirectories for us. We'll see what each of these does as we move on. For now, let's just pull in that data file <code>letters.csv</code> that you downloaded earlier. We'll place it into the <code>data</code> directory:</p>
 
 <pre><code>    mv ~/Downloads/letters.csv data
 </code></pre>
@@ -83,7 +83,7 @@
 
 <p><img src="./munging.jpg" alt="Munging Messages" title="" /></p>
 
-<p>Since our new call to <code>ddply()</code> involves a fairly long computation that produces very simple output, it makes sense to <code>cache()</code> the output of our aggregation step rather than rerun it every time. To do that, we use the <code>cache()</code> function:</p>
+<p>Since our new call to <code>ddply()</code> involves a fairly long computation that produces very simple output, it makes sense to cache the output of our aggregation step rather than rerun it every time. To do that, we use the <code>cache()</code> function:</p>
 
 <pre><code>    cache('first.letter.counts')
     cache('second.letter.counts')
@@ -97,7 +97,7 @@
 
 <p><img src="./caching.jpg" alt="Cache Loading Messages" title="" /></p>
 
-<p>Unfortunately, the preprocessing step still seems to go slowly. That's because, even though we're pulling <code>first.letter.counts</code> and <code>second.letter.counts</code> from <code>cache</code>, we're also still running the munging steps to create those variables. To stop recomputing work we've already cached, we edit our configuration file and turn <code>munging</code> off:</p>
+<p>Unfortunately, the preprocessing step still seems to go slowly. That's because, even though we're pulling <code>first.letter.counts</code> and <code>second.letter.counts</code> from <code>cache</code>, we're also still running the munging steps to create those variables at runtime. To stop recomputing work we've already cached, we edit our configuration file and turn <code>munging</code> off:</p>
 
 <pre><code>    munging: off
 </code></pre>

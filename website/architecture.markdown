@@ -57,4 +57,4 @@ A minimal project, which you can create using `create.project(minimal = TRUE)`, 
     * src/
     * README
 
-This is designed for newcomers who don't need the more advanced sub-directories that ProjectTemplate normally creates.
+This is designed for newcomers who don't need the more advanced subdirectories that ProjectTemplate normally creates.

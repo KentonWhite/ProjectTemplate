@@ -12,3 +12,4 @@
 - Find place for `extensions.dispatch.table` to prevent duplication.
 - Debate maintaining a record of all data sets as they're loaded.
 - `cache()` doesn't generate clean filenames and still saves `variable`.
+- Allow users to dump all of the functionality of ProjectTemplate as flat files when running `create.project()`. This is useful for those who'd like to start with some basic structure for their work, but want to edit ProjectTemplate extensively.
