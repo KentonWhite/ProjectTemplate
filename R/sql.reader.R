@@ -21,16 +21,28 @@ sql.reader <- function(data.file, filename, variable.name)
   
   database.info <- ProjectTemplate:::translate.dcf(filename)
 
-  if (! (database.info[['type']] %in% c('mysql', 'sqlite')))
+  if (! (database.info[['type']] %in% c('mysql', 'sqlite', 'odbc')))
   {
-    warning('Only databases reachable through RMySQL and RSQLite
-             are currently supported.')
+    warning('Only databases reachable through RMySQL, RSQLite and RODBC are currently supported.')
     assign(variable.name,
            NULL,
            envir = .GlobalEnv)
     return()
   }
 
+  # Draft code for ODBC support.
+  if (database.info[['type']] == 'odbc')
+  {
+    library('RODBC')
+    connection <- odbcConnect(database.info[['dbname']])
+    sqlQuery(connection, database.info[['query']])
+    results <- sqlGetResults(connection, as.is = TRUE)
+    odbcClose(connection)
+    assign(variable.name,
+					 results,
+					 envir = .GlobalEnv)
+  }
+  
   if (database.info[['type']] == 'mysql')
   {
     library('RMySQL')
