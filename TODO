@@ -1,14 +1,12 @@
-- Create unit tests for all `*.reader` functions.
-- Create a `show.updates()` function to show which files don't match ProjectTemplate rules.
-- Debate renaming `run.tests()` to `test.project()` permanently.
-- Need proper sample `.zip` files for testing.
-- Need sample Stata file for testing.
-- Clean up DB code.
-- Unit test sqlite support.
-- Make a `cache.project()` function?
-- Make a `stub.tests()` function?
-- Document possible data pipelines.
-- Rename `utilities.R` to `helpers.R`.
-- Debate maintaining a record of all data sets as they're loaded.
-- `cache()` doesn't generate clean filenames and still saves `variable`.
-- Allow users to dump all of the functionality of ProjectTemplate as flat files when running `create.project()`. This is useful for those who'd like to start with some basic structure for their work, but want to edit ProjectTemplate extensively.
+* Improve unit tests for `*.reader` functions.
+* Get sample data files in `.zip` format, Stata format, etc.
+* `cache()` doesn't generate clean filenames and it still saves `variable`.
+* Add `create.project(dump = TRUE)` feature.
+* Document possible data pipelines through `data` and `cache`.
+* Rename `run.tests()` to `test.project()` permanently.
+* Rename `utilities.R` to `helpers.R` permanently.
+* Create a `show.updates()` function.
+* Create a `cache.project()` function.
+* Create a `stub.tests()` function.
+* Clean up DB code.
+* Maintain a record of all loaded data sets.
