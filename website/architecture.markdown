@@ -15,7 +15,7 @@ As far as ProjectTemplate is concerned, a good statistical analysis project shou
     * doc/
     * graphs/
     * lib/
-        * utilities.R
+        * helpers.R
     * logs/
     * munge/
     * profiling/
@@ -35,7 +35,7 @@ Each of these directories and files serves a specific purpose, which we describe
 * `diagnostics`: Here you can store any scripts you use to diagnose your data sets for corruption or problematic data points.
 * `doc`: Here you can store any documentation that you've written about your analysis.
 * `graphs`: Here you can store any graphs that you produce.
-* `lib`: Here you'll store any files that provide useful functionality for your work, but do not constitute a statistical analysis per se. Specifically, you should use the `lib/utilities.R` script to organize any functions you use in your project that aren't quite general enough to belong in a package.
+* `lib`: Here you'll store any files that provide useful functionality for your work, but do not constitute a statistical analysis per se. Specifically, you should use the `lib/helpers.R` script to organize any functions you use in your project that aren't quite general enough to belong in a package.
 * `logs`: Here you can store a log file of any work you've done on this project. If you'll be logging your work, we recommend using the [log4r](https://github.com/johnmyleswhite/log4r) package, which ProjectTemplate will automatically load for you if you turn the `logging` configuration setting on.
 * `munge`: Here you can store any preprocessing or data munging code for your project. For example, if you need to add columns at runtime, merge normalized data sets or globally censor any data points, that code should be stored in the `munge` directory. The preprocessing scripts stored in `munge` will be executed sequentially when you call `load.project()`, so you should append numbers to the filenames to indicate their sequential order.
 * `profiling`: Here you can store any scripts you use to benchmark and time your code.

@@ -4,7 +4,7 @@ run.project <- function()
 
   for (analysis.script in dir('src'))
   {
-    if (grepl('\\.R$', ignore.case = TRUE, analysis.script))
+    if (grepl('\\.R$', analysis.script, ignore.case = TRUE))
     {
       message(paste(' Running analysis script:', analysis.script))
       system(paste('Rscript', file.path('src', analysis.script)))

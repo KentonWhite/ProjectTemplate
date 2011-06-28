@@ -1,58 +1,112 @@
 load.project <- function()
 {
   message('Loading project configuration')
+  if (!file.exists(file.path('config', 'global.dcf')))
+  {
+    stop('You are missing a configuration file: config/global.dcf')
+  }
   config <- ProjectTemplate:::translate.dcf(file.path('config', 'global.dcf'))
+  if (is.null(config[['libraries']]))
+  {
+    warning('Your configuration file is missing an entry: libraries')
+  }
   config[['libraries']] <- strsplit(config[['libraries']], '\\s*,\\s*')[[1]]
   assign('config', config, envir = .GlobalEnv)
 
-  if (file.exists(file.path('lib', 'utilities.R')))
+  if (file.exists('lib'))
   {
-    message('Autoloading utility functions')
-    source(file.path('lib', 'utilities.R'))
-  }
-
-  if (config[['load_libraries']] == 'on')
-  {
-    message('Autoloading libraries')
-    for (library.to.load in config[['libraries']])
+    message('Autoloading helper functions')
+    
+    for (helper.script in dir('lib'))
     {
-      message(paste(' Loading library:', library.to.load))
-      library(library.to.load, character.only = TRUE)
-    }
-  }
-
-  message('Autoloading data')
-  # First, we load everything out of cache/.
-  cache.files <- dir('cache')
-
-  for (cache.file in cache.files)
-  {
-    for (extension in names(ProjectTemplate:::extensions.dispatch.table))
-    {
-      filename <- file.path('cache', cache.file)
-
-      if (grepl(extension, cache.file, ignore.case = TRUE, perl = TRUE))
+      if (grepl('\\.R$', helper.script, ignore.case = TRUE))
       {
-        variable.name <- ProjectTemplate:::clean.variable.name(sub(extension,
-                                                 '',
-                                                 cache.file,
-                                                 ignore.case = TRUE,
-                                                 perl = TRUE))
-
-        message(paste(" Loading cached data set: ", variable.name, sep = ''))
-
-        do.call(ProjectTemplate:::extensions.dispatch.table[[extension]],
-                list(cache.file,
-                     filename,
-                     variable.name))
-
-        break()
+        for (deprecated.file in c('boot.R', 'load_data.R', 'load_libraries.R', 'preprocess_data.R', 'run_tests.R'))
+        {
+          if (grepl(deprecated.file, helper.script, ignore.case = TRUE))
+          {
+            warning(paste('Skipping deprecated file:', deprecated.file))
+            next()
+          }
+        }
+        message(paste(' Running helper script:', helper.script))
+        source(file.path('lib', helper.script))
       }
     }
   }
-  # Then we consider loading things from data/.
+
+  if (is.null(config[['load_libraries']]))
+  {
+    warning('Your configuration file is missing an entry: load_libraries')
+  }
+  else
+  {
+    if (config[['load_libraries']] == 'on')
+    {
+      message('Autoloading packages')
+      for (package.to.load in config[['libraries']])
+      {
+        message(paste(' Loading package:', package.to.load))
+        if (!library(package.to.load, character.only = TRUE, logical.return = TRUE))
+        {
+          stop(paste('Failed to load package: ', package.to.load))
+        }
+      }
+    }
+  }
+
+  if (is.null(config[['data_loading']]))
+  {
+    warning('Your configuration file is missing an entry: data_loading')
+  }
   if (config[['data_loading']] == 'on')
   {
+    message('Autoloading data')
+    
+    # First, we load everything out of cache/.
+    if (!file.exists('cache'))
+    {
+      stop('You are missing a directory: cache')
+    }
+    cache.files <- dir('cache')
+
+    for (cache.file in cache.files)
+    {
+      for (extension in names(ProjectTemplate:::extensions.dispatch.table))
+      {
+        filename <- file.path('cache', cache.file)
+
+        if (grepl(extension, cache.file, ignore.case = TRUE, perl = TRUE))
+        {
+          variable.name <- ProjectTemplate:::clean.variable.name(sub(extension,
+                                                   '',
+                                                   cache.file,
+                                                   ignore.case = TRUE,
+                                                   perl = TRUE))
+
+          # If this variable already exists in the global environment, don't load it from cache.
+          if (variable.name %in% ls(envir = .GlobalEnv))
+          {
+            next()
+          }
+          
+          message(paste(" Loading cached data set: ", variable.name, sep = ''))
+
+          do.call(ProjectTemplate:::extensions.dispatch.table[[extension]],
+                  list(cache.file,
+                       filename,
+                       variable.name))
+
+          break()
+        }
+      }
+    }
+
+    # Then we consider loading things from data/.
+    if (!file.exists('data'))
+    {
+      stop('You are missing a directory: data')
+    }
     data.files <- dir('data')
 
     for (data.file in data.files)
@@ -88,6 +142,10 @@ load.project <- function()
     }
   }
 
+  if (is.null(config[['munging']]))
+  {
+    warning('Your configuration file is missing an entry: munging')
+  }
   if (config[['munging']] == 'on')
   {
     message('Munging data')
@@ -98,6 +156,10 @@ load.project <- function()
     }
   }
 
+  if (is.null(config[['logging']]))
+  {
+    warning('Your configuration file is missing an entry: logging')
+  }
   if (config[['logging']] == 'on')
   {
     message('Initializing logger')

@@ -9,7 +9,7 @@ Because ProjectTemplate is still beta software, there are a number of backwards 
   * Collapse your libraries onto a single line separated by commas (i.e. libraries: ggplot2, stringr)
   * `global.yaml` needs to be renamed `global.dfc`.
   * Any `.url` or `.sql` files you've written in YAML need to be converted to DCF syntax.
-* Remove the `clean.variable.name` and `cache.name` functions from `utilities.R`.
+* Remove the `clean.variable.name` and `cache.name` functions from `helpers.R`.
 
 ### Updating a v0.1-3 Project to a v0.3-1 Project
 
@@ -29,4 +29,4 @@ Because ProjectTemplate is still beta software, there are a number of backwards 
   * `rm lib/load_libraries.R`
   * `rm lib/preprocess_data.R`
   * `rm lib/run_tests.R`
-  * `rm lib/utilities.R`
+  * `rm lib/helpers.R`

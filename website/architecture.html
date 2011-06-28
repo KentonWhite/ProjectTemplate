@@ -29,7 +29,7 @@
 <li>graphs/</li>
 <li>lib/
 <ul>
-<li>utilities.R</li>
+<li>helpers.R</li>
 </ul></li>
 <li>logs/</li>
 <li>munge/</li>
@@ -57,7 +57,7 @@
 <li><code>diagnostics</code>: Here you can store any scripts you use to diagnose your data sets for corruption or problematic data points.</li>
 <li><code>doc</code>: Here you can store any documentation that you've written about your analysis.</li>
 <li><code>graphs</code>: Here you can store any graphs that you produce.</li>
-<li><code>lib</code>: Here you'll store any files that provide useful functionality for your work, but do not constitute a statistical analysis per se. Specifically, you should use the <code>lib/utilities.R</code> script to organize any functions you use in your project that aren't quite general enough to belong in a package.</li>
+<li><code>lib</code>: Here you'll store any files that provide useful functionality for your work, but do not constitute a statistical analysis per se. Specifically, you should use the <code>lib/helpers.R</code> script to organize any functions you use in your project that aren't quite general enough to belong in a package.</li>
 <li><code>logs</code>: Here you can store a log file of any work you've done on this project. If you'll be logging your work, we recommend using the <a href="https://github.com/johnmyleswhite/log4r">log4r</a> package, which ProjectTemplate will automatically load for you if you turn the <code>logging</code> configuration setting on.</li>
 <li><code>munge</code>: Here you can store any preprocessing or data munging code for your project. For example, if you need to add columns at runtime, merge normalized data sets or globally censor any data points, that code should be stored in the <code>munge</code> directory. The preprocessing scripts stored in <code>munge</code> will be executed sequentially when you call <code>load.project()</code>, so you should append numbers to the filenames to indicate their sequential order.</li>
 <li><code>profiling</code>: Here you can store any scripts you use to benchmark and time your code.</li>

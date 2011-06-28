@@ -1,3 +1,10 @@
+2011-06-28	John Myles White  <jmw@johnmyleswhite.com>
+ 
+* v0.3-3
+* Added a reload.project() function.
+* Improved error handling.
+* Renamed utilities.R to helpers.R.
+
 2011-06-27	John Myles White  <jmw@johnmyleswhite.com>
  
 * v0.3-2

@@ -1,5 +1,6 @@
 export("cache")
 export("create.project")
 export("load.project")
+export("reload.project")
 export("run.project")
 export("run.tests")
