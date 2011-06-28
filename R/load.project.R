@@ -164,9 +164,13 @@ load.project <- function()
   {
     message('Initializing logger')
     library('log4r')
+    logger <- create.logger()
+    if (!file.exists('logs'))
+    {
+      dir.create('logs')
+    }
     # Need to think about why this didn't work in the naive way.
     # Something about how `level<-` works.
-    logger <- create.logger()
     logfile(logger) <- file.path('logs', 'project.log')
     level(logger) <- log4r:::INFO
     assign('logger', logger, envir = .GlobalEnv)
