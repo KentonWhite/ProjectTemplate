@@ -1,4 +1,4 @@
-create.project <- function(project.name, minimal = FALSE)
+create.project <- function(project.name, minimal = FALSE, dump = FALSE)
 {
   tmp.dir <- paste(project.name, '_tmp', sep = '')
 
@@ -24,6 +24,11 @@ create.project <- function(project.name, minimal = FALSE)
               recursive = TRUE)
     file.rename(file.path(tmp.dir, 'full'),
                 project.name)
+  }
+  
+  if (dump)
+  {
+    1; # Magic happens here to place all of the R files from ProjectTemplate in the current folder.
   }
 
   unlink(tmp.dir, recursive = TRUE)
