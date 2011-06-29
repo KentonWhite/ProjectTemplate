@@ -1,6 +1,17 @@
 # Changes in ProjectTemplate
 The list of changes below is not necessarily exhaustive. Check the ChangeLog on [GitHub](https://github.com/johnmyleswhite/ProjectTemplate) for more details, but the raw ProjectTemplate source code is always the place to go for ground truth.
 
+# v0.3-3
+
+* Added a reload.project() function.
+* Improved error handling.
+* Renamed utilities.R to helpers.R.
+* Fixed a bug in cache().
+
+# v0.3-2
+
+* Added support for several new data formats.
+
 # v0.3-1
 
 * Changed the configuration system from YAML to DCF format.
@@ -8,6 +19,7 @@ The list of changes below is not necessarily exhaustive. Check the ChangeLog on 
 * Started controlling which functions are exported using a NAMESPACE file.
 * Added the ability to create minimal projects as well as the full projects that existing users will be familiar with.
 * Switched all the `print()` calls to `message()` calls.
+* Fixed a bug in cache().
 
 # v0.2-1
 

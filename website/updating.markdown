@@ -2,6 +2,10 @@
 
 Because ProjectTemplate is still beta software, there are a number of backwards incompatible changes introduced with each iteration of the package. The information below should help you upgrade an existing project to work with the newest version of ProjectTemplate.
 
+### Updating a v0.3-1 Project to a v0.3-3 Project
+
+* Rename `lib/utilities.R` to `lib/helpers.R`. This is not required in any way, but it will make your project seem like a v0.3-3 project.
+
 ### Updating a v0.2-1 Project to a v0.3-1 Project
 
 * Replace any configuration file written in YAML with DCF files.

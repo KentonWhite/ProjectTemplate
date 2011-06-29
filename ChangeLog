@@ -4,6 +4,7 @@
 * Added a reload.project() function.
 * Improved error handling.
 * Renamed utilities.R to helpers.R.
+* Fixed a bug in cache().
 
 2011-06-27	John Myles White  <jmw@johnmyleswhite.com>
  

@@ -1,6 +1,5 @@
 * Improve unit tests for `*.reader` functions.
 * Get sample data files in `.zip` format, Stata format, etc.
-* `cache()` doesn't generate clean filenames and it still saves `variable`.
 * Add `create.project(dump = TRUE)` feature.
 * Document possible data pipelines through `data` and `cache`.
 * Rename `run.tests()` to `test.project()` permanently.
