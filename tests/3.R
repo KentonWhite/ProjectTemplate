@@ -423,3 +423,24 @@ expect_that(nrow(get(variable.name)), equals(5))
 expect_that(ncol(get(variable.name)), equals(2))
 expect_that(get(variable.name)[5, 2], equals(11))
 rm(example.27.Sheet1)
+
+# Example 28: SQLite3 Support with .sql Extension
+print('Example 28: Testing .sql support')
+sql.file <- data.frame(type = 'sqlite',
+                       dbname = file.path(system.file('example_data',
+                                                      package = 'ProjectTemplate'),
+                                          'example_28.db'),
+                       table = 'example_28')
+write.dcf(sql.file, file = 'example_28.sql', width = 500)
+
+data.file <- 'example_28'
+filename <- 'example_28.sql'
+variable.name <- ProjectTemplate:::clean.variable.name('example_28')
+
+ProjectTemplate:::sql.reader(data.file, filename, variable.name)
+
+expect_that(exists(variable.name), is_true())
+expect_that(nrow(get(variable.name)), equals(5))
+expect_that(ncol(get(variable.name)), equals(2))
+expect_that(get(variable.name)[5, 2], equals(11))
+rm(example.28)
