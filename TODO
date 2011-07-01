@@ -21,3 +21,5 @@
 * Clean up DB code.
 * Maintain a record of all loaded data sets.
 * Decide between gdata or xlsxjars for Excel support.
+* Add ability to fetch all tables from a SQLite3 database.
+* Add support for `.db` extension? Fetch entire database?
