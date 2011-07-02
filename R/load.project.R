@@ -72,10 +72,10 @@ load.project <- function()
 
     for (cache.file in cache.files)
     {
+      filename <- file.path('cache', cache.file)
+      
       for (extension in names(ProjectTemplate:::extensions.dispatch.table))
       {
-        filename <- file.path('cache', cache.file)
-
         if (grepl(extension, cache.file, ignore.case = TRUE, perl = TRUE))
         {
           variable.name <- ProjectTemplate:::clean.variable.name(sub(extension,
@@ -111,10 +111,10 @@ load.project <- function()
 
     for (data.file in data.files)
     {
+      filename <- file.path('data', data.file)
+      
       for (extension in names(ProjectTemplate:::extensions.dispatch.table))
       {
-        filename <- file.path('data', data.file)
-
         if (grepl(extension, data.file, ignore.case = TRUE, perl = TRUE))
         {
           variable.name <- ProjectTemplate:::clean.variable.name(sub(extension,
@@ -135,7 +135,7 @@ load.project <- function()
                   list(data.file,
                        filename,
                        variable.name))
-
+          
           break()
         }
       }

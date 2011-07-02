@@ -4,6 +4,7 @@
 * Increased SQLite3 support
 * Load all tables from SQLite3 database using a .sql file: set table = *
 * Load all tables from SQLite3 database automatically using .db extension
+* Added a .file type that can load files outside of the project directory.
 
 2011-06-28	John Myles White  <jmw@johnmyleswhite.com>
  

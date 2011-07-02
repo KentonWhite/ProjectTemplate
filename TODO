@@ -1,5 +1,4 @@
 * Improve unit tests for `*.reader` functions.
-* Get sample data files in `*.zip` format.
 * Get sample data file in `.sav` format.
 * Get sample data file in `.dta` format.
 * Get sample data file in `.arff` format.
@@ -21,4 +20,4 @@
 * Clean up DB code.
 * Maintain a record of all loaded data sets.
 * Decide between gdata or xlsxjars for Excel support.
-* Add `.file` type that provides access to files outside of data or cache.
+* Drop `.zip` support; too messy in R currently.
