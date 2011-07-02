@@ -1,3 +1,10 @@
+2011-07-02	John Myles White  <jmw@johnmyleswhite.com>
+
+* v0.3-4
+* Increased SQLite3 support
+* Load all tables from SQLite3 database using a .sql file: set table = *
+* Load all tables from SQLite3 database automatically using .db extension
+
 2011-06-28	John Myles White  <jmw@johnmyleswhite.com>
  
 * v0.3-3

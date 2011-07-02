@@ -424,14 +424,14 @@ expect_that(ncol(get(variable.name)), equals(2))
 expect_that(get(variable.name)[5, 2], equals(11))
 rm(example.27.Sheet1)
 
-# Example 28: SQLite3 Support with .sql Extension
-print('Example 28: Testing .sql support')
+# Example 28: SQLite3 Support with .sql Extension with table = "..."
+print('Example 28: Testing .sql with table = "x" support')
 sql.file <- data.frame(type = 'sqlite',
                        dbname = file.path(system.file('example_data',
                                                       package = 'ProjectTemplate'),
                                           'example_28.db'),
                        table = 'example_28')
-write.dcf(sql.file, file = 'example_28.sql', width = 500)
+write.dcf(sql.file, file = 'example_28.sql', width = 1000)
 
 data.file <- 'example_28'
 filename <- 'example_28.sql'
@@ -444,3 +444,75 @@ expect_that(nrow(get(variable.name)), equals(5))
 expect_that(ncol(get(variable.name)), equals(2))
 expect_that(get(variable.name)[5, 2], equals(11))
 rm(example.28)
+
+# Example 29: SQLite3 Support with .sql Extension with query = "SELECT * FROM ..."
+print('Example 29: Testing .sql with query = "x" support')
+sql.file <- data.frame(type = 'sqlite',
+                       dbname = file.path(system.file('example_data',
+                                                      package = 'ProjectTemplate'),
+                                          'example_29.db'),
+                       query = 'SELECT * FROM example_29')
+write.dcf(sql.file, file = 'example_29.sql', width = 1000)
+
+data.file <- 'example_29'
+filename <- 'example_29.sql'
+variable.name <- ProjectTemplate:::clean.variable.name('example_29')
+
+ProjectTemplate:::sql.reader(data.file, filename, variable.name)
+
+expect_that(exists(variable.name), is_true())
+expect_that(nrow(get(variable.name)), equals(5))
+expect_that(ncol(get(variable.name)), equals(2))
+expect_that(get(variable.name)[5, 2], equals(11))
+rm(example.29)
+
+# Example 30: SQLite3 Support with .sql Extension and table = "*"
+print('Example 30: Testing .sql with table = "*" support')
+sql.file <- data.frame(type = 'sqlite',
+                       dbname = file.path(system.file('example_data',
+                                                      package = 'ProjectTemplate'),
+                                          'example_30.db'),
+                       table = '*')
+write.dcf(sql.file, file = 'example_30.sql', width = 1000)
+
+data.file <- 'example_30'
+filename <- 'example_30.sql'
+variable.name <- ProjectTemplate:::clean.variable.name('example_30')
+
+ProjectTemplate:::sql.reader(data.file, filename, variable.name)
+
+variable1.name <- ProjectTemplate:::clean.variable.name('example_30a')
+variable2.name <- ProjectTemplate:::clean.variable.name('example_30b')
+expect_that(exists(variable1.name), is_true())
+expect_that(nrow(get(variable1.name)), equals(5))
+expect_that(ncol(get(variable1.name)), equals(2))
+expect_that(get(variable1.name)[5, 2], equals(11))
+rm(example.30a)
+expect_that(exists(variable2.name), is_true())
+expect_that(nrow(get(variable2.name)), equals(5))
+expect_that(ncol(get(variable2.name)), equals(2))
+expect_that(get(variable2.name)[5, 2], equals(11))
+rm(example.30b)
+
+# Example 31: SQLite3 Support with .db Extension
+print('Example 31: Testing .db support')
+data.file <- 'example_31'
+filename <- file.path(system.file('example_data',
+                                package = 'ProjectTemplate'),
+                      'example_31.db')
+variable.name <- ProjectTemplate:::clean.variable.name('example_31')
+
+ProjectTemplate:::db.reader(data.file, filename, variable.name)
+
+variable1.name <- ProjectTemplate:::clean.variable.name('example_31a')
+variable2.name <- ProjectTemplate:::clean.variable.name('example_31b')
+expect_that(exists(variable1.name), is_true())
+expect_that(nrow(get(variable1.name)), equals(5))
+expect_that(ncol(get(variable1.name)), equals(2))
+expect_that(get(variable1.name)[5, 2], equals(11))
+rm(example.31a)
+expect_that(exists(variable2.name), is_true())
+expect_that(nrow(get(variable2.name)), equals(5))
+expect_that(ncol(get(variable2.name)), equals(2))
+expect_that(get(variable2.name)[5, 2], equals(11))
+rm(example.31b)

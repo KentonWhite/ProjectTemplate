@@ -39,8 +39,8 @@ sql.reader <- function(data.file, filename, variable.name)
     results <- sqlGetResults(connection, as.is = TRUE)
     odbcClose(connection)
     assign(variable.name,
-					 results,
-					 envir = .GlobalEnv)
+           results,
+           envir = .GlobalEnv)
   }
   
   if (database.info[['type']] == 'mysql')
@@ -70,60 +70,84 @@ sql.reader <- function(data.file, filename, variable.name)
   query <- database.info[['query']]
   
   # If both a table and a query are specified, favor the query.
-  if (!is.null(table) & !is.null(query))
+  if (! is.null(table) && ! is.null(query))
   {
-  		warning(paste("'query' parameter in ",
-  		              filename,
-  		              " overrides 'table' parameter.",
-  		              sep = ''))
-  		table <- NULL
+      warning(paste("'query' parameter in ",
+                    filename,
+                    " overrides 'table' parameter.",
+                    sep = ''))
+      table <- NULL
+  }
+
+  if (is.null(table) && is.null(query))
+  {
+    warning("Either 'table' or 'query' must be specified in a .sql file")
+    return()
+  }
+  
+  if (! is.null(table) && table == '*')
+  {
+    tables <- dbListTables(connection)
+    for (table in tables)
+    {
+      message(paste('  Loading table:', table))
+      
+      data.parcel <- dbReadTable(connection,
+                                 table,
+                                 row.names = NULL)
+    
+      assign(ProjectTemplate:::clean.variable.name(table),
+             data.parcel,
+             envir = .GlobalEnv)
+    }
   }
   
   # If table is specified, read the whole table.
   # Othwrwise, execute the specified query.
-  if (!is.null(table))
+  if (! is.null(table) && table != '*')
   {
     if (dbExistsTable(connection, table))
-  	{
+    {
       data.parcel <- dbReadTable(connection,
-  	                             table,
-  	                             row.names = NULL)
-  	  
-  	  assign(variable.name,
-  	         data.parcel,
-  	         envir = .GlobalEnv)
-  	}
-  	else
-  	{
-  	  warning(paste('Table not found:', table))
-  	  return()
-  	}
+                                 table,
+                                 row.names = NULL)
+      
+      assign(variable.name,
+             data.parcel,
+             envir = .GlobalEnv)
+    }
+    else
+    {
+      warning(paste('Table not found:', table))
+      return()
+    }
   }
-  else
+
+  if (! is.null(query))
   {
     data.parcel <- try(dbGetQuery(connection, query))
-  	err <- dbGetException(connection)
+    err <- dbGetException(connection)
     
-  	if (class(data.parcel) == 'data.frame' & err$errorNum == 0)
-  	{
-  		assign(variable.name,
-  					 data.parcel,
-  					 envir = .GlobalEnv)
-  	}
-  	else
-  	{
-  		warning(paste("Error loading '",
-  		              variable.name,
-  		              "' with query '",
-  		              query,
-  							    "'\n    '",
-  							    err$errorNum,
-  							    "-",
-  							    err$errorMsg,
-  							    "'",
-  							    sep = ''))
-  		return()
-  	}
+    if (class(data.parcel) == 'data.frame' && err$errorNum == 0)
+    {
+      assign(variable.name,
+             data.parcel,
+             envir = .GlobalEnv)
+    }
+    else
+    {
+      warning(paste("Error loading '",
+                    variable.name,
+                    "' with query '",
+                    query,
+                    "'\n    '",
+                    err$errorNum,
+                    "-",
+                    err$errorMsg,
+                    "'",
+                    sep = ''))
+      return()
+    }
   }
 
   # If the table exists but is empty, do not create a variable.

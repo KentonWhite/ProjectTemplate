@@ -12,8 +12,8 @@ ProjectTemplate provides functions to automatically build a directory structure 
 \tabular{ll}{
 Package: \tab ProjectTemplate\cr
 Type: \tab Package\cr
-Version: \tab 0.3-1\cr
-Date: \tab 2011-06-24\cr
+Version: \tab 0.3-4\cr
+Date: \tab 2011-07-02\cr
 License: \tab Artistic-2.0\cr
 LazyLoad: \tab yes\cr
 }
