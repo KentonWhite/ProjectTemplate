@@ -1,5 +1,7 @@
 load.project <- function()
 {
+  project.info <- list()
+
   message('Loading project configuration')
   if (!file.exists(file.path('config', 'global.dcf')))
   {
@@ -12,10 +14,13 @@ load.project <- function()
   }
   config[['libraries']] <- strsplit(config[['libraries']], '\\s*,\\s*')[[1]]
   assign('config', config, envir = .GlobalEnv)
-
+  project.info[['config']] <- config
+  
   if (file.exists('lib'))
   {
     message('Autoloading helper functions')
+    
+    project.info[['helpers']] <- c()
     
     for (helper.script in dir('lib'))
     {
@@ -31,6 +36,7 @@ load.project <- function()
         }
         message(paste(' Running helper script:', helper.script))
         source(file.path('lib', helper.script))
+        project.info[['helpers']] <- c(project.info[['helpers']], helper.script)
       }
     }
   }
@@ -44,6 +50,7 @@ load.project <- function()
     if (config[['load_libraries']] == 'on')
     {
       message('Autoloading packages')
+      project.info[['packages']] <- c()
       for (package.to.load in config[['libraries']])
       {
         message(paste(' Loading package:', package.to.load))
@@ -51,6 +58,7 @@ load.project <- function()
         {
           stop(paste('Failed to load package: ', package.to.load))
         }
+        project.info[['packages']] <- c(project.info[['packages']], package.to.load)
       }
     }
   }
@@ -69,7 +77,8 @@ load.project <- function()
       stop('You are missing a directory: cache')
     }
     cache.files <- dir('cache')
-
+    project.info[['cache']] <- c()
+    
     for (cache.file in cache.files)
     {
       filename <- file.path('cache', cache.file)
@@ -96,7 +105,9 @@ load.project <- function()
                   list(cache.file,
                        filename,
                        variable.name))
-
+          
+          project.info[['cache']] <- c(project.info[['cache']], variable.name)
+          
           break()
         }
       }
@@ -108,6 +119,7 @@ load.project <- function()
       stop('You are missing a directory: data')
     }
     data.files <- dir('data')
+    project.info[['data']] <- c()
 
     for (data.file in data.files)
     {
@@ -135,6 +147,8 @@ load.project <- function()
                   list(data.file,
                        filename,
                        variable.name))
+
+          project.info[['data']] <- c(project.info[['data']], variable.name)
           
           break()
         }
@@ -175,4 +189,6 @@ load.project <- function()
     level(logger) <- log4r:::INFO
     assign('logger', logger, envir = .GlobalEnv)
   }
+  
+  assign('project.info', project.info, envir = .GlobalEnv)
 }

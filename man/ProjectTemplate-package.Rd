@@ -13,7 +13,7 @@ ProjectTemplate provides functions to automatically build a directory structure 
 Package: \tab ProjectTemplate\cr
 Type: \tab Package\cr
 Version: \tab 0.3-4\cr
-Date: \tab 2011-07-02\cr
+Date: \tab 2011-07-03\cr
 License: \tab Artistic-2.0\cr
 LazyLoad: \tab yes\cr
 }

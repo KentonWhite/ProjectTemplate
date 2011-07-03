@@ -9,27 +9,65 @@
 	<body>
     <h1>The ProjectTemplate TODO</h1>
 
+<h2>Unit Testing of File Formats</h2>
+
 <ul>
-<li>Get sample data file in <code>.sav</code> format.</li>
-<li>Get sample data file in <code>.dta</code> format.</li>
-<li>Get sample data file in <code>.dbf</code> format.</li>
-<li>Get sample data file in <code>.rec</code> format.</li>
-<li>Get sample data file in <code>.mtp</code> format.</li>
-<li>Get sample data file in <code>.m</code> format.</li>
-<li>Get sample data file in <code>.sys</code> format.</li>
-<li>Get sample data file in <code>.syd</code> format.</li>
-<li>Get sample data file in <code>.xport</code> format.</li>
-<li>Get sample data file in <code>.sas</code> format.</li>
+<li>Get a copy of the standard sample data file in <code>.sav</code> format.</li>
+<li>Get a copy of the standard sample data file in <code>.dta</code> format.</li>
+<li>Get a copy of the standard sample data file in <code>.dbf</code> format.</li>
+<li>Get a copy of the standard sample data file in <code>.rec</code> format.</li>
+<li>Get a copy of the standard sample data file in <code>.mtp</code> format.</li>
+<li>Get a copy of the standard sample data file in <code>.m</code> format.</li>
+<li>Get a copy of the standard sample data file in <code>.sys</code> format.</li>
+<li>Get a copy of the standard sample data file in <code>.syd</code> format.</li>
+<li>Get a copy of the standard sample data file in <code>.xport</code> format.</li>
+<li>Get a copy of the standard sample data file in <code>.sas</code> format.</li>
+</ul>
+
+<h2>Database Autoloading</h2>
+
+<ul>
 <li>Find a way to unit test MySQL support.</li>
-<li>Add <code>create.project(dump = TRUE)</code> feature.</li>
-<li>Document possible data pipelines through <code>data</code> and <code>cache</code>.</li>
-<li>Create a <code>show.updates()</code> function.</li>
-<li>Create a <code>cache.project()</code> function.</li>
-<li>Create a <code>stub.tests()</code> function.</li>
 <li>Clean up DB code.</li>
-<li>Maintain a record of all loaded data sets.</li>
+</ul>
+
+<h2>Allow Users to Dump Static Project</h2>
+
+<ul>
+<li>Add <code>create.project(dump = TRUE)</code> feature.</li>
+</ul>
+
+<h2>Documentation</h2>
+
+<ul>
+<li>Document possible data pipelines through <code>data</code> and <code>cache</code>.</li>
+</ul>
+
+<h2>Internal State</h2>
+
+<ul>
+<li>Create a <code>cache.project()</code> function using this record.</li>
+<li>Need to deal with tools that generate data sets that don't meet naming conventions: e.g. <code>.db</code> files.</li>
+<li>Deal with <code>no global binding visible for project.info</code> error.</li>
+</ul>
+
+<h2>Excel Support</h2>
+
+<ul>
 <li>Decide between gdata or xlsxjars for Excel support.</li>
-<li>Drop <code>.zip</code> support; too messy in R currently.</li>
+</ul>
+
+<h2>Zip Support</h2>
+
+<ul>
+<li>Fix <code>.zip</code> support.</li>
+<li>Create temporary file, unzip there, then read in and delete the temporary file.</li>
+</ul>
+
+<h2>Error Handling</h2>
+
+<ul>
+<li>The whole codebase needs more error checking and needs to try to recover from more types of errors.</li>
 </ul>
 
 	</body>

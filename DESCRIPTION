@@ -2,7 +2,7 @@ Package: ProjectTemplate
 Type: Package
 Title: Automates the creation of new statistical analysis projects.
 Version: 0.3-4
-Date: 2011-07-02
+Date: 2011-07-03
 Author: John Myles White
 Maintainer: John Myles White <jmw@johnmyleswhite.com>
 Description: ProjectTemplate provides functions to automatically build a directory structure for a new R project. Using this structure, ProjectTemplate automates data loading, preprocessing, library importing and unit testing.
@@ -11,4 +11,4 @@ LazyLoad: yes
 Depends: R (>= 2.7), testthat
 Suggests: foreign, reshape, plyr, stringr, ggplot2, lubridate, log4r, RMySQL, RSQLite, xlsx, gdata, RODBC
 URL: http://projecttemplate.net
-Collate: cache.R cache.name.R clean.variable.name.R create.project.R load.project.R reload.project.R run.project.R stub.tests.R test.project.R translate.dcf.R arff.reader.R csv.reader.R db.reader.R dbf.reader.R epiinfo.reader.R file.reader.R mtp.reader.R octave.reader.R r.reader.R rdata.reader.R spss.reader.R sql.reader.R stata.reader.R systat.reader.R tsv.reader.R url.reader.R wsv.reader.R xls.reader.R xlsx.reader.R xport.reader.R extensions.dispatch.table.R
+Collate: cache.R cache.name.R clean.variable.name.R create.project.R load.project.R reload.project.R run.project.R show.project.R stub.tests.R test.project.R translate.dcf.R arff.reader.R csv.reader.R db.reader.R dbf.reader.R epiinfo.reader.R file.reader.R mtp.reader.R octave.reader.R r.reader.R rdata.reader.R spss.reader.R sql.reader.R stata.reader.R systat.reader.R tsv.reader.R url.reader.R wsv.reader.R xls.reader.R xlsx.reader.R xport.reader.R extensions.dispatch.table.R

@@ -3,11 +3,13 @@ The list of changes below is not necessarily exhaustive. Check the ChangeLog on 
 
 # v0.3-4
 
-* Increased SQLite3 support:
+* Improved SQLite3 support:
   * Load all tables from SQLite3 database using a `.sql` file: set `table = "*"`
   * Load all tables from SQLite3 database automatically using `.db` extension.
 * Added a .file type that can load files outside of the project directory.
 * Renamed `run.tests()` to `test.project()`.
+* Added a `stub.tests()` function that autogenerates tests for helper functions.
+* Added a `show.project()` function that gives all known information about a project's internal state.
 
 # v0.3-3
 

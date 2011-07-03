@@ -1,4 +1,4 @@
-create.project <- function(project.name, minimal = FALSE, dump = FALSE)
+create.project <- function(project.name = 'new-project', minimal = FALSE, dump = FALSE)
 {
   tmp.dir <- paste(project.name, '_tmp', sep = '')
 

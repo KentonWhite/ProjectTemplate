@@ -1,4 +1,4 @@
-2011-07-02	John Myles White  <jmw@johnmyleswhite.com>
+2011-07-03	John Myles White  <jmw@johnmyleswhite.com>
 
 * v0.3-4
 * Increased SQLite3 support
@@ -7,6 +7,7 @@
 * Added a .file type that can load files outside of the project directory.
 * Removed run.tests(). Use test.project().
 * Added a stub.tests() function that autogenerates tests for helper functions.
+* Added a show.project() function that gives all known information about a project's internal state.
 
 2011-06-28	John Myles White  <jmw@johnmyleswhite.com>
  
