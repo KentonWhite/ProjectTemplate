@@ -1,0 +1,13 @@
+% An example data set
+
+@relation example_32
+
+@attribute N numeric
+@attribute Prime numeric
+
+@data
+1, 2
+2, 3
+3, 5
+4, 7
+5, 11

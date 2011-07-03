@@ -8,7 +8,7 @@ file.reader <- function(data.file, filename, variable.name)
   # extension: ,
 
   file.info <- ProjectTemplate:::translate.dcf(filename)
-  file.type <- file.info[['extension']]
+  file.type <- paste('\\.', file.info[['extension']], '$', sep = '')
 
   do.call(ProjectTemplate:::extensions.dispatch.table[[file.type]],
           list(data.file,

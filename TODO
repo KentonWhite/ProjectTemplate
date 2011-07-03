@@ -1,7 +1,5 @@
-* Improve unit tests for `*.reader` functions.
 * Get sample data file in `.sav` format.
 * Get sample data file in `.dta` format.
-* Get sample data file in `.arff` format.
 * Get sample data file in `.dbf` format.
 * Get sample data file in `.rec` format.
 * Get sample data file in `.mtp` format.
