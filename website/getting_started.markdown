@@ -2,7 +2,7 @@
 
 Let's set up a new data analysis project using ProjectTemplate.
 
-Before we start, you should make sure that you've [installed](./installing.html) ProjectTemplate. You'll also need to download the sample data set we'll use, [letters.csv](./letters.csv).
+Before we start, you should make sure that you've [installed](./installing.html) ProjectTemplate. You'll also need to download the sample data set we'll use, [letters.csv.bz2](./letters.csv.bz2).
 
 Once you've got both of those things done, you can open up R and type
 
@@ -19,11 +19,11 @@ Once you're in the `letters` directory, you can open up your new project in your
 
 ![ProjectTemplate Directories](./directories.jpg)
 
-As you can see, `create.project()` has set up a whole series of subdirectories for us. We'll see what each of these does as we move on. For now, let's just pull in that data file `letters.csv` that you downloaded earlier. We'll place it into the `data` directory:
+As you can see, `create.project()` has set up a whole series of subdirectories for us. We'll see what each of these does as we move on. For now, let's just pull in that data file `letters.csv.bz2` that you downloaded earlier. We'll place it into the `data` directory:
 
-		mv ~/Downloads/letters.csv data
+		mv ~/Downloads/letters.csv.bz2 data
 
-With the `letters.csv` data set in place, we can start to use ProjectTemplate's automated data loading features. Open up R again and type the following:
+With the `letters.csv.bz2` data set in place, we can start to use ProjectTemplate's automated data loading features. Open up R again and type the following:
 
 		library('ProjectTemplate')
 		load.project()
@@ -48,9 +48,9 @@ To use `plyr`, we need to load the package. ProjectTemplate makes it easy to aut
 
 		load_libraries: on
 
-Second, we need to make sure that the `plyr` package will be loaded automatically when we run `load.project()`. To do that, we check that the value of the `libraries` configuration setting contains plyr. We see that it does list plyr, along with reshape, ggplot2 and stringr:
+Second, we need to make sure that the `plyr` package will be loaded automatically when we run `load.project()`. To do that, we check that the value of the `libraries` configuration setting contains plyr. We see that it does list plyr, along with reshape, ggplot2, stringr and lubridate:
 
-		libraries: reshape, plyr, ggplot2, stringr
+		libraries: reshape, plyr, ggplot2, stringr, lubridate
 
 After checking these settings, we know that we have the proper tools in place to compute aggregates. To make sure that this aggregation preprocessing step takes place as soon we run `load.project()`, we edit the `munge/01-A.R` script so that it contains the following two lines of code:
 

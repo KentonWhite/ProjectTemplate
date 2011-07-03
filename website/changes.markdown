@@ -1,12 +1,20 @@
 # Changes in ProjectTemplate
 The list of changes below is not necessarily exhaustive. Check the ChangeLog on [GitHub](https://github.com/johnmyleswhite/ProjectTemplate) for more details, but the raw ProjectTemplate source code is always the place to go for ground truth.
 
+# v0.3-4
+
+* Increased SQLite3 support:
+  * Load all tables from SQLite3 database using a `.sql` file: set `table = "*"`
+  * Load all tables from SQLite3 database automatically using `.db` extension.
+* Added a .file type that can load files outside of the project directory.
+* Renamed `run.tests()` to `test.project()`.
+
 # v0.3-3
 
-* Added a reload.project() function.
+* Added a `reload.project()` function.
 * Improved error handling.
-* Renamed utilities.R to helpers.R.
-* Fixed a bug in cache().
+* Renamed `utilities.R` to `helpers.R`.
+* Fixed a bug in `cache()`.
 
 # v0.3-2
 

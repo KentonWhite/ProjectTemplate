@@ -1,6 +1,6 @@
 url.reader <- function(data.file, filename, variable.name)
 {
-  # A .url file contains YAML describing the data source.
+  # A .url file contains DCF describing the data source.
   # Only one data source per file is supported.
   # An example file is shown below.
   #

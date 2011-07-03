@@ -20,23 +20,18 @@
 <ul>
 <li><code>.csv</code>: CSV files that use a comma separator.</li>
 <li><code>.csv.bz2</code>: CSV files that use a comma separator and are compressed using bzip2.</li>
-<li><code>.csv.zip</code>: CSV files that use a comma separator and are compressed using zip.</li>
 <li><code>.csv.gz</code>: CSV files that use a comma separator and are compressed using gzip.</li>
 <li><code>.tsv</code>: CSV files that use a tab separator.</li>
 <li><code>.tsv.bz2</code>: CSV files that use a tab separator and are compressed using bzip2.</li>
-<li><code>.tsv.zip</code>: CSV files that use a tab separator and are compressed using zip.</li>
 <li><code>.tsv.gz</code>: CSV files that use a tab separator and are compressed using gzip.</li>
 <li><code>.tab</code>: CSV files that use a tab separator.</li>
 <li><code>.tab.bz2</code>: CSV files that use a tab separator and are compressed using bzip2.</li>
-<li><code>.tab.zip</code>: CSV files that use a tab separator and are compressed using zip.</li>
 <li><code>.tab.gz</code>: CSV files that use a tab separator and are compressed using gzip.</li>
 <li><code>.wsv</code>: CSV files that use an arbitrary whitespace separator.</li>
 <li><code>.wsv.bz2</code>: CSV files that use an arbitrary whitespace separator and are compressed using bzip2.</li>
-<li><code>.wsv.zip</code>: CSV files that use an arbitrary whitespace separator and are compressed using zip.</li>
 <li><code>.wsv.gz</code>: CSV files that use an arbitrary whitespace separator and are compressed using gzip.</li>
 <li><code>.txt</code>: CSV files that use an arbitrary whitespace separator.</li>
 <li><code>.txt.bz2</code>: CSV files that use an arbitrary whitespace separator and are compressed using bzip2.</li>
-<li><code>.txt.zip</code>: CSV files that use an arbitrary whitespace separator and are compressed using zip.</li>
 <li><code>.txt.gz</code>: CSV files that use an arbitrary whitespace separator and are compressed using gzip.</li>
 <li><code>.RData</code>: .RData binary files produced by <code>save()</code>.</li>
 <li><code>.rda</code>: .RData binary files produced by <code>save()</code>.</li>
@@ -57,6 +52,8 @@
 <li><code>.syd</code>: Systat files.</li>
 <li><code>.xport</code>: SAS Xport files.</li>
 <li><code>.sas</code>: SAS Xport files.</li>
+<li><code>.db</code>: A SQLite3 database in binary format.</li>
+<li><code>.file</code>: A DCF file describing the location of another file that should be loaded.</li>
 </ul>
 
 <h1>Ad Hoc File Types</h1>
@@ -95,6 +92,14 @@ the details about the SQLite file. Two example files are shown below:</p>
     type: sqlite
     dbname: /path/to/sample_database
     query: SELECT * FROM users WHERE user_active == 1
+</code></pre>
+
+<h2>.file Files</h2>
+
+<p>You can load data that is not stored in the current project using a <code>.file</code> file. You must specify the path and the extension that the file would have, if it were being loaded by the standard ProjectTemplate auto-loader. An example is shown below that would load an SQLite3 database stored in a separate location:</p>
+
+<pre><code>    path: /path/to/sample_database
+    extension: db
 </code></pre>
 
 <h1>Future Support Data Sources</h1>

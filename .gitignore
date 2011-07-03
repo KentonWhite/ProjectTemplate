@@ -4,3 +4,5 @@ ProjectTemplate.Rcheck
 data_examples
 .DS_Store
 ideas
+website/README.markdown
+website/TODO.markdown

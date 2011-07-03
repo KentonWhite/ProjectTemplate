@@ -1,6 +1,6 @@
 sql.reader <- function(data.file, filename, variable.name)
 {
-  # A .sql file contains YAML describing the data source.
+  # A .sql file contains DCF describing the data source.
   # Two example files are shown below.
   #
   # type: mysql

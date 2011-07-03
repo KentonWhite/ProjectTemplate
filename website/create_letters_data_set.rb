@@ -17,3 +17,5 @@ lines.each do |line|
 end
 
 output_file.close
+
+`bzip2 letter.csv`

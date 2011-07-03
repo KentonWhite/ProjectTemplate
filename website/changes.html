@@ -11,13 +11,25 @@
 
 <p>The list of changes below is not necessarily exhaustive. Check the ChangeLog on <a href="https://github.com/johnmyleswhite/ProjectTemplate">GitHub</a> for more details, but the raw ProjectTemplate source code is always the place to go for ground truth.</p>
 
+<h1>v0.3-4</h1>
+
+<ul>
+<li>Increased SQLite3 support:
+<ul>
+<li>Load all tables from SQLite3 database using a <code>.sql</code> file: set <code>table = "*"</code></li>
+<li>Load all tables from SQLite3 database automatically using <code>.db</code> extension.</li>
+</ul></li>
+<li>Added a .file type that can load files outside of the project directory.</li>
+<li>Renamed <code>run.tests()</code> to <code>test.project()</code>.</li>
+</ul>
+
 <h1>v0.3-3</h1>
 
 <ul>
-<li>Added a reload.project() function.</li>
+<li>Added a <code>reload.project()</code> function.</li>
 <li>Improved error handling.</li>
-<li>Renamed utilities.R to helpers.R.</li>
-<li>Fixed a bug in cache().</li>
+<li>Renamed <code>utilities.R</code> to <code>helpers.R</code>.</li>
+<li>Fixed a bug in <code>cache()</code>.</li>
 </ul>
 
 <h1>v0.3-2</h1>

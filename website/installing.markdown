@@ -1,6 +1,6 @@
 # Installing ProjectTemplate from CRAN or GitHub
 
-ProjectTemplate v0.1-3 is currently on [CRAN](http://cran.r-project.org/web/packages/ProjectTemplate/) and can be installed using a simple call to `install.packages()`:
+ProjectTemplate v0.3-3 is currently on [CRAN](http://cran.r-project.org/web/packages/ProjectTemplate/) and can be installed using a simple call to `install.packages()`:
 
     install.packages('ProjectTemplate')
 

@@ -10,23 +10,18 @@ Please note that several of file formats have not been tested yet, including Sta
 
 * `.csv`: CSV files that use a comma separator.
 * `.csv.bz2`: CSV files that use a comma separator and are compressed using bzip2.
-* `.csv.zip`: CSV files that use a comma separator and are compressed using zip.
 * `.csv.gz`: CSV files that use a comma separator and are compressed using gzip.
 * `.tsv`: CSV files that use a tab separator.
 * `.tsv.bz2`: CSV files that use a tab separator and are compressed using bzip2.
-* `.tsv.zip`: CSV files that use a tab separator and are compressed using zip.
 * `.tsv.gz`: CSV files that use a tab separator and are compressed using gzip.
 * `.tab`: CSV files that use a tab separator.
 * `.tab.bz2`: CSV files that use a tab separator and are compressed using bzip2.
-* `.tab.zip`: CSV files that use a tab separator and are compressed using zip.
 * `.tab.gz`: CSV files that use a tab separator and are compressed using gzip.
 * `.wsv`: CSV files that use an arbitrary whitespace separator.
 * `.wsv.bz2`: CSV files that use an arbitrary whitespace separator and are compressed using bzip2.
-* `.wsv.zip`: CSV files that use an arbitrary whitespace separator and are compressed using zip.
 * `.wsv.gz`: CSV files that use an arbitrary whitespace separator and are compressed using gzip.
 * `.txt`: CSV files that use an arbitrary whitespace separator.
 * `.txt.bz2`: CSV files that use an arbitrary whitespace separator and are compressed using bzip2.
-* `.txt.zip`: CSV files that use an arbitrary whitespace separator and are compressed using zip.
 * `.txt.gz`: CSV files that use an arbitrary whitespace separator and are compressed using gzip.
 * `.RData`: .RData binary files produced by `save()`.
 * `.rda`: .RData binary files produced by `save()`.
@@ -47,6 +42,8 @@ Please note that several of file formats have not been tested yet, including Sta
 * `.syd`: Systat files.
 * `.xport`: SAS Xport files.
 * `.sas`: SAS Xport files.
+* `.db`: A SQLite3 database in binary format.
+* `.file`: A DCF file describing the location of another file that should be loaded.
 
 # Ad Hoc File Types
 
@@ -80,6 +77,12 @@ the details about the SQLite file. Two example files are shown below:
 		type: sqlite
 		dbname: /path/to/sample_database
 		query: SELECT * FROM users WHERE user_active == 1
+
+## .file Files
+You can load data that is not stored in the current project using a `.file` file. You must specify the path and the extension that the file would have, if it were being loaded by the standard ProjectTemplate auto-loader. An example is shown below that would load an SQLite3 database stored in a separate location:
+
+		path: /path/to/sample_database
+		extension: db
 
 # Future Support Data Sources
 In the future, ProjectTemplate could potentially support the following formats:
