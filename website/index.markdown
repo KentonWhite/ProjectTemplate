@@ -18,3 +18,5 @@
 - [The ProjectTemplate Mailing List](./mailing_list.html)
 - [Contributing to ProjectTemplate](./contributing.html)
 - [Building Packages](./packages.html)
+- [The ProjectTemplate README](./README.html)
+- [The ProjectTemplate TODO](./TODO.html)
