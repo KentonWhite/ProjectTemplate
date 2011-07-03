@@ -1,5 +1,4 @@
-\name{run.tests}
-\alias{run.tests}
+\name{test.project}
 \alias{test.project}
 \title{
 Automatically run all of the tests cases in the tests directory.
@@ -8,7 +7,7 @@ Automatically run all of the tests cases in the tests directory.
 Automatically run all of the tests cases in the tests directory.
 }
 \usage{
-run.tests()
+test.project()
 }
 \value{
 	No value is returned; this function is called for its side effects.
@@ -23,4 +22,4 @@ setwd('project_name')
 
 load.project()
 
-run.tests()}}
+test.project()}}

@@ -31,7 +31,7 @@ expect_that(file.exists(file.path('test_project', 'TODO')), is_true())
 setwd('test_project')
 
 load.project()
-run.tests()
+test.project()
 
 setwd('..')
 
@@ -54,7 +54,7 @@ expect_that(file.exists(file.path('test_project', 'README')), is_true())
 setwd('test_project')
 
 load.project()
-run.tests()
+test.project()
 
 setwd('..')
 

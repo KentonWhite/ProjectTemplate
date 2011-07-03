@@ -5,6 +5,7 @@
 * Load all tables from SQLite3 database using a .sql file: set table = *
 * Load all tables from SQLite3 database automatically using .db extension
 * Added a .file type that can load files outside of the project directory.
+* Removed run.tests(). Use test.project().
 
 2011-06-28	John Myles White  <jmw@johnmyleswhite.com>
  

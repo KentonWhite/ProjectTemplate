@@ -41,7 +41,7 @@ Each of these directories and files serves a specific purpose, which we describe
 * `profiling`: Here you can store any scripts you use to benchmark and time your code.
 * `reports`: Here you can store any output reports, such as HTML or LaTeX versions of tables, that you produce. Sweave or brew documents should also go in the `reports` directory.
 * `src`: Here you'll store your final statistical analysis scripts. You should add the following piece of code to the start of each analysis script: `library('ProjectTemplate); load.project()`. You should also do your best to insure that any code that's shared between the analyses in `src` is moved into the `munge` directory; if you do that, you can execute all of the analyses in the `src` directory in parallel. A future release of ProjectTemplate will provide tools to automatically execute every individual analysis from `src` in parallel.
-* `tests`: Here you can store any test cases for the functions you've written. Your test files should use `testthat` style tests so that you can call the `run.tests()` function to automatically execute all of your test code.
+* `tests`: Here you can store any test cases for the functions you've written. Your test files should use `testthat` style tests so that you can call the `test.project()` function to automatically execute all of your test code.
 * `README`: In this file, you should write some notes to help orient any newcomers to your project.
 * `TODO`: In this file, you should write a list of future improvements and bug fixes that you plan to make to your analyses.
 

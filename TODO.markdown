@@ -11,7 +11,6 @@
 * Find a way to unit test MySQL support.
 * Add `create.project(dump = TRUE)` feature.
 * Document possible data pipelines through `data` and `cache`.
-* Rename `run.tests()` to `test.project()` permanently.
 * Create a `show.updates()` function.
 * Create a `cache.project()` function.
 * Create a `stub.tests()` function.

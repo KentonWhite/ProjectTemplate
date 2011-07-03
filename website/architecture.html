@@ -63,7 +63,7 @@
 <li><code>profiling</code>: Here you can store any scripts you use to benchmark and time your code.</li>
 <li><code>reports</code>: Here you can store any output reports, such as HTML or LaTeX versions of tables, that you produce. Sweave or brew documents should also go in the <code>reports</code> directory.</li>
 <li><code>src</code>: Here you'll store your final statistical analysis scripts. You should add the following piece of code to the start of each analysis script: <code>library('ProjectTemplate); load.project()</code>. You should also do your best to insure that any code that's shared between the analyses in <code>src</code> is moved into the <code>munge</code> directory; if you do that, you can execute all of the analyses in the <code>src</code> directory in parallel. A future release of ProjectTemplate will provide tools to automatically execute every individual analysis from <code>src</code> in parallel.</li>
-<li><code>tests</code>: Here you can store any test cases for the functions you've written. Your test files should use <code>testthat</code> style tests so that you can call the <code>run.tests()</code> function to automatically execute all of your test code.</li>
+<li><code>tests</code>: Here you can store any test cases for the functions you've written. Your test files should use <code>testthat</code> style tests so that you can call the <code>test.project()</code> function to automatically execute all of your test code.</li>
 <li><code>README</code>: In this file, you should write some notes to help orient any newcomers to your project.</li>
 <li><code>TODO</code>: In this file, you should write a list of future improvements and bug fixes that you plan to make to your analyses.</li>
 </ul>
