@@ -4,6 +4,8 @@
 * Added a cache.project() function.
 * 'as_factors' configuration option suppresses automatic character-to-factor conversion.
 * Implemented .zip support using temporary files.
+* Added .mp3 support through the tuneR package.
+* Added .ppm support through the pixmap package.
 
 2011-07-03	John Myles White  <jmw@johnmyleswhite.com>
 

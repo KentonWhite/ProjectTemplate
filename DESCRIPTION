@@ -9,6 +9,6 @@ Description: ProjectTemplate provides functions to automatically build a directo
 License: Artistic-2.0
 LazyLoad: yes
 Depends: R (>= 2.7), testthat
-Suggests: foreign, reshape, plyr, stringr, ggplot2, lubridate, log4r, RMySQL, RSQLite, xlsx, gdata, RODBC
+Suggests: foreign, reshape, plyr, stringr, ggplot2, lubridate, log4r, RMySQL, RSQLite, xlsx, gdata, RODBC, tuneR, pixmap
 URL: http://projecttemplate.net
-Collate: cache.R cache.name.R cache.project.R clean.variable.name.R create.project.R load.project.R reload.project.R run.project.R show.project.R stub.tests.R test.project.R translate.dcf.R arff.reader.R csv.reader.R db.reader.R dbf.reader.R epiinfo.reader.R file.reader.R mtp.reader.R octave.reader.R r.reader.R rdata.reader.R spss.reader.R sql.reader.R stata.reader.R systat.reader.R tsv.reader.R url.reader.R wsv.reader.R xls.reader.R xlsx.reader.R xport.reader.R extensions.dispatch.table.R
+Collate: cache.R cache.name.R cache.project.R clean.variable.name.R create.project.R load.project.R reload.project.R run.project.R show.project.R stub.tests.R test.project.R translate.dcf.R arff.reader.R csv.reader.R db.reader.R dbf.reader.R epiinfo.reader.R file.reader.R mp3.reader.R mtp.reader.R octave.reader.R ppm.reader.R r.reader.R rdata.reader.R spss.reader.R sql.reader.R stata.reader.R systat.reader.R tsv.reader.R url.reader.R wsv.reader.R xls.reader.R xlsx.reader.R xport.reader.R extensions.dispatch.table.R

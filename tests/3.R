@@ -587,3 +587,20 @@ expect_that(nrow(get(variable.name)), equals(5))
 expect_that(ncol(get(variable.name)), equals(2))
 expect_that(get(variable.name)[5, 2], equals(11))
 rm(example.28)
+
+# Example 34: MP3 Support with .mp3 Extension
+message('Skipping Example 34: Testing .mp3 support')
+
+# Example 35: PPM Support with .ppm Extension
+message('Example 35: Testing .ppm support')
+data.file <- 'example_35.ppm'
+filename <- file.path(system.file('example_data',
+                                  package = 'ProjectTemplate'),
+                      'example_35.ppm')
+variable.name <- ProjectTemplate:::clean.variable.name('example_35')
+
+ProjectTemplate:::ppm.reader(data.file, filename, variable.name)
+
+expect_that(exists(variable.name), is_true())
+expect_that(as.character(class(get(variable.name))), equals('pixmapRGB'))
+rm(example.35)

@@ -38,4 +38,6 @@ extensions.dispatch.table <- list("\\.csv$" = ProjectTemplate:::csv.reader,
                                   "\\.sas$" = ProjectTemplate:::xport.reader,
                                   "\\.xport$" = ProjectTemplate:::xport.reader,
                                   "\\.db$" = ProjectTemplate:::db.reader,
-                                  "\\.file$" = ProjectTemplate:::file.reader)
+                                  "\\.file$" = ProjectTemplate:::file.reader,
+                                  "\\.mp3$" = ProjectTemplate:::mp3.reader,
+                                  "\\.ppm$" = ProjectTemplate:::ppm.reader)
