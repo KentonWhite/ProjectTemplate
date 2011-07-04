@@ -4,7 +4,7 @@ library('ProjectTemplate')
 
 # Example 01: CSV Data File
 message('Example 01: Testing .csv support')
-data.file <- 'example_01'
+data.file <- 'example_01.csv'
 filename <- file.path(system.file('example_data',
                                   package = 'ProjectTemplate'),
                       'example_01.csv')
@@ -21,7 +21,7 @@ rm(example.01)
 
 # Example 02: CSV Data File with BZip2 Compression
 message('Example 02: Testing .csv.bz2 support')
-data.file <- 'example_02'
+data.file <- 'example_02.csv.bz2'
 filename <- file.path(system.file('example_data',
                                   package = 'ProjectTemplate'),
                       'example_02.csv.bz2')
@@ -37,11 +37,25 @@ expect_that(get(variable.name)[5, 2], equals(11))
 rm(example.02)
 
 # Example 03: CSV Data File with Zip Compression
-message('Skipping Example 03: Testing .csv.zip support')
+message('Example 03: Testing .csv.zip support')
+data.file <- 'example_03.csv.zip'
+filename <- file.path(system.file('example_data',
+                                  package = 'ProjectTemplate'),
+                      'example_03.csv.zip')
+variable.name <- ProjectTemplate:::clean.variable.name('example_03')
+
+ProjectTemplate:::csv.reader(data.file, filename, variable.name)
+
+expect_that(exists(variable.name), is_true())
+expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
+expect_that(nrow(get(variable.name)), equals(5))
+expect_that(ncol(get(variable.name)), equals(2))
+expect_that(get(variable.name)[5, 2], equals(11))
+rm(example.03)
 
 # Example 04: CSV Data File with GZip Compression
 message('Example 04: Testing .csv.gz support')
-data.file <- 'example_04'
+data.file <- 'example_04.csv.gz'
 filename <- file.path(system.file('example_data',
                                   package = 'ProjectTemplate'),
                       'example_04.csv.gz')
@@ -58,7 +72,7 @@ rm(example.04)
 
 # Example 05: TSV Data File
 message('Example 05: Testing .tsv support')
-data.file <- 'example_05'
+data.file <- 'example_05.tsv'
 filename <- file.path(system.file('example_data',
                                   package = 'ProjectTemplate'),
                       'example_05.tsv')
@@ -75,7 +89,7 @@ rm(example.05)
 
 # Example 06: TSV Data File with BZip2 Compression
 message('Example 06: Testing .tsv.bz2 support')
-data.file <- 'example_06'
+data.file <- 'example_06.tsv.bz2'
 filename <- file.path(system.file('example_data',
                                   package = 'ProjectTemplate'),
                       'example_06.tsv.bz2')
@@ -91,11 +105,25 @@ expect_that(get(variable.name)[5, 2], equals(11))
 rm(example.06)
 
 # Example 07: TSV Data File with Zip Compression
-message('Skipping Example 07: Testing .tsv.zip support')
+message('Example 07: Testing .tsv.zip support')
+data.file <- 'example_07.tsv.zip'
+filename <- file.path(system.file('example_data',
+                                  package = 'ProjectTemplate'),
+                      'example_07.tsv.zip')
+variable.name <- ProjectTemplate:::clean.variable.name('example_07')
+
+ProjectTemplate:::tsv.reader(data.file, filename, variable.name)
+
+expect_that(exists(variable.name), is_true())
+expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
+expect_that(nrow(get(variable.name)), equals(5))
+expect_that(ncol(get(variable.name)), equals(2))
+expect_that(get(variable.name)[5, 2], equals(11))
+rm(example.07)
 
 # Example 08: TSV Data File with GZip Compression
 message('Example 08: Testing .tsv.gz support')
-data.file <- 'example_08'
+data.file <- 'example_08.tsv.gz'
 filename <- file.path(system.file('example_data',
                                   package = 'ProjectTemplate'),
                       'example_08.tsv.gz')
@@ -112,7 +140,7 @@ rm(example.08)
 
 # Example 09: WSV Data File
 message('Example 09: Testing .wsv support')
-data.file <- 'example_09'
+data.file <- 'example_09.wsv'
 filename <- file.path(system.file('example_data',
                                   package = 'ProjectTemplate'),
                       'example_09.wsv')
@@ -129,7 +157,7 @@ rm(example.09)
 
 # Example 10: WSV Data File with BZip2 Compression
 message('Example 10: Testing .wsv.bz2 support')
-data.file <- 'example_10'
+data.file <- 'example_10.wsv.bz2'
 filename <- file.path(system.file('example_data',
                                   package = 'ProjectTemplate'),
                       'example_10.wsv.bz2')
@@ -145,11 +173,25 @@ expect_that(get(variable.name)[5, 2], equals(11))
 rm(example.10)
 
 # Example 11: WSV Data File with Zip Compression
-message('Skipping Example 11: Testing .wsv.zip support')
+message('Example 11: Testing .wsv.zip support')
+data.file <- 'example_11.wsv.zip'
+filename <- file.path(system.file('example_data',
+                                  package = 'ProjectTemplate'),
+                      'example_11.wsv.zip')
+variable.name <- ProjectTemplate:::clean.variable.name('example_11')
+
+ProjectTemplate:::wsv.reader(data.file, filename, variable.name)
+
+expect_that(exists(variable.name), is_true())
+expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
+expect_that(nrow(get(variable.name)), equals(5))
+expect_that(ncol(get(variable.name)), equals(2))
+expect_that(get(variable.name)[5, 2], equals(11))
+rm(example.11)
 
 # Example 12: WSV Data File with GZip Compression
 message('Example 12: Testing .wsv.gz support')
-data.file <- 'example_12'
+data.file <- 'example_12.wsv.gz'
 filename <- file.path(system.file('example_data',
                                   package = 'ProjectTemplate'),
                       'example_12.wsv.gz')
@@ -165,8 +207,8 @@ expect_that(get(variable.name)[5, 2], equals(11))
 rm(example.12)
 
 # Example 13: RData Data File with .RData Extension
-message('Example 13: Testing .Rdata support')
-data.file <- 'example_13'
+message('Example 13: Testing .RData support')
+data.file <- 'example_13.RData'
 filename <- file.path(system.file('example_data',
                                   package = 'ProjectTemplate'),
                       'example_13.RData')
@@ -183,7 +225,7 @@ rm('m')
 
 # Example 14: RData Data File with .rda Extension
 message('Example 14: Testing .rda support')
-data.file <- 'example_14'
+data.file <- 'example_14.rda'
 filename <- file.path(system.file('example_data',
                                   package = 'ProjectTemplate'),
                       'example_14.rda')
@@ -199,10 +241,11 @@ expect_that(get('n')[5, 2], equals(11))
 rm('n')
 
 # Example 15: URL File with .url Extension
+message('Skipping Example 15: Testing .url support')
 
 # Example 16: TSV File with .tab Extension
 message('Example 16: Testing .tab support')
-data.file <- 'example_16'
+data.file <- 'example_16.tab'
 filename <- file.path(system.file('example_data',
                                   package = 'ProjectTemplate'),
                       'example_16.tab')
@@ -219,7 +262,7 @@ rm(example.16)
 
 # Example 17: TSV File with .tab Extension and BZip2 Compression
 message('Example 17: Testing .tab.bz2 support')
-data.file <- 'example_17'
+data.file <- 'example_17.tab.bz2'
 filename <- file.path(system.file('example_data',
                                   package = 'ProjectTemplate'),
                       'example_17.tab.bz2')
@@ -235,11 +278,25 @@ expect_that(get(variable.name)[5, 2], equals(11))
 rm(example.17)
 
 # Example 18: TSV File with .tab Extension and Zip Compression
-message('Skipping Example 18: Testing .tab.zip support')
+message('Example 18: Testing .tab.zip support')
+data.file <- 'example_18.tab.zip'
+filename <- file.path(system.file('example_data',
+                                  package = 'ProjectTemplate'),
+                      'example_18.tab.zip')
+variable.name <- ProjectTemplate:::clean.variable.name('example_18')
+
+ProjectTemplate:::tsv.reader(data.file, filename, variable.name)
+
+expect_that(exists(variable.name), is_true())
+expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
+expect_that(nrow(get(variable.name)), equals(5))
+expect_that(ncol(get(variable.name)), equals(2))
+expect_that(get(variable.name)[5, 2], equals(11))
+rm(example.18)
 
 # Example 19: TSV File with .tab Extension and GZip Compression
 message('Example 19: Testing .tab.gz support')
-data.file <- 'example_19'
+data.file <- 'example_19.tab.gz'
 filename <- file.path(system.file('example_data',
                                   package = 'ProjectTemplate'),
                       'example_19.tab.gz')
@@ -256,7 +313,7 @@ rm(example.19)
 
 # Example 20: WSV File with .txt Extension
 message('Example 20: Testing .txt support')
-data.file <- 'example_20'
+data.file <- 'example_20.txt'
 filename <- file.path(system.file('example_data',
                                   package = 'ProjectTemplate'),
                       'example_20.txt')
@@ -273,7 +330,7 @@ rm(example.20)
 
 # Example 21: WSV File with .txt Extension and BZip2 Compression
 message('Example 21: Testing .txt.bz2 support')
-data.file <- 'example_21'
+data.file <- 'example_21.txt.bz2'
 filename <- file.path(system.file('example_data',
                                   package = 'ProjectTemplate'),
                       'example_21.txt.bz2')
@@ -290,10 +347,24 @@ rm(example.21)
 
 # Example 22: WSV File with .txt Extension and Zip Compression
 message('Skipping Example 22: Testing .txt.zip support')
+data.file <- 'example_22.txt.zip'
+filename <- file.path(system.file('example_data',
+                                  package = 'ProjectTemplate'),
+                      'example_22.txt.zip')
+variable.name <- ProjectTemplate:::clean.variable.name('example_22')
+
+ProjectTemplate:::wsv.reader(data.file, filename, variable.name)
+
+expect_that(exists(variable.name), is_true())
+expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
+expect_that(nrow(get(variable.name)), equals(5))
+expect_that(ncol(get(variable.name)), equals(2))
+expect_that(get(variable.name)[5, 2], equals(11))
+rm(example.22)
 
 # Example 23: WSV File with .txt Extension and GZip Compression
 message('Example 23: Testing .txt.gz support')
-data.file <- 'example_23'
+data.file <- 'example_23.txt.gz'
 filename <- file.path(system.file('example_data',
                                   package = 'ProjectTemplate'),
                       'example_23.txt.gz')
@@ -310,7 +381,7 @@ rm(example.23)
 
 # Example 24: R File with .R Extension
 message('Example 24: Testing .R support')
-data.file <- 'example_24'
+data.file <- 'example_24.R'
 filename <- file.path(system.file('example_data',
                                   package = 'ProjectTemplate'),
                       'example_24.R')
@@ -327,7 +398,7 @@ rm(example.24)
 
 # Example 25: R File with .r Extension
 message('Example 25: Testing .r support')
-data.file <- 'example_25'
+data.file <- 'example_25.r'
 filename <- file.path(system.file('example_data',
                                   package = 'ProjectTemplate'),
                       'example_25.r')
@@ -344,7 +415,7 @@ rm(example.25)
 
 # Example 26: Excel 2007 File with .xls Extension
 message('Example 26: Testing .xls support')
-data.file <- 'example_26'
+data.file <- 'example_26.xls'
 filename <- file.path(system.file('example_data',
                                   package = 'ProjectTemplate'),
                       'example_26.xls')
@@ -363,7 +434,7 @@ rm(example.26.Sheet1)
 
 # Example 27: Excel 2011 File with .xlsx Extension
 message('Example 27: Testing .xlsx support')
-data.file <- 'example_27'
+data.file <- 'example_27.xlsx'
 filename <- file.path(system.file('example_data',
                                   package = 'ProjectTemplate'),
                       'example_27.xlsx')
@@ -389,7 +460,7 @@ sql.file <- data.frame(type = 'sqlite',
                        table = 'example_28')
 write.dcf(sql.file, file = 'example_28.sql', width = 1000)
 
-data.file <- 'example_28'
+data.file <- 'example_28.sql'
 filename <- 'example_28.sql'
 variable.name <- ProjectTemplate:::clean.variable.name('example_28')
 
@@ -411,7 +482,7 @@ sql.file <- data.frame(type = 'sqlite',
                        query = 'SELECT * FROM example_29')
 write.dcf(sql.file, file = 'example_29.sql', width = 1000)
 
-data.file <- 'example_29'
+data.file <- 'example_29.sql'
 filename <- 'example_29.sql'
 variable.name <- ProjectTemplate:::clean.variable.name('example_29')
 
@@ -433,7 +504,7 @@ sql.file <- data.frame(type = 'sqlite',
                        table = '*')
 write.dcf(sql.file, file = 'example_30.sql', width = 1000)
 
-data.file <- 'example_30'
+data.file <- 'example_30.sql'
 filename <- 'example_30.sql'
 variable.name <- ProjectTemplate:::clean.variable.name('example_30')
 
@@ -456,7 +527,7 @@ rm(example.30b)
 
 # Example 31: SQLite3 Support with .db Extension
 message('Example 31: Testing .db support')
-data.file <- 'example_31'
+data.file <- 'example_31.db'
 filename <- file.path(system.file('example_data',
                                 package = 'ProjectTemplate'),
                       'example_31.db')
@@ -481,7 +552,7 @@ rm(example.31b)
 
 # Example 32: Weka Support with .arff Extension
 message('Example 32: Testing .arff support')
-data.file <- 'example_32'
+data.file <- 'example_32.arff'
 filename <- file.path(system.file('example_data',
                                 package = 'ProjectTemplate'),
                       'example_32.arff')
@@ -504,7 +575,7 @@ info.file <- data.frame(path = file.path(system.file('example_data',
                        extension = 'db')
 write.dcf(info.file, file = 'example_33.file', width = 1000)
 
-data.file <- 'example_33'
+data.file <- 'example_33.file'
 filename <- 'example_33.file'
 variable.name <- ProjectTemplate:::clean.variable.name('example_28')
 

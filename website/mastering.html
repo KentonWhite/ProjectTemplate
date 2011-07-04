@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>ProjectTemplate</title>
+		<link rel="stylesheet" href="style.css" type="text/css" media="screen" />
+	</head>
+	<body>
+    <h1>Mastering ProjectTemplate</h1>
+
+<p>Before you work through this walkthrough, you should make sure you've read (or at least understood) the contents of the <a href="./getting_started.html">beginner's tutorial</a>.</p>
+
+<h1>Ad Hoc File Types</h1>
+
+<p>In the <a href="./getting_started.html">beginner's tutorial</a>, we showed how ProjectTemplate automatically loads data files from the <code>data</code> and <code>cache</code> directories. If you're working with plain text files or any of the <a href="./file_formats.html">supported binary file formats</a>, this automatic data loading should work out of the box without any effort on your part. But if you have to retrieve data sets from more complex data sources, ProjectTemplate has advanced features that will let you set up ad hoc autoloading. In the rest of this document, we'll talk about working with SQL databases, remote resources available over HTTP and FTP, large data files stored on external drives and R files that contain code that generates data at runtime.</p>
+
+<h2>SQLite Databases</h2>
+
+<p>Let's start by working with an SQLite database. We'll use a database from the Analytics X competition in which contestants were trying to predict crimes that took place in Philadelphia. You can download the database file <a href="./analyticsx.db">here</a>.</p>
+
+<h3>Autoloading the Database</h3>
+
+<p>The simplest way to access the database is to store the <code>analyticsx.db</code> file in the <code>data</code> directory of a new project. Let's set up a project using the standard ProjectTemplate invocation:</p>
+
+<pre><code>    library('ProjectTemplate')
+    create.project('AnalyticsX')
+</code></pre>
+
+<p>Then we'll shift into the relevant directory and move our database over:</p>
+
+<pre><code>    cd AnalyticsX
+    mv ~/Downloads/analyticsx.db data
+</code></pre>
+
+<p>Then we reload R and load the project. You'll see ProjectTemplate automatically load the five tables found in our SQLite database:</p>
+
+<pre><code>    library('ProjectTemplate')
+    load.project()
+</code></pre>
+
+<p>IMAGE OF AUTOLOADING GOES HERE</p>
+
+<p>For most users, this automatic loading procedure is probably enough. But if you need more fine-grained control, you can use the <code>.sql</code> ad hoc file type to load specific tables from an SQLite database. You can also specify an exact SQL query to run against the database. We'll go through all three cases below.</p>
+
+<h3>Load One Specific Table</h3>
+
+<p>First, let's move the <code>analyticsx.db</code> file out of the <code>data</code> directory to prevent it from being autoloaded:</p>
+
+<pre><code>    mv data/analyticsx.db .
+</code></pre>
+
+<p>After that, we'll create an <code>.sql</code> file in the <code>data</code> directory. We need to specify (a) that we're working with an SQLite database, (b) the path to the SQLite database and (c) the specific table we want to load:</p>
+
+<pre><code>    type: sqlite
+    dbname: analytics.db
+    table: homicides
+</code></pre>
+
+<p>Running <code>load.project</code> will then load only this table from our database.</p>
+
+<p>IMAGE OF AUTOLOADING GOES HERE</p>
+
+<h3>Load All Tables from a Specific Database</h3>
+
+<p>If we want to load all of the tables from a database file that we can't place inside of the <code>data</code> directory, we can use a <code>.sql</code> file to do this by replacing the name of a specific table with an asterisk:</p>
+
+<pre><code>    type: sqlite
+    dbname: analytics.db
+    table: *
+</code></pre>
+
+<p>IMAGE OF AUTOLOADING GOES HERE</p>
+
+<h3>Loading Data with an SQL Query</h3>
+
+<p>You can load a subset of your data by specifying an SQL query instead of a table:</p>
+
+<pre><code>    type: sqlite
+    dbname: analytics.db
+    query: SELECT * FROM homicides
+</code></pre>
+
+<p>IMAGE OF AUTOLOADING GOES HERE</p>
+
+<h2>MySQL Databases</h2>
+
+<p>Working with a MySQL database is exactly as easy as using a <code>.sql</code> file to access a SQLite database. All that changes is the use of the <code>mysql</code> type instead of the <code>sqlite</code> type:</p>
+
+<pre><code>    type: mysql
+    dbname: analytics.db
+    table: *
+</code></pre>
+
+<p>IMAGE OF AUTOLOADING GOES HERE</p>
+
+<h2>URL Files</h2>
+
+<p>If you need to access a file that's available over HTTP or FTP, you can use a <code>.url</code> file. Inside of the file, you'll specify the URL where your data set is available and the type of data set you're accessing:</p>
+
+<pre><code>    url: http://www.johnmyleswhite.com/ProjectTemplate/sample_data.csv
+    separator: ,
+</code></pre>
+
+<p>IMAGE OF AUTOLOADING GOES HERE</p>
+
+<h2>.file Files</h2>
+
+<p>If you need to access a file that's stored outside of the project's main directory, you use a <code>.file</code> file. Inside of the file, you'll specify the path of the data file and the extension of the data set you're accessing:</p>
+
+<pre><code>    path: /usr/share/dict/words
+    extension: csv
+</code></pre>
+
+<p>IMAGE OF AUTOLOADING GOES HERE</p>
+
+<h2>R Files</h2>
+
+<p>Sometimes you want to generate random data for your analysis: this, after all, is the heart of Monte Carlo analyses of statistical methods. You can do this by inserting R code into a file in the <code>data</code> directory. We'll put this into the <code>data/d.R</code> file:</p>
+
+<pre><code>    set.seed(1)
+    d &lt;- rnorm(1000, 0, 1)
+</code></pre>
+
+<p>IMAGE OF AUTOLOADING GOES HERE</p>
+
+<h1>Unit Testing Your Project</h1>
+
+<p>ProjectTemplate has been designed to make it easier to unit test the functions you've written for your analysis. To get started, you can call <code>stub.tests()</code>, which will generate a file at <code>tests/autogenerated.R</code> filled with sample tests for every one of the functions you defined inside of the <code>lib</code> directory. You should edit these tests, as they are expected to fail by default.</p>
+
+<p>After editing your tests, you can call <code>test.project()</code> to run all of the unit tests in the <code>tests</code> directory.</p>
+
+<p>EXAMPLE</p>
+
+<h1>Logging Your Work</h1>
+
+<p>If you want to log your work, ProjectTemplate will automatically load a <a href="https://github.com/johnmyleswhite/log4r">log4r</a> logger object into the <code>logger</code> variable that will write to a plain text stored at the <code>logs/project.log</code>. To use this logger, you only need to change the configuration file to specify:</p>
+
+<pre><code>    logging: on
+</code></pre>
+
+<p>After making this change, the <code>logger</code> object will be created once you call <code>load.project()</code>.</p>
+
+<h1>Data Diagnostics</h1>
+
+<p>Coming soon</p>
+
+<h1>Profiling Your Project</h1>
+
+<p>Coming soon</p>
+
+	</body>
+</html>

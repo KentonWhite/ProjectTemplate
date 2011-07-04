@@ -40,15 +40,19 @@
 <h2>Documentation</h2>
 
 <ul>
+<li>Switch over to using roxygen and devtools.</li>
 <li>Document possible data pipelines through <code>data</code> and <code>cache</code>.</li>
+<li>Produce a screencast featuring SQLite and SPSS autoloading and letters data.</li>
+<li>Document overriding a default reader.</li>
 </ul>
 
 <h2>Internal State</h2>
 
 <ul>
-<li>Create a <code>cache.project()</code> function using this record.</li>
-<li>Need to deal with tools that generate data sets that don't meet naming conventions: e.g. <code>.db</code> files.</li>
+<li><code>cache.project()</code> needs to deal with tools that generate data sets that don't meet naming conventions: e.g. <code>.db</code> files.</li>
 <li>Deal with <code>no global binding visible for project.info</code> error.</li>
+<li>Assign <code>project.info</code> into ProjectTemplate namespace?</li>
+<li>Add unit test to check that <code>show.project()</code> doesn't produce an error.</li>
 </ul>
 
 <h2>Excel Support</h2>
@@ -57,17 +61,22 @@
 <li>Decide between gdata or xlsxjars for Excel support.</li>
 </ul>
 
-<h2>Zip Support</h2>
-
-<ul>
-<li>Fix <code>.zip</code> support.</li>
-<li>Create temporary file, unzip there, then read in and delete the temporary file.</li>
-</ul>
-
 <h2>Error Handling</h2>
 
 <ul>
 <li>The whole codebase needs more error checking and needs to try to recover from more types of errors.</li>
+</ul>
+
+<h2>Characters As Factors</h2>
+
+<ul>
+<li>Add a configuration variable to force all loading functions to read data sets in using <code>as.is = TRUE</code>. At present, generating factors can be a time sink, especially when the factors are converted back into characters during munging.</li>
+</ul>
+
+<h2>New File Types</h2>
+
+<ul>
+<li>Implement automatic loading of image files and sounds files using ppm and tuneR packages.</li>
 </ul>
 
 	</body>

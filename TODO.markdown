@@ -20,19 +20,25 @@
 * Add `create.project(dump = TRUE)` feature.
 
 ## Documentation
+* Switch over to using roxygen and devtools.
 * Document possible data pipelines through `data` and `cache`.
+* Produce a screencast featuring SQLite and SPSS autoloading and letters data.
+* Document overriding a default reader.
 
 ## Internal State
-* Create a `cache.project()` function using this record.
-* Need to deal with tools that generate data sets that don't meet naming conventions: e.g. `.db` files.
+* `cache.project()` needs to deal with tools that generate data sets that don't meet naming conventions: e.g. `.db` files.
 * Deal with `no global binding visible for project.info` error.
+* Assign `project.info` into ProjectTemplate namespace?
+* Add unit test to check that `show.project()` doesn't produce an error.
 
 ## Excel Support
 * Decide between gdata or xlsxjars for Excel support.
 
-## Zip Support
-* Fix `.zip` support.
-* Create temporary file, unzip there, then read in and delete the temporary file.
-
 ## Error Handling
 * The whole codebase needs more error checking and needs to try to recover from more types of errors.
+
+## Characters As Factors
+* Add a configuration variable to force all loading functions to read data sets in using `as.is = TRUE`. At present, generating factors can be a time sink, especially when the factors are converted back into characters during munging.
+
+## New File Types
+* Implement automatic loading of image files and sounds files using ppm and tuneR packages.

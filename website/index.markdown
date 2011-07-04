@@ -10,6 +10,7 @@
 - [An Introduction to ProjectTemplate](./intro.html)
 - [Installing ProjectTemplate](./installing.html)
 - [Getting Started with ProjectTemplate](./getting_started.html)
+- [Mastering ProjectTemplate's Advanced Features (IN PROGRESS DRAFT)](./mastering.html)
 - [Configuring ProjectTemplate](./configuring.html)
 - [Updating to the Latest Version](./updating.html)
 - [ProjectTemplate's Architecture](./architecture.html)
