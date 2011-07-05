@@ -27,6 +27,11 @@ load.project <- function()
   assign('config', config, envir = .GlobalEnv)
   project.info[['config']] <- config
   
+  if (! is.null(config[['as_factors']]) && config[['as_factors']] == 'off')
+  {
+    options(stringsAsFactors = FALSE)
+  }
+  
   if (file.exists('lib'))
   {
     message('Autoloading helper functions')

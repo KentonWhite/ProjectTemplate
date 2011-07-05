@@ -41,4 +41,4 @@
 * Add a configuration variable to force all loading functions to read data sets in using `as.is = TRUE`. At present, generating factors can be a time sink, especially when the factors are converted back into characters during munging.
 
 ## New File Types
-* Implement automatic loading of image files and sounds files using ppm and tuneR packages.
+* Autoload audio, image and video file formats beyond `.ppm` and `.mp3`.

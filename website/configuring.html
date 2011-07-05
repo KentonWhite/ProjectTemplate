@@ -15,6 +15,7 @@
 <li><code>logging</code>: This can be set to 'on' or 'off'. If <code>logging</code> is on, a logger object using the <code>log4r</code> package is automatically created when you run <code>load.project()</code>. This logger will write to the <code>logs</code> directory. By default, <code>logging</code> is off.</li>
 <li><code>load_libraries</code>: This can be set to 'on' or 'off'. If <code>load_libraries</code> is on, the system will load all of the R packages listed in the <code>libraries</code> field below. By default, <code>load_libraries</code> is off.</li>
 <li><code>libraries</code>: This is a comma separate list of all the R packages that the user wants to automatically load when <code>load.project()</code> is called. These packages must already be installed before calling <code>load.project()</code>. By default, the reshape, plyr, ggplot2, stringr and lubridate packages are included in this list.</li>
+<li><code>as_factors</code>: This can be set to 'on' or 'off'. If <code>as_factors</code> is on, the system will convert every character vector into a factor when creating data frames; most importantly, this occurs when reading in data. If off, character vectors will remain character vectors. By default, <code>as_factors</code> is on.</li>
 </ul>
 
 	</body>
