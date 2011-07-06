@@ -1,10 +1,12 @@
 library('devtools')
 
 document(".")
-#test(".")
-#build(".")
-#install("ProjectTemplate")
+test(".")
+run_examples()
+devtools:::build(".")
+# Happens in /var. Why?
+devtools:::check(".")
+# Fails. Why?
 
-#check(".")
-#run_examples()
+#install("ProjectTemplate")
 #release()
