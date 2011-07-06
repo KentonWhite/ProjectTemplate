@@ -22,13 +22,14 @@
 <li>Get a copy of the standard sample data file in <code>.syd</code> format.</li>
 <li>Get a copy of the standard sample data file in <code>.xport</code> format.</li>
 <li>Get a copy of the standard sample data file in <code>.sas</code> format.</li>
+<li>Get a sample data file in <code>.mp3</code> format.</li>
 </ul>
 
 <h2>Database Autoloading</h2>
 
 <ul>
 <li>Find a way to unit test MySQL support.</li>
-<li>Clean up DB code.</li>
+<li>Clean up DB code in <code>sql.reader.R</code>.</li>
 </ul>
 
 <h2>Allow Users to Dump Static Project</h2>
@@ -40,10 +41,12 @@
 <h2>Documentation</h2>
 
 <ul>
-<li>Switch over to using roxygen and devtools.</li>
+<li>Find out to create <code>dontrun</code> examples using roxygen.</li>
+<li>Find out how to control <code>Collate:</code> statement using devtools.</li>
 <li>Document possible data pipelines through <code>data</code> and <code>cache</code>.</li>
 <li>Produce a screencast featuring SQLite and SPSS autoloading and letters data.</li>
 <li>Document overriding a default reader.</li>
+<li>Show users how to install ProjectTemplate from GitHub using devtools.</li>
 </ul>
 
 <h2>Internal State</h2>
@@ -65,12 +68,6 @@
 
 <ul>
 <li>The whole codebase needs more error checking and needs to try to recover from more types of errors.</li>
-</ul>
-
-<h2>Characters As Factors</h2>
-
-<ul>
-<li>Add a configuration variable to force all loading functions to read data sets in using <code>as.is = TRUE</code>. At present, generating factors can be a time sink, especially when the factors are converted back into characters during munging.</li>
 </ul>
 
 <h2>New File Types</h2>
