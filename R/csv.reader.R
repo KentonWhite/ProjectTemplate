@@ -1,3 +1,12 @@
+#' Read a comma separated values (.csv) file.
+#'
+#' This function will load a data set stored in the CSV file format into
+#' the specified global variable binding.
+#'
+#' @return No value is returned; this function is called for its side effects.
+#'
+#' @examples
+#' csv.reader('example.csv', 'data/example.csv', 'example')
 csv.reader <- function(data.file, filename, variable.name)
 {
   if (grepl('\\.zip$', filename))

@@ -1,24 +1,43 @@
+#' Read a database described in a .sql file.
+#'
+#' This function will load data from a SQL database based on configuration
+#' information found in the specified .sql file. The .sql file must specify
+#' a database to be accessed. All tables from the database, one specific tables
+#' or one specific query against any set of tables may be executed to generate
+#' a data set.
+#'
+#' Examples of the DCF format and settings used in a .sql file are shown
+#' below:
+#'
+#' Example 1
+#' type: mysql
+#' user: sample_user
+#' password: sample_password
+#' host: localhost
+#' dbname: sample_database
+#' table: sample_table
+#'
+#' Example 2
+#' type: sqlite
+#' dbname: /path/to/sample_database
+#' table: sample_table
+#'
+#' Example 3
+#' type: sqlite
+#' dbname: /path/to/sample_database
+#' query: SELECT * FROM users WHERE user_active == 1
+#'
+#' Example 4
+#' type: sqlite
+#' dbname: /path/to/sample_database
+#' table: *
+#'
+#' @return No value is returned; this function is called for its side effects.
+#'
+#' @examples
+#' sql.reader('example.sql', 'data/example.sql', 'example')
 sql.reader <- function(data.file, filename, variable.name)
 {
-  # A .sql file contains DCF describing the data source.
-  # Two example files are shown below.
-  #
-  # type: mysql
-  # user: sample_user
-  # password: sample_password
-  # host: localhost
-  # dbname: sample_database
-  # table: sample_table
-  #
-  # type: sqlite
-  # dbname: /path/to/sample_database
-  # table: sample_table
-  #
-  # type: sqlite
-  # dbname: /path/to/sample_database
-  # query: SELECT * FROM users WHERE user_active == 1
-  #
-  
   database.info <- ProjectTemplate:::translate.dcf(filename)
 
   if (! (database.info[['type']] %in% c('mysql', 'sqlite', 'odbc')))

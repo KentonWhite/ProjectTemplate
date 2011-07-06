@@ -6,6 +6,7 @@
 #' @return No value is returned; this function is called for its side effects.
 #'
 #' @export
+#'
 #' @examples
 #' library('ProjectTemplate')
 #' load.project()

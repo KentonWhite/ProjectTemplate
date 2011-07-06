@@ -1,3 +1,13 @@
+#' Read an MP3 file with a .mp3 file extension.
+#'
+#' This function will load the specified MP3 file into memory using the
+#' tuneR package. This is useful for working with music files as a data
+#' set.
+#'
+#' @return No value is returned; this function is called for its side effects.
+#'
+#' @examples
+#' mp3.reader('example.mp3', 'data/example.mp3', 'example')
 mp3.reader <- function(data.file, filename, variable.name)
 {
   library('tuneR')

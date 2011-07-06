@@ -1,3 +1,13 @@
+#' Read a PPM file with a .ppm file extension.
+#'
+#' This function will load the specified PPM file into memory using the
+#' pixamp package. This is useful for working with image files as a data
+#' set.
+#'
+#' @return No value is returned; this function is called for its side effects.
+#'
+#' @examples
+#' ppm.reader('example.ppm', 'data/example.ppm', 'example')
 ppm.reader <- function(data.file, filename, variable.name)
 {
   library('pixmap')
@@ -6,4 +16,3 @@ ppm.reader <- function(data.file, filename, variable.name)
          read.pnm(filename),
          envir = .GlobalEnv)
 }
-
