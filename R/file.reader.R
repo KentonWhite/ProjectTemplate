@@ -11,10 +11,16 @@
 #' path: http://www.johnmyleswhite.com/ProjectTemplate/sample_data.csv
 #' extension: csv
 #'
+#' @param data.file The name of the data file to be read.
+#' @param filename The path to the data set to be loaded.
+#' @param variable.name The name to be assigned to in the global environment.
+#'
 #' @return No value is returned; this function is called for its side effects.
 #'
 #' @examples
-#' file.reader('example.file', 'data/example.file', 'example')
+#' library('ProjectTemplate')
+#'
+#' #file.reader('example.file', 'data/example.file', 'example')
 file.reader <- function(data.file, filename, variable.name)
 {
   file.info <- ProjectTemplate:::translate.dcf(filename)

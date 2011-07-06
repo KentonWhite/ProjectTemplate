@@ -32,10 +32,16 @@
 #' dbname: /path/to/sample_database
 #' table: *
 #'
+#' @param data.file The name of the data file to be read.
+#' @param filename The path to the data set to be loaded.
+#' @param variable.name The name to be assigned to in the global environment.
+#'
 #' @return No value is returned; this function is called for its side effects.
 #'
 #' @examples
-#' sql.reader('example.sql', 'data/example.sql', 'example')
+#' library('ProjectTemplate')
+#'
+#' #sql.reader('example.sql', 'data/example.sql', 'example')
 sql.reader <- function(data.file, filename, variable.name)
 {
   database.info <- ProjectTemplate:::translate.dcf(filename)

@@ -1,23 +1,19 @@
 \name{run.project}
 \alias{run.project}
-\title{
-Automatically run all of the analysis scripts in the src directory.
-}
+\title{Run all of the analyses in the src directory.}
+
 \description{
-Automatically run all of the analysis scripts in the src directory.
+  Run all of the analyses in the \code{src} directory.
 }
-\usage{
-run.project()
+
+\details{
+  This function will run each of the analyses in the
+  \code{src} directory in separate processes. At present,
+  this is done serially, but future versions of this
+  function will provide a means of running the analyses in
+  parallel.
 }
-\value{
-	No value is returned; this function is called for its side effects.
-}
-\examples{
-\dontrun{
-library('ProjectTemplate')
+\value{No value is returned; this function is called for its side effects.}
+\examples{library('ProjectTemplate')
 
-create.project('project_name')
-
-setwd('project_name')
-
-run.project()}}
+#run.project()}

@@ -1,25 +1,22 @@
 \name{test.project}
 \alias{test.project}
-\title{
-Automatically run all of the tests cases in the tests directory.
-}
+\title{Run all unit tests for this project.}
+
 \description{
-Automatically run all of the tests cases in the tests directory.
+  Run all unit tests for this project.
 }
-\usage{
-test.project()
+
+\details{
+  This function will run all of the \code{testthat} style
+  unit tests for the current project that are defined
+  inside of the \code{tests} directory. The tests will be
+  run in the order defined by the filenames for the tests:
+  it is recommend that each test begin with a number
+  specifying its position in the sequence.
 }
-\value{
-	No value is returned; this function is called for its side effects.
-}
-\examples{
-\dontrun{
-library('ProjectTemplate')
+\value{No value is returned; this function is called for its side effects.}
+\examples{library('ProjectTemplate')
 
-create.project('project_name')
+#load.project()
 
-setwd('project_name')
-
-load.project()
-
-test.project()}}
+#test.project()}

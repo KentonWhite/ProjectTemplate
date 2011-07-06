@@ -1,12 +1,18 @@
-#' Read a DCF file into an R data frame.
+#' Read a DCF file into an R list.
 #'
 #' This function will read a DCF file and translate the resulting
-#' list into a data frame. The DCF format is used throughout ProjectTemplate.
+#' data frame into a list. The DCF format is used throughout ProjectTemplate
+#' for configuration settings and ad hoc file format specifications.
 #'
-#' @return No value is returned; this function is called for its side effects.
+#' @param filename A character vector specifying the DCF file to be
+#'   translated.
+#'
+#' @return Returns a list containing the entries from the DCF file.
 #'
 #' @examples
-#' translate.dcf('config/global.dcf')
+#' library('ProjectTemplate')
+#'
+#' #translate.dcf(file.path('config', 'global.dcf'))
 translate.dcf <- function(filename)
 {
   settings <- read.dcf(filename)

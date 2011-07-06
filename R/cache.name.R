@@ -3,10 +3,14 @@
 #' This function will translate a variable name into a form that is
 #' suitable as a filename on most OS's.
 #'
+#' @param data.filename The variable name to be translated into a filename.
+#'
 #' @return A translated variable name.
 #'
 #' @examples
-#' cache.name('example.1')
+#' library('ProjectTemplate')
+#'
+#' #cache.name('example.1')
 cache.name <- function(data.filename)
 {
   return(gsub('\\..*', '', data.filename, perl = TRUE))

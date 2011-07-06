@@ -1,4 +1,4 @@
-#' Generate simple unit tests for your helper functions.
+#' Generate unit tests for your helper functions.
 #'
 #' This function will parse all of the functions defined in files inside
 #' of the \code{lib} directory and will generate a trivial unit test for
@@ -12,7 +12,8 @@
 #'
 #' @examples
 #' library('ProjectTemplate')
-#' stub.tests()
+#'
+#' #stub.tests()
 stub.tests <- function()
 {
   generate.arguments <- function(fun.name, tmp.env)

@@ -5,14 +5,23 @@
 #' at load time when calling \code{\link{load.project}}. Cached data sets are
 #' stored as \code{.RData} files.
 #'
+#' @param variable A character vector containing the name of the variable to 
+#'  be saved.
+#'
 #' @return No value is returned; this function is called for its side effects.
 #'
 #' @export
 #' @examples
 #' library('ProjectTemplate')
-#' load.project()
+#' #create.project('tmp-project')
 #'
-#' cache('dataset1')
+#' #setwd('tmp-project')
+#'
+#' #dataset1 <- 1:5
+#' #cache('dataset1')
+#'
+#' #setwd('..')
+#' #unlink('tmp-project')
 cache <- function(variable)
 {
   save(list = variable,

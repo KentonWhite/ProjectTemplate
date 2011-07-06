@@ -1,26 +1,31 @@
 \name{cache}
 \alias{cache}
-\title{
-Cache a variable for later use.
-}
+\title{Cache a data set for faster loading.}
+\usage{cache(variable)}
+
 \description{
-\code{cache()} stores a variable in the cache/ directory as an .RData file.
+  Cache a data set for faster loading.
 }
-\usage{
-cache(variable)
+
+\details{
+  This function will store a copy of the named data set in
+  the \code{cache} directory. This cached copy of the data
+  set will then be given precedence at load time when
+  calling \code{\link{load.project}}. Cached data sets are
+  stored as \code{.RData} files.
 }
+\value{No value is returned; this function is called for its side effects.}
 \arguments{
-  \item{variable}{
-	A character vector containing the name of the variable to be saved.
+  \item{variable}{A character vector containing the name of the variable to 
+be saved.}
 }
-}
-\value{
-	No value is returned; this function is called for its side effects.
-}
-\examples{
-\dontrun{
-library('ProjectTemplate')
+\examples{library('ProjectTemplate')
+#create.project('tmp-project')
 
-var1 <- 1:5
+#setwd('tmp-project')
 
-cache('var1')}}
+#dataset1 <- 1:5
+#cache('dataset1')
+
+#setwd('..')
+#unlink('tmp-project')}

@@ -1,7 +1,7 @@
 #' Run all of the analyses in the \code{src} directory.
 #'
 #' This function will run each of the analyses in the \code{src}
-#' directory in isolation. At present, this is done serially, but
+#' directory in separate processes. At present, this is done serially, but
 #' future versions of this function will provide a means of running
 #' the analyses in parallel.
 #'
@@ -11,7 +11,8 @@
 #'
 #' @examples
 #' library('ProjectTemplate')
-#' run.project()
+#'
+#' #run.project()
 run.project <- function()
 {
   message('Running project analyses from src')

@@ -1,24 +1,24 @@
 \name{clean.variable.name}
 \alias{clean.variable.name}
-\title{
-Produce a standardized R variable names.
-}
-\description{
-\code{clean.variable.name()} produces a valid R variable that satisfies ProjectTemplate conventions.
-}
-\usage{
-clean.variable.name(variable.name)
-}
-\arguments{
-  \item{variable.name}{
-	A character vector containing a variable's proposed name that should be standardized.
-}
-}
-\value{
-	Returns a character vector containing the standardized variable name.
-}
-\examples{
-\dontrun{
-library('ProjectTemplate')
+\title{Translate a file name into a valid R variable name.}
+\usage{clean.variable.name(variable.name)}
 
-clean.variable.name('project_name')}}
+\description{
+  Translate a file name into a valid R variable name.
+}
+
+\details{
+  This function will translate a file name into a name that
+  is a valid variable name in R. Non-alphabetic characters
+  on the boundaries of the file name will be stripped;
+  non-alphabetic characters inside of the file name will be
+  replaced with dots.
+}
+\value{A translated variable name.}
+\arguments{
+  \item{variable.name}{A character vector containing a variable's proposed
+name that should be standardized.}
+}
+\examples{library('ProjectTemplate')
+
+#clean.variable.name('example_1')}

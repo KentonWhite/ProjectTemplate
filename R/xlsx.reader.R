@@ -4,10 +4,16 @@
 #' xlsx package. Each sheet of the Excel workbook will be read into a
 #' separate variable in the global environment.
 #'
+#' @param data.file The name of the data file to be read.
+#' @param filename The path to the data set to be loaded.
+#' @param workbook.name The name to be assigned to in the global environment.
+#'
 #' @return No value is returned; this function is called for its side effects.
 #'
 #' @examples
-#' xlsx.reader('example.xlsx', 'data/example.xlsx', 'example')
+#' library('ProjectTemplate')
+#'
+#' #xlsx.reader('example.xlsx', 'data/example.xlsx', 'example')
 xlsx.reader <- function(data.file, filename, workbook.name)
 {
   library('xlsx')

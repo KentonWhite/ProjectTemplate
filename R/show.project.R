@@ -14,9 +14,10 @@
 #'
 #' @examples
 #' library('ProjectTemplate')
-#' load.project()
 #'
-#' show.project()
+#' #load.project()
+#'
+#' #show.project()
 show.project <- function()
 {
   print(project.info)

@@ -12,7 +12,10 @@
 #'
 #' @examples
 #' library('ProjectTemplate')
-#' test.project()
+#'
+#' #load.project()
+#'
+#' #test.project()
 test.project <- function()
 {
   load.project()

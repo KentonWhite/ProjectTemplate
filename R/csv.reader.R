@@ -3,10 +3,16 @@
 #' This function will load a data set stored in the CSV file format into
 #' the specified global variable binding.
 #'
+#' @param data.file The name of the data file to be read.
+#' @param filename The path to the data set to be loaded.
+#' @param variable.name The name to be assigned to in the global environment.
+#'
 #' @return No value is returned; this function is called for its side effects.
 #'
 #' @examples
-#' csv.reader('example.csv', 'data/example.csv', 'example')
+#' library('ProjectTemplate')
+#'
+#' #csv.reader('example.csv', 'data/example.csv', 'example')
 csv.reader <- function(data.file, filename, variable.name)
 {
   if (grepl('\\.zip$', filename))

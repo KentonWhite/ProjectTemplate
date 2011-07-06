@@ -1,20 +1,20 @@
 \name{reload.project}
 \alias{reload.project}
-\title{
-Reload the current project.
-}
-\description{
-\code{reload.project()} clears the global environment and then calls load.project(), which runs .
-}
-\usage{
-reload.project()
-}
-\value{
-	No value is returned; this function is called for its side effects.
-}
-\examples{
-\dontrun{
-library('ProjectTemplate')
-load.project()
+\title{Reload a project from scratch.}
 
-reload.project()}}
+\description{
+  Reload a project from scratch.
+}
+
+\details{
+  This function will clear the global environment and
+  reload a project from scratch. This is useful when you've
+  updated your data sets or changed your preprocessing
+  scripts.
+}
+\value{No value is returned; this function is called for its side effects.}
+\examples{library('ProjectTemplate')
+
+#load.project()
+
+#reload.project()}

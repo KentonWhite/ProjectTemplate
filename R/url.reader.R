@@ -13,10 +13,16 @@
 #' url: http://www.johnmyleswhite.com/ProjectTemplate/sample_data.csv
 #' separator: ,
 #'
+#' @param data.file The name of the data file to be read.
+#' @param filename The path to the data set to be loaded.
+#' @param variable.name The name to be assigned to in the global environment.
+#'
 #' @return No value is returned; this function is called for its side effects.
 #'
 #' @examples
-#' url.reader('example.url', 'data/example.url', 'example')
+#' library('ProjectTemplate')
+#'
+#' #url.reader('example.url', 'data/example.url', 'example')
 url.reader <- function(data.file, filename, variable.name)
 {
   url.info <- ProjectTemplate:::translate.dcf(filename)

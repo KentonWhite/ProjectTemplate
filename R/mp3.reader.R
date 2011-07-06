@@ -4,10 +4,16 @@
 #' tuneR package. This is useful for working with music files as a data
 #' set.
 #'
+#' @param data.file The name of the data file to be read.
+#' @param filename The path to the data set to be loaded.
+#' @param variable.name The name to be assigned to in the global environment.
+#'
 #' @return No value is returned; this function is called for its side effects.
 #'
 #' @examples
-#' mp3.reader('example.mp3', 'data/example.mp3', 'example')
+#' library('ProjectTemplate')
+#'
+#' #mp3.reader('example.mp3', 'data/example.mp3', 'example')
 mp3.reader <- function(data.file, filename, variable.name)
 {
   library('tuneR')

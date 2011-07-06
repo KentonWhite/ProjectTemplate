@@ -9,7 +9,8 @@
 #'
 #' @examples
 #' library('ProjectTemplate')
-#' load.project()
+#'
+#' #load.project()
 load.project <- function()
 {
   project.info <- list()
