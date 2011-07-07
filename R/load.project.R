@@ -183,8 +183,11 @@ load.project <- function()
     message('Munging data')
     for (preprocessing.script in sort(dir('munge')))
     {
-      message(paste(' Running preprocessing script:', preprocessing.script))
-      source(file.path('munge', preprocessing.script))
+      if (grepl('\\.R$', preprocessing.script, ignore.case = TRUE))
+      {
+        message(paste(' Running preprocessing script:', preprocessing.script))
+        source(file.path('munge', preprocessing.script))
+      }
     }
   }
 
