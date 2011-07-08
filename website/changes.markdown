@@ -1,6 +1,16 @@
 # Changes in ProjectTemplate
 The list of changes below is not necessarily exhaustive. Check the ChangeLog on [GitHub](https://github.com/johnmyleswhite/ProjectTemplate) for more details, but the raw ProjectTemplate source code is always the place to go for ground truth.
 
+# v0.3-5
+
+* Added a `cache.project()` function.
+* `as_factors` configuration option suppresses automatic character-to-factor conversion.
+* Implemented `.zip` support using temporary files.
+* Added `.mp3` support through the tuneR package.
+* Added `.ppm` support through the pixmap package.
+* `data_tables` configuration option automatically translates data sets into data.tables.
+* Added unit tests for SPSS, Stata and SAS file formats.
+
 # v0.3-4
 
 * Improved SQLite3 support:

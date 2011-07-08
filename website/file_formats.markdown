@@ -49,6 +49,8 @@ Please note that several of file formats have not been tested yet, including Sta
 * `.sas`: SAS Xport files.
 * `.db`: A SQLite3 database in binary format.
 * `.file`: A DCF file describing the location of another file that should be loaded.
+* `.mp3`: MP3 audio files. (Uses the tuneR package.)
+* `.ppm`: PPM image files. (Uses the pixmap package.)
 
 # Ad Hoc File Types
 
