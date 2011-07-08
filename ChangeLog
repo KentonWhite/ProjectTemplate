@@ -1,4 +1,4 @@
-2011-07-05	John Myles White  <jmw@johnmyleswhite.com>
+2011-07-08	John Myles White  <jmw@johnmyleswhite.com>
 
 * v0.3-5
 * Added a cache.project() function.
@@ -7,6 +7,7 @@
 * Added .mp3 support through the tuneR package.
 * Added .ppm support through the pixmap package.
 * 'data_tables' configuration option automatically translates data sets into data.tables.
+* Added unit tests for SPSS, Stata and SAS file formats.
 
 2011-07-03	John Myles White  <jmw@johnmyleswhite.com>
 

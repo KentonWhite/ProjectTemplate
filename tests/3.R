@@ -604,3 +604,122 @@ ProjectTemplate:::ppm.reader(data.file, filename, variable.name)
 expect_that(exists(variable.name), is_true())
 expect_that(as.character(class(get(variable.name))), equals('pixmapRGB'))
 rm(example.35)
+
+# Example 36: dBase Support with .dbf Extension
+message('Example 36: Testing .dbf support')
+data.file <- 'example_36.dbf'
+filename <- file.path(system.file('example_data',
+                                  package = 'ProjectTemplate'),
+                      'example_36.dbf')
+variable.name <- ProjectTemplate:::clean.variable.name('example_36')
+
+ProjectTemplate:::dbf.reader(data.file, filename, variable.name)
+
+expect_that(exists(variable.name), is_true())
+expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
+expect_that(nrow(get(variable.name)), equals(5))
+expect_that(ncol(get(variable.name)), equals(2))
+expect_that(get(variable.name)[5, 2], equals(11))
+rm(example.36)
+
+# Example 37: SPSS Support with .sav Extension
+message('Example 37: Testing .sav support')
+data.file <- 'example_37.sav'
+filename <- file.path(system.file('example_data',
+                                  package = 'ProjectTemplate'),
+                      'example_37.sav')
+variable.name <- ProjectTemplate:::clean.variable.name('example_37')
+
+ProjectTemplate:::spss.reader(data.file, filename, variable.name)
+
+expect_that(exists(variable.name), is_true())
+expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
+expect_that(nrow(get(variable.name)), equals(5))
+expect_that(ncol(get(variable.name)), equals(2))
+expect_that(get(variable.name)[5, 2], equals(11))
+rm(example.37)
+
+# Example 38: SPSS Support with .sav Extension / Alternative Generation
+message('Example 38: Testing .sav support')
+data.file <- 'example_38.sav'
+filename <- file.path(system.file('example_data',
+                                  package = 'ProjectTemplate'),
+                      'example_38.sav')
+variable.name <- ProjectTemplate:::clean.variable.name('example_38')
+
+ProjectTemplate:::spss.reader(data.file, filename, variable.name)
+
+expect_that(exists(variable.name), is_true())
+expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
+expect_that(nrow(get(variable.name)), equals(5))
+expect_that(ncol(get(variable.name)), equals(2))
+expect_that(get(variable.name)[5, 2], equals(11))
+rm(example.38)
+
+# Example 39: Stata Support with .dta Extension
+message('Example 39: Testing .dta support')
+data.file <- 'example_39.dta'
+filename <- file.path(system.file('example_data',
+                                  package = 'ProjectTemplate'),
+                      'example_39.dta')
+variable.name <- ProjectTemplate:::clean.variable.name('example_39')
+
+ProjectTemplate:::stata.reader(data.file, filename, variable.name)
+
+expect_that(exists(variable.name), is_true())
+expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
+expect_that(nrow(get(variable.name)), equals(5))
+expect_that(ncol(get(variable.name)), equals(2))
+expect_that(get(variable.name)[5, 2], equals(11))
+rm(example.39)
+
+# Example 40: Stata Support with .dta Extension / Alternative Generation
+message('Example 40: Testing .dta support')
+data.file <- 'example_40.dta'
+filename <- file.path(system.file('example_data',
+                                  package = 'ProjectTemplate'),
+                      'example_40.dta')
+variable.name <- ProjectTemplate:::clean.variable.name('example_40')
+
+ProjectTemplate:::stata.reader(data.file, filename, variable.name)
+
+expect_that(exists(variable.name), is_true())
+expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
+expect_that(nrow(get(variable.name)), equals(5))
+expect_that(ncol(get(variable.name)), equals(2))
+expect_that(get(variable.name)[5, 2], equals(11))
+rm(example.40)
+
+# Example 41: SAS Support with .xport Extension
+message('Example 41: Testing .xport support')
+data.file <- 'example_41.xport'
+filename <- file.path(system.file('example_data',
+                                  package = 'ProjectTemplate'),
+                      'example_41.xport')
+variable.name <- ProjectTemplate:::clean.variable.name('example_41')
+
+ProjectTemplate:::xport.reader(data.file, filename, variable.name)
+
+expect_that(exists(variable.name), is_true())
+expect_that(names(get(variable.name)), equals(c('N', 'PRIME')))
+expect_that(nrow(get(variable.name)), equals(5))
+expect_that(ncol(get(variable.name)), equals(2))
+expect_that(get(variable.name)[5, 2], equals(11))
+rm(example.41)
+
+# Example 42: SAS Support with .xpt Extension
+message('Example 42: Testing .xpt support')
+data.file <- 'example_42.xpt'
+filename <- file.path(system.file('example_data',
+                                  package = 'ProjectTemplate'),
+                      'example_42.xpt')
+variable.name <- ProjectTemplate:::clean.variable.name('example_42')
+
+ProjectTemplate:::xport.reader(data.file, filename, variable.name)
+
+expect_that(exists(variable.name), is_true())
+expect_that(names(get(variable.name)), equals(c('N', 'PRIME')))
+expect_that(nrow(get(variable.name)), equals(5))
+expect_that(ncol(get(variable.name)), equals(2))
+expect_that(get(variable.name)[5, 2], equals(11))
+rm(example.42)

@@ -1,15 +1,11 @@
 # The ProjectTemplate TODO
 
 ## Unit Testing of File Formats
-* Get a copy of the standard sample data file in `.sav` format.
-* Get a copy of the standard sample data file in `.dta` format.
-* Get a copy of the standard sample data file in `.dbf` format.
 * Get a copy of the standard sample data file in `.rec` format.
 * Get a copy of the standard sample data file in `.mtp` format.
 * Get a copy of the standard sample data file in `.m` format.
 * Get a copy of the standard sample data file in `.sys` format.
 * Get a copy of the standard sample data file in `.syd` format.
-* Get a copy of the standard sample data file in `.xport` format.
 * Get a copy of the standard sample data file in `.sas` format.
 * Get a sample data file in `.mp3` format.
 
