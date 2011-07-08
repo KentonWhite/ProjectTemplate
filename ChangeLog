@@ -6,6 +6,7 @@
 * Implemented .zip support using temporary files.
 * Added .mp3 support through the tuneR package.
 * Added .ppm support through the pixmap package.
+* 'data_tables' configuration option automatically translates data sets into data.tables.
 
 2011-07-03	John Myles White  <jmw@johnmyleswhite.com>
 

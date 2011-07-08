@@ -174,6 +174,24 @@ load.project <- function()
     }
   }
 
+  if (! is.null(config[['data_tables']]) && config[['data_tables']] == 'on')
+  {
+    library('data.table')
+    
+    for (data.set in project.info[['data']])
+    {
+      message('Converting data.frames to data.tables')
+      
+      if (class(get(data.set, envir = .GlobalEnv)) == 'data.frame')
+      {
+        message(paste(' Translating data.frame:', data.set))
+        assign(data.set,
+               data.table(get(data.set, envir = .GlobalEnv)),
+               envir = .GlobalEnv)
+      }
+    }
+  }
+
   if (is.null(config[['munging']]))
   {
     warning('Your configuration file is missing an entry: munging')

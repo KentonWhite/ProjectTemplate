@@ -30,7 +30,8 @@ Suggests:
     gdata,
     RODBC,
     tuneR,
-    pixmap
+    pixmap,
+    data.table
 URL: http://projecttemplate.net
 Collate:
     'arff.reader.R'

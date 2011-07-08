@@ -6,6 +6,7 @@ Because ProjectTemplate is still beta software, there are a number of backwards 
 
 * Add lubridate to the `libraries` configuration settings in `config/global.dcf`.
 * Add the `as_factors` configuration setting in `config/global.dcf`. Set it to "on".
+* Add the `data_tables` configuration setting in `config/global.dcf`. Set it to "off".
 
 ### Updating a v0.3-3 Project to a v0.3-4 Project
 * Change any calls to `run.tests()` to calls to `test.project()`. `run.tests()` has now been removed permanently from ProjectTemplate.

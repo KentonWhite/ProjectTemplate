@@ -42,3 +42,11 @@
 
 ## New File Types
 * Autoload audio, image and video file formats beyond `.ppm` and `.mp3`.
+
+## More Ambitious Goals
+* Make `data.table` integration more powerful.
+* Integrate `sqldf`?
+* Integrate `bigmemory` or `ff`?
+
+## Cache Changes?
+* Invalidate a file in `cache` if the matching file in `data` is more recently modified?
