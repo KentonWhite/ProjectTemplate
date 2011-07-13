@@ -44,6 +44,10 @@
   Example 5 type: postgres user: sample_user password:
   sample_password host: localhost dbname: sample_database
   table: sample_table
+
+  Example 6 type: odbc dsn: sample_dsn user: sample_user
+  password: sample_password dbname: sample_database query:
+  SELECT * FROM sample_table
 }
 \examples{
 library('ProjectTemplate')

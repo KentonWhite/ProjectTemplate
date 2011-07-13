@@ -2,7 +2,8 @@
 
 * v0.3-6
 * Added Postgres support through RPostgreSQL
-* Assume '.dat' files are '.wsv' files.
+* Very rough ODBC support. See example in ProjectTemplate:::sql.reader documentation.
+* '.dat' files are now read as if they were '.wsv' files.
 * Revised documentation.
 
 2011-07-08	John Myles White  <jmw@johnmyleswhite.com>

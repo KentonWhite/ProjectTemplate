@@ -12,7 +12,9 @@
 ## Database Autoloading
 * Find a way to unit test MySQL support.
 * Clean up DB code in `sql.reader.R`.
-
+* Improve ODBC support.
+* Add JDBC support.
+ 
 ## Allow Users to Dump Static Project
 * Add `create.project(dump = TRUE)` feature.
 
@@ -47,3 +49,8 @@
 
 ## Cache Changes?
 * Invalidate a file in `cache` if the matching file in `data` is more recently modified?
+
+## Scaffolding
+* Compact directories.
+* .gitignore, .gitkeep
+

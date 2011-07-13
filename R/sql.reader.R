@@ -40,6 +40,14 @@
 #' dbname: sample_database
 #' table: sample_table
 #'
+#' Example 6
+#' type: odbc
+#' dsn: sample_dsn
+#' user: sample_user
+#' password: sample_password
+#' dbname: sample_database
+#' query: SELECT * FROM sample_table
+#'
 #' @param data.file The name of the data file to be read.
 #' @param filename The path to the data set to be loaded.
 #' @param variable.name The name to be assigned to in the global environment.
@@ -67,9 +75,13 @@ sql.reader <- function(data.file, filename, variable.name)
   if (database.info[['type']] == 'odbc')
   {
     library('RODBC')
-    connection <- odbcConnect(database.info[['dbname']])
-    sqlQuery(connection, database.info[['query']])
-    results <- sqlGetResults(connection, as.is = TRUE)
+    connection.string <- paste('DSN=', database.info[['dsn']], ';',
+                               'UID=', database.info[['user']], ';',
+                               'PWD=', database.info[['password']], ';',
+                               'DATABASE=', database.info['dbname'],
+                               sep = '')
+    connection <- odbcDriverConnect(connection.string)
+    results <- sqlQuery(connection, database.info[['query']])
     odbcClose(connection)
     assign(variable.name,
            results,

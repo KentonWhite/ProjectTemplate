@@ -1,6 +1,13 @@
 # Changes in ProjectTemplate
 The list of changes below is not necessarily exhaustive. Check the ChangeLog on [GitHub](https://github.com/johnmyleswhite/ProjectTemplate) for more details, but the raw ProjectTemplate source code is always the place to go for ground truth.
 
+# v0.3-6
+
+* Added Postgres support through RPostgreSQL
+* Very rough ODBC support. See example in `ProjectTemplate:::sql.reader` documentation.
+* `.dat` files are now read as if they were `.wsv` files.
+* Revised documentation.
+
 # v0.3-5
 
 * Added a `cache.project()` function.
