@@ -43,6 +43,7 @@
 * Make `data.table` integration more powerful.
 * Integrate `sqldf`?
 * Integrate `bigmemory` or `ff`?
+* Automatic date conversion using lubridate.
 
 ## Cache Changes?
 * Invalidate a file in `cache` if the matching file in `data` is more recently modified?

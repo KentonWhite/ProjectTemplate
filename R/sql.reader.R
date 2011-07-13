@@ -32,6 +32,14 @@
 #' dbname: /path/to/sample_database
 #' table: *
 #'
+#' Example 5
+#' type: postgres
+#' user: sample_user
+#' password: sample_password
+#' host: localhost
+#' dbname: sample_database
+#' table: sample_table
+#'
 #' @param data.file The name of the data file to be read.
 #' @param filename The path to the data set to be loaded.
 #' @param variable.name The name to be assigned to in the global environment.
@@ -46,9 +54,9 @@ sql.reader <- function(data.file, filename, variable.name)
 {
   database.info <- ProjectTemplate:::translate.dcf(filename)
 
-  if (! (database.info[['type']] %in% c('mysql', 'sqlite', 'odbc')))
+  if (! (database.info[['type']] %in% c('mysql', 'sqlite', 'odbc', 'postgres')))
   {
-    warning('Only databases reachable through RMySQL, RSQLite and RODBC are currently supported.')
+    warning('Only databases reachable through RMySQL, RSQLite, RODBC or RPostgreSQL are currently supported.')
     assign(variable.name,
            NULL,
            envir = .GlobalEnv)
@@ -66,6 +74,7 @@ sql.reader <- function(data.file, filename, variable.name)
     assign(variable.name,
            results,
            envir = .GlobalEnv)
+    return()
   }
   
   if (database.info[['type']] == 'mysql')
@@ -86,6 +95,18 @@ sql.reader <- function(data.file, filename, variable.name)
     sqlite.driver <- dbDriver("SQLite")
 
     connection <- dbConnect(sqlite.driver,
+                            dbname = database.info[['dbname']])
+  }
+
+  if (database.info[['type']] == 'postgres')
+  {
+    library('RPostgreSQL')
+    mysql.driver <- dbDriver("PostgreSQL")
+
+    connection <- dbConnect(mysql.driver,
+                            user = database.info[['user']],
+                            password = database.info[['password']],
+                            host = database.info[['host']],
                             dbname = database.info[['dbname']])
   }
 

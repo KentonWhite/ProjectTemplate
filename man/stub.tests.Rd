@@ -1,12 +1,11 @@
 \name{stub.tests}
 \alias{stub.tests}
 \title{Generate unit tests for your helper functions.}
-
-\description{
-  Generate unit tests for your helper functions.
+\value{
+  No value is returned; this function is called for its
+  side effects.
 }
-
-\details{
+\description{
   This function will parse all of the functions defined in
   files inside of the \code{lib} directory and will
   generate a trivial unit test for each function. The
@@ -15,7 +14,9 @@
   fail by default, so you should edit them before calling
   \code{\link{test.project}}.
 }
-\value{No value is returned; this function is called for its side effects.}
-\examples{library('ProjectTemplate')
+\examples{
+library('ProjectTemplate')
 
-#stub.tests()}
+#stub.tests()
+}
+

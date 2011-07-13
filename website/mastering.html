@@ -17,92 +17,95 @@
 
 <h2>SQLite Databases</h2>
 
-<p>Let's start by working with an SQLite database. We'll use a database from the Analytics X competition in which contestants were trying to predict crimes that took place in Philadelphia. You can download the database file <a href="./analyticsx.db">here</a>.</p>
+<p>Let's start by working with a SQLite database. We'll use a database from the Analytics X competition in which contestants were trying to predict crimes that took place in Philadelphia. You can download the database file <a href="./philapd.db.zip">here</a>. To save on bandwidth, we've compressed the database, so you should uncompress it before going through the rest of this tutorial.</p>
 
 <h3>Autoloading the Database</h3>
 
-<p>The simplest way to access the database is to store the <code>analyticsx.db</code> file in the <code>data</code> directory of a new project. Let's set up a project using the standard ProjectTemplate invocation:</p>
+<p>The simplest way to access the database is to store the <code>philapd.db</code> file in the <code>data</code> directory of a new project. Let's set up a project using the standard ProjectTemplate invocation:</p>
 
 <pre><code>    library('ProjectTemplate')
-    create.project('AnalyticsX')
+    create.project('PhilaPD')
 </code></pre>
 
-<p>Then we'll shift into the relevant directory and move our database over:</p>
+<p>Then we'll shift into the relevant directory, move our database over and uncompress it:</p>
 
-<pre><code>    cd AnalyticsX
-    mv ~/Downloads/analyticsx.db data
+<pre><code>    cd PhilaPD
+    mv ~/Downloads/philapd.db.zip data
+    unzip data/philapd.db.zip -d data
+    rm data/philapd.db.zip
 </code></pre>
 
-<p>Then we reload R and load the project. You'll see ProjectTemplate automatically load the five tables found in our SQLite database:</p>
+<p>Then we reload R and load the project. You'll see ProjectTemplate automatically load the two tables found in our SQLite database:</p>
 
 <pre><code>    library('ProjectTemplate')
     load.project()
 </code></pre>
 
-<p>IMAGE OF AUTOLOADING GOES HERE</p>
+<p><img src="./mastering1.jpg" alt="Autoloading" title="" /></p>
 
-<p>For most users, this automatic loading procedure is probably enough. But if you need more fine-grained control, you can use the <code>.sql</code> ad hoc file type to load specific tables from an SQLite database. You can also specify an exact SQL query to run against the database. We'll go through all three cases below.</p>
+<p>For most users, this automatic loading procedure is probably enough. But if you need more fine-grained control, you can use the <code>.sql</code> ad hoc file type to load specific tables from a SQLite database. You can also specify an exact SQL query to run against the database. We'll go through all three cases below.</p>
 
 <h3>Load One Specific Table</h3>
 
-<p>First, let's move the <code>analyticsx.db</code> file out of the <code>data</code> directory to prevent it from being autoloaded:</p>
+<p>First, let's move the <code>philapd.db</code> file out of the <code>data</code> directory to prevent it from being autoloaded:</p>
 
-<pre><code>    mv data/analyticsx.db .
+<pre><code>    mv data/philapd.db .
 </code></pre>
 
-<p>After that, we'll create an <code>.sql</code> file in the <code>data</code> directory. We need to specify (a) that we're working with an SQLite database, (b) the path to the SQLite database and (c) the specific table we want to load:</p>
+<p>After that, we'll create an <code>.sql</code> file in the <code>data</code> directory. We'll use a file called <code>data/philapd.sql</code>. Inside of this file, we need to specify (a) that we're working with a SQLite database, (b) the path to the SQLite database and (c) the specific table we want to load. We've done that below:</p>
 
 <pre><code>    type: sqlite
-    dbname: analytics.db
-    table: homicides
+    dbname: philapd.db
+    table: location_info
 </code></pre>
 
-<p>Running <code>load.project</code> will then load only this table from our database.</p>
+<p>After creating the <code>data/philapd.sql</code> file, we can rerun <code>load.project</code>, which will load only the <code>location_info</code> table from our database into the variable <code>philapd</code>:</p>
 
-<p>IMAGE OF AUTOLOADING GOES HERE</p>
+<p><img src="./mastering2.jpg" alt="Autoloading" title="" /></p>
 
 <h3>Load All Tables from a Specific Database</h3>
 
 <p>If we want to load all of the tables from a database file that we can't place inside of the <code>data</code> directory, we can use a <code>.sql</code> file to do this by replacing the name of a specific table with an asterisk:</p>
 
 <pre><code>    type: sqlite
-    dbname: analytics.db
+    dbname: philapd.db
     table: *
 </code></pre>
 
-<p>IMAGE OF AUTOLOADING GOES HERE</p>
+<p><img src="./mastering3.jpg" alt="Autoloading" title="" /></p>
 
 <h3>Loading Data with an SQL Query</h3>
 
-<p>You can load a subset of your data by specifying an SQL query instead of a table:</p>
+<p>You can also load a subset of your data by specifying an SQL query instead of a table in your <code>.sql</code> file:</p>
 
 <pre><code>    type: sqlite
-    dbname: analytics.db
-    query: SELECT * FROM homicides
+    dbname: philapd.db
+    query: SELECT * FROM location_info WHERE zip = '19144'
 </code></pre>
 
-<p>IMAGE OF AUTOLOADING GOES HERE</p>
+<p><img src="./mastering4.jpg" alt="Autoloading" title="" /></p>
 
 <h2>MySQL Databases</h2>
 
 <p>Working with a MySQL database is exactly as easy as using a <code>.sql</code> file to access a SQLite database. All that changes is the use of the <code>mysql</code> type instead of the <code>sqlite</code> type:</p>
 
 <pre><code>    type: mysql
-    dbname: analytics.db
-    table: *
+    user: sample_user
+    password: sample_password
+    host: localhost
+    dbname: philapd
+    table: location_info
 </code></pre>
-
-<p>IMAGE OF AUTOLOADING GOES HERE</p>
 
 <h2>URL Files</h2>
 
-<p>If you need to access a file that's available over HTTP or FTP, you can use a <code>.url</code> file. Inside of the file, you'll specify the URL where your data set is available and the type of data set you're accessing:</p>
+<p>If you need to access a file that's available over HTTP or FTP, you can use a <code>.url</code> file. Inside of the file, you'll specify the URL where your data set is available and the type of data set you're accessing. Here, we'll use a <code>data/sample.url</code> file to load the ProjectTemplate standard sample data set over HTTP:</p>
 
 <pre><code>    url: http://www.johnmyleswhite.com/ProjectTemplate/sample_data.csv
     separator: ,
 </code></pre>
 
-<p>IMAGE OF AUTOLOADING GOES HERE</p>
+<p><img src="./mastering5.jpg" alt="Autoloading" title="" /></p>
 
 <h2>.file Files</h2>
 
@@ -112,7 +115,7 @@
     extension: csv
 </code></pre>
 
-<p>IMAGE OF AUTOLOADING GOES HERE</p>
+<p><img src="./mastering6.jpg" alt="Autoloading" title="" /></p>
 
 <h2>R Files</h2>
 
@@ -122,7 +125,11 @@
     d &lt;- rnorm(1000, 0, 1)
 </code></pre>
 
-<p>IMAGE OF AUTOLOADING GOES HERE</p>
+<p><img src="./mastering7.jpg" alt="Autoloading" title="" /></p>
+
+<h2>Media Files: MP3's and PPM's</h2>
+
+<p>Sometimes you want to work with more interesting sorts of data than a typical text file. ProjectTemplate now has basic support for loading media files into R. To load an MP3 audio file into an R object for analysis, simply place the <code>.mp3</code> file in the <code>data</code> directory. The <code>tuneR</code> package will be automatically loaded by ProjectTemplate and the MP3 file will be read into an R object in the global environment. Similarly, if you want to load a PPM image file, just place the <code>.ppm</code> file into the <code>data</code> directory. ProjectTemplate will then use the <code>pixmap</code> package to load the image file into an R object in the global environment.</p>
 
 <h1>Unit Testing Your Project</h1>
 
@@ -130,7 +137,7 @@
 
 <p>After editing your tests, you can call <code>test.project()</code> to run all of the unit tests in the <code>tests</code> directory.</p>
 
-<p>EXAMPLE</p>
+<p><img src="./unit_tests.jpg" alt="Unit Tests" title="" /></p>
 
 <h1>Logging Your Work</h1>
 
@@ -139,7 +146,13 @@
 <pre><code>    logging: on
 </code></pre>
 
-<p>After making this change, the <code>logger</code> object will be created once you call <code>load.project()</code>.</p>
+<p>After making this change, the <code>logger</code> object will be created once you call <code>load.project()</code>:</p>
+
+<p><img src="./logging.jpg" alt="Logging" title="" /></p>
+
+<h1>Data Tables</h1>
+
+<p>The <code>data.table</code>'s package allows you to create a variant of the typical R data frame that provides indices. Indices make locating and selecting subsets of your data much faster than the typical vector scan that R uses when working with data frames. To automatically convert all of the data frames loaded from the <code>data</code> directory into <code>data.table</code>'s, change the configuration option in <code>config/global.dcf</code> to <code>data_tables: on</code>. After that, you can check for tables by calling the <code>tables()</code> function.</p>
 
 <h1>Data Diagnostics</h1>
 
