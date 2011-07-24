@@ -1,17 +1,83 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-		<title>ProjectTemplate</title>
-		<link rel="stylesheet" href="style.css" type="text/css" media="screen" />
-	</head>
-	<body>
-    <h1>Getting Started with ProjectTemplate</h1>
+<!doctype html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
 
-<p>Let's set up a new data analysis project using ProjectTemplate.</p>
+	<!-- Basic Page Needs
+  ================================================== -->
+	<meta charset="utf-8" />
+	<title>ProjectTemplate</title>
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	
+	<!-- Mobile Specific Metas
+  ================================================== -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" /> 
+	
+	<!-- CSS
+  ================================================== -->
+	<link rel="stylesheet" href="stylesheets/base.css">
+	<link rel="stylesheet" href="stylesheets/skeleton.css">
+	<link rel="stylesheet" href="stylesheets/layout.css">
+	<link rel="stylesheet" href="stylesheets/docs.css">
+	
+	<!-- Favicons
+	================================================== -->
+	<link rel="shortcut icon" href="images/favicon.ico">
+	<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png" />
+	<link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png" />
+	
+</head>
+<body>
 
-<p>Before we start, you should make sure that you've <a href="./installing.html">installed</a> ProjectTemplate. You'll also need to download the sample data set we'll use, <a href="./letters.csv.bz2">letters.csv.bz2</a>.</p>
+
+
+
+
+	<!-- Primary Page Layout
+	================================================== -->
+	
+	<!-- Delete everything in this .container and get started on your own site! -->
+
+	<div class="container">	
+	  <div class="sixteen columns">
+  	  <a title="ProjectTemplate" label="ProjectTemplate" href="index.html"><img src="logo.jpg" height="75" width="405" /></a>
+  	  <hr />
+  	</div>
+
+      <div class="four columns sidebar">
+        <nav>
+  	<ul>
+  	  <li><a title="intro" href="./index.html">Introduction</a></li>
+      <li><a title="installing" href="./installing.html">Installing</a></li>
+      <li><a title="getting_started" href="./getting_started.html">Getting Started</a></li>
+      <li><a title="mastering" href="./mastering.html">Mastering ProjectTemplate</a></li>
+      <li><a title="configuring" href="./configuring.html">Configuring</a></li>
+      <li><a title="updating" href="./updating.html">Updating</a></li>
+      <li><a title="architecture" href="./architecture.html">Architecture</a></li>
+      <li><a title="file_formats" href="./file_formats.html">Supported File Formats</a></li>
+      <li><a title="changes" href="./changes.html">Changes</a></li>
+      <li><a title="mailing_list" href="./mailing_list.html">Mailing List</a></li>
+      <li><a title="contributing" href="./contributing.html">Contributing</a></li>
+      <li><a title="packages" href="./packages.html">Building Packages</a></li>
+      <li><a title="github" href="https://github.com/johnmyleswhite/ProjectTemplate">ProjectTemplate on GitHub</a></li>
+      <!--<li><a title="README" href="./README.html">README</a></li>-->
+      <!--<li><a title="TODO" href="./TODO.html">TODO</a></li>-->
+  	</ul>
+  	</nav>
+      </div>
+
+
+    <div class="eleven columns content offset-by-one">
+      <p>Let's set up a new data analysis project using ProjectTemplate.</p>
+
+<p>Before we start, you should make sure that you've <a href="./installing.html">installed</a> ProjectTemplate. You'll also need to download the sample data set we'll use, which is stored in a file called <a href="./letters.csv.bz2">letters.csv.bz2</a>.</p>
 
 <p>Once you've got both of those things done, you can open up R and type</p>
 
@@ -24,14 +90,14 @@
 <pre><code>    cd letters
 </code></pre>
 
-<p>Once you're in the <code>letters</code> directory, you can open up your new project in your favorite text editor. I like using TextMate as an editor, since it will show the structure of our entire project in a sidebar:</p>
+<p>Once you're in the <code>letters</code> directory, you can open up your new project in your favorite text editor. I like using TextMate as an editor, since it will show the structure of the entire project in a sidebar:</p>
 
 <pre><code>    mate .
 </code></pre>
 
 <p><img src="./directories.jpg" alt="ProjectTemplate Directories" title="" /></p>
 
-<p>As you can see, <code>create.project()</code> has set up a whole series of subdirectories for us. We'll see what each of these does as we move on. For now, let's just pull in that data file <code>letters.csv.bz2</code> that you downloaded earlier. We'll place it into the <code>data</code> directory:</p>
+<p>As you can see, <code>create.project()</code> has set up a whole series of subdirectories for us to use when organizing our analysis. We'll see what each of these does as we move on. For now, let's just pull in that data file <code>letters.csv.bz2</code> that you downloaded earlier. We'll place it into the <code>data</code> directory:</p>
 
 <pre><code>    mv ~/Downloads/letters.csv.bz2 data
 </code></pre>
@@ -57,7 +123,7 @@
 
 <p><img src="./head.jpg" alt="head() Output" title="" /></p>
 
-<p>As you can see, we've got a data frame that contains 233,614 words along with the first and second letter of each word in a separate column. For our current analysis, we're interested in the total number of occurrences of each letter in the first and second letter positions and not in the words themselves. For that reason, we can generate aggregate letter counts using the <code>ddply()</code> function from the plyr package. Wanting to work with aggregate counts instead of the raw data set we stored in <code>data</code> naturally leads us to ProjectTemplate's automatic package loading and data munging tools.</p>
+<p>As you can see, we've got a data frame that contains 233,614 words along with the first and second letter of each word in a separate column. For our current analysis, we're interested in the total number of occurrences of each letter in the first and second letter positions and not in the words themselves. For that reason, we can generate aggregate letter counts using the <code>ddply()</code> function from the <a href="http://plyr.had.co.nz/"><code>plyr</code></a> package. Wanting to work with aggregate counts instead of the raw data set we stored in the <code>data</code> directory naturally leads us to working with ProjectTemplate's automatic package loading and data munging tools.</p>
 
 <p>To use <code>plyr</code>, we need to load the package. ProjectTemplate makes it easy to automate this step. First, we have to edit the <code>config/global.dcf</code> file to make sure that the <code>load_libraries</code> setting is turned on:</p>
 
@@ -75,7 +141,7 @@
     second.letter.counts &lt;- ddply(letters, c('SecondLetter'), nrow)
 </code></pre>
 
-<p>Now that we've edited this munging script, our aggregation preprocessing step will take place every time we run <code>load.project()</code>. Indeed, you'll see that preprocessing take place if you close R, open it again and rerun <code>load.project()</code>:</p>
+<p>Now that we've edited this munging script, our aggregation preprocessing step will take place every time we run <code>load.project()</code>. Indeed, you'll see that preprocessing step take place if you close R, open it again and then rerun <code>load.project()</code>:</p>
 
 <pre><code>    library('ProjectTemplate')
     load.project()
@@ -139,5 +205,25 @@
 
 <p>With that report written and stored in the <code>reports</code> directory, we've gone through the simplest sort of analysis you might run with ProjectTemplate. Along the way, we've shown some of ProjectTemplate's basic and intermediate features. In a future piece of documentation, we'll describe some of the more advanced features that ProjectTemplate offers.</p>
 
-	</body>
+    </div>
+    
+    <div class="sixteen columns">
+      <hr />
+      <footer>
+      Styled with <a href="http://www.getskeleton.com/">skeleton</a>. Design ideas taken from the <a href="http://plyr.had.co.nz/">plyr</a> and <a href="http://www.rapache.net/">rApache</a> websites.
+      </footer>
+    </div>
+    
+	</div>
+	<!-- container -->
+
+	<!-- JS
+	================================================== -->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.js"></script>
+	<script>window.jQuery || document.write("<script src='javascripts/jquery-1.5.1.min.js'>\x3C/script>")</script>
+	<script src="javascripts/app.js"></script>
+	
+<!-- End Document
+================================================== -->
+</body>
 </html>

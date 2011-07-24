@@ -1,8 +1,6 @@
-# Getting Started with ProjectTemplate
-
 Let's set up a new data analysis project using ProjectTemplate.
 
-Before we start, you should make sure that you've [installed](./installing.html) ProjectTemplate. You'll also need to download the sample data set we'll use, [letters.csv.bz2](./letters.csv.bz2).
+Before we start, you should make sure that you've [installed](./installing.html) ProjectTemplate. You'll also need to download the sample data set we'll use, which is stored in a file called [letters.csv.bz2](./letters.csv.bz2).
 
 Once you've got both of those things done, you can open up R and type
 
@@ -13,13 +11,13 @@ You can now exit R and change into the directory `letters` that you just set up:
 
 		cd letters
 
-Once you're in the `letters` directory, you can open up your new project in your favorite text editor. I like using TextMate as an editor, since it will show the structure of our entire project in a sidebar:
+Once you're in the `letters` directory, you can open up your new project in your favorite text editor. I like using TextMate as an editor, since it will show the structure of the entire project in a sidebar:
 
 		mate .
 
 ![ProjectTemplate Directories](./directories.jpg)
 
-As you can see, `create.project()` has set up a whole series of subdirectories for us. We'll see what each of these does as we move on. For now, let's just pull in that data file `letters.csv.bz2` that you downloaded earlier. We'll place it into the `data` directory:
+As you can see, `create.project()` has set up a whole series of subdirectories for us to use when organizing our analysis. We'll see what each of these does as we move on. For now, let's just pull in that data file `letters.csv.bz2` that you downloaded earlier. We'll place it into the `data` directory:
 
 		mv ~/Downloads/letters.csv.bz2 data
 
@@ -42,7 +40,7 @@ The `letters` data set takes a few seconds to load into R because it contains 23
 
 ![head() Output](./head.jpg)
 
-As you can see, we've got a data frame that contains 233,614 words along with the first and second letter of each word in a separate column. For our current analysis, we're interested in the total number of occurrences of each letter in the first and second letter positions and not in the words themselves. For that reason, we can generate aggregate letter counts using the `ddply()` function from the plyr package. Wanting to work with aggregate counts instead of the raw data set we stored in `data` naturally leads us to ProjectTemplate's automatic package loading and data munging tools.
+As you can see, we've got a data frame that contains 233,614 words along with the first and second letter of each word in a separate column. For our current analysis, we're interested in the total number of occurrences of each letter in the first and second letter positions and not in the words themselves. For that reason, we can generate aggregate letter counts using the `ddply()` function from the [`plyr`](http://plyr.had.co.nz/) package. Wanting to work with aggregate counts instead of the raw data set we stored in the `data` directory naturally leads us to working with ProjectTemplate's automatic package loading and data munging tools.
 
 To use `plyr`, we need to load the package. ProjectTemplate makes it easy to automate this step. First, we have to edit the `config/global.dcf` file to make sure that the `load_libraries` setting is turned on:
 
@@ -57,7 +55,7 @@ After checking these settings, we know that we have the proper tools in place to
 		first.letter.counts <- ddply(letters, c('FirstLetter'), nrow)
 		second.letter.counts <- ddply(letters, c('SecondLetter'), nrow)
 
-Now that we've edited this munging script, our aggregation preprocessing step will take place every time we run `load.project()`. Indeed, you'll see that preprocessing take place if you close R, open it again and rerun `load.project()`:
+Now that we've edited this munging script, our aggregation preprocessing step will take place every time we run `load.project()`. Indeed, you'll see that preprocessing step take place if you close R, open it again and then rerun `load.project()`:
 
 		library('ProjectTemplate')
 		load.project()

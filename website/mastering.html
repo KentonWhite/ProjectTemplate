@@ -1,25 +1,91 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-		<title>ProjectTemplate</title>
-		<link rel="stylesheet" href="style.css" type="text/css" media="screen" />
-	</head>
-	<body>
-    <h1>Mastering ProjectTemplate</h1>
+<!doctype html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
 
-<p>Before you work through this walkthrough, you should make sure you've read (or at least understood) the contents of the <a href="./getting_started.html">beginner's tutorial</a>.</p>
+	<!-- Basic Page Needs
+  ================================================== -->
+	<meta charset="utf-8" />
+	<title>ProjectTemplate</title>
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	
+	<!-- Mobile Specific Metas
+  ================================================== -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" /> 
+	
+	<!-- CSS
+  ================================================== -->
+	<link rel="stylesheet" href="stylesheets/base.css">
+	<link rel="stylesheet" href="stylesheets/skeleton.css">
+	<link rel="stylesheet" href="stylesheets/layout.css">
+	<link rel="stylesheet" href="stylesheets/docs.css">
+	
+	<!-- Favicons
+	================================================== -->
+	<link rel="shortcut icon" href="images/favicon.ico">
+	<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png" />
+	<link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png" />
+	
+</head>
+<body>
 
-<h1>Ad Hoc File Types</h1>
+
+
+
+
+	<!-- Primary Page Layout
+	================================================== -->
+	
+	<!-- Delete everything in this .container and get started on your own site! -->
+
+	<div class="container">	
+	  <div class="sixteen columns">
+  	  <a title="ProjectTemplate" label="ProjectTemplate" href="index.html"><img src="logo.jpg" height="75" width="405" /></a>
+  	  <hr />
+  	</div>
+
+      <div class="four columns sidebar">
+        <nav>
+  	<ul>
+  	  <li><a title="intro" href="./index.html">Introduction</a></li>
+      <li><a title="installing" href="./installing.html">Installing</a></li>
+      <li><a title="getting_started" href="./getting_started.html">Getting Started</a></li>
+      <li><a title="mastering" href="./mastering.html">Mastering ProjectTemplate</a></li>
+      <li><a title="configuring" href="./configuring.html">Configuring</a></li>
+      <li><a title="updating" href="./updating.html">Updating</a></li>
+      <li><a title="architecture" href="./architecture.html">Architecture</a></li>
+      <li><a title="file_formats" href="./file_formats.html">Supported File Formats</a></li>
+      <li><a title="changes" href="./changes.html">Changes</a></li>
+      <li><a title="mailing_list" href="./mailing_list.html">Mailing List</a></li>
+      <li><a title="contributing" href="./contributing.html">Contributing</a></li>
+      <li><a title="packages" href="./packages.html">Building Packages</a></li>
+      <li><a title="github" href="https://github.com/johnmyleswhite/ProjectTemplate">ProjectTemplate on GitHub</a></li>
+      <!--<li><a title="README" href="./README.html">README</a></li>-->
+      <!--<li><a title="TODO" href="./TODO.html">TODO</a></li>-->
+  	</ul>
+  	</nav>
+      </div>
+
+
+    <div class="eleven columns content offset-by-one">
+      <p>Before you work through this walkthrough, you should make sure you've read (or at least understood) the contents of the <a href="./getting_started.html">beginner's tutorial</a>.</p>
+
+<h4>Ad Hoc File Types</h4>
 
 <p>In the <a href="./getting_started.html">beginner's tutorial</a>, we showed how ProjectTemplate automatically loads data files from the <code>data</code> and <code>cache</code> directories. If you're working with plain text files or any of the <a href="./file_formats.html">supported binary file formats</a>, this automatic data loading should work out of the box without any effort on your part. But if you have to retrieve data sets from more complex data sources, ProjectTemplate has advanced features that will let you set up ad hoc autoloading. In the rest of this document, we'll talk about working with SQL databases, remote resources available over HTTP and FTP, large data files stored on external drives and R files that contain code that generates data at runtime.</p>
 
-<h2>SQLite Databases</h2>
+<h5>SQLite Databases</h5>
 
 <p>Let's start by working with a SQLite database. We'll use a database from the Analytics X competition in which contestants were trying to predict crimes that took place in Philadelphia. You can download the database file <a href="./philapd.db.zip">here</a>. To save on bandwidth, we've compressed the database, so you should uncompress it before going through the rest of this tutorial.</p>
 
-<h3>Autoloading the Database</h3>
+<h6>Autoloading the Database</h6>
 
 <p>The simplest way to access the database is to store the <code>philapd.db</code> file in the <code>data</code> directory of a new project. Let's set up a project using the standard ProjectTemplate invocation:</p>
 
@@ -45,7 +111,7 @@
 
 <p>For most users, this automatic loading procedure is probably enough. But if you need more fine-grained control, you can use the <code>.sql</code> ad hoc file type to load specific tables from a SQLite database. You can also specify an exact SQL query to run against the database. We'll go through all three cases below.</p>
 
-<h3>Load One Specific Table</h3>
+<h6>Load One Specific Table</h6>
 
 <p>First, let's move the <code>philapd.db</code> file out of the <code>data</code> directory to prevent it from being autoloaded:</p>
 
@@ -63,7 +129,7 @@
 
 <p><img src="./mastering2.jpg" alt="Autoloading" title="" /></p>
 
-<h3>Load All Tables from a Specific Database</h3>
+<h6>Load All Tables from a Specific Database</h6>
 
 <p>If we want to load all of the tables from a database file that we can't place inside of the <code>data</code> directory, we can use a <code>.sql</code> file to do this by replacing the name of a specific table with an asterisk:</p>
 
@@ -74,7 +140,7 @@
 
 <p><img src="./mastering3.jpg" alt="Autoloading" title="" /></p>
 
-<h3>Loading Data with an SQL Query</h3>
+<h6>Loading Data with an SQL Query</h6>
 
 <p>You can also load a subset of your data by specifying an SQL query instead of a table in your <code>.sql</code> file:</p>
 
@@ -85,9 +151,9 @@
 
 <p><img src="./mastering4.jpg" alt="Autoloading" title="" /></p>
 
-<h2>MySQL Databases</h2>
+<h5>MySQL, PostGres or ODBC Databases</h5>
 
-<p>Working with a MySQL database is exactly as easy as using a <code>.sql</code> file to access a SQLite database. All that changes is the use of the <code>mysql</code> type instead of the <code>sqlite</code> type:</p>
+<p>Working with a MySQL, PostGres or ODBC database is exactly as easy as using a <code>.sql</code> file to access a SQLite database. All that changes is the use of the <code>mysql</code>, <code>postgres</code> or <code>odbc</code> types instead of the <code>sqlite</code> type:</p>
 
 <pre><code>    type: mysql
     user: sample_user
@@ -95,11 +161,25 @@
     host: localhost
     dbname: philapd
     table: location_info
+
+    type: postgres
+    user: sample_user
+    password: sample_password
+    host: localhost
+    dbname: philapd
+    table: location_info
+
+    type: odbc
+    user: sample_user
+    password: sample_password
+    host: localhost
+    dbname: philapd
+    table: location_info
 </code></pre>
 
-<h2>URL Files</h2>
+<h5>URL Files</h5>
 
-<p>If you need to access a file that's available over HTTP or FTP, you can use a <code>.url</code> file. Inside of the file, you'll specify the URL where your data set is available and the type of data set you're accessing. Here, we'll use a <code>data/sample.url</code> file to load the ProjectTemplate standard sample data set over HTTP:</p>
+<p>If you need to access a file that's available over HTTP or FTP, you can use a <code>.url</code> file. Inside of the file, you'll specify the URL where your data set is available and the type of data set you're accessing. Here, we'll use a <code>data/sample.url</code> file to load the standard ProjectTemplate sample data set over HTTP:</p>
 
 <pre><code>    url: http://www.johnmyleswhite.com/ProjectTemplate/sample_data.csv
     separator: ,
@@ -107,7 +187,7 @@
 
 <p><img src="./mastering5.jpg" alt="Autoloading" title="" /></p>
 
-<h2>.file Files</h2>
+<h5>.file Files</h5>
 
 <p>If you need to access a file that's stored outside of the project's main directory, you use a <code>.file</code> file. Inside of the file, you'll specify the path of the data file and the extension of the data set you're accessing:</p>
 
@@ -117,7 +197,7 @@
 
 <p><img src="./mastering6.jpg" alt="Autoloading" title="" /></p>
 
-<h2>R Files</h2>
+<h5>R Files</h5>
 
 <p>Sometimes you want to generate random data for your analysis: this, after all, is the heart of Monte Carlo analyses of statistical methods. You can do this by inserting R code into a file in the <code>data</code> directory. We'll put this into the <code>data/d.R</code> file:</p>
 
@@ -127,11 +207,11 @@
 
 <p><img src="./mastering7.jpg" alt="Autoloading" title="" /></p>
 
-<h2>Media Files: MP3's and PPM's</h2>
+<h5>Media Files: MP3's and PPM's</h5>
 
 <p>Sometimes you want to work with more interesting sorts of data than a typical text file. ProjectTemplate now has basic support for loading media files into R. To load an MP3 audio file into an R object for analysis, simply place the <code>.mp3</code> file in the <code>data</code> directory. The <code>tuneR</code> package will be automatically loaded by ProjectTemplate and the MP3 file will be read into an R object in the global environment. Similarly, if you want to load a PPM image file, just place the <code>.ppm</code> file into the <code>data</code> directory. ProjectTemplate will then use the <code>pixmap</code> package to load the image file into an R object in the global environment.</p>
 
-<h1>Unit Testing Your Project</h1>
+<h4>Unit Testing Your Project</h4>
 
 <p>ProjectTemplate has been designed to make it easier to unit test the functions you've written for your analysis. To get started, you can call <code>stub.tests()</code>, which will generate a file at <code>tests/autogenerated.R</code> filled with sample tests for every one of the functions you defined inside of the <code>lib</code> directory. You should edit these tests, as they are expected to fail by default.</p>
 
@@ -139,7 +219,7 @@
 
 <p><img src="./unit_tests.jpg" alt="Unit Tests" title="" /></p>
 
-<h1>Logging Your Work</h1>
+<h4>Logging Your Work</h4>
 
 <p>If you want to log your work, ProjectTemplate will automatically load a <a href="https://github.com/johnmyleswhite/log4r">log4r</a> logger object into the <code>logger</code> variable that will write to a plain text stored at the <code>logs/project.log</code>. To use this logger, you only need to change the configuration file to specify:</p>
 
@@ -150,17 +230,37 @@
 
 <p><img src="./logging.jpg" alt="Logging" title="" /></p>
 
-<h1>Data Tables</h1>
+<h4>Data Tables</h4>
 
 <p>The <code>data.table</code>'s package allows you to create a variant of the typical R data frame that provides indices. Indices make locating and selecting subsets of your data much faster than the typical vector scan that R uses when working with data frames. To automatically convert all of the data frames loaded from the <code>data</code> directory into <code>data.table</code>'s, change the configuration option in <code>config/global.dcf</code> to <code>data_tables: on</code>. After that, you can check for tables by calling the <code>tables()</code> function.</p>
 
-<h1>Data Diagnostics</h1>
+<h4>Data Diagnostics</h4>
 
 <p>Coming soon</p>
 
-<h1>Profiling Your Project</h1>
+<h4>Profiling Your Project</h4>
 
 <p>Coming soon</p>
 
-	</body>
+    </div>
+    
+    <div class="sixteen columns">
+      <hr />
+      <footer>
+      Styled with <a href="http://www.getskeleton.com/">skeleton</a>. Design ideas taken from the <a href="http://plyr.had.co.nz/">plyr</a> and <a href="http://www.rapache.net/">rApache</a> websites.
+      </footer>
+    </div>
+    
+	</div>
+	<!-- container -->
+
+	<!-- JS
+	================================================== -->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.js"></script>
+	<script>window.jQuery || document.write("<script src='javascripts/jquery-1.5.1.min.js'>\x3C/script>")</script>
+	<script src="javascripts/app.js"></script>
+	
+<!-- End Document
+================================================== -->
+</body>
 </html>

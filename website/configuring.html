@@ -1,23 +1,111 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-		<title>ProjectTemplate</title>
-		<link rel="stylesheet" href="style.css" type="text/css" media="screen" />
-	</head>
-	<body>
-    <h1>Configuring ProjectTemplate</h1>
+<!doctype html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+
+	<!-- Basic Page Needs
+  ================================================== -->
+	<meta charset="utf-8" />
+	<title>ProjectTemplate</title>
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	
+	<!-- Mobile Specific Metas
+  ================================================== -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" /> 
+	
+	<!-- CSS
+  ================================================== -->
+	<link rel="stylesheet" href="stylesheets/base.css">
+	<link rel="stylesheet" href="stylesheets/skeleton.css">
+	<link rel="stylesheet" href="stylesheets/layout.css">
+	<link rel="stylesheet" href="stylesheets/docs.css">
+	
+	<!-- Favicons
+	================================================== -->
+	<link rel="shortcut icon" href="images/favicon.ico">
+	<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png" />
+	<link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png" />
+	
+</head>
+<body>
+
+
+
+
+
+	<!-- Primary Page Layout
+	================================================== -->
+	
+	<!-- Delete everything in this .container and get started on your own site! -->
+
+	<div class="container">	
+	  <div class="sixteen columns">
+  	  <a title="ProjectTemplate" label="ProjectTemplate" href="index.html"><img src="logo.jpg" height="75" width="405" /></a>
+  	  <hr />
+  	</div>
+
+      <div class="four columns sidebar">
+        <nav>
+  	<ul>
+  	  <li><a title="intro" href="./index.html">Introduction</a></li>
+      <li><a title="installing" href="./installing.html">Installing</a></li>
+      <li><a title="getting_started" href="./getting_started.html">Getting Started</a></li>
+      <li><a title="mastering" href="./mastering.html">Mastering ProjectTemplate</a></li>
+      <li><a title="configuring" href="./configuring.html">Configuring</a></li>
+      <li><a title="updating" href="./updating.html">Updating</a></li>
+      <li><a title="architecture" href="./architecture.html">Architecture</a></li>
+      <li><a title="file_formats" href="./file_formats.html">Supported File Formats</a></li>
+      <li><a title="changes" href="./changes.html">Changes</a></li>
+      <li><a title="mailing_list" href="./mailing_list.html">Mailing List</a></li>
+      <li><a title="contributing" href="./contributing.html">Contributing</a></li>
+      <li><a title="packages" href="./packages.html">Building Packages</a></li>
+      <li><a title="github" href="https://github.com/johnmyleswhite/ProjectTemplate">ProjectTemplate on GitHub</a></li>
+      <!--<li><a title="README" href="./README.html">README</a></li>-->
+      <!--<li><a title="TODO" href="./TODO.html">TODO</a></li>-->
+  	</ul>
+  	</nav>
+      </div>
+
+
+    <div class="eleven columns content offset-by-one">
+      <p>The current configuration settings exist in the <code>config/global.dcf</code> file:</p>
 
 <ul>
-<li><code>data_loading</code>: This can be set to 'on' or 'off'. If <code>data_loading</code> is on, the system will load data from both the <code>cache</code> and <code>data</code> directories with <code>cache</code> taking precedence in case of name conflict. By default, <code>data_loading</code> is on.</li>
-<li><code>munging</code>: This can be set to 'on' or 'off'. If <code>munging</code> is on, the system will execute the files in the <code>munge</code> directory sequentially. If <code>munging</code> is off, none of the files in the <code>munge</code> directory will be executed. By default, <code>munging</code> is on.</li>
+<li><code>data_loading</code>: This can be set to 'on' or 'off'. If <code>data_loading</code> is on, the system will load data from both the <code>cache</code> and <code>data</code> directories with <code>cache</code> taking precedence in the case of name conflict. By default, <code>data_loading</code> is on.</li>
+<li><code>munging</code>: This can be set to 'on' or 'off'. If <code>munging</code> is on, the system will execute the files in the <code>munge</code> directory sequentially using the order implied by the <code>sort()</code> function. If <code>munging</code> is off, none of the files in the <code>munge</code> directory will be executed. By default, <code>munging</code> is on.</li>
 <li><code>logging</code>: This can be set to 'on' or 'off'. If <code>logging</code> is on, a logger object using the <code>log4r</code> package is automatically created when you run <code>load.project()</code>. This logger will write to the <code>logs</code> directory. By default, <code>logging</code> is off.</li>
-<li><code>load_libraries</code>: This can be set to 'on' or 'off'. If <code>load_libraries</code> is on, the system will load all of the R packages listed in the <code>libraries</code> field below. By default, <code>load_libraries</code> is off.</li>
-<li><code>libraries</code>: This is a comma separate list of all the R packages that the user wants to automatically load when <code>load.project()</code> is called. These packages must already be installed before calling <code>load.project()</code>. By default, the reshape, plyr, ggplot2, stringr and lubridate packages are included in this list.</li>
-<li><code>as_factors</code>: This can be set to 'on' or 'off'. If <code>as_factors</code> is on, the system will convert every character vector into a factor when creating data frames; most importantly, this occurs when reading in data. If off, character vectors will remain character vectors. By default, <code>as_factors</code> is on.</li>
+<li><code>load_libraries</code>: This can be set to 'on' or 'off'. If <code>load_libraries</code> is on, the system will load all of the R packages listed in the <code>libraries</code> field described below. By default, <code>load_libraries</code> is off.</li>
+<li><code>libraries</code>: This is a comma separated list of all the R packages that the user wants to automatically load when <code>load.project()</code> is called. These packages must already be installed before calling <code>load.project()</code>. By default, the reshape, plyr, ggplot2, stringr and lubridate packages are included in this list.</li>
+<li><code>as_factors</code>: This can be set to 'on' or 'off'. If <code>as_factors</code> is on, the system will convert every character vector into a factor when creating data frames; most importantly, this automatic conversion occurs when reading in data automatically. If 'off', character vectors will remain character vectors. By default, <code>as_factors</code> is on.</li>
 <li><code>data_tables</code>: This can be set to 'on' or 'off'. If <code>data_tables</code> is on, the system will convert every data set loaded from the <code>data</code> directory into a <code>data.table</code>. By default, <code>data_tables</code> is off.</li>
 </ul>
 
-	</body>
+    </div>
+    
+    <div class="sixteen columns">
+      <hr />
+      <footer>
+      Styled with <a href="http://www.getskeleton.com/">skeleton</a>. Design ideas taken from the <a href="http://plyr.had.co.nz/">plyr</a> and <a href="http://www.rapache.net/">rApache</a> websites.
+      </footer>
+    </div>
+    
+	</div>
+	<!-- container -->
+
+	<!-- JS
+	================================================== -->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.js"></script>
+	<script>window.jQuery || document.write("<script src='javascripts/jquery-1.5.1.min.js'>\x3C/script>")</script>
+	<script src="javascripts/app.js"></script>
+	
+<!-- End Document
+================================================== -->
+</body>
 </html>

@@ -1,14 +1,13 @@
-# Changes in ProjectTemplate
 The list of changes below is not necessarily exhaustive. Check the ChangeLog on [GitHub](https://github.com/johnmyleswhite/ProjectTemplate) for more details, but the raw ProjectTemplate source code is always the place to go for ground truth.
 
-# v0.3-6
+#### v0.3-6
 
 * Added Postgres support through RPostgreSQL
 * Very rough ODBC support. See example in `ProjectTemplate:::sql.reader` documentation.
 * `.dat` files are now read as if they were `.wsv` files.
 * Revised documentation.
 
-# v0.3-5
+#### v0.3-5
 
 * Added a `cache.project()` function.
 * `as_factors` configuration option suppresses automatic character-to-factor conversion.
@@ -18,7 +17,7 @@ The list of changes below is not necessarily exhaustive. Check the ChangeLog on 
 * `data_tables` configuration option automatically translates data sets into data.tables.
 * Added unit tests for SPSS, Stata and SAS file formats.
 
-# v0.3-4
+#### v0.3-4
 
 * Improved SQLite3 support:
   * Load all tables from SQLite3 database using a `.sql` file: set `table = "*"`
@@ -28,18 +27,18 @@ The list of changes below is not necessarily exhaustive. Check the ChangeLog on 
 * Added a `stub.tests()` function that autogenerates tests for helper functions.
 * Added a `show.project()` function that gives all known information about a project's internal state.
 
-# v0.3-3
+#### v0.3-3
 
 * Added a `reload.project()` function.
 * Improved error handling.
 * Renamed `utilities.R` to `helpers.R`.
 * Fixed a bug in `cache()`.
 
-# v0.3-2
+#### v0.3-2
 
 * Added support for several new data formats.
 
-# v0.3-1
+#### v0.3-1
 
 * Changed the configuration system from YAML to DCF format.
 * Moved the data loading helper functions into separate files. They are no longer nested inside of `load.project()`.
@@ -48,7 +47,7 @@ The list of changes below is not necessarily exhaustive. Check the ChangeLog on 
 * Switched all the `print()` calls to `message()` calls.
 * Fixed a bug in cache().
 
-# v0.2-1
+#### v0.2-1
 
 * Version 0.2-1 adds the following directories:
   * `cache`

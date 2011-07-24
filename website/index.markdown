@@ -1,24 +1,18 @@
-## ProjectTemplate is an R package that makes data analysis easier:
+ProjectTemplate is a system for automating the thoughtless parts of a data analysis project:
 
-- Automatic data loading
-- Standardized preprocessing across multiple analyses
-- Best practices file organization
-- A curated set of R packages to use
+* Organizing the files in your project.
+* Loading all the R packages you'll use.
+* Loading all of your data sets into memory.
+* Munging and preprocessing your data into a form that's suitable for analysis.
 
-## To learn more about ProjectTemplate, see the links below:
+In addition to automating the drudge work of analyzing data, ProjectTemplate hopes to promote better coding and analysis practices by:
 
-- [An Introduction to ProjectTemplate](./intro.html)
-- [Installing ProjectTemplate](./installing.html)
-- [Getting Started with ProjectTemplate](./getting_started.html)
-- [Mastering ProjectTemplate's Advanced Features](./mastering.html)
-- [Configuring ProjectTemplate](./configuring.html)
-- [Updating to the Latest Version](./updating.html)
-- [ProjectTemplate's Architecture](./architecture.html)
-- [Supported File Formats](./file_formats.html)
-- [Changes across ProjectTemplate Versions](./changes.html)
-- [The ProjectTemplate Mailing List](./mailing_list.html)
-- [ProjectTemplate on GitHub](https://github.com/johnmyleswhite/ProjectTemplate)
-- [Contributing to ProjectTemplate](./contributing.html)
-- [Building Packages](./packages.html)
-- [The ProjectTemplate README](./README.html)
-- [The ProjectTemplate TODO](./TODO.html)
+* Curating the best R packages.
+* Providing simple tools for keeping a log of your work
+* Providing template code for:
+	* Data diagnostics
+	* Data munging
+	* Code profiling
+	* Unit testing
+
+To learn how to use ProjectTemplate, we suggest going through the [ProjectTemplate tutorial](./getting_started.html).

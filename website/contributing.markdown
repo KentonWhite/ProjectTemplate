@@ -1,13 +1,11 @@
-# Contributing to ProjectTemplate
-
 If you have changes you'd like to make to ProjectTemplate, we'd love to see them. We'd prefer that you fork ProjectTemplate through GitHub and submit a pull request. If that's not possible, please e-mail a patch to the [mailing list](./mailing_list.html) so that we can manually incorporate your changes.
 
-# Commit Team
+#### Commit Team
 
 * John Myles White
 * Allen Goodman
 
-# Code Contributors
+#### Code Contributors
 
 * Diego Valle-Jones
 * Patrick Schalk
@@ -15,7 +13,7 @@ If you have changes you'd like to make to ProjectTemplate, we'd love to see them
 * Jeffrey Breen
 * Aleksandar Blagotic
 
-# Idea Contributors and Inspiration
+#### Idea Contributors and Inspiration
 
 * Hadley Wickham
 * Mike Dewar
