@@ -19,12 +19,10 @@
 * Add `create.project(dump = TRUE)` feature.
 
 ## Documentation
-* Find out to create `dontrun` examples using roxygen.
-* Find out how to control `Collate:` statement using devtools.
 * Document possible data pipelines through `data` and `cache`.
 * Produce a screencast featuring SQLite and SPSS autoloading and letters data.
 * Document overriding a default reader.
-* Show users how to install ProjectTemplate from GitHub using devtools.
+* Create a tarball of the final state of the walkthrough project for the intro tutorial.
 
 ## Internal State
 * `cache.project()` needs to deal with tools that generate data sets that don't meet naming conventions: e.g. `.db` files.

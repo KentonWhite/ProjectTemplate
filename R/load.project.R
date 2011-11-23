@@ -10,7 +10,7 @@
 #' @examples
 #' library('ProjectTemplate')
 #'
-#' #load.project()
+#' \dontrun{load.project()}
 load.project <- function()
 {
   project.info <- list()
@@ -85,6 +85,54 @@ load.project <- function()
   {
     warning('Your configuration file is missing an entry: data_loading')
   }
+  
+  if (config[['data_loading']] != 'on' && config[['cache_loading']] == 'on')
+  {
+    message('Autoloading cache')
+    
+    # First, we load everything out of cache/.
+    if (!file.exists('cache'))
+    {
+      stop('You are missing a directory: cache')
+    }
+    cache.files <- dir('cache')
+    project.info[['cache']] <- c()
+    
+    for (cache.file in cache.files)
+    {
+      filename <- file.path('cache', cache.file)
+      
+      for (extension in names(ProjectTemplate:::extensions.dispatch.table))
+      {
+        if (grepl(extension, cache.file, ignore.case = TRUE, perl = TRUE))
+        {
+          variable.name <- ProjectTemplate:::clean.variable.name(sub(extension,
+                                                   '',
+                                                   cache.file,
+                                                   ignore.case = TRUE,
+                                                   perl = TRUE))
+
+          # If this variable already exists in the global environment, don't load it from cache.
+          if (variable.name %in% ls(envir = .GlobalEnv))
+          {
+            next()
+          }
+          
+          message(paste(" Loading cached data set: ", variable.name, sep = ''))
+
+          do.call(ProjectTemplate:::extensions.dispatch.table[[extension]],
+                  list(cache.file,
+                       filename,
+                       variable.name))
+          
+          project.info[['cache']] <- c(project.info[['cache']], variable.name)
+          
+          break()
+        }
+      }
+    }
+  }
+  
   if (config[['data_loading']] == 'on')
   {
     message('Autoloading data')
