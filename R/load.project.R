@@ -81,11 +81,15 @@ load.project <- function()
     }
   }
 
+  if (is.null(config[['cache_loading']]))
+  {
+    warning('Your configuration file is missing an entry: cache_loading')
+  }
   if (is.null(config[['data_loading']]))
   {
     warning('Your configuration file is missing an entry: data_loading')
   }
-  
+
   if (config[['data_loading']] != 'on' && config[['cache_loading']] == 'on')
   {
     message('Autoloading cache')

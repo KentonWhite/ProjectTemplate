@@ -19,6 +19,7 @@
 * Add `create.project(dump = TRUE)` feature.
 
 ## Documentation
+* Document `cache_loading` setting.
 * Document possible data pipelines through `data` and `cache`.
 * Produce a screencast featuring SQLite and SPSS autoloading and letters data.
 * Document overriding a default reader.

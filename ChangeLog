@@ -1,3 +1,10 @@
+2011-11-23	John Myles White  <jmw@johnmyleswhite.com>
+
+* v0.4-1
+* Added 'eda.R' example file in 'src/' directory.
+* Allow loading from 'cache/' without loading from 'data/' through 'cache_loading' setting.
+* Revised documentation.
+
 2011-07-13	John Myles White  <jmw@johnmyleswhite.com>
 
 * v0.3-6
