@@ -25,6 +25,6 @@
 \examples{
 library('ProjectTemplate')
 
-#xlsx.reader('example.xlsx', 'data/example.xlsx', 'example')
+\dontrun{xlsx.reader('example.xlsx', 'data/example.xlsx', 'example')}
 }
 

@@ -14,8 +14,8 @@
 \examples{
 library('ProjectTemplate')
 
-#load.project()
+\dontrun{load.project()
 
-#reload.project()
+reload.project()}
 }
 

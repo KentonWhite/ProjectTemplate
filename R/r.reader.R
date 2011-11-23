@@ -13,7 +13,7 @@
 #' @examples
 #' library('ProjectTemplate')
 #'
-#' #r.reader('example.R', 'data/example.R', 'example')
+#' \dontrun{r.reader('example.R', 'data/example.R', 'example')}
 r.reader <- function(data.file, filename, variable.name)
 {
   source(filename)

@@ -15,8 +15,8 @@
 }
 \examples{
 library('ProjectTemplate')
-#load.project()
+\dontrun{load.project()
 
-#cache.project()
+cache.project()}
 }
 

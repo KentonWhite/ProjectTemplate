@@ -12,7 +12,7 @@
 #' @examples
 #' library('ProjectTemplate')
 #'
-#' #run.project()
+#' \dontrun{run.project()}
 run.project <- function()
 {
   message('Running project analyses from src')

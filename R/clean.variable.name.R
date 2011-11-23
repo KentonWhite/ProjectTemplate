@@ -13,7 +13,7 @@
 #' @examples
 #' library('ProjectTemplate')
 #'
-#' #clean.variable.name('example_1')
+#' \dontrun{clean.variable.name('example_1')}
 clean.variable.name <- function(variable.name)
 {
   variable.name <- gsub('^[^a-zA-Z0-9]+', '', variable.name, perl = TRUE)

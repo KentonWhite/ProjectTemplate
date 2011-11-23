@@ -23,6 +23,6 @@
 \examples{
 library('ProjectTemplate')
 
-#octave.reader('example.m', 'data/example.m', 'example')
+\dontrun{octave.reader('example.m', 'data/example.m', 'example')}
 }
 

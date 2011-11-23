@@ -23,6 +23,6 @@
 \examples{
 library('ProjectTemplate')
 
-#tsv.reader('example.tsv', 'data/example.tsv', 'example')
+\dontrun{tsv.reader('example.tsv', 'data/example.tsv', 'example')}
 }
 

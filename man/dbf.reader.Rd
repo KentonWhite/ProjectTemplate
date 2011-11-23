@@ -23,6 +23,6 @@
 \examples{
 library('ProjectTemplate')
 
-#dbf.reader('example.dbf', 'data/example.dbf', 'example')
+\dontrun{dbf.reader('example.dbf', 'data/example.dbf', 'example')}
 }
 

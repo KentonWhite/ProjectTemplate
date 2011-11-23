@@ -15,9 +15,9 @@
 #' @examples
 #' library('ProjectTemplate')
 #'
-#' #load.project()
+#' \dontrun{load.project()
 #'
-#' #show.project()
+#' show.project()}
 show.project <- function()
 {
   print(project.info)

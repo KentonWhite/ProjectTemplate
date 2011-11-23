@@ -26,7 +26,7 @@
 #' @examples
 #' library('ProjectTemplate')
 #'
-#' #create.project('MyProject')
+#' \dontrun{create.project('MyProject')}
 create.project <- function(project.name = 'new-project', minimal = FALSE, dump = FALSE)
 {
   tmp.dir <- paste(project.name, '_tmp', sep = '')

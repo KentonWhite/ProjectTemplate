@@ -13,7 +13,7 @@
 #' @examples
 #' library('ProjectTemplate')
 #'
-#' #xlsx.reader('example.xlsx', 'data/example.xlsx', 'example')
+#' \dontrun{xlsx.reader('example.xlsx', 'data/example.xlsx', 'example')}
 xlsx.reader <- function(data.file, filename, workbook.name)
 {
   library('xlsx')

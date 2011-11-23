@@ -14,7 +14,7 @@
 #' @examples
 #' library('ProjectTemplate')
 #'
-#' #db.reader('example.db', 'data/example.db', 'example')
+#' \dontrun{db.reader('example.db', 'data/example.db', 'example')}
 db.reader <- function(data.file, filename, variable.name)
 {
   library('RSQLite')

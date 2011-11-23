@@ -15,6 +15,6 @@
 \examples{
 library('ProjectTemplate')
 
-#run.project()
+\dontrun{run.project()}
 }
 

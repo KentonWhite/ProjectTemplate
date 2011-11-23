@@ -24,6 +24,6 @@
 \examples{
 library('ProjectTemplate')
 
-#mp3.reader('example.mp3', 'data/example.mp3', 'example')
+\dontrun{mp3.reader('example.mp3', 'data/example.mp3', 'example')}
 }
 

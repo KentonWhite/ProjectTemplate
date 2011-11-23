@@ -38,6 +38,6 @@
 \examples{
 library('ProjectTemplate')
 
-#create.project('MyProject')
+\dontrun{create.project('MyProject')}
 }
 

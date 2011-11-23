@@ -20,7 +20,7 @@
 #' @examples
 #' library('ProjectTemplate')
 #'
-#' #file.reader('example.file', 'data/example.file', 'example')
+#' \dontrun{file.reader('example.file', 'data/example.file', 'example')}
 file.reader <- function(data.file, filename, variable.name)
 {
   file.info <- ProjectTemplate:::translate.dcf(filename)

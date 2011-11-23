@@ -13,9 +13,9 @@
 #' @examples
 #' library('ProjectTemplate')
 #'
-#' #load.project()
+#' \dontrun{load.project()
 #'
-#' #test.project()
+#' test.project()}
 test.project <- function()
 {
   load.project()

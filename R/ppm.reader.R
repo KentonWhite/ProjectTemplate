@@ -13,7 +13,7 @@
 #' @examples
 #' library('ProjectTemplate')
 #'
-#' #ppm.reader('example.ppm', 'data/example.ppm', 'example')
+#' \dontrun{ppm.reader('example.ppm', 'data/example.ppm', 'example')}
 ppm.reader <- function(data.file, filename, variable.name)
 {
   library('pixmap')

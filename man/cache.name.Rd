@@ -18,6 +18,6 @@
 \examples{
 library('ProjectTemplate')
 
-#cache.name('example.1')
+\dontrun{cache.name('example.1')}
 }
 

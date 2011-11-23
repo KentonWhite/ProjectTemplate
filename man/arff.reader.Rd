@@ -21,6 +21,6 @@
   file format into the specified global variable binding.
 }
 \examples{
-#arff.reader('example.arff', 'data/example.arff', 'example')
+\dontrun{arff.reader('example.arff', 'data/example.arff', 'example')}
 }
 

@@ -12,7 +12,7 @@
 #' @examples
 #' library('ProjectTemplate')
 #'
-#' #csv.reader('example.csv', 'data/example.csv', 'example')
+#' \dontrun{csv.reader('example.csv', 'data/example.csv', 'example')}
 csv.reader <- function(data.file, filename, variable.name)
 {
   if (grepl('\\.zip$', filename))

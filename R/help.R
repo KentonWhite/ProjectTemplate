@@ -13,8 +13,8 @@
 #' @examples
 #' library('ProjectTemplate')
 #'
-#' #create.project('project_name')
+#' \dontrun{create.project('project_name')
 #'
-#' #setwd('project_name')
-#' #load.project()
+#' setwd('project_name')
+#' load.project()}
 NULL

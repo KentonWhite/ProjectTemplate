@@ -23,6 +23,6 @@
 \examples{
 library('ProjectTemplate')
 
-#wsv.reader('example.wsv', 'data/example.wsv', 'example')
+\dontrun{wsv.reader('example.wsv', 'data/example.wsv', 'example')}
 }
 

@@ -11,9 +11,9 @@
 #' @examples
 #' library('ProjectTemplate')
 #'
-#' #load.project()
+#' \dontrun{load.project()
 #'
-#' #reload.project()
+#' reload.project()}
 reload.project <- function()
 {
   rm(list = ls(.GlobalEnv), pos = .GlobalEnv)

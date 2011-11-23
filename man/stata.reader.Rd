@@ -23,6 +23,6 @@
 \examples{
 library('ProjectTemplate')
 
-#stata.reader('example.stata', 'data/example.stata', 'example')
+\dontrun{stata.reader('example.stata', 'data/example.stata', 'example')}
 }
 

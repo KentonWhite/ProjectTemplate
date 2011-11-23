@@ -13,7 +13,7 @@
 #' @examples
 #' library('ProjectTemplate')
 #'
-#' #stub.tests()
+#' \dontrun{stub.tests()}
 stub.tests <- function()
 {
   generate.arguments <- function(fun.name, tmp.env)

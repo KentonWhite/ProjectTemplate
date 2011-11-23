@@ -10,7 +10,7 @@
 #' @examples
 #' library('ProjectTemplate')
 #'
-#' #cache.name('example.1')
+#' \dontrun{cache.name('example.1')}
 cache.name <- function(data.filename)
 {
   return(gsub('\\..*', '', data.filename, perl = TRUE))

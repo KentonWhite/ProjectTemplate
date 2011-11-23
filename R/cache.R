@@ -13,15 +13,15 @@
 #' @export
 #' @examples
 #' library('ProjectTemplate')
-#' #create.project('tmp-project')
+#' \dontrun{create.project('tmp-project')
 #'
-#' #setwd('tmp-project')
+#' setwd('tmp-project')
 #'
-#' #dataset1 <- 1:5
-#' #cache('dataset1')
+#' dataset1 <- 1:5
+#' cache('dataset1')
 #'
-#' #setwd('..')
-#' #unlink('tmp-project')
+#' setwd('..')
+#' unlink('tmp-project')}
 cache <- function(variable)
 {
   save(list = variable,

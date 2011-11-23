@@ -57,7 +57,7 @@
 #' @examples
 #' library('ProjectTemplate')
 #'
-#' #sql.reader('example.sql', 'data/example.sql', 'example')
+#' \dontrun{sql.reader('example.sql', 'data/example.sql', 'example')}
 sql.reader <- function(data.file, filename, variable.name)
 {
   database.info <- ProjectTemplate:::translate.dcf(filename)

@@ -12,7 +12,7 @@
 #' @examples
 #' library('ProjectTemplate')
 #'
-#' #mtp.reader('example.mtp', 'data/example.mtp', 'example')
+#' \dontrun{mtp.reader('example.mtp', 'data/example.mtp', 'example')}
 mtp.reader <- function(data.file, filename, variable.name)
 {
   library('foreign')

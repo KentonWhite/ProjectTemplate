@@ -52,6 +52,6 @@
 \examples{
 library('ProjectTemplate')
 
-#sql.reader('example.sql', 'data/example.sql', 'example')
+\dontrun{sql.reader('example.sql', 'data/example.sql', 'example')}
 }
 

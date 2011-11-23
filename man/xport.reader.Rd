@@ -23,6 +23,6 @@
 \examples{
 library('ProjectTemplate')
 
-#xport.reader('example.xport', 'data/example.xport', 'example')
+\dontrun{xport.reader('example.xport', 'data/example.xport', 'example')}
 }
 

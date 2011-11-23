@@ -20,6 +20,6 @@
 \examples{
 library('ProjectTemplate')
 
-#translate.dcf(file.path('config', 'global.dcf'))
+\dontrun{translate.dcf(file.path('config', 'global.dcf'))}
 }
 

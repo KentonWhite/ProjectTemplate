@@ -12,7 +12,7 @@
 #' @examples
 #' library('ProjectTemplate')
 #'
-#' #translate.dcf(file.path('config', 'global.dcf'))
+#' \dontrun{translate.dcf(file.path('config', 'global.dcf'))}
 translate.dcf <- function(filename)
 {
   settings <- read.dcf(filename)

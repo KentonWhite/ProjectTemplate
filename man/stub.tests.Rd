@@ -17,6 +17,6 @@
 \examples{
 library('ProjectTemplate')
 
-#stub.tests()
+\dontrun{stub.tests()}
 }
 

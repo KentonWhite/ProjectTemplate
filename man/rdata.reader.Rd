@@ -24,6 +24,6 @@
 \examples{
 library('ProjectTemplate')
 
-#rdata.reader('example.RData', 'data/example.RData', 'example')
+\dontrun{rdata.reader('example.RData', 'data/example.RData', 'example')}
 }
 

@@ -22,7 +22,7 @@
 #' @examples
 #' library('ProjectTemplate')
 #'
-#' #url.reader('example.url', 'data/example.url', 'example')
+#' \dontrun{url.reader('example.url', 'data/example.url', 'example')}
 url.reader <- function(data.file, filename, variable.name)
 {
   url.info <- ProjectTemplate:::translate.dcf(filename)

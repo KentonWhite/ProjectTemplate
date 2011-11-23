@@ -12,9 +12,9 @@
 #'
 #' @examples
 #' library('ProjectTemplate')
-#' #load.project()
+#' \dontrun{load.project()
 #'
-#' #cache.project()
+#' cache.project()}
 cache.project <- function()
 {
   for (dataset in project.info[['data']])

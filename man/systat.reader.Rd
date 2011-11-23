@@ -23,6 +23,6 @@
 \examples{
 library('ProjectTemplate')
 
-#systat.reader('example.sys', 'data/example.sys', 'example')
+\dontrun{systat.reader('example.sys', 'data/example.sys', 'example')}
 }
 

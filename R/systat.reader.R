@@ -11,7 +11,7 @@
 #' @examples
 #' library('ProjectTemplate')
 #'
-#' #systat.reader('example.sys', 'data/example.sys', 'example')
+#' \dontrun{systat.reader('example.sys', 'data/example.sys', 'example')}
 systat.reader <- function(data.file, filename, variable.name)
 {
   library('foreign')

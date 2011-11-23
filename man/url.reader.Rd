@@ -35,6 +35,6 @@
 \examples{
 library('ProjectTemplate')
 
-#url.reader('example.url', 'data/example.url', 'example')
+\dontrun{url.reader('example.url', 'data/example.url', 'example')}
 }
 

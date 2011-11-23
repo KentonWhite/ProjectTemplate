@@ -34,6 +34,6 @@
 \examples{
 library('ProjectTemplate')
 
-#file.reader('example.file', 'data/example.file', 'example')
+\dontrun{file.reader('example.file', 'data/example.file', 'example')}
 }
 

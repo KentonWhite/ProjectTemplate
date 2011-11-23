@@ -11,7 +11,7 @@
 #' @examples
 #' library('ProjectTemplate')
 #'
-#' #stata.reader('example.stata', 'data/example.stata', 'example')
+#' \dontrun{stata.reader('example.stata', 'data/example.stata', 'example')}
 stata.reader <- function(data.file, filename, variable.name)
 {
   library('foreign')

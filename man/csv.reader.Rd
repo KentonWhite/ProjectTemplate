@@ -23,6 +23,6 @@
 \examples{
 library('ProjectTemplate')
 
-#csv.reader('example.csv', 'data/example.csv', 'example')
+\dontrun{csv.reader('example.csv', 'data/example.csv', 'example')}
 }
 

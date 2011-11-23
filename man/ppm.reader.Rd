@@ -24,6 +24,6 @@
 \examples{
 library('ProjectTemplate')
 
-#ppm.reader('example.ppm', 'data/example.ppm', 'example')
+\dontrun{ppm.reader('example.ppm', 'data/example.ppm', 'example')}
 }
 

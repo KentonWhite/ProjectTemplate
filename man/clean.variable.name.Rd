@@ -21,6 +21,6 @@
 \examples{
 library('ProjectTemplate')
 
-#clean.variable.name('example_1')
+\dontrun{clean.variable.name('example_1')}
 }
 

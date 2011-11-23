@@ -23,6 +23,6 @@
 \examples{
 library('ProjectTemplate')
 
-#epiinfo.reader('example.rec', 'data/example.rec', 'example')
+\dontrun{epiinfo.reader('example.rec', 'data/example.rec', 'example')}
 }
 

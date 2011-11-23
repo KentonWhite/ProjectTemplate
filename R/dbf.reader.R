@@ -12,7 +12,7 @@
 #' @examples
 #' library('ProjectTemplate')
 #'
-#' #dbf.reader('example.dbf', 'data/example.dbf', 'example')
+#' \dontrun{dbf.reader('example.dbf', 'data/example.dbf', 'example')}
 dbf.reader <- function(data.file, filename, variable.name)
 {
   library('foreign')

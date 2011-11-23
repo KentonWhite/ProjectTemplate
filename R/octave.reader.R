@@ -11,7 +11,7 @@
 #' @examples
 #' library('ProjectTemplate')
 #'
-#' #octave.reader('example.m', 'data/example.m', 'example')
+#' \dontrun{octave.reader('example.m', 'data/example.m', 'example')}
 octave.reader <- function(data.file, filename, variable.name)
 {
   library('foreign')

@@ -10,7 +10,7 @@
 #' @return No value is returned; this function is called for its side effects.
 #'
 #' @examples
-#' #arff.reader('example.arff', 'data/example.arff', 'example')
+#' \dontrun{arff.reader('example.arff', 'data/example.arff', 'example')}
 arff.reader <- function(data.file, filename, variable.name)
 {
   library('foreign')
