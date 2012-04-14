@@ -18,21 +18,31 @@
 #' table: sample_table
 #'
 #' Example 2
-#' type: sqlite
-#' dbname: /path/to/sample_database
+#' type: mysql
+#' user: sample_user
+#' password: sample_password
+#' host: localhost
+#' port: 3306
+#' socket: /Applications/MAMP/tmp/mysql/mysql.sock
+#' dbname: sample_database
 #' table: sample_table
 #'
 #' Example 3
 #' type: sqlite
 #' dbname: /path/to/sample_database
-#' query: SELECT * FROM users WHERE user_active == 1
+#' table: sample_table
 #'
 #' Example 4
 #' type: sqlite
 #' dbname: /path/to/sample_database
-#' table: *
+#' query: SELECT * FROM users WHERE user_active == 1
 #'
 #' Example 5
+#' type: sqlite
+#' dbname: /path/to/sample_database
+#' table: *
+#'
+#' Example 6
 #' type: postgres
 #' user: sample_user
 #' password: sample_password
@@ -40,7 +50,7 @@
 #' dbname: sample_database
 #' table: sample_table
 #'
-#' Example 6
+#' Example 7
 #' type: odbc
 #' dsn: sample_dsn
 #' user: sample_user
