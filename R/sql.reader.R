@@ -93,12 +93,17 @@ sql.reader <- function(data.file, filename, variable.name)
   {
     library('RMySQL')
     mysql.driver <- dbDriver("MySQL")
-
+    
+    # Default value for 'port' in mysqlNewConnection is 0.
+    if ( is.null( database.info[['port']] ) ) database.info[['port']] <- 0
+    
     connection <- dbConnect(mysql.driver,
                             user = database.info[['user']],
                             password = database.info[['password']],
                             host = database.info[['host']],
-                            dbname = database.info[['dbname']])
+                            dbname = database.info[['dbname']],
+                            port = database.info[['port']],
+                            unix.socket = database.info[['socket']])
   }
 
   if (database.info[['type']] == 'sqlite')
