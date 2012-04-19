@@ -105,7 +105,10 @@ sql.reader <- function(data.file, filename, variable.name)
     mysql.driver <- dbDriver("MySQL")
     
     # Default value for 'port' in mysqlNewConnection is 0.
-    if ( is.null( database.info[['port']] ) ) database.info[['port']] <- 0
+    if (is.null(database.info[['port']]))
+    {
+      database.info[['port']] <- 0
+    }
     
     connection <- dbConnect(mysql.driver,
                             user = database.info[['user']],
