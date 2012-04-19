@@ -18,21 +18,31 @@
 #' table: sample_table
 #'
 #' Example 2
-#' type: sqlite
-#' dbname: /path/to/sample_database
+#' type: mysql
+#' user: sample_user
+#' password: sample_password
+#' host: localhost
+#' port: 3306
+#' socket: /Applications/MAMP/tmp/mysql/mysql.sock
+#' dbname: sample_database
 #' table: sample_table
 #'
 #' Example 3
 #' type: sqlite
 #' dbname: /path/to/sample_database
-#' query: SELECT * FROM users WHERE user_active == 1
+#' table: sample_table
 #'
 #' Example 4
 #' type: sqlite
 #' dbname: /path/to/sample_database
-#' table: *
+#' query: SELECT * FROM users WHERE user_active == 1
 #'
 #' Example 5
+#' type: sqlite
+#' dbname: /path/to/sample_database
+#' table: *
+#'
+#' Example 6
 #' type: postgres
 #' user: sample_user
 #' password: sample_password
@@ -40,7 +50,7 @@
 #' dbname: sample_database
 #' table: sample_table
 #'
-#' Example 6
+#' Example 7
 #' type: odbc
 #' dsn: sample_dsn
 #' user: sample_user
@@ -93,12 +103,17 @@ sql.reader <- function(data.file, filename, variable.name)
   {
     library('RMySQL')
     mysql.driver <- dbDriver("MySQL")
-
+    
+    # Default value for 'port' in mysqlNewConnection is 0.
+    if ( is.null( database.info[['port']] ) ) database.info[['port']] <- 0
+    
     connection <- dbConnect(mysql.driver,
                             user = database.info[['user']],
                             password = database.info[['password']],
                             host = database.info[['host']],
-                            dbname = database.info[['dbname']])
+                            dbname = database.info[['dbname']],
+                            port = database.info[['port']],
+                            unix.socket = database.info[['socket']])
   }
 
   if (database.info[['type']] == 'sqlite')
