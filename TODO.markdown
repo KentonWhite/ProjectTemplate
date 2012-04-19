@@ -53,3 +53,4 @@
 * Compact directories.
 * .gitignore, .gitkeep
 
+* CSV quote character control.
