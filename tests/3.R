@@ -433,23 +433,23 @@ expect_that(get(variable.name)[5, 2], equals(11))
 rm(example.26.Sheet1)
 
 # Example 27: Excel 2011 File with .xlsx Extension
-message('Example 27: Testing .xlsx support')
-data.file <- 'example_27.xlsx'
-filename <- file.path(system.file('example_data',
-                                  package = 'ProjectTemplate'),
-                      'example_27.xlsx')
-variable.name <- ProjectTemplate:::clean.variable.name('example_27')
-
-ProjectTemplate:::xlsx.reader(data.file, filename, variable.name)
-
-variable.name <- paste(variable.name, '.Sheet1', sep = '')
-
-expect_that(exists(variable.name), is_true())
-expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
-expect_that(nrow(get(variable.name)), equals(5))
-expect_that(ncol(get(variable.name)), equals(2))
-expect_that(get(variable.name)[5, 2], equals(11))
-rm(example.27.Sheet1)
+#message('Example 27: Testing .xlsx support')
+#data.file <- 'example_27.xlsx'
+#filename <- file.path(system.file('example_data',
+#                                  package = 'ProjectTemplate'),
+#                      'example_27.xlsx')
+#variable.name <- ProjectTemplate:::clean.variable.name('example_27')
+#
+#ProjectTemplate:::xlsx.reader(data.file, filename, variable.name)
+#
+#variable.name <- paste(variable.name, '.Sheet1', sep = '')
+#
+#expect_that(exists(variable.name), is_true())
+#expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
+#expect_that(nrow(get(variable.name)), equals(5))
+#expect_that(ncol(get(variable.name)), equals(2))
+#expect_that(get(variable.name)[5, 2], equals(11))
+#rm(example.27.Sheet1)
 
 # Example 28: SQLite3 Support with .sql Extension with table = "..."
 message('Example 28: Testing .sql with table = "x" support')

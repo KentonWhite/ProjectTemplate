@@ -1,3 +1,8 @@
+2012-05-12	John Myles White  <jmw@johnmyleswhite.com>
+
+* v0.4-2
+* Had to disable xlsx.reader temporarily because it does not build for 2.15.
+
 2011-11-23	John Myles White  <jmw@johnmyleswhite.com>
 
 * v0.4-1
