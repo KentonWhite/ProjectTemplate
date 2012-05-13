@@ -1,6 +1,9 @@
 \name{stub.tests}
 \alias{stub.tests}
 \title{Generate unit tests for your helper functions.}
+\usage{
+  stub.tests()
+}
 \value{
   No value is returned; this function is called for its
   side effects.

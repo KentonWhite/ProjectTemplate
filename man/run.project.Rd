@@ -1,6 +1,9 @@
 \name{run.project}
 \alias{run.project}
 \title{Run all of the analyses in the \code{src} directory.}
+\usage{
+  run.project()
+}
 \value{
   No value is returned; this function is called for its
   side effects.

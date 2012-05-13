@@ -1,6 +1,9 @@
 \name{reload.project}
 \alias{reload.project}
 \title{Reload a project from scratch.}
+\usage{
+  reload.project()
+}
 \value{
   No value is returned; this function is called for its
   side effects.

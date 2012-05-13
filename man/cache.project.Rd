@@ -1,6 +1,9 @@
 \name{cache.project}
 \alias{cache.project}
 \title{Cache a project's data sets in binary format.}
+\usage{
+  cache.project()
+}
 \value{
   No value is returned; this function is called for its
   side effects.

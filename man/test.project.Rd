@@ -1,6 +1,9 @@
 \name{test.project}
 \alias{test.project}
 \title{Run all unit tests for this project.}
+\usage{
+  test.project()
+}
 \value{
   No value is returned; this function is called for its
   side effects.

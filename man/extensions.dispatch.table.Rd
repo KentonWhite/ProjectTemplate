@@ -1,6 +1,59 @@
+\docType{data}
 \name{extensions.dispatch.table}
 \alias{extensions.dispatch.table}
 \title{Maps file types to the reader functions used to autoload them.}
+\format{List of 48
+ $ \.csv$    :function (data.file, filename, variable.name)  
+ $ \.csv.bz2$:function (data.file, filename, variable.name)  
+ $ \.csv.zip$:function (data.file, filename, variable.name)  
+ $ \.csv.gz$ :function (data.file, filename, variable.name)  
+ $ \.tsv$    :function (data.file, filename, variable.name)  
+ $ \.tsv.bz2$:function (data.file, filename, variable.name)  
+ $ \.tsv.zip$:function (data.file, filename, variable.name)  
+ $ \.tsv.gz$ :function (data.file, filename, variable.name)  
+ $ \.tab$    :function (data.file, filename, variable.name)  
+ $ \.tab.bz2$:function (data.file, filename, variable.name)  
+ $ \.tab.zip$:function (data.file, filename, variable.name)  
+ $ \.tab.gz$ :function (data.file, filename, variable.name)  
+ $ \.wsv$    :function (data.file, filename, variable.name)  
+ $ \.wsv.bz2$:function (data.file, filename, variable.name)  
+ $ \.wsv.zip$:function (data.file, filename, variable.name)  
+ $ \.wsv.gz$ :function (data.file, filename, variable.name)  
+ $ \.txt$    :function (data.file, filename, variable.name)  
+ $ \.txt.bz2$:function (data.file, filename, variable.name)  
+ $ \.txt.zip$:function (data.file, filename, variable.name)  
+ $ \.txt.gz$ :function (data.file, filename, variable.name)  
+ $ \.Rdata$  :function (data.file, filename, variable.name)  
+ $ \.rda$    :function (data.file, filename, variable.name)  
+ $ \.R$      :function (data.file, filename, variable.name)  
+ $ \.r$      :function (data.file, filename, variable.name)  
+ $ \.url$    :function (data.file, filename, variable.name)  
+ $ \.sql$    :function (data.file, filename, variable.name)  
+ $ \.xls$    :function (data.file, filename, workbook.name)  
+ $ \.xlsx$   :function (data.file, filename, workbook.name)  
+ $ \.sav$    :function (data.file, filename, variable.name)  
+ $ \.dta$    :function (data.file, filename, variable.name)  
+ $ \.arff$   :function (data.file, filename, variable.name)  
+ $ \.dbf$    :function (data.file, filename, variable.name)  
+ $ \.rec$    :function (data.file, filename, variable.name)  
+ $ \.mtp$    :function (data.file, filename, variable.name)  
+ $ \.m$      :function (data.file, filename, variable.name)  
+ $ \.sys$    :function (data.file, filename, variable.name)  
+ $ \.syd$    :function (data.file, filename, variable.name)  
+ $ \.sas$    :function (data.file, filename, variable.name)  
+ $ \.xport$  :function (data.file, filename, variable.name)  
+ $ \.db$     :function (data.file, filename, variable.name)  
+ $ \.file$   :function (data.file, filename, variable.name)  
+ $ \.mp3$    :function (data.file, filename, variable.name)  
+ $ \.ppm$    :function (data.file, filename, variable.name)  
+ $ \.xpt$    :function (data.file, filename, variable.name)  
+ $ \.dat$    :function (data.file, filename, variable.name)  
+ $ \.dat.bz2$:function (data.file, filename, variable.name)  
+ $ \.dat.zip$:function (data.file, filename, variable.name)  
+ $ \.dat.gz$ :function (data.file, filename, variable.name)}
+\usage{
+  extensions.dispatch.table
+}
 \description{
   This list stores a mapping from regular expressions that
   match file extensions for the file types supported by
@@ -8,4 +61,5 @@
   autoloading for those formats. Any new file type must be
   appended to this dispatch table.
 }
+\keyword{datasets}
 

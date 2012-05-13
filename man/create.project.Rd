@@ -2,8 +2,8 @@
 \alias{create.project}
 \title{Create a new project.}
 \usage{
-  create.project(project.name = "new-project", minimal =
-  FALSE, dump = FALSE)
+  create.project(project.name = "new-project",
+    minimal = FALSE, dump = FALSE)
 }
 \arguments{
   \item{project.name}{A character vector containing the

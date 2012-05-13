@@ -1,6 +1,9 @@
 \name{load.project}
 \alias{load.project}
 \title{Automatically load data and packages for a project.}
+\usage{
+  load.project()
+}
 \value{
   No value is returned; this function is called for its
   side effects.

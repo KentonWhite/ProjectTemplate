@@ -1,6 +1,9 @@
 \name{show.project}
 \alias{show.project}
 \title{Show information about the current project.}
+\usage{
+  show.project()
+}
 \value{
   No value is returned; this function is called for its
   side effects.
