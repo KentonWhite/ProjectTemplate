@@ -58,6 +58,13 @@
 #' dbname: sample_database
 #' query: SELECT * FROM sample_table
 #'
+#' Example 8
+#' type: oracle
+#' user: sample_user
+#' password: sample_password
+#' dbname: sample_database
+#' table: sample_table
+#'
 #' @param data.file The name of the data file to be read.
 #' @param filename The path to the data set to be loaded.
 #' @param variable.name The name to be assigned to in the global environment.
@@ -72,9 +79,9 @@ sql.reader <- function(data.file, filename, variable.name)
 {
   database.info <- ProjectTemplate:::translate.dcf(filename)
 
-  if (! (database.info[['type']] %in% c('mysql', 'sqlite', 'odbc', 'postgres')))
+  if (! (database.info[['type']] %in% c('mysql', 'sqlite', 'odbc', 'postgres', 'oracle')))
   {
-    warning('Only databases reachable through RMySQL, RSQLite, RODBC or RPostgreSQL are currently supported.')
+    warning('Only databases reachable through RMySQL, RSQLite, RODBC ROracle or RPostgreSQL are currently supported.')
     assign(variable.name,
            NULL,
            envir = .GlobalEnv)
@@ -137,6 +144,23 @@ sql.reader <- function(data.file, filename, variable.name)
                             user = database.info[['user']],
                             password = database.info[['password']],
                             host = database.info[['host']],
+                            dbname = database.info[['dbname']])
+  }
+
+  if (database.info[['type']] == 'oracle')
+  {
+    library('RMySQL')
+    oracle.driver <- dbDriver("Oracle")
+    
+    # Default value for 'port' in mysqlNewConnection is 0.
+    if (is.null(database.info[['port']]))
+    {
+      database.info[['port']] <- 0
+    }
+    
+    connection <- dbConnect(oracle.driver,
+                            user = database.info[['user']],
+                            password = database.info[['password']],
                             dbname = database.info[['dbname']])
   }
 
