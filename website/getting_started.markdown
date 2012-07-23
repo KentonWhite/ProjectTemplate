@@ -21,8 +21,10 @@ As you can see, `create.project()` has set up a whole series of subdirectories f
 
 		mv ~/Downloads/letters.csv.bz2 data
 
-With the `letters.csv.bz2` data set in place, we can start to use ProjectTemplate's automated data loading features. Open up R again and type the following:
+With the `letters.csv.bz2` data set in place, we can start to use ProjectTemplate's automated data loading features. Open up R again and type the following, where `PATH_TO_LETTERS_DIRECTORY` is the path of the folder in which you've expanded the `letters.csv` data set:
 
+    
+		setwd("PATH_TO_LETTERS_DIRECTORY")
 		library('ProjectTemplate')
 		load.project()
 

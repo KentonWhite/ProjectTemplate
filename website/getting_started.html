@@ -102,9 +102,10 @@
 <pre><code>    mv ~/Downloads/letters.csv.bz2 data
 </code></pre>
 
-<p>With the <code>letters.csv.bz2</code> data set in place, we can start to use ProjectTemplate's automated data loading features. Open up R again and type the following:</p>
+<p>With the <code>letters.csv.bz2</code> data set in place, we can start to use ProjectTemplate's automated data loading features. Open up R again and type the following, where <code>PATH_TO_LETTERS_DIRECTORY</code> is the path of the folder in which you've expanded the <code>letters.csv</code> data set:</p>
 
-<pre><code>    library('ProjectTemplate')
+<pre><code>    setwd("PATH_TO_LETTERS_DIRECTORY")
+    library('ProjectTemplate')
     load.project()
 </code></pre>
 
