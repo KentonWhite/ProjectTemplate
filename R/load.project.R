@@ -188,7 +188,22 @@ load.project <- function()
     {
       stop('You are missing a directory: data')
     }
-    data.files <- dir('data')
+
+    # If recursive_loading
+    if (is.null(config[['recursive_loading']]))
+    {
+      warning('Your configuration file is missing an entry: recursive_loading')
+      config[['recursive_loading']] <- 'off'
+    }
+
+    if (config[['recursive_loading']] == 'on')
+    {
+      data.files <- dir('data')
+    }
+    else
+    {
+      data.files <- dir('data', recursive = TRUE)
+    }
     project.info[['data']] <- c()
 
     for (data.file in data.files)
