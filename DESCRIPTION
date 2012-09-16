@@ -41,6 +41,7 @@ Collate:
     'clean.variable.name.R'
     'create.project.R'
     'csv.reader.R'
+    'csv2.reader.R'
     'db.reader.R'
     'dbf.reader.R'
     'epiinfo.reader.R'
