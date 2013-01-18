@@ -122,7 +122,7 @@ sql.reader <- function(data.file, filename, variable.name)
                             password = database.info[['password']],
                             host = database.info[['host']],
                             dbname = database.info[['dbname']],
-                            port = database.info[['port']],
+                            port = as.integer(database.info[['port']]),
                             unix.socket = database.info[['socket']])
   }
 
