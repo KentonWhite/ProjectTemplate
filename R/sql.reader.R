@@ -78,6 +78,15 @@
 sql.reader <- function(data.file, filename, variable.name)
 {
   database.info <- ProjectTemplate:::translate.dcf(filename)
+  
+  if (! is.null(database.info[['connection']]))
+  {
+    connection_filename <- paste("data/", database.info[['connection']],".sql-connection", sep="")
+    connection.info <- ProjectTemplate:::translate.dcf(connection_filename)
+
+    # Allow .sql to override options defined in .connection
+    database.info <- c(database.info, connection.info) 
+  }
 
   if (! (database.info[['type']] %in% c('mysql', 'sqlite', 'odbc', 'postgres', 'oracle')))
   {
