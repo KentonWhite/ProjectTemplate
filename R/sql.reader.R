@@ -124,6 +124,7 @@ sql.reader <- function(data.file, filename, variable.name)
                             dbname = database.info[['dbname']],
                             port = as.integer(database.info[['port']]),
                             unix.socket = database.info[['socket']])
+    dbGetQuery(connection, "SET NAMES 'utf8'") # Switch to utf-8 strings
   }
 
   if (database.info[['type']] == 'sqlite')
