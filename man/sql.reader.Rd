@@ -23,6 +23,12 @@
   accessed. All tables from the database, one specific
   tables or one specific query against any set of tables
   may be executed to generate a data set.
+
+  It is also possible to place shared connection settings
+  in a separate file using the option "connection". The
+  shared connection configuration is placed in files 
+  named *.sql-connection in the data/ directory.
+
 }
 \details{
   Examples of the DCF format and settings used in a .sql
