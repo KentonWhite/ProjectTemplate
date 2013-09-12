@@ -187,7 +187,11 @@ sql.reader <- function(data.file, filename, variable.name)
   {
     library('RJDBC')
 
-    rjdbc.driver <- JDBC(database.info[['class']], database.info[['classpath']])
+    ident.quote <- NA
+    if('identquote' %in% names(database.info))
+       ident.quote <- database.info[['identquote']]
+
+    rjdbc.driver <- JDBC(database.info[['class']], database.info[['classpath']], ident.quote)
     connection <- dbConnect(rjdbc.driver,
                             database.info[['url']],
                             user = database.info[['user']],
