@@ -1,3 +1,7 @@
+# NOTICE
+
+__This project is no longer actively maintained. I still merge pull requests when I can find time, but I no longer do any work on this package. If you are interested in taking over maintenance, please get in touch.__
+
 # Introduction
 The ProjectTemplate package lets you automatically build a directory for a new R project with a standardized subdirectory structure. Using this structure, ProjectTemplate automates data and package loading. The hope is that standardized data loading, automatic importing of best practice packages, integrated unit testing and useful nudges towards keeping a cleanly organized codebase will improve the quality of R coding.
 
