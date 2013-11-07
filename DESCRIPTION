@@ -28,6 +28,7 @@ Suggests:
     gdata,
     RODBC,
     RJDBC,
+    xlsx,
     tuneR,
     pixmap,
     data.table,
