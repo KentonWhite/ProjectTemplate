@@ -14,8 +14,7 @@ Description: ProjectTemplate provides functions to
 License: Artistic-2.0
 LazyLoad: yes
 Depends:
-    R (>= 2.7),
-    testthat
+    R (>= 2.7)
 Suggests:
     foreign,
     reshape,
@@ -32,7 +31,8 @@ Suggests:
     tuneR,
     pixmap,
     data.table,
-    RPostgreSQL
+    RPostgreSQL,
+    testthat
 URL: http://projecttemplate.net
 Collate:
     'arff.reader.R'
