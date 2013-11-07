@@ -15,6 +15,7 @@ before_install:
   - ./travis-tool.sh bootstrap
   - rm ProjectTemplate_*.*.tar.gz
 install:
+  - ./travis-tool.sh r_binary_install colorspace RColorBrewer dichromat munsell labeling Formula sp mvtnorm TH.data sandwich formatR highr markdown zoo bit gtable reshape2 scales proto quantreg Hmisc mapproj maps hexbin maptools multcomp knitr DBI RUnit gtools signal pastecs chron fastmatch xts
   - ./travis-tool.sh aptget_install unixodbc-dev
   - ./travis-tool.sh install_deps
   - ./travis-tool.sh github_package assertthat
