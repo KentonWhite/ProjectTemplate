@@ -28,6 +28,7 @@ Suggests:
     RSQLite,
     gdata,
     RODBC,
+    RJDBC,
     tuneR,
     pixmap,
     data.table,
