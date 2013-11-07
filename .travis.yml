@@ -15,6 +15,7 @@ before_install:
   - ./travis-tool.sh bootstrap
   - rm ProjectTemplate_*.*.tar.gz
 install:
+  - ./travis-tool.sh aptget_install unixodbc-dev
   - ./travis-tool.sh install_deps
   - ./travis-tool.sh github_package assertthat
 notifications:
