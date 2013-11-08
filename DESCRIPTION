@@ -2,8 +2,8 @@ Package: ProjectTemplate
 Type: Package
 Title: Automates the creation of new statistical analysis
     projects.
-Version: 0.4-3
-Date: 2012-08-11
+Version: 0.4-4
+Date: 2013-11-08
 Author: John Myles White
 Maintainer: John Myles White <jmw@johnmyleswhite.com>
 Description: ProjectTemplate provides functions to
