@@ -71,7 +71,7 @@
 #' classpath: /path/to/ojdbc5.jar (or set in CLASSPATH)
 #' user: scott
 #' password: tiger
-#' url: jdbc:oracle:thin:@myhost:1521:orcl
+#' url: jdbc:oracle:thin:@@myhost:1521:orcl
 #' query: select * from emp
 #'
 #' @param data.file The name of the data file to be read.
