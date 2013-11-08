@@ -4,7 +4,7 @@
 # see the wiki:
 #   https://github.com/craigcitro/r-travis/wiki
 
-language: c
+language: java
 script: ./travis-tool.sh run_tests
 env:
    global:
@@ -17,8 +17,9 @@ before_install:
 install:
   - ./travis-tool.sh r_binary_install colorspace RColorBrewer dichromat munsell labeling Formula sp mvtnorm TH.data sandwich formatR highr markdown zoo bit gtable reshape2 scales proto quantreg Hmisc mapproj maps hexbin maptools multcomp knitr DBI RUnit gtools signal pastecs chron fastmatch xts
   - ./travis-tool.sh aptget_install unixodbc-dev
+  - sudo R CMD javareconf
   - ./travis-tool.sh install_deps
-  - ./travis-tool.sh github_package assertthat
+  - Rscript -e "library(RJDBC); library(xlsx); library(RODBC)"
 notifications:
   email:
     on_success: change
