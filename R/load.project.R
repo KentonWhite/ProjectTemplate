@@ -13,7 +13,7 @@
 #' \dontrun{load.project()}
 load.project <- function()
 {
-  project.info <- list()
+  my.project.info <- list()
 
   message('Loading project configuration')
   if (!file.exists(file.path('config', 'global.dcf')))
@@ -27,7 +27,7 @@ load.project <- function()
   }
   config[['libraries']] <- strsplit(config[['libraries']], '\\s*,\\s*')[[1]]
   assign('config', config, envir = .GlobalEnv)
-  project.info[['config']] <- config
+  my.project.info[['config']] <- config
   
   if (! is.null(config[['as_factors']]) && config[['as_factors']] == 'off')
   {
@@ -38,7 +38,7 @@ load.project <- function()
   {
     message('Autoloading helper functions')
     
-    project.info[['helpers']] <- c()
+    my.project.info[['helpers']] <- c()
     
     for (helper.script in dir('lib'))
     {
@@ -54,7 +54,7 @@ load.project <- function()
         }
         message(paste(' Running helper script:', helper.script))
         source(file.path('lib', helper.script))
-        project.info[['helpers']] <- c(project.info[['helpers']], helper.script)
+        my.project.info[['helpers']] <- c(my.project.info[['helpers']], helper.script)
       }
     }
   }
@@ -68,7 +68,7 @@ load.project <- function()
     if (config[['load_libraries']] == 'on')
     {
       message('Autoloading packages')
-      project.info[['packages']] <- c()
+      my.project.info[['packages']] <- c()
       for (package.to.load in config[['libraries']])
       {
         message(paste(' Loading package:', package.to.load))
@@ -76,7 +76,7 @@ load.project <- function()
         {
           stop(paste('Failed to load package: ', package.to.load))
         }
-        project.info[['packages']] <- c(project.info[['packages']], package.to.load)
+        my.project.info[['packages']] <- c(my.project.info[['packages']], package.to.load)
       }
     }
   }
@@ -100,7 +100,7 @@ load.project <- function()
       stop('You are missing a directory: cache')
     }
     cache.files <- dir('cache')
-    project.info[['cache']] <- c()
+    my.project.info[['cache']] <- c()
     
     for (cache.file in cache.files)
     {
@@ -129,7 +129,7 @@ load.project <- function()
                        filename,
                        variable.name))
           
-          project.info[['cache']] <- c(project.info[['cache']], variable.name)
+          my.project.info[['cache']] <- c(my.project.info[['cache']], variable.name)
           
           break()
         }
@@ -147,7 +147,7 @@ load.project <- function()
       stop('You are missing a directory: cache')
     }
     cache.files <- dir('cache')
-    project.info[['cache']] <- c()
+    my.project.info[['cache']] <- c()
     
     for (cache.file in cache.files)
     {
@@ -176,7 +176,7 @@ load.project <- function()
                        filename,
                        variable.name))
           
-          project.info[['cache']] <- c(project.info[['cache']], variable.name)
+          my.project.info[['cache']] <- c(my.project.info[['cache']], variable.name)
           
           break()
         }
@@ -204,7 +204,7 @@ load.project <- function()
     {
       data.files <- dir('data')
     }
-    project.info[['data']] <- c()
+    my.project.info[['data']] <- c()
 
     for (data.file in data.files)
     {
@@ -233,7 +233,7 @@ load.project <- function()
                        filename,
                        variable.name))
 
-          project.info[['data']] <- c(project.info[['data']], variable.name)
+          my.project.info[['data']] <- c(my.project.info[['data']], variable.name)
           
           break()
         }
@@ -245,7 +245,7 @@ load.project <- function()
   {
     library('data.table')
     
-    for (data.set in project.info[['data']])
+    for (data.set in my.project.info[['data']])
     {
       message('Converting data.frames to data.tables')
       
@@ -294,7 +294,24 @@ load.project <- function()
     assign('logger', logger, envir = .GlobalEnv)
   }
 
-  assign('project.info', project.info, envir = .GlobalEnv)
-  #assign('project.info', project.info, envir = parent.frame())
-  #assign('project.info', project.info, envir = environment(ProjectTemplate:::create.project))
+  project.info <- my.project.info
 }
+
+.project.info.env <- new.env()
+
+.project.info <- function(arg) {
+  if (missing(arg))
+    get(x="project.info", envir=.project.info.env)
+  else
+    assign("project.info", arg, envir=.project.info.env)
+}
+
+#' Stores all information about the project.
+#'
+#' This variable (actually, an active binding) is initialized by
+#' \code{load.project}.
+#'
+#' @export
+project.info <- NULL
+
+makeActiveBinding("project.info", .project.info, parent.frame())
