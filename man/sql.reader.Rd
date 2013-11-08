@@ -23,12 +23,6 @@
   accessed. All tables from the database, one specific
   tables or one specific query against any set of tables
   may be executed to generate a data set.
-
-  It is also possible to place shared connection settings
-  in a separate file using the option "connection". The
-  shared connection configuration is placed in files 
-  named *.sql-connection in the data/ directory.
-
 }
 \details{
   Examples of the DCF format and settings used in a .sql
@@ -59,6 +53,14 @@
   Example 7 type: odbc dsn: sample_dsn user: sample_user
   password: sample_password dbname: sample_database query:
   SELECT * FROM sample_table
+
+  Example 8 type: oracle user: sample_user password:
+  sample_password dbname: sample_database table:
+  sample_table
+
+  Example 9 type: jdbc class: oracle.jdbc.OracleDriver
+  classpath: /path/to/ojdbc5.jar (or set in CLASSPATH)
+  user: scott password: tiger url: jdbc:oracle:thin:
 }
 \examples{
 library('ProjectTemplate')

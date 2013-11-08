@@ -1,5 +1,5 @@
-export(cache.project)
 export(cache)
+export(cache.project)
 export(create.project)
 export(load.project)
 export(reload.project)
