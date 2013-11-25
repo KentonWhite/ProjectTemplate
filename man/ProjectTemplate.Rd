@@ -1,8 +1,8 @@
 \docType{package}
 \name{ProjectTemplate}
-\alias{package-ProjectTemplate}
 \alias{ProjectTemplate}
 \alias{ProjectTemplate-package}
+\alias{package-ProjectTemplate}
 \title{Automates the creation of new statistical analysis projects.}
 \description{
   ProjectTemplate provides functions to automatically build

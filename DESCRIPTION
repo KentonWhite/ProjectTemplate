@@ -2,8 +2,8 @@ Package: ProjectTemplate
 Type: Package
 Title: Automates the creation of new statistical analysis
     projects.
-Version: 0.4-3
-Date: 2012-08-11
+Version: 0.4-4
+Date: 2013-11-08
 Author: John Myles White
 Maintainer: John Myles White <jmw@johnmyleswhite.com>
 Description: ProjectTemplate provides functions to
@@ -14,8 +14,7 @@ Description: ProjectTemplate provides functions to
 License: Artistic-2.0
 LazyLoad: yes
 Depends:
-    R (>= 2.7),
-    testthat
+    R (>= 2.7)
 Suggests:
     foreign,
     reshape,
@@ -28,10 +27,13 @@ Suggests:
     RSQLite,
     gdata,
     RODBC,
+    RJDBC,
+    xlsx,
     tuneR,
     pixmap,
     data.table,
-    RPostgreSQL
+    RPostgreSQL,
+    testthat
 URL: http://projecttemplate.net
 Collate:
     'arff.reader.R'
