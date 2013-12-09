@@ -2,6 +2,21 @@ library('testthat')
 
 library('ProjectTemplate')
 
+library('Defaults')
+
+# testthat by default runs tests in the parent environment to global
+# This gives access to pacakges and keeps the test from polluting the global environment
+# However, the global environment is not in the test seach path
+# The global environment is needed for the objects created by the readers being tested
+# 
+# Solution is to set the global environment as the parent of the test environment
+# Then the global environment is part of the test environment search path
+
+test.env <- environment()
+parent.env(test.env) <- .GlobalEnv
+
+setDefaults("rm", inherits = TRUE)
+
 # Example 01: CSV Data File
 message('Example 01: Testing .csv support')
 data.file <- 'example_01.csv'
@@ -472,6 +487,7 @@ expect_that(nrow(get(variable.name)), equals(5))
 expect_that(ncol(get(variable.name)), equals(2))
 expect_that(get(variable.name)[5, 2], equals(11))
 rm(example.28)
+unlink('example_28.sql')
 
 # Example 29: SQLite3 Support with .sql Extension with query = "SELECT * FROM ..."
 message('Example 29: Testing .sql with query = "x" support')
@@ -494,6 +510,7 @@ expect_that(nrow(get(variable.name)), equals(5))
 expect_that(ncol(get(variable.name)), equals(2))
 expect_that(get(variable.name)[5, 2], equals(11))
 rm(example.29)
+unlink('example_29.sql')
 
 # Example 30: SQLite3 Support with .sql Extension and table = "*"
 message('Example 30: Testing .sql with table = "*" support')
@@ -524,6 +541,8 @@ expect_that(nrow(get(variable2.name)), equals(5))
 expect_that(ncol(get(variable2.name)), equals(2))
 expect_that(get(variable2.name)[5, 2], equals(11))
 rm(example.30b)
+rm(example.30)
+unlink('example_30.sql')
 
 # Example 31: SQLite3 Support with .db Extension
 message('Example 31: Testing .db support')
@@ -587,6 +606,7 @@ expect_that(nrow(get(variable.name)), equals(5))
 expect_that(ncol(get(variable.name)), equals(2))
 expect_that(get(variable.name)[5, 2], equals(11))
 rm(example.28)
+unlink('example_33.file')
 
 # Example 34: MP3 Support with .mp3 Extension
 message('Skipping Example 34: Testing .mp3 support')

@@ -20,5 +20,6 @@ test.project <- function()
 {
   load.project()
   library('testthat')
-  test_dir('tests', reporter = 'summary')
+	files = dir('tests', full.names = TRUE)
+	invisible(lapply(files, test_file, enclos = environment()))
 }
