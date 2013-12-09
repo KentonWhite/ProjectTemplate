@@ -2,7 +2,7 @@
 \alias{spss.reader}
 \title{Read an SPSS file with a .sav file extension.}
 \usage{
-  spss.reader(data.file, filename, variable.name)
+spss.reader(data.file, filename, variable.name)
 }
 \arguments{
   \item{data.file}{The name of the data file to be read.}
@@ -13,14 +13,14 @@
   global environment.}
 }
 \value{
-  No value is returned; this function is called for its
-  side effects.
+No value is returned; this function is called for its side
+effects.
 }
 \description{
-  This function will load the specified SPSS file into
-  memory. It will convert the resulting list object into a
-  data frame before inserting the data set into the global
-  environment.
+This function will load the specified SPSS file into
+memory. It will convert the resulting list object into a
+data frame before inserting the data set into the global
+environment.
 }
 \examples{
 library('ProjectTemplate')
