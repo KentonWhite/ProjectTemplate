@@ -33,6 +33,8 @@ Suggests:
     pixmap,
     data.table,
     RPostgreSQL,
+		RElasticSearch,
+    GetoptLong,
     testthat,
 		Defaults
 URL: http://projecttemplate.net
@@ -48,6 +50,7 @@ Collate:
     'db.reader.R'
     'dbf.reader.R'
     'epiinfo.reader.R'
+    'es.reader.R'
     'xport.reader.R'
     'xlsx.reader.R'
     'xls.reader.R'

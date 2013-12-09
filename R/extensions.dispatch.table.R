@@ -10,6 +10,7 @@
 #' @include db.reader.R
 #' @include dbf.reader.R
 #' @include epiinfo.reader.R
+#' @include es.reader.R
 #' @include file.reader.R
 #' @include mp3.reader.R
 #' @include mtp.reader.R
@@ -78,5 +79,6 @@ extensions.dispatch.table <- list("\\.csv$" = ProjectTemplate:::csv.reader,
                                   "\\.dat$" = ProjectTemplate:::wsv.reader,
                                   "\\.dat.bz2$" = ProjectTemplate:::wsv.reader,
                                   "\\.dat.zip$" = ProjectTemplate:::wsv.reader,
-                                  "\\.dat.gz$" = ProjectTemplate:::wsv.reader)
+                                  "\\.dat.gz$" = ProjectTemplate:::wsv.reader,
+																	"\\.es$" = ProjectTemplate:::es.reader)
                                   
