@@ -50,6 +50,7 @@ Collate:
     'db.reader.R'
     'dbf.reader.R'
     'epiinfo.reader.R'
+    'es.reader.R'
     'xport.reader.R'
     'xlsx.reader.R'
     'xls.reader.R'

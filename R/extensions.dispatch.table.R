@@ -5,28 +5,29 @@
 #' reader functions that implement autoloading for those formats. Any
 #' new file type must be appended to this dispatch table.
 #'
-#' @include arff.reader.R
-#' @include csv.reader.R
-#' @include db.reader.R
-#' @include dbf.reader.R
-#' @include epiinfo.reader.R
-#' @include file.reader.R
-#' @include mp3.reader.R
-#' @include mtp.reader.R
-#' @include octave.reader.R
-#' @include ppm.reader.R
-#' @include r.reader.R
-#' @include rdata.reader.R
-#' @include spss.reader.R
-#' @include sql.reader.R
-#' @include stata.reader.R
-#' @include systat.reader.R
-#' @include tsv.reader.R
-#' @include url.reader.R
-#' @include wsv.reader.R
-#' @include xls.reader.R
-#' @include xlsx.reader.R
-#' @include xport.reader.R
+#' @include R/arff.reader.R
+#' @include R/csv.reader.R
+#' @include R/db.reader.R
+#' @include R/dbf.reader.R
+#' @include R/epiinfo.reader.R
+#' @include R/es.reader.R
+#' @include R/file.reader.R
+#' @include R/mp3.reader.R
+#' @include R/mtp.reader.R
+#' @include R/octave.reader.R
+#' @include R/ppm.reader.R
+#' @include R/r.reader.R
+#' @include R/rdata.reader.R
+#' @include R/spss.reader.R
+#' @include R/sql.reader.R
+#' @include R/stata.reader.R
+#' @include R/systat.reader.R
+#' @include R/tsv.reader.R
+#' @include R/url.reader.R
+#' @include R/wsv.reader.R
+#' @include R/xls.reader.R
+#' @include R/xlsx.reader.R
+#' @include R/xport.reader.R
 extensions.dispatch.table <- list("\\.csv$" = ProjectTemplate:::csv.reader,
                                   "\\.csv.bz2$" = ProjectTemplate:::csv.reader,
                                   "\\.csv.zip$" = ProjectTemplate:::csv.reader,
@@ -78,5 +79,6 @@ extensions.dispatch.table <- list("\\.csv$" = ProjectTemplate:::csv.reader,
                                   "\\.dat$" = ProjectTemplate:::wsv.reader,
                                   "\\.dat.bz2$" = ProjectTemplate:::wsv.reader,
                                   "\\.dat.zip$" = ProjectTemplate:::wsv.reader,
-                                  "\\.dat.gz$" = ProjectTemplate:::wsv.reader)
+                                  "\\.dat.gz$" = ProjectTemplate:::wsv.reader,
+																	"\\.es$" = ProjectTemplate:::es.reader)
                                   
