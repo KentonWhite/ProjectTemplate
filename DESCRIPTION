@@ -51,6 +51,18 @@ Suggests:
     Defaults
 URL: http://projecttemplate.net
 Collate:
+    'arff.reader.R'
+    'cache.R'
+    'cache.name.R'
+    'cache.project.R'
+    'clean.variable.name.R'
+    'create.project.R'
+    'csv.reader.R'
+    'csv2.reader.R'
+    'db.reader.R'
+    'dbf.reader.R'
+    'epiinfo.reader.R'
+    'es.reader.R'
     'xport.reader.R'
     'xlsx.reader.R'
     'xls.reader.R'
