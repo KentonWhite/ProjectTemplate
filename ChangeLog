@@ -5,6 +5,7 @@
 * project.info is now an active binding to avoid writing to the global environment.
 * Reenabled xlsx.reader.
 * JDBC connection can now use path to jar stored in CLASSPATH
+* Added a JDBC database wrapper for accessing PostgreSQL databases hosted by Heroku
 
 2012-08-11	John Myles White  <jmw@johnmyleswhite.com>
 
