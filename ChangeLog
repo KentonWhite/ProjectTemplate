@@ -1,3 +1,4 @@
+* Allow string interpolation of R functions in sql queries
 * Added a JDBC database wrapper for accessing PostgreSQL databases hosted by Heroku
 * JDBC connection can now use path to jar stored in CLASSPATH
 
