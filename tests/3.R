@@ -12,7 +12,7 @@ library('Defaults')
 # Solution is to set the global environment as the parent of the test environment
 # Then the global environment is part of the test environment search path
 
-if (environmentName(environment()) != environmentName(.GlobalEnv))
+if (!identical(environment(), .GlobalEnv))
 {
 	test.env <- environment()
 	parent.env(test.env) <- .GlobalEnv
