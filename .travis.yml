@@ -20,7 +20,10 @@ install:
   - sudo R CMD javareconf
   - ./travis-tool.sh install_deps
   - Rscript -e "library(RJDBC); library(xlsx); library(RODBC)"
+    - ./travis-tool.sh dump_sysinfo
 notifications:
   email:
     on_success: change
     on_failure: always
+after_error:
+  - ./travis-tool.sh dump_logs
