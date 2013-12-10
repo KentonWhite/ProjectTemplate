@@ -25,6 +25,14 @@ specific query against any set of tables may be executed to
 generate a data set.
 }
 \details{
+queries can support string interpolation to execute code
+snippets. This is used to create queries that depend on
+data from other sources. Code delimited is @{...}
+
+Example: query: SELECT * FROM my_table WHERE id IN
+(@{paste(ids, collapse = ',')}). Here ids is data
+previously loaded into ProjectTemplate
+
 Examples of the DCF format and settings used in a .sql file
 are shown below:
 
