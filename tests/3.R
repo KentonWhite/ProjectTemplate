@@ -12,10 +12,13 @@ library('Defaults')
 # Solution is to set the global environment as the parent of the test environment
 # Then the global environment is part of the test environment search path
 
-test.env <- environment()
-parent.env(test.env) <- .GlobalEnv
+if (environmentName(environment()) != environmentName(.GlobalEnv))
+{
+	test.env <- environment()
+	parent.env(test.env) <- .GlobalEnv
 
-setDefaults("rm", inherits = TRUE)
+	setDefaults("rm", inherits = TRUE)	
+}
 
 # Example 01: CSV Data File
 message('Example 01: Testing .csv support')

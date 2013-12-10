@@ -33,7 +33,8 @@ Suggests:
     pixmap,
     data.table,
     RPostgreSQL,
-    testthat
+    testthat,
+		Defaults
 URL: http://projecttemplate.net
 Collate:
     'arff.reader.R'
