@@ -34,28 +34,6 @@ load.project <- function()
     options(stringsAsFactors = FALSE)
   }
   
-  if (is.null(config[['load_libraries']]))
-  {
-    warning('Your configuration file is missing an entry: load_libraries')
-  }
-  else
-  {
-    if (config[['load_libraries']] == 'on')
-    {
-      message('Autoloading packages')
-      my.project.info[['packages']] <- c()
-      for (package.to.load in config[['libraries']])
-      {
-        message(paste(' Loading package:', package.to.load))
-        if (!library(package.to.load, character.only = TRUE, logical.return = TRUE))
-        {
-          stop(paste('Failed to load package: ', package.to.load))
-        }
-        my.project.info[['packages']] <- c(my.project.info[['packages']], package.to.load)
-      }
-    }
-  }
-
   if (file.exists('lib'))
   {
     message('Autoloading helper functions')
@@ -77,6 +55,28 @@ load.project <- function()
         message(paste(' Running helper script:', helper.script))
         source(file.path('lib', helper.script))
         my.project.info[['helpers']] <- c(my.project.info[['helpers']], helper.script)
+      }
+    }
+  }
+
+  if (is.null(config[['load_libraries']]))
+  {
+    warning('Your configuration file is missing an entry: load_libraries')
+  }
+  else
+  {
+    if (config[['load_libraries']] == 'on')
+    {
+      message('Autoloading packages')
+      my.project.info[['packages']] <- c()
+      for (package.to.load in config[['libraries']])
+      {
+        message(paste(' Loading package:', package.to.load))
+        if (!library(package.to.load, character.only = TRUE, logical.return = TRUE))
+        {
+          stop(paste('Failed to load package: ', package.to.load))
+        }
+        my.project.info[['packages']] <- c(my.project.info[['packages']], package.to.load)
       }
     }
   }
