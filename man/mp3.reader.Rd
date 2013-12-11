@@ -2,7 +2,7 @@
 \alias{mp3.reader}
 \title{Read an MP3 file with a .mp3 file extension.}
 \usage{
-  mp3.reader(data.file, filename, variable.name)
+mp3.reader(data.file, filename, variable.name)
 }
 \arguments{
   \item{data.file}{The name of the data file to be read.}
@@ -13,13 +13,13 @@
   global environment.}
 }
 \value{
-  No value is returned; this function is called for its
-  side effects.
+No value is returned; this function is called for its side
+effects.
 }
 \description{
-  This function will load the specified MP3 file into
-  memory using the tuneR package. This is useful for
-  working with music files as a data set.
+This function will load the specified MP3 file into memory
+using the tuneR package. This is useful for working with
+music files as a data set.
 }
 \examples{
 library('ProjectTemplate')

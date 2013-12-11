@@ -2,7 +2,7 @@
 \alias{epiinfo.reader}
 \title{Read an Epi Info file with a .rec file extension.}
 \usage{
-  epiinfo.reader(data.file, filename, variable.name)
+epiinfo.reader(data.file, filename, variable.name)
 }
 \arguments{
   \item{data.file}{The name of the data file to be read.}
@@ -13,12 +13,12 @@
   global environment.}
 }
 \value{
-  No value is returned; this function is called for its
-  side effects.
+No value is returned; this function is called for its side
+effects.
 }
 \description{
-  This function will load all of the data sets stored in
-  the specified Epi Info file into the global environment.
+This function will load all of the data sets stored in the
+specified Epi Info file into the global environment.
 }
 \examples{
 library('ProjectTemplate')

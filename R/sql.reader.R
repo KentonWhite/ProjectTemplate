@@ -6,6 +6,12 @@
 #' or one specific query against any set of tables may be executed to generate
 #' a data set.
 #'
+#' queries can support string interpolation to execute code snippets. This is used
+#' to create queries that depend on data from other sources. Code delimited is @@{...}
+#'
+#' Example: query: SELECT * FROM my_table WHERE id IN (@@{paste(ids, collapse = ',')}).
+#' Here ids is data previously loaded into ProjectTemplate
+#'
 #' Examples of the DCF format and settings used in a .sql file are shown
 #' below:
 #'
@@ -74,6 +80,16 @@
 #' url: jdbc:oracle:thin:@@myhost:1521:orcl
 #' query: select * from emp
 #'
+#' Example 10
+#' type: heroku
+#' classpath: /path/to/ojdbc5.jar (or set in CLASSPATH)
+#' user: scott
+#' password: tiger
+#' host: heroku.postgres.url
+#' port: 1234
+#' dbname: herokudb 
+#' query: select * from emp
+#'
 #' @param data.file The name of the data file to be read.
 #' @param filename The path to the data set to be loaded.
 #' @param variable.name The name to be assigned to in the global environment.
@@ -97,7 +113,7 @@ sql.reader <- function(data.file, filename, variable.name)
     database.info <- modifyList(connection.info, database.info) 
   }
 
-  if (! (database.info[['type']] %in% c('mysql', 'sqlite', 'odbc', 'postgres', 'oracle', 'jdbc')))
+  if (! (database.info[['type']] %in% c('mysql', 'sqlite', 'odbc', 'postgres', 'oracle', 'jdbc', 'heroku')))
   {
     warning('Only databases reachable through RMySQL, RSQLite, RODBC ROracle or RPostgreSQL are currently supported.')
     assign(variable.name,
@@ -190,8 +206,34 @@ sql.reader <- function(data.file, filename, variable.name)
     ident.quote <- NA
     if('identquote' %in% names(database.info))
        ident.quote <- database.info[['identquote']]
+		
+		if(is.null(database.info[['classpath']])) {
+			database.info[['classpath']] = ''
+		}
 
     rjdbc.driver <- JDBC(database.info[['class']], database.info[['classpath']], ident.quote)
+    connection <- dbConnect(rjdbc.driver,
+                            database.info[['url']],
+                            user = database.info[['user']],
+                            password = database.info[['password']])
+  }
+
+  if (database.info[['type']] == 'heroku')
+  {
+    library('RJDBC')
+		
+		if(is.null(database.info[['classpath']])) {
+			database.info[['classpath']] <- ''
+	}
+
+		database.info[['class']] <- 'org.postgresql.Driver'
+		
+		database.info[['url']] <- paste('jdbc:postgresql://', database.info[['host']], 
+				':', database.info[['port']], 
+				'/', database.info[['dbname']], 
+				'?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory', sep = '')
+		
+    rjdbc.driver <- JDBC(database.info[['class']], database.info[['classpath']])
     connection <- dbConnect(rjdbc.driver,
                             database.info[['url']],
                             user = database.info[['user']],
@@ -259,6 +301,11 @@ sql.reader <- function(data.file, filename, variable.name)
 
   if (! is.null(query))
   {
+		if (length(grep('\\@\\{.*\\}', query)) != 0) {
+			# Do string interpolation
+			library('GetoptLong')
+			query <- qq(query)
+		}
     data.parcel <- try(dbGetQuery(connection, query))
     err <- dbGetException(connection)
     

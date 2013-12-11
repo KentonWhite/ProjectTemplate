@@ -2,7 +2,7 @@
 \alias{xport.reader}
 \title{Read an XPort file with a .xport file extension.}
 \usage{
-  xport.reader(data.file, filename, variable.name)
+xport.reader(data.file, filename, variable.name)
 }
 \arguments{
   \item{data.file}{The name of the data file to be read.}
@@ -13,12 +13,12 @@
   global environment.}
 }
 \value{
-  No value is returned; this function is called for its
-  side effects.
+No value is returned; this function is called for its side
+effects.
 }
 \description{
-  This function will load the specified XPort file into
-  memory.
+This function will load the specified XPort file into
+memory.
 }
 \examples{
 library('ProjectTemplate')
