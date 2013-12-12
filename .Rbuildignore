@@ -7,3 +7,4 @@
 ^roxygenate\.R$
 ^TODO\.markdown$
 ^website$
+^Makefile$
