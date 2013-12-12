@@ -2,7 +2,7 @@
 \alias{ppm.reader}
 \title{Read a PPM file with a .ppm file extension.}
 \usage{
-  ppm.reader(data.file, filename, variable.name)
+ppm.reader(data.file, filename, variable.name)
 }
 \arguments{
   \item{data.file}{The name of the data file to be read.}
@@ -13,13 +13,13 @@
   global environment.}
 }
 \value{
-  No value is returned; this function is called for its
-  side effects.
+No value is returned; this function is called for its side
+effects.
 }
 \description{
-  This function will load the specified PPM file into
-  memory using the pixamp package. This is useful for
-  working with image files as a data set.
+This function will load the specified PPM file into memory
+using the pixamp package. This is useful for working with
+image files as a data set.
 }
 \examples{
 library('ProjectTemplate')

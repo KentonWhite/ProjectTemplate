@@ -2,13 +2,14 @@
 \name{project.info}
 \alias{project.info}
 \title{Stores all information about the project.}
-\format{NULL}
+\format{\preformatted{ NULL
+}}
 \usage{
-  project.info
+project.info
 }
 \description{
-  This variable (actually, an active binding) is
-  initialized by \code{load.project}.
+This variable (actually, an active binding) is initialized
+by \code{load.project}.
 }
 \keyword{datasets}
 

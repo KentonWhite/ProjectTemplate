@@ -2,7 +2,7 @@
 \alias{rdata.reader}
 \title{Read an RData file with a .rdata or .rda file extension.}
 \usage{
-  rdata.reader(data.file, filename, variable.name)
+rdata.reader(data.file, filename, variable.name)
 }
 \arguments{
   \item{data.file}{The name of the data file to be read.}
@@ -13,13 +13,13 @@
   global environment.}
 }
 \value{
-  No value is returned; this function is called for its
-  side effects.
+No value is returned; this function is called for its side
+effects.
 }
 \description{
-  This function will load the specified RData file into
-  memory using the \code{\link{load}} function. This may
-  generate many data sets simultaneously.
+This function will load the specified RData file into
+memory using the \code{\link{load}} function. This may
+generate many data sets simultaneously.
 }
 \examples{
 library('ProjectTemplate')

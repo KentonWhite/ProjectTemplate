@@ -2,7 +2,7 @@
 \alias{mtp.reader}
 \title{Read a Minitab Portable Worksheet with an .mtp3 file extension.}
 \usage{
-  mtp.reader(data.file, filename, variable.name)
+mtp.reader(data.file, filename, variable.name)
 }
 \arguments{
   \item{data.file}{The name of the data file to be read.}
@@ -13,12 +13,12 @@
   global environment.}
 }
 \value{
-  No value is returned; this function is called for its
-  side effects.
+No value is returned; this function is called for its side
+effects.
 }
 \description{
-  This function will load the specified Minitab Portable
-  Worksheet into memory.
+This function will load the specified Minitab Portable
+Worksheet into memory.
 }
 \examples{
 library('ProjectTemplate')

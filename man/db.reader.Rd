@@ -2,7 +2,7 @@
 \alias{db.reader}
 \title{Read a SQlite3 database with a (.db) file extension.}
 \usage{
-  db.reader(data.file, filename, variable.name)
+db.reader(data.file, filename, variable.name)
 }
 \arguments{
   \item{data.file}{The name of the data file to be read.}
@@ -13,15 +13,15 @@
   global environment.}
 }
 \value{
-  No value is returned; this function is called for its
-  side effects.
+No value is returned; this function is called for its side
+effects.
 }
 \description{
-  This function will load all of the data sets stored in
-  the SQlite3 database into the global environment. If you
-  want to specify a single table or query to execute
-  against the database, move it elsewhere and use a .sql
-  file interpreted by \code{\link{sql.reader}}.
+This function will load all of the data sets stored in the
+SQlite3 database into the global environment. If you want
+to specify a single table or query to execute against the
+database, move it elsewhere and use a .sql file interpreted
+by \code{\link{sql.reader}}.
 }
 \examples{
 library('ProjectTemplate')
