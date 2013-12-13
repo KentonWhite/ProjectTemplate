@@ -18,4 +18,4 @@ end
 
 output_file.close
 
-`bzip2 letter.csv`
+`bzip2 letters.csv`
