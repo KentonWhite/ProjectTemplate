@@ -98,7 +98,7 @@
 <pre><code>    cd PhilaPD
     mv ~/Downloads/philapd.db.zip data
     unzip data/philapd.db.zip -d data
-    rm data/philapd.db.zip
+    rm data/philapd.db.zip 
 </code></pre>
 
 <p>Then we reload R and load the project. You'll see ProjectTemplate automatically load the two tables found in our SQLite database:</p>
@@ -107,7 +107,7 @@
     load.project()
 </code></pre>
 
-<p><img src="./mastering1.jpg" alt="Autoloading" title="" /></p>
+<p><img src="./mastering1.jpg" alt="Autoloading" /></p>
 
 <p>For most users, this automatic loading procedure is probably enough. But if you need more fine-grained control, you can use the <code>.sql</code> ad hoc file type to load specific tables from a SQLite database. You can also specify an exact SQL query to run against the database. We'll go through all three cases below.</p>
 
@@ -127,7 +127,7 @@
 
 <p>After creating the <code>data/philapd.sql</code> file, we can rerun <code>load.project</code>, which will load only the <code>location_info</code> table from our database into the variable <code>philapd</code>:</p>
 
-<p><img src="./mastering2.jpg" alt="Autoloading" title="" /></p>
+<p><img src="./mastering2.jpg" alt="Autoloading" /></p>
 
 <h6>Load All Tables from a Specific Database</h6>
 
@@ -138,7 +138,7 @@
     table: *
 </code></pre>
 
-<p><img src="./mastering3.jpg" alt="Autoloading" title="" /></p>
+<p><img src="./mastering3.jpg" alt="Autoloading" /></p>
 
 <h6>Loading Data with an SQL Query</h6>
 
@@ -149,7 +149,7 @@
     query: SELECT * FROM location_info WHERE zip = '19144'
 </code></pre>
 
-<p><img src="./mastering4.jpg" alt="Autoloading" title="" /></p>
+<p><img src="./mastering4.jpg" alt="Autoloading" /></p>
 
 <h5>MySQL, PostGres or ODBC Databases</h5>
 
@@ -185,7 +185,7 @@
     separator: ,
 </code></pre>
 
-<p><img src="./mastering5.jpg" alt="Autoloading" title="" /></p>
+<p><img src="./mastering5.jpg" alt="Autoloading" /></p>
 
 <h5>.file Files</h5>
 
@@ -195,7 +195,7 @@
     extension: csv
 </code></pre>
 
-<p><img src="./mastering6.jpg" alt="Autoloading" title="" /></p>
+<p><img src="./mastering6.jpg" alt="Autoloading" /></p>
 
 <h5>R Files</h5>
 
@@ -205,7 +205,7 @@
     d &lt;- rnorm(1000, 0, 1)
 </code></pre>
 
-<p><img src="./mastering7.jpg" alt="Autoloading" title="" /></p>
+<p><img src="./mastering7.jpg" alt="Autoloading" /></p>
 
 <h5>Media Files: MP3's and PPM's</h5>
 
@@ -217,7 +217,7 @@
 
 <p>After editing your tests, you can call <code>test.project()</code> to run all of the unit tests in the <code>tests</code> directory.</p>
 
-<p><img src="./unit_tests.jpg" alt="Unit Tests" title="" /></p>
+<p><img src="./unit_tests.jpg" alt="Unit Tests" /></p>
 
 <h4>Logging Your Work</h4>
 
@@ -228,7 +228,7 @@
 
 <p>After making this change, the <code>logger</code> object will be created once you call <code>load.project()</code>:</p>
 
-<p><img src="./logging.jpg" alt="Logging" title="" /></p>
+<p><img src="./logging.jpg" alt="Logging" /></p>
 
 <h4>Data Tables</h4>
 
