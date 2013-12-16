@@ -13,6 +13,7 @@ Description: ProjectTemplate provides functions to
     importing and unit testing.
 License: Artistic-2.0
 LazyLoad: yes
+Roxygen: list(wrap = FALSE)
 Depends:
     R (>= 2.7)
 Suggests:
