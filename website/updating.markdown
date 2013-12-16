@@ -1,3 +1,6 @@
+---
+layout: page
+---
 Because ProjectTemplate is still beta software, there are a number of backwards incompatible changes introduced with each iteration of the package. The information below should help you upgrade an existing project to work with the newest version of ProjectTemplate.
 
 ##### Updating a v0.3-4 Project to a v0.3-5 Project

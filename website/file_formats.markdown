@@ -1,3 +1,6 @@
+---
+layout: page
+---
 ProjectTemplate can automatically load a variety of text based file formats, including comma separated value (CSV) files, tab separated value (TSV) files and generic whitespace separated value (WSV) files. In addition, automatic data loading is supported for several binary file formats, including the RData, SPSS, Stata and SAS formats.
 
 Beyond those file formats, several ad hoc file types support the loading of data sets that are accessible over HTTP or contained in SQL databases, such as MySQL and sqlite.

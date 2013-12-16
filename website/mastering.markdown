@@ -1,3 +1,6 @@
+---
+layout: page
+---
 Before you work through this walkthrough, you should make sure you've read (or at least understood) the contents of the [beginner's tutorial](./getting_started.html).
 
 #### Ad Hoc File Types

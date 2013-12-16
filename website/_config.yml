@@ -7,7 +7,7 @@ exclude:     []
 keep_files:  ['.git','.svn']
 gems:        []
 timezone:    nil
-encoding:    nil
+encoding:    UTF-8
 
 future:      true
 show_drafts: nil

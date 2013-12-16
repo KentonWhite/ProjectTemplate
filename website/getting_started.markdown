@@ -1,3 +1,6 @@
+---
+layout: page
+---
 Let's set up a new data analysis project using ProjectTemplate.
 
 Before we start, you should make sure that you've [installed](./installing.html) ProjectTemplate. You'll also need to download the sample data set we'll use, which is stored in a file called [letters.csv.bz2](./letters.csv.bz2).
