@@ -9,9 +9,10 @@ ProjectTemplate is now available on CRAN and can be installed using a simple cal
 
     install.packages('ProjectTemplate')
 
-If you would like access to changes to this package that are not available in the version currently on CRAN, please download the contents of this repository and then run,
+If you would like access to changes to this package that are not available in the version currently on CRAN, please install this package directly from Github,
 
-    R CMD INSTALL ProjectTemplate_*.tar.gz
+		library('devtools')
+		install_github('ProjectTemplate', username = 'johnmyleswhite')
 
 For most users, running the bleeding edge version of this package is probably a mistake.
 
