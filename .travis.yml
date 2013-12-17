@@ -13,7 +13,6 @@ before_install:
   - curl -OL http://raw.github.com/craigcitro/r-travis/master/scripts/travis-tool.sh
   - chmod 755 ./travis-tool.sh
   - ./travis-tool.sh bootstrap
-  - rm ProjectTemplate_*.*.tar.gz
 install:
   - ./travis-tool.sh r_binary_install colorspace RColorBrewer dichromat munsell labeling Formula sp mvtnorm TH.data sandwich formatR highr markdown zoo bit gtable reshape2 scales proto quantreg Hmisc mapproj maps hexbin maptools multcomp knitr DBI RUnit gtools signal pastecs chron fastmatch xts reshape ggplot2 lubridate RMySQL RSQLite gdata RODBC pixmap data.table testthat
   - ./travis-tool.sh aptget_install unixodbc-dev
