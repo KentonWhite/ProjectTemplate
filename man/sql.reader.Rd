@@ -61,6 +61,11 @@ Example 9 type: jdbc class: oracle.jdbc.OracleDriver
 classpath: /path/to/ojdbc5.jar (or set in CLASSPATH) user:
 scott password: tiger url:
 jdbc:oracle:thin:@myhost:1521:orcl query: select * from emp
+
+Example 10 type: heroku classpath: /path/to/ojdbc5.jar (or
+set in CLASSPATH) user: scott password: tiger host:
+heroku.postgres.url port: 1234 dbname: herokudb query:
+select * from emp
 }
 \examples{
 library('ProjectTemplate')
