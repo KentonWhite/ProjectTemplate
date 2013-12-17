@@ -13,14 +13,12 @@ spss.reader(data.file, filename, variable.name)
   global environment.}
 }
 \value{
-No value is returned; this function is called for its side
-effects.
+No value is returned; this function is called for its side effects.
 }
 \description{
-This function will load the specified SPSS file into
-memory. It will convert the resulting list object into a
-data frame before inserting the data set into the global
-environment.
+This function will load the specified SPSS file into memory. It will
+convert the resulting list object into a data frame before inserting the
+data set into the global environment.
 }
 \examples{
 library('ProjectTemplate')

@@ -13,12 +13,11 @@ epiinfo.reader(data.file, filename, variable.name)
   global environment.}
 }
 \value{
-No value is returned; this function is called for its side
-effects.
+No value is returned; this function is called for its side effects.
 }
 \description{
-This function will load all of the data sets stored in the
-specified Epi Info file into the global environment.
+This function will load all of the data sets stored in the specified
+Epi Info file into the global environment.
 }
 \examples{
 library('ProjectTemplate')

@@ -9,15 +9,13 @@ cache(variable)
   the variable to be saved.}
 }
 \value{
-No value is returned; this function is called for its side
-effects.
+No value is returned; this function is called for its side effects.
 }
 \description{
-This function will store a copy of the named data set in
-the \code{cache} directory. This cached copy of the data
-set will then be given precedence at load time when calling
-\code{\link{load.project}}. Cached data sets are stored as
-\code{.RData} files.
+This function will store a copy of the named data set in the \code{cache}
+directory. This cached copy of the data set will then be given precedence
+at load time when calling \code{\link{load.project}}. Cached data sets are
+stored as \code{.RData} files.
 }
 \examples{
 library('ProjectTemplate')

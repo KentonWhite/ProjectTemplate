@@ -5,10 +5,10 @@
 \alias{package-ProjectTemplate}
 \title{Automates the creation of new statistical analysis projects.}
 \description{
-ProjectTemplate provides functions to automatically build a
-directory structure for a new R project. Using this
-structure, ProjectTemplate automates data loading,
-preprocessing, library importing and unit testing.
+ProjectTemplate provides functions to automatically build a directory
+structure for a new R project. Using this structure, ProjectTemplate
+automates data loading, preprocessing, library importing and unit
+testing.
 }
 \examples{
 library('ProjectTemplate')
@@ -20,6 +20,6 @@ load.project()}
 }
 \references{
 This code is inspired by the skeleton structure used by
-Ruby on Rails.
+  Ruby on Rails.
 }
 

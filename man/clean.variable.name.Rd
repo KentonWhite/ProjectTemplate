@@ -12,11 +12,10 @@ clean.variable.name(variable.name)
 A translated variable name.
 }
 \description{
-This function will translate a file name into a name that
-is a valid variable name in R. Non-alphabetic characters on
-the boundaries of the file name will be stripped;
-non-alphabetic characters inside of the file name will be
-replaced with dots.
+This function will translate a file name into a name that is a valid
+variable name in R. Non-alphabetic characters on the boundaries of the
+file name will be stripped; non-alphabetic characters inside of the file
+name will be replaced with dots.
 }
 \examples{
 library('ProjectTemplate')

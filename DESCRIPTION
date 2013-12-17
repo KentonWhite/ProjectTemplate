@@ -34,7 +34,7 @@ Suggests:
     pixmap,
     data.table,
     RPostgreSQL,
-		GetoptLong,
+    GetoptLong,
     testthat,
     Defaults
 URL: http://projecttemplate.net
@@ -58,6 +58,7 @@ Collate:
     'tsv.reader.R'
     'systat.reader.R'
     'stata.reader.R'
+    'require.package.R'
     'sql.reader.R'
     'spss.reader.R'
     'rdata.reader.R'

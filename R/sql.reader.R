@@ -100,6 +100,8 @@
 #' library('ProjectTemplate')
 #'
 #' \dontrun{sql.reader('example.sql', 'data/example.sql', 'example')}
+#'
+#' @include require.package.R
 sql.reader <- function(data.file, filename, variable.name)
 {
   database.info <- ProjectTemplate:::translate.dcf(filename)
@@ -303,7 +305,7 @@ sql.reader <- function(data.file, filename, variable.name)
   {
 		if (length(grep('\\@\\{.*\\}', query)) != 0) {
 			# Do string interpolation
-			library('GetoptLong')
+			require.package('GetoptLong')
 			query <- qq(query)
 		}
     data.parcel <- try(dbGetQuery(connection, query))

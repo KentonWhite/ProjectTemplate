@@ -21,19 +21,16 @@ create.project(project.name = "new-project", minimal = FALSE,
   flat files in the current project.}
 }
 \value{
-No value is returned; this function is called for its side
-effects.
+No value is returned; this function is called for its side effects.
 }
 \description{
-This function will create all of the scaffolding for a new
-project. It will set up all of the relevant directories and
-their initial contents. For those who only want the minimal
-functionality, the \code{minimal} argument can be set to
-\code{TRUE} to create a subset of ProjectTemplate's default
-directories. For those who want to dump all of
-ProjectTemplate's functionality into a directory for
-extensive customization, the \code{dump} argument can be
-set to \code{TRUE}.
+This function will create all of the scaffolding for a new project.
+It will set up all of the relevant directories and their initial
+contents. For those who only want the minimal functionality, the
+\code{minimal} argument can be set to \code{TRUE} to create a subset of
+ProjectTemplate's default directories. For those who want to dump
+all of ProjectTemplate's functionality into a directory for extensive
+customization, the \code{dump} argument can be set to \code{TRUE}.
 }
 \examples{
 library('ProjectTemplate')

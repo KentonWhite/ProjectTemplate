@@ -13,13 +13,12 @@ r.reader(data.file, filename, variable.name)
   global environment.}
 }
 \value{
-No value is returned; this function is called for its side
-effects.
+No value is returned; this function is called for its side effects.
 }
 \description{
-This function will call source on the specified R file,
-executing the code inside of it as a way of generating data
-sets dynamically, as in many Monte Carlo applications.
+This function will call source on the specified R file, executing the
+code inside of it as a way of generating data sets dynamically, as in
+many Monte Carlo applications.
 }
 \examples{
 library('ProjectTemplate')

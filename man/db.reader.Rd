@@ -13,15 +13,13 @@ db.reader(data.file, filename, variable.name)
   global environment.}
 }
 \value{
-No value is returned; this function is called for its side
-effects.
+No value is returned; this function is called for its side effects.
 }
 \description{
-This function will load all of the data sets stored in the
-SQlite3 database into the global environment. If you want
-to specify a single table or query to execute against the
-database, move it elsewhere and use a .sql file interpreted
-by \code{\link{sql.reader}}.
+This function will load all of the data sets stored in the SQlite3
+database into the global environment. If you want to specify a single
+table or query to execute against the database, move it elsewhere and
+use a .sql file interpreted by \code{\link{sql.reader}}.
 }
 \examples{
 library('ProjectTemplate')

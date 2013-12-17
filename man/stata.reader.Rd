@@ -13,12 +13,10 @@ stata.reader(data.file, filename, variable.name)
   global environment.}
 }
 \value{
-No value is returned; this function is called for its side
-effects.
+No value is returned; this function is called for its side effects.
 }
 \description{
-This function will load the specified Stata file into
-memory.
+This function will load the specified Stata file into memory.
 }
 \examples{
 library('ProjectTemplate')
