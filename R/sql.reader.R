@@ -190,6 +190,10 @@ sql.reader <- function(data.file, filename, variable.name)
     ident.quote <- NA
     if('identquote' %in% names(database.info))
        ident.quote <- database.info[['identquote']]
+		
+		if(is.null(database.info[['classpath']])) {
+			database.info[['classpath']] = ''
+		}
 
     rjdbc.driver <- JDBC(database.info[['class']], database.info[['classpath']], ident.quote)
     connection <- dbConnect(rjdbc.driver,
