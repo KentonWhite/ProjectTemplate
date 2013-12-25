@@ -13,13 +13,12 @@ mp3.reader(data.file, filename, variable.name)
   global environment.}
 }
 \value{
-No value is returned; this function is called for its side
-effects.
+No value is returned; this function is called for its side effects.
 }
 \description{
-This function will load the specified MP3 file into memory
-using the tuneR package. This is useful for working with
-music files as a data set.
+This function will load the specified MP3 file into memory using the
+tuneR package. This is useful for working with music files as a data
+set.
 }
 \examples{
 library('ProjectTemplate')

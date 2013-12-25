@@ -8,8 +8,8 @@
 project.info
 }
 \description{
-This variable (actually, an active binding) is initialized
-by \code{load.project}.
+This variable (actually, an active binding) is initialized by
+\code{load.project}.
 }
 \keyword{datasets}
 

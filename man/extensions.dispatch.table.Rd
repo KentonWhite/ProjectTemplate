@@ -60,11 +60,10 @@
 extensions.dispatch.table
 }
 \description{
-This list stores a mapping from regular expressions that
-match file extensions for the file types supported by
-ProjectTemplate to the reader functions that implement
-autoloading for those formats. Any new file type must be
-appended to this dispatch table.
+This list stores a mapping from regular expressions that match file
+extensions for the file types supported by ProjectTemplate to the
+reader functions that implement autoloading for those formats. Any
+new file type must be appended to this dispatch table.
 }
 \keyword{datasets}
 

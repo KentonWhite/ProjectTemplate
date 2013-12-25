@@ -13,12 +13,11 @@ arff.reader(data.file, filename, variable.name)
   global environment.}
 }
 \value{
-No value is returned; this function is called for its side
-effects.
+No value is returned; this function is called for its side effects.
 }
 \description{
-This function will load a data set stored in the Weka file
-format into the specified global variable binding.
+This function will load a data set stored in the Weka file format into
+the specified global variable binding.
 }
 \examples{
 \dontrun{arff.reader('example.arff', 'data/example.arff', 'example')}

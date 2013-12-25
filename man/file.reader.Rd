@@ -13,22 +13,19 @@ file.reader(data.file, filename, variable.name)
   global environment.}
 }
 \value{
-No value is returned; this function is called for its side
-effects.
+No value is returned; this function is called for its side effects.
 }
 \description{
-This function will load all of the data sets described in
-the specified .file file into the global environment. A
-.file file must contain DCF that specifies the path to the
-data set and which extension should be used from the
-dispatch table to load the data set.
+This function will load all of the data sets described in the specified
+.file file into the global environment. A .file file must contain DCF
+that specifies the path to the data set and which extension should be
+used from the dispatch table to load the data set.
 }
 \details{
-Examples of the DCF format and settings used in a .file
-file are shown below:
+Examples of the DCF format and settings used in a .file file are shown
+below:
 
-path:
-http://www.johnmyleswhite.com/ProjectTemplate/sample_data.csv
+path: http://www.johnmyleswhite.com/ProjectTemplate/sample_data.csv
 extension: csv
 }
 \examples{
