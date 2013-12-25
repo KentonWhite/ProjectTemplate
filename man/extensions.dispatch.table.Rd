@@ -2,7 +2,7 @@
 \name{extensions.dispatch.table}
 \alias{extensions.dispatch.table}
 \title{Maps file types to the reader functions used to autoload them.}
-\format{\preformatted{List of 53
+\format{\preformatted{List of 52
  $ \\.csv$     :function (data.file, filename, variable.name)  
  $ \\.csv.bz2$ :function (data.file, filename, variable.name)  
  $ \\.csv.zip$ :function (data.file, filename, variable.name)  
@@ -55,7 +55,6 @@
  $ \\.dat.bz2$ :function (data.file, filename, variable.name)  
  $ \\.dat.zip$ :function (data.file, filename, variable.name)  
  $ \\.dat.gz$  :function (data.file, filename, variable.name)  
- $ \\.es$      :function (data.file, filename, variable.name)  
 }}
 \usage{
 extensions.dispatch.table
