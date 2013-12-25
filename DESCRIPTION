@@ -70,7 +70,6 @@ Collate:
     'cache.project.R'
     'clean.variable.name.R'
     'create.project.R'
-    'es.reader.R'
     'help.R'
     'load.project.R'
     'reload.project.R'
