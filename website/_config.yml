@@ -25,11 +25,8 @@ textile_ext:   textile
 
 excerpt_separator: "\n\n"
 
-safe:        false
-host:        0.0.0.0
-port:        4000
-baseurl:     /
-url:         http://localhost:4000
+safe:        true
+url:         http://projecttemplate.net
 lsi:         false
 
 maruku:
