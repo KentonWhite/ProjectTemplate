@@ -1,3 +1,6 @@
+---
+layout: page
+---
 ProjectTemplate v0.3-5 is currently on [CRAN](http://cran.r-project.org/web/packages/ProjectTemplate/) and can be installed using a simple call to `install.packages()`:
 
     install.packages('ProjectTemplate')

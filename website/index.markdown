@@ -1,3 +1,6 @@
+---
+layout: page
+---
 ProjectTemplate is a system for automating the thoughtless parts of a data analysis project:
 
 * Organizing the files in your project.

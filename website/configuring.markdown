@@ -1,3 +1,6 @@
+---
+layout: page
+---
 The current configuration settings exist in the `config/global.dcf` file:
 
 * `data_loading`: This can be set to 'on' or 'off'. If `data_loading` is on, the system will load data from both the `cache` and `data` directories with `cache` taking precedence in the case of name conflict. By default, `data_loading` is on.
