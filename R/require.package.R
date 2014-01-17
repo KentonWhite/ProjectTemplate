@@ -4,6 +4,9 @@
 #' it will stop execution and print a message to the user instructing them which
 #' package to install and which function caused the error.
 #'
+#' @param package.name A character vector containing the package name.
+#'   Must be a valid package name installed on the system.
+
 #' @return No value is returned; this function is called for its side effects.
 #'
 #' @export
