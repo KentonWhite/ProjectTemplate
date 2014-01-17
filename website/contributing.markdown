@@ -1,15 +1,21 @@
 ---
 layout: page
 ---
-If you have changes you'd like to make to ProjectTemplate, we'd love to see them. We'd prefer that you fork ProjectTemplate through GitHub and submit a pull request. If that's not possible, please e-mail a patch to the [mailing list](./mailing_list.html) so that we can manually incorporate your changes.
+If you have changes you'd like to make to ProjectTemplate, we'd love to see them. We'd prefer that you fork ProjectTemplate through [GitHub](https://github.com/johnmyleswhite/ProjectTemplate) and submit a pull request. If that's not possible, please submit a patch to the [ProjectTemplate Google Group](http://groups.google.com/group/projecttemplate) so that we can manually incorporate your changes.
+
+#### Issues & Suggestions
+
+Please report bugs, issues or suggestions on our [GitHub Issues Page](https://github.com/johnmyleswhite/ProjectTemplate/issues). Before posting, please take a few moments to see if someone has already reported the issue or made a similar suggestion.
 
 #### Commit Team
 
-* John Myles White
-* Allen Goodman
+* Kirill Müller
+* Kenton White
 
 #### Code Contributors
 
+* John Myles White
+* Allen Goodman
 * Diego Valle-Jones
 * Patrick Schalk
 * Noah Lorang
