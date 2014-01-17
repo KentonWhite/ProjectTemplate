@@ -99,7 +99,7 @@ query: select * from emp
 
 Example 10
 type: heroku
-classpath: /path/to/ojdbc5.jar (or set in CLASSPATH)
+classpath: /path/to/jdbc4.jar (or set in CLASSPATH)
 user: scott
 password: tiger
 host: heroku.postgres.url
