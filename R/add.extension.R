@@ -8,10 +8,10 @@
 #' @return No value is returned; this function is called for its side effects.
 #'
 #' @examples
-#' \dontrun{add.extension('foo', foo.reader)}
+#' \dontrun{.add.extension('foo', foo.reader)}
 #' @include extensions.dispatch.table.R
 
-add.extension <- function(extension, reader) {
+.add.extension <- function(extension, reader) {
 	key <- paste('\\.', extension, '$', sep='')
 	extensions.dispatch.table[[key]] <- reader
 	unlockBinding('extensions.dispatch.table', asNamespace('ProjectTemplate'))
