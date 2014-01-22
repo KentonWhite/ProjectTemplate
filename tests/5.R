@@ -4,7 +4,7 @@ library('ProjectTemplate')
 
 foo1.reader <- function() {}
 	
-ProjectTemplate:::add.extension('foo1', foo1.reader)
+.add.extension('foo1', foo1.reader)
 expect_that(ProjectTemplate:::extensions.dispatch.table[['\\.foo1$']], equals(foo1.reader))
 
 create.project('test_project', minimal = FALSE)

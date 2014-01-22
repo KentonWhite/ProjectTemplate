@@ -1,8 +1,8 @@
-\name{add.extension}
-\alias{add.extension}
+\name{.add.extension}
+\alias{.add.extension}
 \title{Associate a reader function with an extension.}
 \usage{
-add.extension(extension, reader)
+.add.extension(extension, reader)
 }
 \arguments{
   \item{extension}{The extension of the new data file.}
@@ -17,6 +17,6 @@ No value is returned; this function is called for its side effects.
 This function will associate an extension with a custom reader function.
 }
 \examples{
-\dontrun{add.extension('foo', foo.reader)}
+\dontrun{.add.extension('foo', foo.reader)}
 }
 
