@@ -294,24 +294,7 @@ load.project <- function()
     assign('logger', logger, envir = .GlobalEnv)
   }
 
-  project.info <- my.project.info
+  assign('project.info', my.project.info, envir = .GlobalEnv)
+  #assign('project.info', my.project.info, envir = parent.frame())
+  #assign('project.info', my.project.info, envir = environment(ProjectTemplate:::create.project))
 }
-
-.project.info.env <- new.env()
-
-.project.info <- function(arg) {
-  if (missing(arg))
-    get(x="project.info", envir=.project.info.env)
-  else
-    assign("project.info", arg, envir=.project.info.env)
-}
-
-#' Stores all information about the project.
-#'
-#' This variable (actually, an active binding) is initialized by
-#' \code{load.project}.
-#'
-#' @export
-project.info <- NULL
-
-makeActiveBinding("project.info", .project.info, parent.frame())
