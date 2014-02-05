@@ -30,7 +30,10 @@
 create.project <- function(project.name = 'new-project', minimal = FALSE, dump = FALSE)
 {
   template.name <- if (minimal) 'minimal' else 'full'
-  .create.project.new(template.name, project.name)
+  if (file.exists(project.name) && file.info(project.name)$isdir) {
+    .create.project.existing(template.name, project.name)
+  } else
+    .create.project.new(template.name, project.name)
 
   if (dump)
   {
@@ -50,6 +53,25 @@ create.project <- function(project.name = 'new-project', minimal = FALSE, dump =
   }
 }
 
+.create.project.existing <- function(template.name, project.name) {
+  template.path <- .get.template.path(template.name)
+  files.list <- lapply(c(template.path, project.name),
+                      function(path) list.files(path = path, all.files = TRUE,
+                                                include.dirs = TRUE, no.. = TRUE))
+  files <- sort(unlist(files.list))
+  rle.files <- rle(files)
+  if (any(rle.files$length > 1)) {
+    stop(paste("Creating a project in ", project.name,
+               " would overwrite the following existing files/directories:\n",
+               paste(rle.files$values[rle.files$length > 1], collapse=', ')
+    ), sep = '')
+  }
+
+  file.copy(file.path(template.path, files.list[[1]]),
+            file.path(project.name),
+            recursive = TRUE, overwrite = FALSE)
+}
+
 .create.project.new <- function(template.name, project.name) {
   tmp.dir <- paste(project.name, '_tmp', sep = '')
 
@@ -61,12 +83,11 @@ create.project <- function(project.name = 'new-project', minimal = FALSE, dump =
   dir.create(tmp.dir)
   on.exit(unlink(tmp.dir, recursive = TRUE), add=TRUE)
 
-  .copy.project.files(template.name, tmp.dir)
+  file.copy(.get.template.path(template.name),
+            file.path(tmp.dir),
+            recursive = TRUE)
   file.rename(file.path(tmp.dir, template.name), project.name)
 }
 
-.copy.project.files <- function(template.name, tmp.dir) {
-  file.copy(system.file(file.path('defaults', template.name), package = 'ProjectTemplate'),
-            file.path(tmp.dir),
-            recursive = TRUE)
-}
+.get.template.path <- function(template.name)
+  system.file(file.path('defaults', template.name), package = 'ProjectTemplate')
