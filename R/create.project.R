@@ -25,6 +25,11 @@
 #'
 #' @return No value is returned; this function is called for its side effects.
 #'
+#' @details  If the target directory does not exist, it is created.  Otherwise,
+#'   it must be empty or (if \code{merge.existing} is \code{TRUE}) it must
+#'   not contain files or directories with the same name as the files and
+#'   directories to be copied.
+#'
 #' @export
 #'
 #' @examples
