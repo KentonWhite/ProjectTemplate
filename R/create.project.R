@@ -51,6 +51,8 @@ create.project <- function(project.name = 'new-project', minimal = FALSE, dump =
           file = file.path(project.name, paste(item, '.R', sep = '')))
     }
   }
+
+  invisible(NULL)
 }
 
 .create.project.existing <- function(template.name, project.name) {
