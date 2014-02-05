@@ -55,20 +55,20 @@ create.project <- function(project.name = 'new-project', minimal = FALSE, dump =
 
 .create.project.existing <- function(template.name, project.name) {
   template.path <- .get.template.path(template.name)
-  files.list <- lapply(c(template.path, project.name),
-                      function(path) list.files(path = path, all.files = TRUE,
-                                                include.dirs = TRUE, no.. = TRUE))
-  files <- sort(unlist(files.list))
-  rle.files <- rle(files)
-  if (any(rle.files$length > 1)) {
-    stop(paste("Creating a project in ", project.name,
+  template.files <- list.files(path = template.path, all.files = TRUE,
+                               include.dirs = TRUE, no.. = TRUE)
+
+  project.path <- file.path(project.name)
+  target.file.exists <- file.exists(file.path(project.path, template.files))
+  if (any(target.file.exists)) {
+    stop(paste("Creating a project in ", project.path,
                " would overwrite the following existing files/directories:\n",
-               paste(rle.files$values[rle.files$length > 1], collapse=', ')
+               paste(template.files[target.file.exists], collapse=', ')
     ), sep = '')
   }
 
-  file.copy(file.path(template.path, files.list[[1]]),
-            file.path(project.name),
+  file.copy(file.path(template.path, template.files),
+            project.path,
             recursive = TRUE, overwrite = FALSE)
 }
 

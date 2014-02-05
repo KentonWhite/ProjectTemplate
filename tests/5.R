@@ -69,14 +69,53 @@ setwd('..')
 
 unlink('test_project', recursive = TRUE)
 
-# Test failure creating project in directory with existing items of the same
-# name
+# Test failure creating project in directory with existing empty directory
+# matching the name of a template directory
 
 expect_that(file.exists(file.path('test_project')), is_false())
 dir.create('test_project')
 expect_that(file.exists(file.path('test_project')), is_true())
 dir.create(file.path('test_project', 'munge'))
 expect_that(file.exists(file.path('test_project', 'munge')), is_true())
+
+expect_error(create.project('test_project', minimal = TRUE), "overwrite")
+
+unlink('test_project', recursive = TRUE)
+
+# Test failure creating project in directory with existing file
+# matching the name of a template directory
+
+expect_that(file.exists(file.path('test_project')), is_false())
+dir.create('test_project')
+expect_that(file.exists(file.path('test_project')), is_true())
+file.create(file.path('test_project', 'munge'))
+expect_that(file.exists(file.path('test_project', 'munge')), is_true())
+
+expect_error(create.project('test_project', minimal = TRUE), "overwrite")
+
+unlink('test_project', recursive = TRUE)
+
+# Test failure creating project in directory with existing empty directory
+# matching the name of a template file
+
+expect_that(file.exists(file.path('test_project')), is_false())
+dir.create('test_project')
+expect_that(file.exists(file.path('test_project')), is_true())
+dir.create(file.path('test_project', 'README'))
+expect_that(file.exists(file.path('test_project', 'README')), is_true())
+
+expect_error(create.project('test_project', minimal = TRUE), "overwrite")
+
+unlink('test_project', recursive = TRUE)
+
+# Test failure creating project in directory with existing file
+# matching the name of a template file
+
+expect_that(file.exists(file.path('test_project')), is_false())
+dir.create('test_project')
+expect_that(file.exists(file.path('test_project')), is_true())
+file.create(file.path('test_project', 'README'))
+expect_that(file.exists(file.path('test_project', 'README')), is_true())
 
 expect_error(create.project('test_project', minimal = TRUE), "overwrite")
 
