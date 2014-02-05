@@ -4,7 +4,7 @@ library('ProjectTemplate')
 
 unlink('test_project', recursive = TRUE)
 
-# Test full project.
+# Test full project into existing directory.
 
 expect_that(file.exists(file.path('test_project')), is_false())
 dir.create('test_project')
@@ -44,13 +44,17 @@ setwd('..')
 
 unlink('test_project', recursive = TRUE)
 
-# Test minimal project.
+# Test minimal project into existing directory with an unrelated entry.
 
 expect_that(file.exists(file.path('test_project')), is_false())
 dir.create('test_project')
 expect_that(file.exists(file.path('test_project')), is_true())
+file.create(file.path('test_project', '.dummy'))
+expect_that(file.exists(file.path('test_project', '.dummy')), is_true())
+dir.create(file.path('test_project', 'dummy_dir'))
+expect_that(file.exists(file.path('test_project', 'dummy_dir')), is_true())
 
-create.project('test_project', minimal = TRUE)
+create.project('test_project', minimal = TRUE, merge.existing = TRUE)
 
 expect_that(file.exists(file.path('test_project', 'cache')), is_true())
 expect_that(file.exists(file.path('test_project', 'config')), is_true())
@@ -69,6 +73,21 @@ setwd('..')
 
 unlink('test_project', recursive = TRUE)
 
+# Test failure creating project into existing directory with an unrelated entry
+# if merge.existing is not set.
+
+expect_that(file.exists(file.path('test_project')), is_false())
+dir.create('test_project')
+expect_that(file.exists(file.path('test_project')), is_true())
+file.create(file.path('test_project', '.dummy'))
+expect_that(file.exists(file.path('test_project', '.dummy')), is_true())
+dir.create(file.path('test_project', 'dummy_dir'))
+expect_that(file.exists(file.path('test_project', 'dummy_dir')), is_true())
+
+expect_error(create.project('test_project', minimal = TRUE), "not empty")
+
+unlink('test_project', recursive = TRUE)
+
 # Test failure creating project in directory with existing empty directory
 # matching the name of a template directory
 
@@ -78,7 +97,8 @@ expect_that(file.exists(file.path('test_project')), is_true())
 dir.create(file.path('test_project', 'munge'))
 expect_that(file.exists(file.path('test_project', 'munge')), is_true())
 
-expect_error(create.project('test_project', minimal = TRUE), "overwrite")
+expect_error(create.project('test_project', minimal = TRUE,
+                            merge.existing = TRUE), "overwrite")
 
 unlink('test_project', recursive = TRUE)
 
@@ -91,7 +111,8 @@ expect_that(file.exists(file.path('test_project')), is_true())
 file.create(file.path('test_project', 'munge'))
 expect_that(file.exists(file.path('test_project', 'munge')), is_true())
 
-expect_error(create.project('test_project', minimal = TRUE), "overwrite")
+expect_error(create.project('test_project', minimal = TRUE,
+                            merge.existing = TRUE), "overwrite")
 
 unlink('test_project', recursive = TRUE)
 
@@ -104,7 +125,8 @@ expect_that(file.exists(file.path('test_project')), is_true())
 dir.create(file.path('test_project', 'README'))
 expect_that(file.exists(file.path('test_project', 'README')), is_true())
 
-expect_error(create.project('test_project', minimal = TRUE), "overwrite")
+expect_error(create.project('test_project', minimal = TRUE,
+                            merge.existing = TRUE), "overwrite")
 
 unlink('test_project', recursive = TRUE)
 
@@ -117,6 +139,7 @@ expect_that(file.exists(file.path('test_project')), is_true())
 file.create(file.path('test_project', 'README'))
 expect_that(file.exists(file.path('test_project', 'README')), is_true())
 
-expect_error(create.project('test_project', minimal = TRUE), "overwrite")
+expect_error(create.project('test_project', minimal = TRUE,
+                            merge.existing = TRUE), "overwrite")
 
 unlink('test_project', recursive = TRUE)

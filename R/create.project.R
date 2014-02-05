@@ -18,6 +18,10 @@
 #' @param dump A boolean value indicating whether the entire functionality
 #'   of ProjectTemplate should be written out to flat files in the current
 #'   project.
+#' @param merge.existing If \code{TRUE}, allow merging into an existing
+#'   directory unless files or directories would be overwritten there.  If
+#'   \code{FALSE} and the \code{project.name} directory exists, it must be
+#'   empty.
 #'
 #' @return No value is returned; this function is called for its side effects.
 #'
@@ -27,11 +31,12 @@
 #' library('ProjectTemplate')
 #'
 #' \dontrun{create.project('MyProject')}
-create.project <- function(project.name = 'new-project', minimal = FALSE, dump = FALSE)
+create.project <- function(project.name = 'new-project', minimal = FALSE,
+                           dump = FALSE, merge.existing = FALSE)
 {
   template.name <- if (minimal) 'minimal' else 'full'
   if (file.exists(project.name) && file.info(project.name)$isdir) {
-    .create.project.existing(template.name, project.name)
+    .create.project.existing(template.name, project.name, merge.existing)
   } else
     .create.project.new(template.name, project.name)
 
@@ -55,18 +60,27 @@ create.project <- function(project.name = 'new-project', minimal = FALSE, dump =
   invisible(NULL)
 }
 
-.create.project.existing <- function(template.name, project.name) {
+.create.project.existing <- function(template.name, project.name,
+                                     merge.existing) {
   template.path <- .get.template.path(template.name)
   template.files <- list.files(path = template.path, all.files = TRUE,
                                include.dirs = TRUE, no.. = TRUE)
 
   project.path <- file.path(project.name)
   target.file.exists <- file.exists(file.path(project.path, template.files))
-  if (any(target.file.exists)) {
-    stop(paste("Creating a project in ", project.path,
-               " would overwrite the following existing files/directories:\n",
-               paste(template.files[target.file.exists], collapse=', ')
-    ), sep = '')
+  if (merge.existing) {
+    if (any(target.file.exists)) {
+      stop(paste("Creating a project in ", project.path,
+                 " would overwrite the following existing files/directories:\n",
+                 paste(template.files[target.file.exists], collapse=', ')
+      ), sep = '')
+    }
+  } else {
+    if (length(list.files(path = project.path, all.files = TRUE,
+                          include.dirs = TRUE, no.. = TRUE))) {
+      stop(paste("Directory", project.path,
+                 "not empty.  Use merge.existing = TRUE to override."))
+    }
   }
 
   file.copy(file.path(template.path, template.files),
