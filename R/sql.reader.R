@@ -208,10 +208,10 @@ sql.reader <- function(data.file, filename, variable.name)
     ident.quote <- NA
     if('identquote' %in% names(database.info))
        ident.quote <- database.info[['identquote']]
-		
-		if(is.null(database.info[['classpath']])) {
-			database.info[['classpath']] = ''
-		}
+    
+    if(is.null(database.info[['classpath']])) {
+      database.info[['classpath']] = ''
+    }
 
     rjdbc.driver <- JDBC(database.info[['class']], database.info[['classpath']], ident.quote)
     connection <- dbConnect(rjdbc.driver,
@@ -223,18 +223,18 @@ sql.reader <- function(data.file, filename, variable.name)
   if (database.info[['type']] == 'heroku')
   {
     library('RJDBC')
-		
-		if(is.null(database.info[['classpath']])) {
-			database.info[['classpath']] <- ''
-	}
+    
+    if(is.null(database.info[['classpath']])) {
+      database.info[['classpath']] <- ''
+  }
 
-		database.info[['class']] <- 'org.postgresql.Driver'
-		
-		database.info[['url']] <- paste('jdbc:postgresql://', database.info[['host']], 
-				':', database.info[['port']], 
-				'/', database.info[['dbname']], 
-				'?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory', sep = '')
-		
+    database.info[['class']] <- 'org.postgresql.Driver'
+    
+    database.info[['url']] <- paste('jdbc:postgresql://', database.info[['host']], 
+        ':', database.info[['port']], 
+        '/', database.info[['dbname']], 
+        '?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory', sep = '')
+    
     rjdbc.driver <- JDBC(database.info[['class']], database.info[['classpath']])
     connection <- dbConnect(rjdbc.driver,
                             database.info[['url']],
@@ -303,11 +303,11 @@ sql.reader <- function(data.file, filename, variable.name)
 
   if (! is.null(query))
   {
-		if (length(grep('\\@\\{.*\\}', query)) != 0) {
-			# Do string interpolation
-			require.package('GetoptLong')
-			query <- qq(query)
-		}
+    if (length(grep('\\@\\{.*\\}', query)) != 0) {
+      # Do string interpolation
+      require.package('GetoptLong')
+      query <- qq(query)
+    }
     data.parcel <- try(dbGetQuery(connection, query))
     err <- dbGetException(connection)
     
