@@ -73,19 +73,17 @@ create.project <- function(project.name = 'new-project', minimal = FALSE,
 
   project.path <- file.path(project.name)
   target.file.exists <- file.exists(file.path(project.path, template.files))
-  if (merge.existing) {
-    if (any(target.file.exists)) {
-      stop(paste("Creating a project in ", project.path,
-                 " would overwrite the following existing files/directories:\n",
-                 paste(template.files[target.file.exists], collapse=', ')
-      ), sep = '')
-    }
-  } else {
-    if (length(list.files(path = project.path, all.files = TRUE,
-                          include.dirs = TRUE, no.. = TRUE))) {
-      stop(paste("Directory", project.path,
-                 "not empty.  Use merge.existing = TRUE to override."))
-    }
+
+  if (merge.existing && any(target.file.exists)) {
+    stop(paste("Creating a project in ", project.path,
+               " would overwrite the following existing files/directories:\n",
+               paste(template.files[target.file.exists], collapse=', ')
+    ), sep = '')
+  }
+
+  if (!merge.existing && !.dir.empty(project.path)) {
+    stop(paste("Directory", project.path,
+               "not empty.  Use merge.existing = TRUE to override."))
   }
 
   file.copy(file.path(template.path, template.files),
@@ -112,3 +110,8 @@ create.project <- function(project.name = 'new-project', minimal = FALSE,
 
 .get.template.path <- function(template.name)
   system.file(file.path('defaults', template.name), package = 'ProjectTemplate')
+
+.dir.empty <- function(path) {
+  length(list.files(path = path, all.files = TRUE, include.dirs = TRUE,
+                    no.. = TRUE)) == 0
+}
