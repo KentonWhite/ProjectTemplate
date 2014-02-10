@@ -17,11 +17,11 @@
 #' \dontrun{require.project('PackageName')}
 require.package <- function(package.name)
 {
-	# Temporarily disable warnings
-	old.options <- options(warn=-1)
-	on.exit(options(old.options))
-	if (!require(package.name, character.only = TRUE)) {
-	  	function.name <- deparse(sys.calls()[[sys.nframe()-1]])
-		stop(paste(function.name, ' requires package ', package.name, '.\nPlease install ', package.name, ' by running install.packages("', package.name, '") and then try re-running project.load()', sep = ''), call. = FALSE)
-	  }
+  # Temporarily disable warnings
+  old.options <- options(warn=-1)
+  on.exit(options(old.options))
+  if (!require(package.name, character.only = TRUE)) {
+    function.name <- deparse(sys.calls()[[sys.nframe()-1]])
+    stop(paste(function.name, ' requires package ', package.name, '.\nPlease install ', package.name, ' by running install.packages("', package.name, '") and then try re-running project.load()', sep = ''), call. = FALSE)
+  }
 }
