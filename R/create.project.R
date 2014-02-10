@@ -18,17 +18,16 @@
 #' @param dump A boolean value indicating whether the entire functionality
 #'   of ProjectTemplate should be written out to flat files in the current
 #'   project.
-#' @param merge.existing If \code{TRUE}, allow merging into an existing
-#'   directory unless files or directories would be overwritten there.  If
-#'   \code{FALSE} and the \code{project.name} directory exists, it must be
-#'   empty.
+#' @param merge.strategy What should happen if the target directory exists and
+#'   is not empty?
+#'   If \code{"force.empty"}, the target directory must be empty;
+#'   if \code{"allow.non.conflict"}, the method succeeds if no files or
+#'   directories with the same name exist in the target directory.
 #'
 #' @return No value is returned; this function is called for its side effects.
 #'
 #' @details  If the target directory does not exist, it is created.  Otherwise,
-#'   it must be empty or (if \code{merge.existing} is \code{TRUE}) it must
-#'   not contain files or directories with the same name as the files and
-#'   directories to be copied.
+#'   it can only contain files and directories allowed by the merge strategy.
 #'
 #' @export
 #'
@@ -37,11 +36,12 @@
 #'
 #' \dontrun{create.project('MyProject')}
 create.project <- function(project.name = 'new-project', minimal = FALSE,
-                           dump = FALSE, merge.existing = FALSE)
+                           dump = FALSE, merge.strategy = c("require.empty", "allow.non.conflict"))
 {
   template.name <- if (minimal) 'minimal' else 'full'
+  merge.strategy <- match.arg(merge.strategy)
   if (file.exists(project.name) && file.info(project.name)$isdir) {
-    .create.project.existing(template.name, project.name, merge.existing)
+    .create.project.existing(template.name, project.name, merge.strategy)
   } else
     .create.project.new(template.name, project.name)
 
@@ -66,25 +66,28 @@ create.project <- function(project.name = 'new-project', minimal = FALSE,
 }
 
 .create.project.existing <- function(template.name, project.name,
-                                     merge.existing) {
+                                     merge.strategy) {
   template.path <- .get.template.path(template.name)
   template.files <- list.files(path = template.path, all.files = TRUE,
                                include.dirs = TRUE, no.. = TRUE)
 
   project.path <- file.path(project.name)
-  target.file.exists <- file.exists(file.path(project.path, template.files))
 
-  if (merge.existing && any(target.file.exists)) {
-    stop(paste("Creating a project in ", project.path,
-               " would overwrite the following existing files/directories:\n",
-               paste(template.files[target.file.exists], collapse=', ')
-    ), sep = '')
-  }
-
-  if (!merge.existing && !.dir.empty(project.path)) {
-    stop(paste("Directory", project.path,
-               "not empty.  Use merge.existing = TRUE to override."))
-  }
+  switch(
+    merge.strategy,
+    require.empty={
+      if (!.dir.empty(project.path))
+        stop(paste("Directory", project.path,
+                   "not empty.  Use merge.strategy = 'allow.non.conflict' to override."))
+    },
+    allow.non.conflict={
+      target.file.exists <- file.exists(file.path(project.path, template.files))
+      if (any(target.file.exists))
+        stop(paste("Creating a project in ", project.path,
+                   " would overwrite the following existing files/directories:\n",
+                   paste(template.files[target.file.exists], collapse=', ')))
+    },
+    stop("Invalid value for merge.strategy:", merge.strategy))
 
   file.copy(file.path(template.path, template.files),
             project.path,

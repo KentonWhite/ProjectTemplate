@@ -54,7 +54,7 @@ expect_that(file.exists(file.path('test_project', '.dummy')), is_true())
 dir.create(file.path('test_project', 'dummy_dir'))
 expect_that(file.exists(file.path('test_project', 'dummy_dir')), is_true())
 
-create.project('test_project', minimal = TRUE, merge.existing = TRUE)
+create.project('test_project', minimal = TRUE, merge.strategy = "allow.non.conflict")
 
 expect_that(file.exists(file.path('test_project', 'cache')), is_true())
 expect_that(file.exists(file.path('test_project', 'config')), is_true())
@@ -98,7 +98,7 @@ dir.create(file.path('test_project', 'munge'))
 expect_that(file.exists(file.path('test_project', 'munge')), is_true())
 
 expect_error(create.project('test_project', minimal = TRUE,
-                            merge.existing = TRUE), "overwrite")
+                            merge.strategy = "allow.non.conflict"), "overwrite")
 
 unlink('test_project', recursive = TRUE)
 
@@ -112,7 +112,7 @@ file.create(file.path('test_project', 'munge'))
 expect_that(file.exists(file.path('test_project', 'munge')), is_true())
 
 expect_error(create.project('test_project', minimal = TRUE,
-                            merge.existing = TRUE), "overwrite")
+                            merge.strategy = "allow.non.conflict"), "overwrite")
 
 unlink('test_project', recursive = TRUE)
 
@@ -126,7 +126,7 @@ dir.create(file.path('test_project', 'README'))
 expect_that(file.exists(file.path('test_project', 'README')), is_true())
 
 expect_error(create.project('test_project', minimal = TRUE,
-                            merge.existing = TRUE), "overwrite")
+                            merge.strategy = "allow.non.conflict"), "overwrite")
 
 unlink('test_project', recursive = TRUE)
 
@@ -140,6 +140,6 @@ file.create(file.path('test_project', 'README'))
 expect_that(file.exists(file.path('test_project', 'README')), is_true())
 
 expect_error(create.project('test_project', minimal = TRUE,
-                            merge.existing = TRUE), "overwrite")
+                            merge.strategy = "allow.non.conflict"), "overwrite")
 
 unlink('test_project', recursive = TRUE)
