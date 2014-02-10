@@ -7,6 +7,9 @@
 
 2014-02-11	Kirill Müller  <mail@kirill-mueller.de>, Kenton White  <jkentonwhite@gmail.com>
 
+* 0.5-0
+* Added .add.extension. This allows users to create custom readers for extensions, either locally in a project or as packages.
+
 * 0.4-5
 * Allow string interpolation of R functions in sql queries
 * Added a JDBC database wrapper for accessing PostgreSQL databases hosted by Heroku
@@ -15,7 +18,7 @@
   0.4-4); the active binding seemed to work for the tests but not from outside
   the package
 * create.project now works if the directory exists. Merging with a non-empty
-  directory is supported by setting the new parameter merge.strategy.
+  directory is supported when the new parameter merge.existing is set to TRUE.
 
 2013-08-11	John Myles White  <jmw@johnmyleswhite.com>
 
