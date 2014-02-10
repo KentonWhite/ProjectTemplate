@@ -3,7 +3,7 @@
 \title{Create a new project.}
 \usage{
 create.project(project.name = "new-project", minimal = FALSE,
-  dump = FALSE, merge.existing = FALSE)
+  dump = FALSE, merge.strategy = c("require.empty", "allow.non.conflict"))
 }
 \arguments{
   \item{project.name}{A character vector containing the
@@ -20,10 +20,12 @@ create.project(project.name = "new-project", minimal = FALSE,
   functionality of ProjectTemplate should be written out to
   flat files in the current project.}
 
-  \item{merge.existing}{If \code{TRUE}, allow merging into
-  an existing directory unless files or directories would
-  be overwritten there.  If \code{FALSE} and the
-  \code{project.name} directory exists, it must be empty.}
+  \item{merge.strategy}{What should happen if the target
+  directory exists and is not empty?  If
+  \code{"force.empty"}, the target directory must be empty;
+  if \code{"allow.non.conflict"}, the method succeeds if no
+  files or directories with the same name exist in the
+  target directory.}
 }
 \value{
 No value is returned; this function is called for its side effects.
@@ -39,9 +41,7 @@ customization, the \code{dump} argument can be set to \code{TRUE}.
 }
 \details{
 If the target directory does not exist, it is created.  Otherwise,
-  it must be empty or (if \code{merge.existing} is \code{TRUE}) it must
-  not contain files or directories with the same name as the files and
-  directories to be copied.
+  it can only contain files and directories allowed by the merge strategy.
 }
 \examples{
 library('ProjectTemplate')
