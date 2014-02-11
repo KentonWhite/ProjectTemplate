@@ -29,6 +29,6 @@ test.project <- function()
   {
     invisible(lapply(files, test_file))
   } else {
-    invisible(lapply(files, test_file, enclos = environment()))
+    invisible(lapply(files, test_file, env = environment()))
   }      
 }

@@ -3,7 +3,7 @@
 \title{Create a new project.}
 \usage{
 create.project(project.name = "new-project", minimal = FALSE,
-  dump = FALSE)
+  dump = FALSE, merge.strategy = c("require.empty", "allow.non.conflict"))
 }
 \arguments{
   \item{project.name}{A character vector containing the
@@ -19,6 +19,13 @@ create.project(project.name = "new-project", minimal = FALSE,
   \item{dump}{A boolean value indicating whether the entire
   functionality of ProjectTemplate should be written out to
   flat files in the current project.}
+
+  \item{merge.strategy}{What should happen if the target
+  directory exists and is not empty?  If
+  \code{"force.empty"}, the target directory must be empty;
+  if \code{"allow.non.conflict"}, the method succeeds if no
+  files or directories with the same name exist in the
+  target directory.}
 }
 \value{
 No value is returned; this function is called for its side effects.
@@ -31,6 +38,10 @@ contents. For those who only want the minimal functionality, the
 ProjectTemplate's default directories. For those who want to dump
 all of ProjectTemplate's functionality into a directory for extensive
 customization, the \code{dump} argument can be set to \code{TRUE}.
+}
+\details{
+If the target directory does not exist, it is created.  Otherwise,
+  it can only contain files and directories allowed by the merge strategy.
 }
 \examples{
 library('ProjectTemplate')
