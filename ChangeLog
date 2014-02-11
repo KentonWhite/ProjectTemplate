@@ -8,7 +8,7 @@
   0.4-4); the active binding seemed to work for the tests but not from outside
   the package
 * create.project now works if the directory exists. Merging with a non-empty
-  directory is supported when the new parameter merge.existing is set to TRUE.
+  directory is supported by setting the new parameter merge.strategy.
 
 2013-08-11	John Myles White  <jmw@johnmyleswhite.com>
 
