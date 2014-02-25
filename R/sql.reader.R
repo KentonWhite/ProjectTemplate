@@ -311,7 +311,7 @@ sql.reader <- function(data.file, filename, variable.name)
       query <- qq(query)
     } else if (length(grep('\\{\\{.*\\}\\}', query))) {
       require.package('whisker')
-      query <- whisker.render(query)       
+      query <- whisker.render(query, data = .GlobalEnv)       
     }
     data.parcel <- try(dbGetQuery(connection, query))
     err <- dbGetException(connection)
