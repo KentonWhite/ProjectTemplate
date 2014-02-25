@@ -6,11 +6,11 @@
 #' or one specific query against any set of tables may be executed to generate
 #' a data set.
 #'
-#' queries can support string interpolation to execute code snippets. This is used
-#' to create queries that depend on data from other sources. Code delimited is @@\{...\}
+#' queries can support string interpolation to execute code snippets using mustache syntax (http://mustache.github.io). This is used
+#' to create queries that depend on data from other sources. Code delimited is \{}\{...\}\}
 #'
-#' Example: query: SELECT * FROM my_table WHERE id IN (@@\{paste(ids, collapse = ',')\}).
-#' Here ids is data previously loaded into ProjectTemplate
+#' Example: query: SELECT * FROM my_table WHERE id IN (\{\{ids\}\}).
+#' Here ids is a vector previously loaded into the Global Environment through ProjectTemplate
 #'
 #' Examples of the DCF format and settings used in a .sql file are shown
 #' below:
@@ -304,9 +304,14 @@ sql.reader <- function(data.file, filename, variable.name)
   if (! is.null(query))
   {
     if (length(grep('\\@\\{.*\\}', query)) != 0) {
+      # TODO Remove GetoptLong version and prefer Mustache syntax
+      warning("@{...} syntax is deprecated for string interpolation. Please use Mustache syntax: {...}")
       # Do string interpolation
       require.package('GetoptLong')
       query <- qq(query)
+    } else if (length(grep('\\{\\{.*\\}\\}', query))) {
+      require.package('whisker')
+      query <- whisker.render(query)       
     }
     data.parcel <- try(dbGetQuery(connection, query))
     err <- dbGetException(connection)
