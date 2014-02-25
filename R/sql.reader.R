@@ -7,7 +7,7 @@
 #' a data set.
 #'
 #' queries can support string interpolation to execute code snippets using mustache syntax (http://mustache.github.io). This is used
-#' to create queries that depend on data from other sources. Code delimited is \{}\{...\}\}
+#' to create queries that depend on data from other sources. Code delimited is \{\{...\}\}
 #'
 #' Example: query: SELECT * FROM my_table WHERE id IN (\{\{ids\}\}).
 #' Here ids is a vector previously loaded into the Global Environment through ProjectTemplate
