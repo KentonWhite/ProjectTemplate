@@ -7,6 +7,8 @@
 #'
 #' @return No value is returned; this function is called for its side effects.
 #'
+#' @export
+#'
 #' @examples
 #' \dontrun{.add.extension('foo', foo.reader)}
 #' @include extensions.dispatch.table.R
