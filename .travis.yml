@@ -7,13 +7,40 @@
 language: java
 script: ./travis-tool.sh run_tests
 env:
-   global:
-     - WARNINGS_ARE_ERRORS=1
+  global:
+    - WARNINGS_ARE_ERRORS=1
 before_install:
   - curl -OL http://raw.github.com/craigcitro/r-travis/master/scripts/travis-tool.sh
   - chmod 755 ./travis-tool.sh
   - ./travis-tool.sh bootstrap
+  - IsSourceInstall() { [[ -n "${RELEASE}" ]]; }
+  - if IsSourceInstall; then export FORCE_SOURCE_INSTALL=1; fi
 install:
+  - if IsSourceInstall; then (
+    cd ~ &&
+    svn co -q https://svn.r-project.org/R/${RELEASE}/ r-source &&
+    cd r-source &&
+    tools/rsync-recommended &&
+    R_BATCHSAVE="--no-save --no-restore"
+      R_BROWSER=xdg-open
+      PAGER=/usr/bin/pager
+      PERL=/usr/bin/perl
+      R_UNZIPCMD=/usr/bin/unzip
+      R_ZIPCMD=/usr/bin/zip
+      R_PRINTCMD=/usr/bin/lpr
+      LIBnn=lib
+      AWK=/usr/bin/awk
+      CC=gcc
+      CFLAGS="-ggdb -pipe -std=gnu99 -Wall -pedantic"
+      CXX=g++
+      CXXFLAGS="-ggdb -pipe -Wall -pedantic"
+      FC=gfortran
+      F77=gfortran
+      MAKE="make -j2"
+       ./configure --enable-R-shlib &&
+     make -j2 &&
+     sudo make install
+   ); fi
   - ./travis-tool.sh r_binary_install colorspace RColorBrewer dichromat munsell labeling Formula sp mvtnorm TH.data sandwich formatR highr markdown zoo bit gtable reshape2 scales proto quantreg Hmisc mapproj maps hexbin maptools multcomp knitr DBI RUnit gtools signal pastecs chron fastmatch xts reshape ggplot2 lubridate RMySQL RSQLite gdata RODBC pixmap data.table testthat
   - ./travis-tool.sh aptget_install unixodbc-dev
   - sudo R CMD javareconf
@@ -26,3 +53,5 @@ notifications:
     on_failure: always
 after_error:
   - ./travis-tool.sh dump_logs
+after_failure:
+  - cat ~/r-source/config.log || true
