@@ -1,3 +1,7 @@
+* Internal: Store templates for empty projects in tar files instead of storing
+  the entire directory structure per CRAN request and to avoid having to build
+  with the --keep-empty-dirs switch.
+
 2014-02-11	Kirill Müller  <mail@kirill-mueller.de>, Kenton White  <jkentonwhite@gmail.com>
 
 * 0.4-5

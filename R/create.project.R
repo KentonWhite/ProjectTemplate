@@ -39,11 +39,17 @@ create.project <- function(project.name = 'new-project', minimal = FALSE,
                            dump = FALSE, merge.strategy = c("require.empty", "allow.non.conflict"))
 {
   template.name <- if (minimal) 'minimal' else 'full'
+  temp.dir <- tempfile("ProjectTemplate")
+  on.exit(unlink(temp.dir, recursive = TRUE), add = TRUE)
+  untar(.get.template.tar.path(template.name), exdir = temp.dir,
+        tar = "internal")
+  template.path <- file.path(temp.dir, template.name)
+
   merge.strategy <- match.arg(merge.strategy)
   if (file.exists(project.name) && file.info(project.name)$isdir) {
-    .create.project.existing(template.name, project.name, merge.strategy)
+    .create.project.existing(template.path, project.name, merge.strategy)
   } else
-    .create.project.new(template.name, project.name)
+    .create.project.new(template.path, project.name)
 
   if (dump)
   {
@@ -65,9 +71,8 @@ create.project <- function(project.name = 'new-project', minimal = FALSE,
   invisible(NULL)
 }
 
-.create.project.existing <- function(template.name, project.name,
+.create.project.existing <- function(template.path, project.name,
                                      merge.strategy) {
-  template.path <- .get.template.path(template.name)
   template.files <- list.files(path = template.path, all.files = TRUE,
                                include.dirs = TRUE, no.. = TRUE)
 
@@ -94,25 +99,25 @@ create.project <- function(project.name = 'new-project', minimal = FALSE,
             recursive = TRUE, overwrite = FALSE)
 }
 
-.create.project.new <- function(template.name, project.name) {
-  tmp.dir <- paste(project.name, '_tmp', sep = '')
-
-  if (file.exists(project.name) || file.exists(tmp.dir))
-  {
-    stop(paste("Cannot run create.project() from a directory containing", project.name, "or", tmp.dir))
+.create.project.new <- function(template.path, project.name) {
+  if (file.exists(project.name)) {
+    stop(paste("Cannot run create.project() from a directory containing", project.name))
   }
 
-  dir.create(tmp.dir)
-  on.exit(unlink(tmp.dir, recursive = TRUE), add=TRUE)
-
-  file.copy(.get.template.path(template.name),
-            file.path(tmp.dir),
-            recursive = TRUE)
-  file.rename(file.path(tmp.dir, template.name), project.name)
+  dir.create(project.name)
+  tryCatch(
+    .create.project.existing(template.path = template.path,
+                             project.name = project.name,
+                             merge.strategy = "require.empty"),
+    error = function(e) {
+      unlink(project.name, recursive = TRUE)
+      stop(e)
+    }
+  )
 }
 
-.get.template.path <- function(template.name)
-  system.file(file.path('defaults', template.name), package = 'ProjectTemplate')
+.get.template.tar.path <- function(template.name)
+  system.file(file.path('defaults', paste0(template.name, ".tar")), package = 'ProjectTemplate')
 
 .dir.empty <- function(path) {
   length(list.files(path = path, all.files = TRUE, include.dirs = TRUE,
