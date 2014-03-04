@@ -1,7 +1,21 @@
 ---
 layout: page
 ---
-The list of changes below is not necessarily exhaustive. Check the ChangeLog on [GitHub](https://github.com/johnmyleswhite/ProjectTemplate) for more details, but the raw ProjectTemplate source code is always the place to go for ground truth.
+For latest release notes please visit the [Releases page](https://github.com/johnmyleswhite/ProjectTemplate/releases) at GitHub.
+Bleeding-edge development is reflected in the [ChangeLog](https://github.com/johnmyleswhite/ProjectTemplate/blob/master/ChangeLog) and in the [list of commits](https://github.com/johnmyleswhite/ProjectTemplate/commits/master):
+The raw ProjectTemplate source code is always the place to go for ground truth.
+
+The list of changes below covers all releases up to and including v0.4-2. It is not necessarily exhaustive.
+
+#### v0.4-2
+
+* Had to disable xlsx.reader temporarily because it does not build for 2.15.
+
+#### v0.4-1
+
+* Added 'eda.R' example file in 'src/' directory.
+* Allow loading from 'cache/' without loading from 'data/' through 'cache_loading' setting.
+* Revised documentation.
 
 #### v0.3-6
 
