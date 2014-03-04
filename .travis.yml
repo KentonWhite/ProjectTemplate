@@ -17,6 +17,7 @@ before_install:
   - if IsSourceInstall; then export FORCE_SOURCE_INSTALL=1; fi
 install:
   - if IsSourceInstall; then (
+    sudo apt-get install --no-install-recommends texinfo texlive-latex-recommended texlive-latex-extra lmodern texlive-fonts-recommended texlive-fonts-extra;
     cd ~ &&
     svn co -q https://svn.r-project.org/R/${RELEASE}/ r-source &&
     cd r-source &&
