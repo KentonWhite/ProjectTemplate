@@ -7,6 +7,9 @@
 #'
 #' @export
 #'
+#' @seealso \code{\link{create.project}}, \code{\link{get.project}},
+#'   \code{\link{cache.project}}, \code{\link{show.project}}
+#'   
 #' @examples
 #' library('ProjectTemplate')
 #'
@@ -294,7 +297,23 @@ load.project <- function()
     assign('logger', logger, envir = .GlobalEnv)
   }
 
-  assign('project.info', my.project.info, envir = .GlobalEnv)
-  #assign('project.info', my.project.info, envir = parent.frame())
-  #assign('project.info', my.project.info, envir = environment(create.project))
+  assign('project.info', my.project.info, envir = .private.env)
+
+  suppressWarnings(rm('project.info', envir = .GlobalEnv))
+
+  makeActiveBinding(
+    sym = 'project.info',
+    fun = function(x) {
+      if (missing(x)) {
+        if (!exists('project.info.warn', envir = .private.env)) {
+          warning("project.info is deprecated, use get.project() instead.")
+          assign('project.info.warn', TRUE, envir = .private.env)
+        }
+        get.project()
+      } else {
+        stop("Changing project.info is not supported.")
+      }
+    },
+    env = .GlobalEnv
+  )
 }

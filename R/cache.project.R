@@ -10,6 +10,9 @@
 #'
 #' @export
 #'
+#' @seealso \code{\link{create.project}}, \code{\link{load.project}},
+#'   \code{\link{get.project}}, \code{\link{show.project}}
+#'
 #' @examples
 #' library('ProjectTemplate')
 #' \dontrun{load.project()
@@ -17,7 +20,7 @@
 #' cache.project()}
 cache.project <- function()
 {
-  for (dataset in project.info[['data']])
+  for (dataset in get.project()[['data']])
   {
     message(paste('Caching', dataset))
     cache(dataset)
