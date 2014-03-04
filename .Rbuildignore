@@ -8,3 +8,4 @@
 ^TODO\.markdown$
 ^website$
 ^Makefile$
+^/ChangeLog\.tmpl$
