@@ -9,9 +9,12 @@ Authors@R: c(
     person("Allen", "Goodman", role = "ctb"),
     person("Diego", "Valle-Jones", role = "ctb"),
     person("Jeffrey", "Breen", role = "ctb"),
+    person("Joakim", "Lundborg", role = "ctb"),
     person("John Myles", "White", role = c("aut", "cph")),
+    person("Josh", "Bode", role = "ctb"),
     person("Kenton", "White", role = "ctb"),
     person("Kirill", "Mueller", email = "mail@kirill-mueller.de", role = c("ctb", "cre")),
+    person("Matteo", "Redadelli", role = "ctb"),
     person("Noah", "Lorang", role = "ctb"),
     person("Patrick", "Schalk", role = "ctb"))
 Description: ProjectTemplate provides functions to
