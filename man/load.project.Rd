@@ -17,4 +17,8 @@ library('ProjectTemplate')
 
 \dontrun{load.project()}
 }
+\seealso{
+\code{\link{create.project}}, \code{\link{get.project}},
+  \code{\link{cache.project}}, \code{\link{show.project}}
+}
 

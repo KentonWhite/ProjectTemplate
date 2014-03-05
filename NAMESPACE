@@ -3,6 +3,7 @@
 export(cache)
 export(cache.project)
 export(create.project)
+export(get.project)
 export(load.project)
 export(reload.project)
 export(require.package)

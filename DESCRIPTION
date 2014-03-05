@@ -80,6 +80,7 @@ Collate:
     'mp3.reader.R'
     'file.reader.R'
     'extensions.dispatch.table.R'
+    'get.project.R'
     'help.R'
     'load.project.R'
     'reload.project.R'
