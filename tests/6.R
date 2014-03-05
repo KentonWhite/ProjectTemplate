@@ -14,4 +14,6 @@ expect_that(project.info, gives_warning("deprecated"))
 expect_that(project.info, not(gives_warning()))
 expect_identical(project.info, get.project())
 
+setwd('..')
+
 unlink('test_project', recursive = TRUE)
