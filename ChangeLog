@@ -5,6 +5,10 @@
   Accessing project.info will work but emit a deprecation warning once per
   session (#39).
 * Updated author information in DESCRIPTION file (#40).
+* project.info is now deprecated in favor of the new function get.project().
+  Accessing project.info will work but emit a deprecation warning once per
+  session (#39).
+* Updated author information in DESCRIPTION file (#40).
 * Internal: Store templates for empty projects in tar files instead of storing
   the entire directory structure per CRAN request and to avoid having to build
   with the --keep-empty-dirs switch (#41).
