@@ -14,6 +14,7 @@ Please report bugs, issues or suggestions on our [GitHub Issues Page](https://gi
 
 #### Code Contributors
 
+* [People who supplied pull requests](https://github.com/johnmyleswhite/ProjectTemplate/graphs/contributors)
 * John Myles White
 * Allen Goodman
 * Diego Valle-Jones
