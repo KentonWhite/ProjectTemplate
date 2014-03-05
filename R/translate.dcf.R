@@ -9,6 +9,8 @@
 #'
 #' @return Returns a list containing the entries from the DCF file.
 #'
+#' @export
+#'
 #' @examples
 #' library('ProjectTemplate')
 #'
