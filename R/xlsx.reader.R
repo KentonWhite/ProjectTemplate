@@ -23,7 +23,7 @@ xlsx.reader <- function(data.file, filename, workbook.name)
 
   for (sheet.name in names(sheets))
   {
-    variable.name <- paste(workbook.name, ProjectTemplate:::clean.variable.name(sheet.name), sep = ".")
+    variable.name <- paste(workbook.name, clean.variable.name(sheet.name), sep = ".")
     tryCatch(assign(variable.name,
                     read.xlsx(filename,
                               sheetName = sheet.name,
