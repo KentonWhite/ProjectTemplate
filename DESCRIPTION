@@ -46,6 +46,7 @@ Suggests:
     data.table,
     RPostgreSQL,
     GetoptLong,
+    whisker,
     testthat,
     Defaults
 URL: http://projecttemplate.net
