@@ -28,7 +28,10 @@
 #'
 #' @details  If the target directory does not exist, it is created.  Otherwise,
 #'   it can only contain files and directories allowed by the merge strategy.
-#'
+#'   
+#' @seealso \code{\link{load.project}}, \code{\link{get.project}},
+#'   \code{\link{cache.project}}, \code{\link{show.project}}
+#' 
 #' @export
 #'
 #' @examples

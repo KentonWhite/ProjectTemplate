@@ -81,6 +81,7 @@ Collate:
     'cache.project.R'
     'clean.variable.name.R'
     'create.project.R'
+    'get.project.R'
     'help.R'
     'load.project.R'
     'reload.project.R'
