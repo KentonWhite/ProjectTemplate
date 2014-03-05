@@ -175,13 +175,10 @@ sql.reader <- function(data.file, filename, variable.name)
   if (database.info[['type']] == 'postgres')
   {
     library('RPostgreSQL')
-    mysql.driver <- dbDriver("PostgreSQL")
+    pgsql.driver <- dbDriver("PostgreSQL")
 
-    connection <- dbConnect(mysql.driver,
-                            user = database.info[['user']],
-                            password = database.info[['password']],
-                            host = database.info[['host']],
-                            dbname = database.info[['dbname']])
+    args <- intersect(names(database.info), c('user', 'password', 'host', 'dbname'))
+    connection <- do.call(dbConnect, c(list(pgsql.driver), database.info[args]))
   }
 
   if (database.info[['type']] == 'oracle')
