@@ -17,7 +17,7 @@
 
 * 0.4-5
 * Allow string interpolation of R functions in sql queries
-* Added a JDBC database wrapper for accessing PostgreSQL databases hosted by Heroku
+* Added a JDBC database wrapper for accessing PostgreSQL databases hosted by Heroku (#20)
 * JDBC connection can now use path to jar stored in CLASSPATH
 * project.info is stored in the global environment again (reverted change from
   0.4-4); the active binding seemed to work for the tests but not from outside
