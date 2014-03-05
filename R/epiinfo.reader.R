@@ -15,7 +15,7 @@
 #' \dontrun{epiinfo.reader('example.rec', 'data/example.rec', 'example')}
 epiinfo.reader <- function(data.file, filename, variable.name)
 {
-  library('foreign')
+  require.package('foreign')
 
   assign(variable.name,
          read.epiinfo(filename),

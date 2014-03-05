@@ -15,7 +15,7 @@
 #' \dontrun{mtp.reader('example.mtp', 'data/example.mtp', 'example')}
 mtp.reader <- function(data.file, filename, variable.name)
 {
-  library('foreign')
+  require.package('foreign')
 
   assign(variable.name,
          read.mtp(filename),
