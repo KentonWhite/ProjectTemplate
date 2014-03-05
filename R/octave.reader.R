@@ -14,7 +14,7 @@
 #' \dontrun{octave.reader('example.m', 'data/example.m', 'example')}
 octave.reader <- function(data.file, filename, variable.name)
 {
-  library('foreign')
+  require.package('foreign')
 
   assign(variable.name,
          read.octave(filename),

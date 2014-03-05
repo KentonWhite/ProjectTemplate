@@ -1,6 +1,7 @@
 2014-03-05	Kirill Müller  <mail@kirill-mueller.de>, Kenton White  <jkentonwhite@gmail.com>
 
 * 0.5
+* Use require.package() instead of library() (#26).
 * Export existing translate.dcf function, useful for implementing custom readers (#59).
 * Add new function .add.extension. This allows users to create custom readers for extensions, either locally in a project or as packages (#59).
 * Internal: Fix CRAN warnings concerning use of ProjectTemplate::: qualification

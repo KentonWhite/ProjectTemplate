@@ -15,7 +15,7 @@
 #' \dontrun{dbf.reader('example.dbf', 'data/example.dbf', 'example')}
 dbf.reader <- function(data.file, filename, variable.name)
 {
-  library('foreign')
+  require.package('foreign')
 
   assign(variable.name,
          read.dbf(filename),

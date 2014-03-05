@@ -246,7 +246,7 @@ load.project <- function()
 
   if (! is.null(config[['data_tables']]) && config[['data_tables']] == 'on')
   {
-    library('data.table')
+    require.package('data.table')
     
     for (data.set in my.project.info[['data']])
     {
@@ -286,7 +286,8 @@ load.project <- function()
   if (config[['logging']] == 'on')
   {
     message('Initializing logger')
-    library('log4r')
+    require.package('log4r')
+
     logger <- create.logger()
     if (!file.exists('logs'))
     {

@@ -16,7 +16,8 @@
 #' \dontrun{xls.reader('example.xls', 'data/example.xls', 'example')}
 xls.reader <- function(data.file, filename, workbook.name)
 {
-  library('gdata')
+  require.package('gdata')
+
   sheets <- sheetNames(filename)
   
   for (sheet.name in sheets)
