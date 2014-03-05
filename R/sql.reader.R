@@ -303,10 +303,8 @@ sql.reader <- function(data.file, filename, variable.name)
 
   if (! is.null(query))
   {
+    # Do string interpolation
     if (length(grep('\\@\\{.*\\}', query)) != 0) {
-      # TODO Remove GetoptLong version and prefer Mustache syntax
-      warning("@{...} syntax is deprecated for string interpolation. Please use Mustache syntax: {...}")
-      # Do string interpolation
       require.package('GetoptLong')
       query <- qq(query)
     } else if (length(grep('\\{\\{.*\\}\\}', query))) {
