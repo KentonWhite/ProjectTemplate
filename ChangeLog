@@ -1,13 +1,10 @@
 2014-03-05	Kirill Müller  <mail@kirill-mueller.de>, Kenton White  <jkentonwhite@gmail.com>
 
 * 0.5
+* Export existing translate.dcf function, useful for implementing custom readers.
+* Add new function .add.extension. This allows users to create custom readers for extensions, either locally in a project or as packages.
 * Internal: Fix CRAN warnings concerning use of ProjectTemplate::: qualification
   (#56).
-* Updated author information in DESCRIPTION file.
-* project.info is now deprecated in favor of the new function get.project().
-  Accessing project.info will work but emit a deprecation warning once per
-  session (#39).
-* Updated author information in DESCRIPTION file (#40).
 * project.info is now deprecated in favor of the new function get.project().
   Accessing project.info will work but emit a deprecation warning once per
   session (#39).

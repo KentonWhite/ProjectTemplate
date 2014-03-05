@@ -80,4 +80,3 @@ extensions.dispatch.table <- list("\\.csv$" = csv.reader,
                                   "\\.dat.bz2$" = wsv.reader,
                                   "\\.dat.zip$" = wsv.reader,
                                   "\\.dat.gz$" = wsv.reader)
-                                  
