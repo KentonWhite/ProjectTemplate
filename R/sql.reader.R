@@ -104,12 +104,12 @@
 #' @include require.package.R
 sql.reader <- function(data.file, filename, variable.name)
 {
-  database.info <- ProjectTemplate:::translate.dcf(filename)
+  database.info <- translate.dcf(filename)
 
   if (! is.null(database.info[['connection']]))
   {
     connection_filename <- paste("data/", database.info[['connection']],".sql-connection", sep="")
-    connection.info <- ProjectTemplate:::translate.dcf(connection_filename)
+    connection.info <- translate.dcf(connection_filename)
 
     # Allow .sql to override options defined in .connection
     database.info <- modifyList(connection.info, database.info) 
@@ -274,7 +274,7 @@ sql.reader <- function(data.file, filename, variable.name)
                                  table,
                                  row.names = NULL)
     
-      assign(ProjectTemplate:::clean.variable.name(table),
+      assign(clean.variable.name(table),
              data.parcel,
              envir = .GlobalEnv)
     }

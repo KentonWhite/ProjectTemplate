@@ -20,7 +20,7 @@ load.project <- function()
   {
     stop('You are missing a configuration file: config/global.dcf')
   }
-  config <- ProjectTemplate:::translate.dcf(file.path('config', 'global.dcf'))
+  config <- translate.dcf(file.path('config', 'global.dcf'))
   if (is.null(config[['libraries']]))
   {
     warning('Your configuration file is missing an entry: libraries')
@@ -106,11 +106,11 @@ load.project <- function()
     {
       filename <- file.path('cache', cache.file)
       
-      for (extension in names(ProjectTemplate:::extensions.dispatch.table))
+      for (extension in names(extensions.dispatch.table))
       {
         if (grepl(extension, cache.file, ignore.case = TRUE, perl = TRUE))
         {
-          variable.name <- ProjectTemplate:::clean.variable.name(sub(extension,
+          variable.name <- clean.variable.name(sub(extension,
                                                    '',
                                                    cache.file,
                                                    ignore.case = TRUE,
@@ -124,7 +124,7 @@ load.project <- function()
           
           message(paste(" Loading cached data set: ", variable.name, sep = ''))
 
-          do.call(ProjectTemplate:::extensions.dispatch.table[[extension]],
+          do.call(extensions.dispatch.table[[extension]],
                   list(cache.file,
                        filename,
                        variable.name))
@@ -153,11 +153,11 @@ load.project <- function()
     {
       filename <- file.path('cache', cache.file)
       
-      for (extension in names(ProjectTemplate:::extensions.dispatch.table))
+      for (extension in names(extensions.dispatch.table))
       {
         if (grepl(extension, cache.file, ignore.case = TRUE, perl = TRUE))
         {
-          variable.name <- ProjectTemplate:::clean.variable.name(sub(extension,
+          variable.name <- clean.variable.name(sub(extension,
                                                    '',
                                                    cache.file,
                                                    ignore.case = TRUE,
@@ -171,7 +171,7 @@ load.project <- function()
           
           message(paste(" Loading cached data set: ", variable.name, sep = ''))
 
-          do.call(ProjectTemplate:::extensions.dispatch.table[[extension]],
+          do.call(extensions.dispatch.table[[extension]],
                   list(cache.file,
                        filename,
                        variable.name))
@@ -210,11 +210,11 @@ load.project <- function()
     {
       filename <- file.path('data', data.file)
       
-      for (extension in names(ProjectTemplate:::extensions.dispatch.table))
+      for (extension in names(extensions.dispatch.table))
       {
         if (grepl(extension, data.file, ignore.case = TRUE, perl = TRUE))
         {
-          variable.name <- ProjectTemplate:::clean.variable.name(sub(extension,
+          variable.name <- clean.variable.name(sub(extension,
                                                    '',
                                                    data.file,
                                                    ignore.case = TRUE,
@@ -228,7 +228,7 @@ load.project <- function()
 
           message(paste(" Loading data set: ", variable.name, sep = ''))
 
-          do.call(ProjectTemplate:::extensions.dispatch.table[[extension]],
+          do.call(extensions.dispatch.table[[extension]],
                   list(data.file,
                        filename,
                        variable.name))
@@ -296,5 +296,5 @@ load.project <- function()
 
   assign('project.info', my.project.info, envir = .GlobalEnv)
   #assign('project.info', my.project.info, envir = parent.frame())
-  #assign('project.info', my.project.info, envir = environment(ProjectTemplate:::create.project))
+  #assign('project.info', my.project.info, envir = environment(create.project))
 }

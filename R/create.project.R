@@ -57,7 +57,7 @@ create.project <- function(project.name = 'new-project', minimal = FALSE,
 
     # For time being, just copy the entire contents of defaults/* and then also copy the collated R source.
     # Seriously broken at the moment.
-    e <- environment(ProjectTemplate:::load.project)
+    e <- environment(load.project)
     
     pt.contents <- ls(e)
     

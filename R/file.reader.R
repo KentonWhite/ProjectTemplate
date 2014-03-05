@@ -23,10 +23,10 @@
 #' \dontrun{file.reader('example.file', 'data/example.file', 'example')}
 file.reader <- function(data.file, filename, variable.name)
 {
-  file.info <- ProjectTemplate:::translate.dcf(filename)
+  file.info <- translate.dcf(filename)
   file.type <- paste('\\.', file.info[['extension']], '$', sep = '')
 
-  do.call(ProjectTemplate:::extensions.dispatch.table[[file.type]],
+  do.call(extensions.dispatch.table[[file.type]],
           list(data.file,
                file.info[['path']],
                variable.name))

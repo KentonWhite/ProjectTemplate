@@ -31,7 +31,7 @@ db.reader <- function(data.file, filename, variable.name)
                                table,
                                row.names = NULL)
     
-    assign(ProjectTemplate:::clean.variable.name(table),
+    assign(clean.variable.name(table),
            data.parcel,
            envir = .GlobalEnv)
   }

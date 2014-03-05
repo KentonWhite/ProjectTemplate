@@ -25,11 +25,11 @@
 #' \dontrun{url.reader('example.url', 'data/example.url', 'example')}
 url.reader <- function(data.file, filename, variable.name)
 {
-  url.info <- ProjectTemplate:::translate.dcf(filename)
+  url.info <- translate.dcf(filename)
 
   file.type <- ""
   
-  for (extension in names(ProjectTemplate:::extensions.dispatch.table))
+  for (extension in names(extensions.dispatch.table))
   {
     if(grepl(extension, url.info[['url']], ignore.case = TRUE, perl = TRUE))
     {
@@ -48,24 +48,24 @@ url.reader <- function(data.file, filename, variable.name)
     if (file.type %in% c("\\.Rdata$", "\\.Rda$"))
     {
       con <- url(url.info[['url']])
-      ProjectTemplate:::rdata.reader(data.file, con, variable.name)
+      rdata.reader(data.file, con, variable.name)
     }
 
     if (file.type %in% c("\\.xlsx$"))
     {
       download.file(url.info[['url']], file.path(tempdir(), "xlsxtmp.xlsx"))
-      ProjectTemplate:::xlsx.reader(data.file, file.path(tempdir(), "xlsxtmp.xlsx"), variable.name)
+      xlsx.reader(data.file, file.path(tempdir(), "xlsxtmp.xlsx"), variable.name)
     }
 
     if (file.type %in% c("\\.sql$"))
     {
       download.file(url.info[['url']], file.path(tempdir(), "sqltmp.sql"))
-      ProjectTemplate:::sql.reader(data.file, file.path(tempdir(), "sqltmp.sql"), variable.name)
+      sql.reader(data.file, file.path(tempdir(), "sqltmp.sql"), variable.name)
     }
     
     else
     {
-      do.call(ProjectTemplate:::extensions.dispatch.table[[file.type]],
+      do.call(extensions.dispatch.table[[file.type]],
               list(data.file,
                    url.info[['url']],
                    variable.name))
