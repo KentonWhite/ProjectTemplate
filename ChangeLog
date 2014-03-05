@@ -1,3 +1,5 @@
+* Internal: Fix CRAN warnings concerning use of ProjectTemplate::: qualification
+  (#56).
 * Updated author information in DESCRIPTION file.
 * Internal: Store templates for empty projects in tar files instead of storing
   the entire directory structure per CRAN request and to avoid having to build
