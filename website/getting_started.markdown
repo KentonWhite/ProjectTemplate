@@ -20,6 +20,9 @@ Once you're in the `letters` directory, you can open up your new project in your
 
 ![ProjectTemplate Directories](./directories.jpg)
 
+(If you prefer an environment tailored for R, [RStudio](http://www.rstudio.com/)
+is an excellent option.)
+
 As you can see, `create.project()` has set up a whole series of subdirectories for us to use when organizing our analysis. We'll see what each of these does as we move on. For now, let's just pull in that data file `letters.csv.bz2` that you downloaded earlier. We'll place it into the `data` directory:
 
         mv ~/Downloads/letters.csv.bz2 data
