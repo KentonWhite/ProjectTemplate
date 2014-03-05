@@ -37,7 +37,6 @@ install:
       CXXFLAGS="-ggdb -pipe -Wall -pedantic"
       FC=gfortran
       F77=gfortran
-      MAKE="make -j2"
        ./configure --enable-R-shlib &&
      make -j2 &&
      sudo make install
