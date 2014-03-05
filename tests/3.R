@@ -746,3 +746,6 @@ expect_that(nrow(get(variable.name)), equals(5))
 expect_that(ncol(get(variable.name)), equals(2))
 expect_that(get(variable.name)[5, 2], equals(11))
 rm(example.42)
+
+# Example 43: ElasticSearch Support with .es Extension
+message('Skipping Example 43: Testing .es support')
