@@ -1,22 +1,36 @@
-2014-03-05	Kirill Müller  <mail@kirill-mueller.de>, Kenton White  <jkentonwhite@gmail.com>
+v0.5 (2014-03-05)
+===
 
-* 0.5
-* Use require.package() instead of library() (#26).
-* Export existing translate.dcf function, useful for implementing custom readers (#59).
-* Add new function .add.extension. This allows users to create custom readers for extensions, either locally in a project or as packages (#59).
-* Internal: Fix CRAN warnings concerning use of ProjectTemplate::: qualification
-  (#56).
-* project.info is now deprecated in favor of the new function get.project().
-  Accessing project.info will work but emit a deprecation warning once per
+Breaking changes
+---
+
+* `project.info` is now deprecated in favor of the new function `get.project()`.
+  Accessing `project.info` will work but emit a deprecation warning once per
   session (#39).
+
+Features
+---
+
+* Attempting to load a missing package when reading data will lead to a
+ user-friendly error message (#26).
+* Export existing `translate.dcf` function, useful for implementing custom readers (#59).
+* Add new function `.add.extension.` This allows users to create custom readers
+  for extensions, either locally in a project or as packages (#59).
+
+Internal
+---
+
+* Fix CRAN warnings concerning use of `ProjectTemplate:::` qualification
+  (#56).
 * Updated author information in DESCRIPTION file (#40).
-* Internal: Store templates for empty projects in tar files instead of storing
+* Store templates for empty projects in tar files instead of storing
   the entire directory structure per CRAN request and to avoid having to build
-  with the --keep-empty-dirs switch (#41).
+  with the `--keep-empty-dirs` switch (#41).
 
-2014-02-11	Kirill Müller  <mail@kirill-mueller.de>, Kenton White  <jkentonwhite@gmail.com>
+v0.4-5 (2014-02-11)
+===
 
-* 0.4-5
+* New maintainers: Kirill Müller  <mail@kirill-mueller.de>, Kenton White  <jkentonwhite@gmail.com>
 * Allow string interpolation of R functions in sql queries
 * Added a JDBC database wrapper for accessing PostgreSQL databases hosted by Heroku (#20)
 * JDBC connection can now use path to jar stored in CLASSPATH
@@ -26,9 +40,9 @@
 * create.project now works if the directory exists. Merging with a non-empty
   directory is supported by setting the new parameter merge.strategy.
 
-2013-08-11	John Myles White  <jmw@johnmyleswhite.com>
+v0.4-4 (2013-08-11)
+===
 
-* v0.4-4
 * Fix CRAN checks (@krlmlr).
 * project.info is now an active binding to avoid writing to the global
   environment (@krlmlr).
@@ -39,35 +53,35 @@
   driver (@cortex, #7).
 * Tentative CSV2 support.
 
-2012-08-11	John Myles White  <jmw@johnmyleswhite.com>
+v0.4-3 (2012-08-11)
+===
 
-* v0.4-3
 * Added optional recursive data directory loading using a 'recursive_loading' setting.
 * Added basic Oracle support (with tnsnames, no host/port) (@matteoredaelli, #6).
 
-2012-05-12	John Myles White  <jmw@johnmyleswhite.com>
+v0.4-2 (2012-05-12)
+===
 
-* v0.4-2
 * Had to disable xlsx.reader temporarily because it does not build for 2.15.
 
-2011-11-23	John Myles White  <jmw@johnmyleswhite.com>
+v0.4-1 (2011-11-23)
+===
 
-* v0.4-1
 * Added 'eda.R' example file in 'src/' directory.
 * Allow loading from 'cache/' without loading from 'data/' through 'cache_loading' setting.
 * Revised documentation.
 
-2011-07-13	John Myles White  <jmw@johnmyleswhite.com>
+v0.3-6 (2011-07-13)
+===
 
-* v0.3-6
 * Added Postgres support through RPostgreSQL
 * Very rough ODBC support. See example in ProjectTemplate:::sql.reader documentation.
 * '.dat' files are now read as if they were '.wsv' files.
 * Revised documentation.
 
-2011-07-08	John Myles White  <jmw@johnmyleswhite.com>
+v0.3-5 (2011-07-08)
+===
 
-* v0.3-5
 * Added a cache.project() function.
 * 'as_factors' configuration option suppresses automatic character-to-factor conversion.
 * Implemented .zip support using temporary files.
@@ -76,9 +90,9 @@
 * 'data_tables' configuration option automatically translates data sets into data.tables.
 * Added unit tests for SPSS, Stata and SAS file formats.
 
-2011-07-03	John Myles White  <jmw@johnmyleswhite.com>
+v0.3-4 (2011-07-03)
+===
 
-* v0.3-4
 * Increased SQLite3 support
 * Load all tables from SQLite3 database using a .sql file: set table = *
 * Load all tables from SQLite3 database automatically using .db extension
@@ -87,31 +101,31 @@
 * Added a stub.tests() function that autogenerates tests for helper functions.
 * Added a show.project() function that gives all known information about a project's internal state.
 
-2011-06-28	John Myles White  <jmw@johnmyleswhite.com>
- 
-* v0.3-3
+v0.3-3 (2011-06-28)
+===
+
 * Added a reload.project() function.
 * Improved error handling.
 * Renamed utilities.R to helpers.R.
 * Fixed a bug in cache().
 
-2011-06-27	John Myles White  <jmw@johnmyleswhite.com>
- 
-* v0.3-2
+v0.3-2 (2011-06-27)
+===
+
 * Added new *Reader functions.
 
-2011-06-24	John Myles White  <jmw@johnmyleswhite.com>
- 
-* v0.3-1
+v0.3-1 (2011-06-24)
+===
+
 * Switched configuration system over to DCF format.
 * Ability to create full projects or minimal projects.
 * Switched print() calls to message() calls.
 * Moved *Reader functionality into separate functions that users can override.
 * Fixed a bug in cache().
 
-2010-12-03	John Myles White  <jmw@johnmyleswhite.com>
- 
-* v0.2-1
+v0.2-1 (2010-12-03)
+===
+
 * Moved boot.R's logic into functions and configuration files.
 * Added SQLite support using the RSQLite package.
 * Cleaned up the database connection and disconnection code.
@@ -128,9 +142,9 @@
 * Fixed a bug in clean.variable.name() for variable names that start with numbers.
 * Added XSLX support.
 
-2010-10-02	John Myles White  <jmw@johnmyleswhite.com>
- 
-* v0.1-3
+v0.1-3 (2010-10-02)
+===
+
 * Many changes to load_data.R.
 * Added notices when data sets are autoloaded.
 * Added autoload support for WSV (whitespace separated values) data files.
@@ -146,14 +160,15 @@
 * Added a sample test that always passes to the default project.
 * Added a basic show.updates() function for porting projects to newer releases of ProjectTemplate.
 
-2010-08-26  John Myles White  <jmw@johnmyleswhite.com>
+v0.1-2 (2010-08-26)
+===
 
-* v0.1-2
 * Cleaned up documentation.
 * Rewrote backend.
 * Added load.package() and run.tests() functions.
 
-2010-08-24  John Myles White  <jmw@johnmyleswhite.com>
+v0.1-1 (2010-08-24)
+===
 
-* v0.1-1
+* Maintainer: John Myles White  <jmw@johnmyleswhite.com>
 * Initial release.
