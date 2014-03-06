@@ -44,6 +44,7 @@ Suggests:
     testthat,
     Defaults
 URL: http://projecttemplate.net
+BugReports: https://github.com/johnmyleswhite/ProjectTemplate/issues
 Collate:
     'xport.reader.R'
     'xlsx.reader.R'
