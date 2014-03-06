@@ -4,15 +4,14 @@ Title: Automates the creation of new statistical analysis
     projects.
 Version: 0.5
 Date: 2014-03-05
-Authors@R: c( person("Aleksandar", "Blagotic", role = "ctb"), person("Allen",
-    "Goodman", role = "ctb"), person("Diego", "Valle-Jones", role = "ctb"),
-    person("Jeffrey", "Breen", role = "ctb"), person("Joakim", "Lundborg", role
-    = "ctb"), person("John Myles", "White", role = c("aut", "cph")),
-    person("Josh", "Bode", role = "ctb"), person("Kenton", "White", role =
-    "ctb"), person("Kirill", "Mueller", email = "mail@kirill-mueller.de", role
-    = c("ctb", "cre")), person("Matteo", "Redaelli", role = "ctb"),
-    person("Noah", "Lorang", role = "ctb"), person("Patrick", "Schalk", role =
-    "ctb"))
+Authors@R: c( person("Aleksandar", "Blagotic", role = "ctb"), person("Diego",
+    "Valle-Jones", role = "ctb"), person("Jeffrey", "Breen", role = "ctb"),
+    person("Joakim", "Lundborg", role = "ctb"), person("John Myles", "White",
+    role = c("aut", "cph")), person("Josh", "Bode", role = "ctb"),
+    person("Kenton", "White", role = "ctb"), person("Kirill", "Mueller", email
+    = "mail@kirill-mueller.de", role = c("ctb", "cre")), person("Matteo",
+    "Redaelli", role = "ctb"), person("Noah", "Lorang", role = "ctb"),
+    person("Patrick", "Schalk", role = "ctb"))
 Description: ProjectTemplate provides functions to
     automatically build a directory structure for a new R
     project. Using this structure, ProjectTemplate
