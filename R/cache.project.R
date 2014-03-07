@@ -14,7 +14,7 @@
 #' @export
 #'
 #' @seealso \code{\link{create.project}}, \code{\link{load.project}},
-#'   \code{\link{show.project}}
+#'   \code{\link{get.project}}, \code{\link{show.project}}
 #'
 #' @examples
 #' library('ProjectTemplate')
