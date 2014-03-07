@@ -7,6 +7,10 @@ If you have changes you'd like to make to ProjectTemplate, we'd love to see them
 
 Please report bugs, issues or suggestions on our [GitHub Issues Page](https://github.com/johnmyleswhite/ProjectTemplate/issues). Before posting, please take a few moments to see if someone has already reported the issue or made a similar suggestion.
 
+#### Creator
+
+* John Myles White
+
 #### Commit Team
 
 * Kirill Müller
@@ -14,8 +18,7 @@ Please report bugs, issues or suggestions on our [GitHub Issues Page](https://gi
 
 #### Code Contributors
 
-* John Myles White
-* Allen Goodman
+* [People who supplied pull requests](https://github.com/johnmyleswhite/ProjectTemplate/graphs/contributors)
 * Diego Valle-Jones
 * Patrick Schalk
 * Noah Lorang
