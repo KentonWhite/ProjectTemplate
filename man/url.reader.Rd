@@ -3,7 +3,7 @@
 \alias{url.reader}
 \title{Read a remote file described in a .url file.}
 \usage{
-url.reader(data.file, filename, variable.name)
+url.reader(data.file, filename, variable.name, envir = .GlobalEnv)
 }
 \arguments{
   \item{data.file}{The name of the data file to be read.}
@@ -12,6 +12,10 @@ url.reader(data.file, filename, variable.name)
 
   \item{variable.name}{The name to be assigned to in the
   global environment.}
+
+  \item{envir}{The environment, defaults to the global
+  environment.  In most use cases this parameter can be
+  omitted.}
 }
 \value{
 No value is returned; this function is called for its side effects.

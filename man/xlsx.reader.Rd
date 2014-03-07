@@ -3,7 +3,7 @@
 \alias{xlsx.reader}
 \title{Read an Excel 2007 file with a .xlsx file extension.}
 \usage{
-xlsx.reader(data.file, filename, workbook.name)
+xlsx.reader(data.file, filename, workbook.name, envir = .GlobalEnv)
 }
 \arguments{
   \item{data.file}{The name of the data file to be read.}
@@ -12,6 +12,10 @@ xlsx.reader(data.file, filename, workbook.name)
 
   \item{workbook.name}{The name to be assigned to in the
   global environment.}
+
+  \item{envir}{The environment, defaults to the global
+  environment.  In most use cases this parameter can be
+  omitted.}
 }
 \value{
 No value is returned; this function is called for its side effects.

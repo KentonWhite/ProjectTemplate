@@ -7,6 +7,8 @@
 #' @param data.file The name of the data file to be read.
 #' @param filename The path to the data set to be loaded.
 #' @param workbook.name The name to be assigned to in the global environment.
+#' @param envir The environment, defaults to the global environment.  In most
+#'   use cases this parameter can be omitted.
 #'
 #' @return No value is returned; this function is called for its side effects.
 #'
@@ -14,7 +16,7 @@
 #' library('ProjectTemplate')
 #'
 #' \dontrun{xls.reader('example.xls', 'data/example.xls', 'example')}
-xls.reader <- function(data.file, filename, workbook.name)
+xls.reader <- function(data.file, filename, workbook.name, envir = .GlobalEnv)
 {
   require.package('gdata')
 
@@ -26,7 +28,7 @@ xls.reader <- function(data.file, filename, workbook.name)
     tryCatch(assign(variable.name,
                     read.xls(filename,
                              sheet = sheet.name),
-                    envir = .GlobalEnv),
+                    envir = envir),
              error = function(e)
              {
                warning(paste("The worksheet", sheet.name, "didn't load correctly."))

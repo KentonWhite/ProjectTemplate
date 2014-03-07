@@ -7,6 +7,8 @@
 #' @param data.file The name of the data file to be read.
 #' @param filename The path to the data set to be loaded.
 #' @param variable.name The name to be assigned to in the global environment.
+#' @param envir The environment, defaults to the global environment.  In most
+#'   use cases this parameter can be omitted.
 #'
 #' @return No value is returned; this function is called for its side effects.
 #'
@@ -14,11 +16,11 @@
 #' library('ProjectTemplate')
 #'
 #' \dontrun{ppm.reader('example.ppm', 'data/example.ppm', 'example')}
-ppm.reader <- function(data.file, filename, variable.name)
+ppm.reader <- function(data.file, filename, variable.name, envir = .GlobalEnv)
 {
   require.package('pixmap')
 
   assign(variable.name,
          read.pnm(filename),
-         envir = .GlobalEnv)
+         envir = envir)
 }

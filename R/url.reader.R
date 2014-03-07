@@ -16,6 +16,8 @@
 #' @param data.file The name of the data file to be read.
 #' @param filename The path to the data set to be loaded.
 #' @param variable.name The name to be assigned to in the global environment.
+#' @param envir The environment, defaults to the global environment.  In most
+#'   use cases this parameter can be omitted.
 #'
 #' @return No value is returned; this function is called for its side effects.
 #'
@@ -23,7 +25,7 @@
 #' library('ProjectTemplate')
 #'
 #' \dontrun{url.reader('example.url', 'data/example.url', 'example')}
-url.reader <- function(data.file, filename, variable.name)
+url.reader <- function(data.file, filename, variable.name, envir = .GlobalEnv)
 {
   url.info <- translate.dcf(filename)
 
@@ -48,19 +50,19 @@ url.reader <- function(data.file, filename, variable.name)
     if (file.type %in% c("\\.Rdata$", "\\.Rda$"))
     {
       con <- url(url.info[['url']])
-      rdata.reader(data.file, con, variable.name)
+      rdata.reader(data.file, con, variable.name, envir)
     }
 
     if (file.type %in% c("\\.xlsx$"))
     {
       download.file(url.info[['url']], file.path(tempdir(), "xlsxtmp.xlsx"))
-      xlsx.reader(data.file, file.path(tempdir(), "xlsxtmp.xlsx"), variable.name)
+      xlsx.reader(data.file, file.path(tempdir(), "xlsxtmp.xlsx"), variable.name, envir)
     }
 
     if (file.type %in% c("\\.sql$"))
     {
       download.file(url.info[['url']], file.path(tempdir(), "sqltmp.sql"))
-      sql.reader(data.file, file.path(tempdir(), "sqltmp.sql"), variable.name)
+      sql.reader(data.file, file.path(tempdir(), "sqltmp.sql"), variable.name, envir)
     }
     
     else
@@ -68,7 +70,8 @@ url.reader <- function(data.file, filename, variable.name)
       do.call(extensions.dispatch.table[[file.type]],
               list(data.file,
                    url.info[['url']],
-                   variable.name))
+                   variable.name,
+                   envir))
     }
   }
 }

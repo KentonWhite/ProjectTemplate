@@ -3,7 +3,12 @@
 \alias{load.project}
 \title{Automatically load data and packages for a project.}
 \usage{
-load.project()
+load.project(envir = .GlobalEnv)
+}
+\arguments{
+  \item{envir}{The environment, defaults to the global
+  environment.  In most use cases this parameter can be
+  omitted.}
 }
 \value{
 No value is returned; this function is called for its side effects.

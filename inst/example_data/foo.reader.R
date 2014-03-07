@@ -1,4 +1,4 @@
-foo.reader <- function(data.file, filename, variable.name)
+foo.reader <- function(data.file, filename, variable.name, envir = .GlobalEnv)
 {
   assign(variable.name,
          "bar",

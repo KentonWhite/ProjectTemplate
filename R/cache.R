@@ -7,6 +7,8 @@
 #'
 #' @param variable A character vector containing the name of the variable to 
 #'  be saved.
+#' @param envir The environment, defaults to the global environment.  In most
+#'   use cases this parameter can be omitted.
 #'
 #' @return No value is returned; this function is called for its side effects.
 #'
@@ -22,10 +24,10 @@
 #'
 #' setwd('..')
 #' unlink('tmp-project')}
-cache <- function(variable)
+cache <- function(variable, envir = .GlobalEnv)
 {
   save(list = variable,
-       envir = .GlobalEnv,
+       envir = envir,
        file = file.path('cache',
                         paste(variable, '.RData', sep = '')))
 }

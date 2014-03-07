@@ -3,7 +3,7 @@
 \alias{dbf.reader}
 \title{Read an XBASE file with a .dbf file extension.}
 \usage{
-dbf.reader(data.file, filename, variable.name)
+dbf.reader(data.file, filename, variable.name, envir = .GlobalEnv)
 }
 \arguments{
   \item{data.file}{The name of the data file to be read.}
@@ -12,6 +12,10 @@ dbf.reader(data.file, filename, variable.name)
 
   \item{variable.name}{The name to be assigned to in the
   global environment.}
+
+  \item{envir}{The environment, defaults to the global
+  environment.  In most use cases this parameter can be
+  omitted.}
 }
 \value{
 No value is returned; this function is called for its side effects.
