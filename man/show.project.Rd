@@ -3,7 +3,12 @@
 \alias{show.project}
 \title{Show information about the current project.}
 \usage{
-show.project()
+show.project(envir = .GlobalEnv)
+}
+\arguments{
+  \item{envir}{The environment, defaults to the global
+  environment.  In most use cases this parameter can be
+  omitted.}
 }
 \value{
 No value is returned; this function is called for its side effects.

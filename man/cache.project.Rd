@@ -3,7 +3,12 @@
 \alias{cache.project}
 \title{Cache a project's data sets in binary format.}
 \usage{
-cache.project()
+cache.project(envir = .GlobalEnv)
+}
+\arguments{
+  \item{envir}{The environment, defaults to the global
+  environment.  In most use cases this parameter can be
+  omitted.}
 }
 \value{
 No value is returned; this function is called for its side effects.
@@ -23,6 +28,6 @@ cache.project()}
 }
 \seealso{
 \code{\link{create.project}}, \code{\link{load.project}},
-  \code{\link{get.project}}, \code{\link{show.project}}
+  \code{\link{show.project}}
 }
 

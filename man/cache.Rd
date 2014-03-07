@@ -3,11 +3,15 @@
 \alias{cache}
 \title{Cache a data set for faster loading.}
 \usage{
-cache(variable)
+cache(variable, envir = .GlobalEnv)
 }
 \arguments{
   \item{variable}{A character vector containing the name of
   the variable to be saved.}
+
+  \item{envir}{The environment, defaults to the global
+  environment.  In most use cases this parameter can be
+  omitted.}
 }
 \value{
 No value is returned; this function is called for its side effects.

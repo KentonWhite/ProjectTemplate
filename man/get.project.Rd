@@ -3,7 +3,12 @@
 \alias{get.project}
 \title{Show information about the current project.}
 \usage{
-get.project()
+get.project(envir = .GlobalEnv)
+}
+\arguments{
+  \item{envir}{The environment, defaults to the global
+  environment.  In most use cases this parameter can be
+  omitted.}
 }
 \value{
 A named list.
@@ -16,11 +21,6 @@ ProjectTemplate keeps a record of the project's configuration settings,
 all packages that were loaded automatically and all of the data sets that
 were loaded automatically. The information about autoloaded data sets
 is used by the \code{\link{cache.project}} function.
-}
-\details{
-In previous releases this information has been available through the
-  global variable \code{project.info}.  Using this variable is now deprecated
-  and will result in a warning.
 }
 \examples{
 library('ProjectTemplate')

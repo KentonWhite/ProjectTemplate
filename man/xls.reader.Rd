@@ -3,7 +3,7 @@
 \alias{xls.reader}
 \title{Read an Excel 2004 file with a .xls file extension.}
 \usage{
-xls.reader(data.file, filename, workbook.name)
+xls.reader(data.file, filename, workbook.name, envir = .GlobalEnv)
 }
 \arguments{
   \item{data.file}{The name of the data file to be read.}
@@ -12,6 +12,10 @@ xls.reader(data.file, filename, workbook.name)
 
   \item{workbook.name}{The name to be assigned to in the
   global environment.}
+
+  \item{envir}{The environment, defaults to the global
+  environment.  In most use cases this parameter can be
+  omitted.}
 }
 \value{
 No value is returned; this function is called for its side effects.
