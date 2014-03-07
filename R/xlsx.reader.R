@@ -7,6 +7,8 @@
 #' @param data.file The name of the data file to be read.
 #' @param filename The path to the data set to be loaded.
 #' @param workbook.name The name to be assigned to in the global environment.
+#' @param envir The environment, defaults to the global environment.  In most
+#'   use cases this parameter can be omitted.
 #'
 #' @return No value is returned; this function is called for its side effects.
 #'
@@ -14,7 +16,7 @@
 #' library('ProjectTemplate')
 #'
 #' \dontrun{xlsx.reader('example.xlsx', 'data/example.xlsx', 'example')}
-xlsx.reader <- function(data.file, filename, workbook.name)
+xlsx.reader <- function(data.file, filename, workbook.name, envir = .GlobalEnv)
 {
   require.package('xlsx')
   
@@ -28,7 +30,7 @@ xlsx.reader <- function(data.file, filename, workbook.name)
                     read.xlsx(filename,
                               sheetName = sheet.name,
                               header = TRUE),
-                    envir = .GlobalEnv),
+                    envir = envir),
              error = function(e)
              {
                warning(paste("The worksheet", sheet.name, "didn't load correctly."))

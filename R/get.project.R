@@ -8,9 +8,8 @@
 #' were loaded automatically. The information about autoloaded data sets
 #' is used by the \code{\link{cache.project}} function.
 #' 
-#' @details In previous releases this information has been available through the
-#'   global variable \code{project.info}.  Using this variable is now deprecated
-#'   and will result in a warning.
+#' @param envir The environment, defaults to the global environment.  In most
+#'   use cases this parameter can be omitted.
 #'
 #' @return A named list.
 #'
@@ -25,12 +24,10 @@
 #' \dontrun{load.project()
 #'
 #' get.project()}
-get.project <- function()
+get.project <- function(envir = .GlobalEnv)
 {
   tryCatch(
-    get("project.info", envir = .private.env),
+    get("project.info", envir = envir),
     error = function(e) stop("Project must be loaded using load.project().")
   )
 }
-
-.private.env <- new.env(parent = emptyenv())

@@ -6,23 +6,26 @@
 #' that you've modified during a slow munging process that does not
 #' need to be repeated.
 #'
+#' @param envir The environment, defaults to the global environment.  In most
+#'   use cases this parameter can be omitted.
+#'
 #' @return No value is returned; this function is called for its side effects.
 #'
 #' @export
 #'
 #' @seealso \code{\link{create.project}}, \code{\link{load.project}},
-#'   \code{\link{get.project}}, \code{\link{show.project}}
+#'   \code{\link{show.project}}
 #'
 #' @examples
 #' library('ProjectTemplate')
 #' \dontrun{load.project()
 #'
 #' cache.project()}
-cache.project <- function()
+cache.project <- function(envir = .GlobalEnv)
 {
-  for (dataset in get.project()[['data']])
+  for (dataset in get.project(envir)[['data']])
   {
     message(paste('Caching', dataset))
-    cache(dataset)
+    cache(dataset, envir)
   }
 }

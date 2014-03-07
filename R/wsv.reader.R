@@ -6,6 +6,8 @@
 #' @param data.file The name of the data file to be read.
 #' @param filename The path to the data set to be loaded.
 #' @param variable.name The name to be assigned to in the global environment.
+#' @param envir The environment, defaults to the global environment.  In most
+#'   use cases this parameter can be omitted.
 #'
 #' @return No value is returned; this function is called for its side effects.
 #'
@@ -13,7 +15,7 @@
 #' library('ProjectTemplate')
 #'
 #' \dontrun{wsv.reader('example.wsv', 'data/example.wsv', 'example')}
-wsv.reader <- function(data.file, filename, variable.name)
+wsv.reader <- function(data.file, filename, variable.name, envir = .GlobalEnv)
 {
   if (grepl('\\.zip$', filename))
   {
@@ -28,5 +30,5 @@ wsv.reader <- function(data.file, filename, variable.name)
          read.csv(filename,
                   header = TRUE,
                   sep = ' '),
-         envir = .GlobalEnv)
+         envir = envir)
 }

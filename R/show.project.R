@@ -8,6 +8,9 @@
 #' were loaded automatically. The information about autoloaded data sets
 #' is used by the \code{\link{cache.project}} function.
 #'
+#' @param envir The environment, defaults to the global environment.  In most
+#'   use cases this parameter can be omitted.
+#'
 #' @return No value is returned; this function is called for its side effects.
 #'
 #' @export
@@ -21,7 +24,7 @@
 #' \dontrun{load.project()
 #'
 #' show.project()}
-show.project <- function()
+show.project <- function(envir = .GlobalEnv)
 {
-  print(get.project())
+  print(get.project(envir))
 }
