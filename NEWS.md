@@ -1,16 +1,10 @@
 v0.5 (2014-03-05)
 ===
 
-Breaking changes
----
-
-* `project.info` is now deprecated in favor of the new function `get.project()`.
-  Accessing `project.info` will work but emit a deprecation warning once per
-  session (#39).
-
 Features
 ---
 
+* New function `get.project()` to access `project.info` (#63).
 * Attempting to load a missing package when reading data will lead to a
  user-friendly error message (#26).
 * Export existing `translate.dcf` function, useful for implementing custom readers (#59).

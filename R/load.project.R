@@ -298,23 +298,7 @@ load.project <- function()
     assign('logger', logger, envir = .TargetEnv)
   }
 
-  assign('project.info', my.project.info, envir = .private.env)
-
-  suppressWarnings(rm('project.info', envir = .TargetEnv))
-
-  makeActiveBinding(
-    sym = 'project.info',
-    fun = function(x) {
-      if (missing(x)) {
-        if (!exists('project.info.warn', envir = .private.env)) {
-          warning("project.info is deprecated, use get.project() instead.")
-          assign('project.info.warn', TRUE, envir = .private.env)
-        }
-        get.project()
-      } else {
-        stop("Changing project.info is not supported.")
-      }
-    },
-    env = .TargetEnv
-  )
+  assign('project.info', my.project.info, envir = .TargetEnv)
+  #assign('project.info', my.project.info, envir = parent.frame())
+  #assign('project.info', my.project.info, envir = environment(create.project))
 }
