@@ -28,7 +28,7 @@ xlsx.reader <- function(data.file, filename, workbook.name)
                     read.xlsx(filename,
                               sheetName = sheet.name,
                               header = TRUE),
-                    envir = .GlobalEnv),
+                    envir = .TargetEnv),
              error = function(e)
              {
                warning(paste("The worksheet", sheet.name, "didn't load correctly."))

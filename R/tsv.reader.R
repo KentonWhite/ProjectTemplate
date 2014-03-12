@@ -28,5 +28,5 @@ tsv.reader <- function(data.file, filename, variable.name)
          read.csv(filename,
                   header = TRUE,
                   sep = '\t'),
-         envir = .GlobalEnv)
+         envir = .TargetEnv)
 }

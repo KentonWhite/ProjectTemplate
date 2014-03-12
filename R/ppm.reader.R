@@ -20,5 +20,5 @@ ppm.reader <- function(data.file, filename, variable.name)
 
   assign(variable.name,
          read.pnm(filename),
-         envir = .GlobalEnv)
+         envir = .TargetEnv)
 }

@@ -34,7 +34,7 @@ db.reader <- function(data.file, filename, variable.name)
     
     assign(clean.variable.name(table),
            data.parcel,
-           envir = .GlobalEnv)
+           envir = .TargetEnv)
   }
 
   disconnect.success <- dbDisconnect(connection)

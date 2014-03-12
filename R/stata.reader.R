@@ -18,5 +18,5 @@ stata.reader <- function(data.file, filename, variable.name)
 
   assign(variable.name,
          read.dta(filename),
-         envir = .GlobalEnv)
+         envir = .TargetEnv)
 }

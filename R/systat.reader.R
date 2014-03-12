@@ -18,5 +18,5 @@ systat.reader <- function(data.file, filename, variable.name)
 
   assign(variable.name,
          read.systat(filename),
-         envir = .GlobalEnv)
+         envir = .TargetEnv)
 }

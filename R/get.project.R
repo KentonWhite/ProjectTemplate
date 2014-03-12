@@ -28,9 +28,7 @@
 get.project <- function()
 {
   tryCatch(
-    get("project.info", envir = .private.env),
+    get("project.info", envir = .TargetEnv),
     error = function(e) stop("Project must be loaded using load.project().")
   )
 }
-
-.private.env <- new.env(parent = emptyenv())
