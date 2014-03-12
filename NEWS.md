@@ -4,7 +4,7 @@ v0.5 (2014-03-05)
 Features
 ---
 
-* New function `get.project()` to access `project.info` (#63).
+* New function `get.project()` to access `project.info`.
 * Attempting to load a missing package when reading data will lead to a
  user-friendly error message (#26).
 * Export existing `translate.dcf` function, useful for implementing custom readers (#59).
@@ -16,6 +16,7 @@ Internal
 
 * Fix CRAN warnings concerning use of `ProjectTemplate:::` qualification
   (#56).
+* Fix CRAN warnings concerning assignments to `.GlobalEnv`.
 * Updated author information in DESCRIPTION file (#40).
 * Store templates for empty projects in tar files instead of storing
   the entire directory structure per CRAN request and to avoid having to build
