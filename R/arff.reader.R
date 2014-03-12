@@ -17,5 +17,5 @@ arff.reader <- function(data.file, filename, variable.name)
 
   assign(variable.name,
          read.arff(filename),
-         envir = .GlobalEnv)
+         envir = .TargetEnv)
 }

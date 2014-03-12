@@ -18,5 +18,5 @@ octave.reader <- function(data.file, filename, variable.name)
 
   assign(variable.name,
          read.octave(filename),
-         envir = .GlobalEnv)
+         envir = .TargetEnv)
 }

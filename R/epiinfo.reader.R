@@ -19,5 +19,5 @@ epiinfo.reader <- function(data.file, filename, variable.name)
 
   assign(variable.name,
          read.epiinfo(filename),
-         envir = .GlobalEnv)
+         envir = .TargetEnv)
 }

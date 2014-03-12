@@ -26,7 +26,7 @@ xls.reader <- function(data.file, filename, workbook.name)
     tryCatch(assign(variable.name,
                     read.xls(filename,
                              sheet = sheet.name),
-                    envir = .GlobalEnv),
+                    envir = .TargetEnv),
              error = function(e)
              {
                warning(paste("The worksheet", sheet.name, "didn't load correctly."))

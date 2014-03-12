@@ -18,5 +18,5 @@ xport.reader <- function(data.file, filename, variable.name)
 
   assign(variable.name,
          read.xport(filename),
-         envir = .GlobalEnv)
+         envir = .TargetEnv)
 }

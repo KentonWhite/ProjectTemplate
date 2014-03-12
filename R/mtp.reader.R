@@ -19,5 +19,5 @@ mtp.reader <- function(data.file, filename, variable.name)
 
   assign(variable.name,
          read.mtp(filename),
-         envir = .GlobalEnv)
+         envir = .TargetEnv)
 }

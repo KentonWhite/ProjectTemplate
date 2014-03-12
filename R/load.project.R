@@ -29,7 +29,7 @@ load.project <- function()
     warning('Your configuration file is missing an entry: libraries')
   }
   config[['libraries']] <- strsplit(config[['libraries']], '\\s*,\\s*')[[1]]
-  assign('config', config, envir = .GlobalEnv)
+  assign('config', config, envir = .TargetEnv)
   my.project.info[['config']] <- config
   
   if (! is.null(config[['as_factors']]) && config[['as_factors']] == 'off')
@@ -120,7 +120,7 @@ load.project <- function()
                                                    perl = TRUE))
 
           # If this variable already exists in the global environment, don't load it from cache.
-          if (variable.name %in% ls(envir = .GlobalEnv))
+          if (variable.name %in% ls(envir = .TargetEnv))
           {
             next()
           }
@@ -167,7 +167,7 @@ load.project <- function()
                                                    perl = TRUE))
 
           # If this variable already exists in the global environment, don't load it from cache.
-          if (variable.name %in% ls(envir = .GlobalEnv))
+          if (variable.name %in% ls(envir = .TargetEnv))
           {
             next()
           }
@@ -224,7 +224,7 @@ load.project <- function()
                                                    perl = TRUE))
 
           # If this variable already exists in cache, don't load it from data.
-          if (variable.name %in% ls(envir = .GlobalEnv))
+          if (variable.name %in% ls(envir = .TargetEnv))
           {
             next()
           }
@@ -252,12 +252,12 @@ load.project <- function()
     {
       message('Converting data.frames to data.tables')
       
-      if (class(get(data.set, envir = .GlobalEnv)) == 'data.frame')
+      if (class(get(data.set, envir = .TargetEnv)) == 'data.frame')
       {
         message(paste(' Translating data.frame:', data.set))
         assign(data.set,
-               data.table(get(data.set, envir = .GlobalEnv)),
-               envir = .GlobalEnv)
+               data.table(get(data.set, envir = .TargetEnv)),
+               envir = .TargetEnv)
       }
     }
   }
@@ -295,12 +295,12 @@ load.project <- function()
     }
     logfile(logger) <- file.path('logs', 'project.log')
     level(logger) <- log4r:::INFO
-    assign('logger', logger, envir = .GlobalEnv)
+    assign('logger', logger, envir = .TargetEnv)
   }
 
   assign('project.info', my.project.info, envir = .private.env)
 
-  suppressWarnings(rm('project.info', envir = .GlobalEnv))
+  suppressWarnings(rm('project.info', envir = .TargetEnv))
 
   makeActiveBinding(
     sym = 'project.info',
@@ -315,6 +315,6 @@ load.project <- function()
         stop("Changing project.info is not supported.")
       }
     },
-    env = .GlobalEnv
+    env = .TargetEnv
   )
 }

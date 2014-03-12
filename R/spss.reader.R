@@ -20,5 +20,5 @@ spss.reader <- function(data.file, filename, variable.name)
 
   assign(variable.name,
          read.spss(filename, to.data.frame = TRUE),
-         envir = .GlobalEnv)
+         envir = .TargetEnv)
 }

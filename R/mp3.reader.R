@@ -20,5 +20,5 @@ mp3.reader <- function(data.file, filename, variable.name)
   
   assign(variable.name,
          readMP3(filename),
-         envir = .GlobalEnv)
+         envir = .TargetEnv)
 }
