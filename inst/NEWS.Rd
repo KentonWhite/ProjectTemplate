@@ -1,5 +1,10 @@
 \name{NEWS}
 \title{News for Package 'ProjectTemplate'}
+\section{Changes in ProjectTemplate version 0.5-1 (2014-03-13)}{
+  \itemize{
+    \item No changes.
+  }
+}
 \section{Changes in ProjectTemplate version 0.5 (2014-03-13)}{
   \subsection{Features}{
     \itemize{
