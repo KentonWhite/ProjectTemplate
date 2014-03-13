@@ -2,7 +2,6 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^build_script\.R$
-^PT_Logo\.ai$
 ^README\.markdown$
 ^roxygenate\.R$
 ^TODO\.markdown$
