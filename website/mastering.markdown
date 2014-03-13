@@ -27,7 +27,7 @@ Then we reload R and load the project. You'll see ProjectTemplate automatically 
         library('ProjectTemplate')
         load.project()
         
-![Autoloading](./mastering1.jpg)
+![Autoloading](./mastering1.png)
 
 For most users, this automatic loading procedure is probably enough. But if you need more fine-grained control, you can use the `.sql` ad hoc file type to load specific tables from a SQLite database. You can also specify an exact SQL query to run against the database. We'll go through all three cases below.
 
@@ -45,7 +45,7 @@ After that, we'll create an `.sql` file in the `data` directory. We'll use a fil
 
 After creating the `data/philapd.sql` file, we can rerun `load.project`, which will load only the `location_info` table from our database into the variable `philapd`:
 
-![Autoloading](./mastering2.jpg)
+![Autoloading](./mastering2.png)
 
 ###### Load All Tables from a Specific Database
 If we want to load all of the tables from a database file that we can't place inside of the `data` directory, we can use a `.sql` file to do this by replacing the name of a specific table with an asterisk:
@@ -54,7 +54,7 @@ If we want to load all of the tables from a database file that we can't place in
         dbname: philapd.db
         table: *
 
-![Autoloading](./mastering3.jpg)
+![Autoloading](./mastering3.png)
 
 ###### Loading Data with an SQL Query
 You can also load a subset of your data by specifying an SQL query instead of a table in your `.sql` file:
@@ -63,7 +63,7 @@ You can also load a subset of your data by specifying an SQL query instead of a 
         dbname: philapd.db
         query: SELECT * FROM location_info WHERE zip = '19144'
 
-![Autoloading](./mastering4.jpg)
+![Autoloading](./mastering4.png)
 
 ##### MySQL, PostGres or ODBC Databases
 Working with a MySQL, PostGres or ODBC database is exactly as easy as using a `.sql` file to access a SQLite database. All that changes is the use of the `mysql`, `postgres` or `odbc` types instead of the `sqlite` type:
@@ -95,7 +95,7 @@ If you need to access a file that's available over HTTP or FTP, you can use a `.
         url: http://www.johnmyleswhite.com/ProjectTemplate/sample_data.csv
         separator: ,
 
-![Autoloading](./mastering5.jpg)
+![Autoloading](./mastering5.png)
 
 ##### .file Files
 If you need to access a file that's stored outside of the project's main directory, you use a `.file` file. Inside of the file, you'll specify the path of the data file and the extension of the data set you're accessing:
@@ -103,7 +103,7 @@ If you need to access a file that's stored outside of the project's main directo
         path: /usr/share/dict/words
         extension: csv
 
-![Autoloading](./mastering6.jpg)
+![Autoloading](./mastering6.png)
 
 ##### R Files
 Sometimes you want to generate random data for your analysis: this, after all, is the heart of Monte Carlo analyses of statistical methods. You can do this by inserting R code into a file in the `data` directory. We'll put this into the `data/d.R` file:
@@ -111,7 +111,7 @@ Sometimes you want to generate random data for your analysis: this, after all, i
         set.seed(1)
         d <- rnorm(1000, 0, 1)
 
-![Autoloading](./mastering7.jpg)
+![Autoloading](./mastering7.png)
 
 ##### Media Files: MP3's and PPM's
 Sometimes you want to work with more interesting sorts of data than a typical text file. ProjectTemplate now has basic support for loading media files into R. To load an MP3 audio file into an R object for analysis, simply place the `.mp3` file in the `data` directory. The `tuneR` package will be automatically loaded by ProjectTemplate and the MP3 file will be read into an R object in the global environment. Similarly, if you want to load a PPM image file, just place the `.ppm` file into the `data` directory. ProjectTemplate will then use the `pixmap` package to load the image file into an R object in the global environment.
@@ -121,7 +121,7 @@ ProjectTemplate has been designed to make it easier to unit test the functions y
 
 After editing your tests, you can call `test.project()` to run all of the unit tests in the `tests` directory.
 
-![Unit Tests](./unit_tests.jpg)
+![Unit Tests](./unit_tests.png)
 
 #### Logging Your Work
 If you want to log your work, ProjectTemplate will automatically load a [log4r](https://github.com/johnmyleswhite/log4r) logger object into the `logger` variable that will write to a plain text stored at the `logs/project.log`. To use this logger, you only need to change the configuration file to specify:
@@ -130,7 +130,7 @@ If you want to log your work, ProjectTemplate will automatically load a [log4r](
 
 After making this change, the `logger` object will be created once you call `load.project()`:
 
-![Logging](./logging.jpg)
+![Logging](./logging.png)
 
 #### Data Tables
 The `data.table`'s package allows you to create a variant of the typical R data frame that provides indices. Indices make locating and selecting subsets of your data much faster than the typical vector scan that R uses when working with data frames. To automatically convert all of the data frames loaded from the `data` directory into `data.table`'s, change the configuration option in `config/global.dcf` to `data_tables: on`. After that, you can check for tables by calling the `tables()` function.

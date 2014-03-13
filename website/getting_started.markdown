@@ -18,7 +18,7 @@ Once you're in the `letters` directory, you can open up your new project in your
 
         mate .
 
-![ProjectTemplate Directories](./directories.jpg)
+![ProjectTemplate Directories](./directories.png)
 
 (If you prefer an environment tailored for R, [RStudio](http://www.rstudio.com/)
 is an excellent option.)
@@ -36,7 +36,7 @@ With the `letters.csv.bz2` data set in place, we can start to use ProjectTemplat
 
 You'll see ProjectTemplate print out a bunch of messages:
 
-![Loading Messages](./loading.jpg)
+![Loading Messages](./loading.png)
 
 Among the messages above, you'll notice that the `letters` data set was automatically loaded into memory. How did ProjectTemplate do this?
 
@@ -46,7 +46,7 @@ The `letters` data set takes a few seconds to load into R because it contains 23
 
         head(letters)
 
-![head() Output](./head.jpg)
+![head() Output](./head.png)
 
 As you can see, we've got a data frame that contains 233,614 words along with the first and second letter of each word in a separate column. For our current analysis, we're interested in the total number of occurrences of each letter in the first and second letter positions and not in the words themselves. For that reason, we can generate aggregate letter counts using the `ddply()` function from the [`plyr`](http://plyr.had.co.nz/) package. Wanting to work with aggregate counts instead of the raw data set we stored in the `data` directory naturally leads us to working with ProjectTemplate's automatic package loading and data munging tools.
 
@@ -68,7 +68,7 @@ Now that we've edited this munging script, our aggregation preprocessing step wi
         library('ProjectTemplate')
         load.project()
 
-![Munging Messages](./munging.jpg)
+![Munging Messages](./munging.png)
 
 Since our new call to `ddply()` involves a fairly long computation that produces very simple output, it makes sense to cache the output of our aggregation step rather than rerun it every time. To do that, we use the `cache()` function:
 
@@ -80,7 +80,7 @@ Now when we reload our project we see the following:
         library('ProjectTemplate')
         load.project()
 
-![Cache Loading Messages](./caching.jpg)
+![Cache Loading Messages](./caching.png)
 
 Unfortunately, the preprocessing step still seems to go slowly. That's because, even though we're pulling `first.letter.counts` and `second.letter.counts` from `cache`, we're also still running the munging steps to create those variables at runtime. To stop recomputing work we've already cached, we edit our configuration file and turn `munging` off:
 
@@ -91,7 +91,7 @@ After doing that, we load our project again and see that things run a lot faster
         library('ProjectTemplate')
         load.project()
 
-![Munging Off Messages](./munging_off.jpg)
+![Munging Off Messages](./munging_off.png)
 
 Now that we've got interesting data in our hands, let's produce some simple density plots to see the shape of the first and second letter counts. To do that, we'll code up an analysis that we'll store inside of `src/generate_plots.R`. In general, you'll use the `src` directory to store any analyses that you run. The convention is that every analysis starts with the familiar two lines:
 
