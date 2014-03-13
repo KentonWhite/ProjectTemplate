@@ -25,7 +25,7 @@
 cache <- function(variable)
 {
   save(list = variable,
-       envir = .GlobalEnv,
+       envir = .TargetEnv,
        file = file.path('cache',
                         paste(variable, '.RData', sep = '')))
 }

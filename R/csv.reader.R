@@ -28,5 +28,5 @@ csv.reader <- function(data.file, filename, variable.name)
          read.csv(filename,
                   header = TRUE,
                   sep = ','),
-         envir = .GlobalEnv)
+         envir = .TargetEnv)
 }

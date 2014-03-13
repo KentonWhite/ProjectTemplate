@@ -14,9 +14,9 @@
 #' \dontrun{xport.reader('example.xport', 'data/example.xport', 'example')}
 xport.reader <- function(data.file, filename, variable.name)
 {
-  library('foreign')
+  require.package('foreign')
 
   assign(variable.name,
          read.xport(filename),
-         envir = .GlobalEnv)
+         envir = .TargetEnv)
 }

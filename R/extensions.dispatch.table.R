@@ -7,6 +7,7 @@
 #'
 #' @include arff.reader.R
 #' @include csv.reader.R
+#' @include csv2.reader.R
 #' @include db.reader.R
 #' @include dbf.reader.R
 #' @include epiinfo.reader.R
@@ -79,3 +80,5 @@ extensions.dispatch.table <- list("\\.csv$" = csv.reader,
                                   "\\.dat.bz2$" = wsv.reader,
                                   "\\.dat.zip$" = wsv.reader,
                                   "\\.dat.gz$" = wsv.reader)
+
+.TargetEnv <- .GlobalEnv

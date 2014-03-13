@@ -120,14 +120,15 @@ sql.reader <- function(data.file, filename, variable.name)
     warning('Only databases reachable through RMySQL, RSQLite, RODBC ROracle or RPostgreSQL are currently supported.')
     assign(variable.name,
            NULL,
-           envir = .GlobalEnv)
+           envir = .TargetEnv)
     return()
   }
 
   # Draft code for ODBC support.
   if (database.info[['type']] == 'odbc')
   {
-    library('RODBC')
+    require.package('RODBC')
+
     connection.string <- paste('DSN=', database.info[['dsn']], ';',
                                'UID=', database.info[['user']], ';',
                                'PWD=', database.info[['password']], ';',
@@ -138,13 +139,14 @@ sql.reader <- function(data.file, filename, variable.name)
     odbcClose(connection)
     assign(variable.name,
            results,
-           envir = .GlobalEnv)
+           envir = .TargetEnv)
     return()
   }
   
   if (database.info[['type']] == 'mysql')
   {
-    library('RMySQL')
+    require.package('RMySQL')
+
     mysql.driver <- dbDriver("MySQL")
     
     # Default value for 'port' in mysqlNewConnection is 0.
@@ -165,7 +167,8 @@ sql.reader <- function(data.file, filename, variable.name)
 
   if (database.info[['type']] == 'sqlite')
   {
-    library('RSQLite')
+    require.package('RSQLite')
+
     sqlite.driver <- dbDriver("SQLite")
 
     connection <- dbConnect(sqlite.driver,
@@ -174,7 +177,8 @@ sql.reader <- function(data.file, filename, variable.name)
 
   if (database.info[['type']] == 'postgres')
   {
-    library('RPostgreSQL')
+    require.package('RPostgreSQL')
+
     pgsql.driver <- dbDriver("PostgreSQL")
 
     args <- intersect(names(database.info), c('user', 'password', 'host', 'dbname'))
@@ -183,7 +187,8 @@ sql.reader <- function(data.file, filename, variable.name)
 
   if (database.info[['type']] == 'oracle')
   {
-    library('RMySQL')
+    require.package('RMySQL')
+
     oracle.driver <- dbDriver("Oracle")
     
     # Default value for 'port' in mysqlNewConnection is 0.
@@ -200,7 +205,7 @@ sql.reader <- function(data.file, filename, variable.name)
 
   if (database.info[['type']] == 'jdbc')
   {
-    library('RJDBC')
+    require.package('RJDBC')
 
     ident.quote <- NA
     if('identquote' %in% names(database.info))
@@ -219,7 +224,7 @@ sql.reader <- function(data.file, filename, variable.name)
 
   if (database.info[['type']] == 'heroku')
   {
-    library('RJDBC')
+    require.package('RJDBC')
     
     if(is.null(database.info[['classpath']])) {
       database.info[['classpath']] <- ''
@@ -273,7 +278,7 @@ sql.reader <- function(data.file, filename, variable.name)
     
       assign(clean.variable.name(table),
              data.parcel,
-             envir = .GlobalEnv)
+             envir = .TargetEnv)
     }
   }
   
@@ -289,7 +294,7 @@ sql.reader <- function(data.file, filename, variable.name)
       
       assign(variable.name,
              data.parcel,
-             envir = .GlobalEnv)
+             envir = .TargetEnv)
     }
     else
     {
@@ -315,7 +320,7 @@ sql.reader <- function(data.file, filename, variable.name)
     {
       assign(variable.name,
              data.parcel,
-             envir = .GlobalEnv)
+             envir = .TargetEnv)
     }
     else
     {
@@ -339,7 +344,7 @@ sql.reader <- function(data.file, filename, variable.name)
   {
     assign(variable.name,
            NULL,
-           envir = .GlobalEnv)
+           envir = .TargetEnv)
     return()
   }
 

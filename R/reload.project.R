@@ -16,6 +16,6 @@
 #' reload.project()}
 reload.project <- function()
 {
-  rm(list = ls(.GlobalEnv), pos = .GlobalEnv)
+  rm(list = ls(.TargetEnv), pos = .TargetEnv)
   load.project()
 }

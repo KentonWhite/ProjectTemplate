@@ -16,7 +16,8 @@
 #' \dontrun{xls.reader('example.xls', 'data/example.xls', 'example')}
 xls.reader <- function(data.file, filename, workbook.name)
 {
-  library('gdata')
+  require.package('gdata')
+
   sheets <- sheetNames(filename)
   
   for (sheet.name in sheets)
@@ -25,7 +26,7 @@ xls.reader <- function(data.file, filename, workbook.name)
     tryCatch(assign(variable.name,
                     read.xls(filename,
                              sheet = sheet.name),
-                    envir = .GlobalEnv),
+                    envir = .TargetEnv),
              error = function(e)
              {
                warning(paste("The worksheet", sheet.name, "didn't load correctly."))

@@ -8,4 +8,5 @@
 ^TODO\.markdown$
 ^website$
 ^Makefile$
-^ChangeLog\.tmpl$
+^NEWS\.md$
+^NEWS\.md\.tmpl$

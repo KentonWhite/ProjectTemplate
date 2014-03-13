@@ -61,6 +61,7 @@ Please note that several of file formats have not been tested yet, including Wek
 * `.file`: A DCF file describing the location of another file that should be loaded.
 * `.mp3`: MP3 audio files. (Uses the tuneR package.)
 * `.ppm`: PPM image files. (Uses the pixmap package.)
+
 #### Ad Hoc File Types
 
 ##### URL Files
@@ -140,11 +141,11 @@ You can load data that is not stored in the current project using a `.file` file
         path: /path/to/sample_database
         extension: db
 
-#### Future Support Data Sources
-In the future, ProjectTemplate could potentially support the following formats:
+#### Future Support For Data Sources
 
-* SQL Server
-* MongoDB
-* CouchDB
-
-If you'd like to help us implement support for these data sources or your favorite data source, please use the [mailing list](./mailing_list.html) to get in touch with us.
+It is possible to provide support for new data sources by hooking into
+ProjectTemplate.
+The [ElasticSearch reader](https://github.com/KentonWhite/esReader) is a working
+example of how to achieve this.  We are looking forward to linking to your
+custom readers for new data sources, such as SQL Server, MongoDB or CouchDB.
+Please use the [mailing list](./mailing_list.html) to get in touch with us.
