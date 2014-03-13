@@ -1,6 +1,6 @@
 \name{NEWS}
 \title{News for Package 'ProjectTemplate'}
-\section{Changes in ProjectTemplate version 0.5 (2014-03-05)}{
+\section{Changes in ProjectTemplate version 0.5 (2014-03-13)}{
   \subsection{Features}{
     \itemize{
       \item New function \code{get.project()} to access \code{project.info}.
