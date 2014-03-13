@@ -1,15 +1,9 @@
 \name{NEWS}
 \title{News for Package 'ProjectTemplate'}
 \section{Changes in ProjectTemplate version 0.5 (2014-03-05)}{
-  \subsection{Breaking changes}{
-    \itemize{
-      \item \code{project.info} is now deprecated in favor of the new function \code{get.project()}.
-         Accessing \code{project.info} will work but emit a deprecation warning once per
-         session (#39).
-    }
-  }
   \subsection{Features}{
     \itemize{
+      \item New function \code{get.project()} to access \code{project.info}.
       \item Attempting to load a missing package when reading data will lead to a
         user-friendly error message (#26).
       \item Export existing \code{translate.dcf} function, useful for implementing custom readers (#59).
@@ -21,6 +15,7 @@
     \itemize{
       \item Fix CRAN warnings concerning use of \code{ProjectTemplate:::} qualification
          (#56).
+      \item Fix CRAN warnings concerning assignments to \code{.GlobalEnv}.
       \item Updated author information in DESCRIPTION file (#40).
       \item Store templates for empty projects in tar files instead of storing
          the entire directory structure per CRAN request and to avoid having to build
