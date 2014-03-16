@@ -76,8 +76,7 @@ create.project <- function(project.name = 'new-project', minimal = FALSE,
 
 .create.project.existing <- function(template.path, project.name,
                                      merge.strategy) {
-  template.files <- list.files(path = template.path, all.files = TRUE,
-                               include.dirs = TRUE, no.. = TRUE)
+  template.files <- .list.files.and.dirs(path = template.path)
 
   project.path <- file.path(project.name)
 
@@ -122,7 +121,13 @@ create.project <- function(project.name = 'new-project', minimal = FALSE,
 .get.template.tar.path <- function(template.name)
   system.file(file.path('defaults', paste0(template.name, ".tar")), package = 'ProjectTemplate')
 
+.list.files.and.dirs <- function(path) {
+  # no.. not available in R 2.15.3
+  files <- list.files(path = path, all.files = TRUE, include.dirs = TRUE)
+  files <- grep("^[.][.]?$", files, value = TRUE, invert = TRUE)
+  files
+}
+
 .dir.empty <- function(path) {
-  length(list.files(path = path, all.files = TRUE, include.dirs = TRUE,
-                    no.. = TRUE)) == 0
+  length(.list.files.and.dirs(path = path)) == 0
 }
