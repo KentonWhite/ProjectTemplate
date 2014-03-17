@@ -1,3 +1,6 @@
+v0.5-1 (2014-03-17)
+===
+
 * Restore compatibility to R 2.15.3 by avoiding use of the `no..` parameter
   to `list.files()` in our `create.project()` function.
 
