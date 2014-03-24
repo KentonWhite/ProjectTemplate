@@ -1,8 +1,11 @@
 \name{NEWS}
 \title{News for Package 'ProjectTemplate'}
-\section{Changes in ProjectTemplate version 0.5-1 (2014-03-13)}{
-  \itemize{
-    \item No changes.
+\section{Changes in ProjectTemplate version 0.5-1 (2014-03-17)}{
+  \subsection{Bug fixes}{
+    \itemize{
+      \item Restore compatibility to R 2.15.3 by avoiding use of the \code{no..} parameter
+         to \code{list.files()} in our \code{create.project()} function.
+    }
   }
 }
 \section{Changes in ProjectTemplate version 0.5 (2014-03-13)}{

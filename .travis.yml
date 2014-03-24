@@ -5,7 +5,7 @@
 #   https://github.com/craigcitro/r-travis/wiki
 
 language: java
-script: ./travis-tool.sh run_tests
+script: _R_CHECK_CRAN_INCOMING_=FALSE ./travis-tool.sh run_tests
 env:
   global:
     - WARNINGS_ARE_ERRORS=1
