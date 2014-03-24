@@ -16,9 +16,9 @@
 #' \dontrun{ppm.reader('example.ppm', 'data/example.ppm', 'example')}
 ppm.reader <- function(data.file, filename, variable.name)
 {
-  library('pixmap')
+  require.package('pixmap')
 
   assign(variable.name,
          read.pnm(filename),
-         envir = .GlobalEnv)
+         envir = .TargetEnv)
 }

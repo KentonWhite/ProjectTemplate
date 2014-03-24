@@ -16,5 +16,5 @@
 #' \dontrun{rdata.reader('example.RData', 'data/example.RData', 'example')}
 rdata.reader <- function(data.file, filename, variable.name)
 {
-  load(filename, envir = .GlobalEnv)
+  load(filename, envir = .TargetEnv)
 }

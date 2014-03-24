@@ -7,6 +7,9 @@
 #'
 #' @export
 #'
+#' @seealso \code{\link{create.project}}, \code{\link{get.project}},
+#'   \code{\link{cache.project}}, \code{\link{show.project}}
+#'   
 #' @examples
 #' library('ProjectTemplate')
 #'
@@ -26,7 +29,7 @@ load.project <- function()
     warning('Your configuration file is missing an entry: libraries')
   }
   config[['libraries']] <- strsplit(config[['libraries']], '\\s*,\\s*')[[1]]
-  assign('config', config, envir = .GlobalEnv)
+  assign('config', config, envir = .TargetEnv)
   my.project.info[['config']] <- config
   
   if (! is.null(config[['as_factors']]) && config[['as_factors']] == 'off')
@@ -117,7 +120,7 @@ load.project <- function()
                                                    perl = TRUE))
 
           # If this variable already exists in the global environment, don't load it from cache.
-          if (variable.name %in% ls(envir = .GlobalEnv))
+          if (variable.name %in% ls(envir = .TargetEnv))
           {
             next()
           }
@@ -164,7 +167,7 @@ load.project <- function()
                                                    perl = TRUE))
 
           # If this variable already exists in the global environment, don't load it from cache.
-          if (variable.name %in% ls(envir = .GlobalEnv))
+          if (variable.name %in% ls(envir = .TargetEnv))
           {
             next()
           }
@@ -221,7 +224,7 @@ load.project <- function()
                                                    perl = TRUE))
 
           # If this variable already exists in cache, don't load it from data.
-          if (variable.name %in% ls(envir = .GlobalEnv))
+          if (variable.name %in% ls(envir = .TargetEnv))
           {
             next()
           }
@@ -243,18 +246,18 @@ load.project <- function()
 
   if (! is.null(config[['data_tables']]) && config[['data_tables']] == 'on')
   {
-    library('data.table')
+    require.package('data.table')
     
     for (data.set in my.project.info[['data']])
     {
       message('Converting data.frames to data.tables')
       
-      if (class(get(data.set, envir = .GlobalEnv)) == 'data.frame')
+      if (class(get(data.set, envir = .TargetEnv)) == 'data.frame')
       {
         message(paste(' Translating data.frame:', data.set))
         assign(data.set,
-               data.table(get(data.set, envir = .GlobalEnv)),
-               envir = .GlobalEnv)
+               data.table(get(data.set, envir = .TargetEnv)),
+               envir = .TargetEnv)
       }
     }
   }
@@ -283,7 +286,8 @@ load.project <- function()
   if (config[['logging']] == 'on')
   {
     message('Initializing logger')
-    library('log4r')
+    require.package('log4r')
+
     logger <- create.logger()
     if (!file.exists('logs'))
     {
@@ -291,10 +295,10 @@ load.project <- function()
     }
     logfile(logger) <- file.path('logs', 'project.log')
     level(logger) <- log4r:::INFO
-    assign('logger', logger, envir = .GlobalEnv)
+    assign('logger', logger, envir = .TargetEnv)
   }
 
-  assign('project.info', my.project.info, envir = .GlobalEnv)
+  assign('project.info', my.project.info, envir = .TargetEnv)
   #assign('project.info', my.project.info, envir = parent.frame())
   #assign('project.info', my.project.info, envir = environment(create.project))
 }

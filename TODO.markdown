@@ -27,8 +27,6 @@
 
 ## Internal State
 * `cache.project()` needs to deal with tools that generate data sets that don't meet naming conventions: e.g. `.db` files.
-* Deal with `no global binding visible for project.info` error.
-* Assign `project.info` into ProjectTemplate namespace?
 * Add unit test to check that `show.project()` doesn't produce an error.
 
 ## Excel Support
