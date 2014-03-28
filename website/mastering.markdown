@@ -133,4 +133,4 @@ After making this change, the `logger` object will be created once you call `loa
 ![Logging](./logging.png)
 
 #### Data Tables
-The `data.table`s package allows you to create a variant of the typical R data frame that provides indices. Indices make locating and selecting subsets of your data much faster than the typical vector scan that R uses when working with data frames. To automatically convert all of the data frames loaded from the `data` directory into `data.table`s, change the configuration option in `config/global.dcf` to `data_tables: on`. After that, you can check for tables by calling the `tables()` function.
+The `data.table` package allows you to create a variant of the typical R data frame that provides indices. Indices make locating and selecting subsets of your data much faster than the typical vector scan that R uses when working with data frames. To automatically convert all of the data frames loaded from the `data` directory into `data.table`s, change the configuration option in `config/global.dcf` to `data_tables: on`. After that, you can check for tables by calling the `tables()` function.
