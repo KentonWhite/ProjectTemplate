@@ -6,8 +6,8 @@
 translate.dcf(filename)
 }
 \arguments{
-  \item{filename}{A character vector specifying the DCF
-  file to be translated.}
+\item{filename}{A character vector specifying the DCF file to be
+  translated.}
 }
 \value{
 Returns a list containing the entries from the DCF file.

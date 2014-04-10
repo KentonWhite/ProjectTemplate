@@ -6,8 +6,8 @@
 cache(variable)
 }
 \arguments{
-  \item{variable}{A character vector containing the name of
-  the variable to be saved.}
+\item{variable}{A character vector containing the name of the variable to
+ be saved.}
 }
 \value{
 No value is returned; this function is called for its side effects.

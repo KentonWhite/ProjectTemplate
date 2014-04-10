@@ -6,8 +6,7 @@
 cache.name(data.filename)
 }
 \arguments{
-  \item{data.filename}{The variable name to be translated
-  into a filename.}
+\item{data.filename}{The variable name to be translated into a filename.}
 }
 \value{
 A translated variable name.

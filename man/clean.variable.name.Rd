@@ -6,8 +6,8 @@
 clean.variable.name(variable.name)
 }
 \arguments{
-  \item{variable.name}{A character vector containing a
-  variable's proposed name that should be standardized.}
+\item{variable.name}{A character vector containing a variable's proposed
+ name that should be standardized.}
 }
 \value{
 A translated variable name.
