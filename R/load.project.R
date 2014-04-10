@@ -94,10 +94,7 @@ load.project <- function()
     my.project.info$cache <- .load.cache()
 
     # Then we consider loading things from data/.
-    if (!file.exists('data'))
-    {
-      stop('You are missing a directory: data')
-    }
+    .provide.directory('data')
 
     # If recursive_loading
     data.files <- dir('data', recursive = config$recursive_loading)
@@ -203,10 +200,7 @@ load.project <- function()
 }
 
 .load.cache <- function() {
-  if (!file.exists('cache'))
-  {
-    stop('You are missing a directory: cache')
-  }
+  .provide.directory('cache')
   cache.files <- dir('cache')
   cached.files <- c()
   
@@ -245,4 +239,12 @@ load.project <- function()
   }
   
   cached.files
+}
+
+.provide.directory <- function(name) {
+  is.dir <- file.info(name)$isdir
+  if (is.na(is.dir) || !is.dir) {
+    warning("Creating missing directory ", name)
+    dir.create(name)
+  }
 }
