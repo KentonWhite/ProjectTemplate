@@ -19,11 +19,15 @@ load.project <- function()
   my.project.info <- list()
 
   message('Loading project configuration')
-  if (!file.exists(file.path('config', 'global.dcf')))
-  {
-    stop('You are missing a configuration file: config/global.dcf')
+
+  config.path <- file.path('config', 'global.dcf')
+  config <- if (file.exists(config.path)) {
+    translate.dcf(file.path('config', 'global.dcf'))
+  } else {
+    warning('You are missing a configuration file: ', config.path, ' . Defaults will be used.')
+    default.config
   }
-  config <- translate.dcf(file.path('config', 'global.dcf'))
+
   missing.entries <- setdiff(names(default.config), names(config))
   if (length(missing.entries) > 0) {
     warning('Your configuration file is missing the following entries: ',
