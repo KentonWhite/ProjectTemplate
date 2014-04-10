@@ -2,7 +2,7 @@
 \docType{data}
 \name{default.config}
 \alias{default.config}
-\title{Maps file types to the reader functions used to autoload them.}
+\title{Default configuration}
 \format{\preformatted{List of 9
  $ data_loading     : chr "on"
  $ cache_loading    : chr "on"
@@ -18,10 +18,8 @@
 default.config
 }
 \description{
-This list stores a mapping from regular expressions that match file
-extensions for the file types supported by ProjectTemplate to the
-reader functions that implement autoloading for those formats. Any
-new file type must be appended to this dispatch table.
+This list stores the configuration used for new projects or as default
+for missing items in the configuration of the current project.
 }
 \keyword{datasets}
 
