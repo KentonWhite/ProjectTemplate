@@ -132,10 +132,8 @@ load.project <- function()
     require.package('log4r')
 
     logger <- create.logger()
-    if (!file.exists('logs'))
-    {
-      dir.create('logs')
-    }
+    .provide.directory('logs')
+
     logfile(logger) <- file.path('logs', 'project.log')
     level(logger) <- log4r:::INFO
     assign('logger', logger, envir = .TargetEnv)
