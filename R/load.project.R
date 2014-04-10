@@ -84,93 +84,14 @@ load.project <- function()
     message('Autoloading cache')
     
     # First, we load everything out of cache/.
-    if (!file.exists('cache'))
-    {
-      stop('You are missing a directory: cache')
-    }
-    cache.files <- dir('cache')
-    my.project.info$cache <- c()
-    
-    for (cache.file in cache.files)
-    {
-      filename <- file.path('cache', cache.file)
-      
-      for (extension in names(extensions.dispatch.table))
-      {
-        if (grepl(extension, cache.file, ignore.case = TRUE, perl = TRUE))
-        {
-          variable.name <- clean.variable.name(sub(extension,
-                                                   '',
-                                                   cache.file,
-                                                   ignore.case = TRUE,
-                                                   perl = TRUE))
-
-          # If this variable already exists in the global environment, don't load it from cache.
-          if (variable.name %in% ls(envir = .TargetEnv))
-          {
-            next()
-          }
-          
-          message(paste(" Loading cached data set: ", variable.name, sep = ''))
-
-          do.call(extensions.dispatch.table[[extension]],
-                  list(cache.file,
-                       filename,
-                       variable.name))
-          
-          my.project.info$cache <- c(my.project.info$cache, variable.name)
-          
-          break()
-        }
-      }
-    }
+    my.project.info$cache <- .load.cache()
   }
   
   if (config$data_loading)
   {
     message('Autoloading data')
     
-    # First, we load everything out of cache/.
-    if (!file.exists('cache'))
-    {
-      stop('You are missing a directory: cache')
-    }
-    cache.files <- dir('cache')
-    my.project.info$cache <- c()
-    
-    for (cache.file in cache.files)
-    {
-      filename <- file.path('cache', cache.file)
-      
-      for (extension in names(extensions.dispatch.table))
-      {
-        if (grepl(extension, cache.file, ignore.case = TRUE, perl = TRUE))
-        {
-          variable.name <- clean.variable.name(sub(extension,
-                                                   '',
-                                                   cache.file,
-                                                   ignore.case = TRUE,
-                                                   perl = TRUE))
-
-          # If this variable already exists in the global environment, don't load it from cache.
-          if (variable.name %in% ls(envir = .TargetEnv))
-          {
-            next()
-          }
-          
-          message(paste(" Loading cached data set: ", variable.name, sep = ''))
-
-          do.call(extensions.dispatch.table[[extension]],
-                  list(cache.file,
-                       filename,
-                       variable.name))
-          
-          my.project.info$cache <- c(my.project.info$cache, variable.name)
-          
-          break()
-        }
-      }
-    }
+    my.project.info$cache <- .load.cache()
 
     # Then we consider loading things from data/.
     if (!file.exists('data'))
@@ -279,4 +200,49 @@ load.project <- function()
   else as.logical(x)
   if (is.na(ret)) stop('Cannot convert ', x, ' to logical value.')
   ret
+}
+
+.load.cache <- function() {
+  if (!file.exists('cache'))
+  {
+    stop('You are missing a directory: cache')
+  }
+  cache.files <- dir('cache')
+  cached.files <- c()
+  
+  for (cache.file in cache.files)
+  {
+    filename <- file.path('cache', cache.file)
+    
+    for (extension in names(extensions.dispatch.table))
+    {
+      if (grepl(extension, cache.file, ignore.case = TRUE, perl = TRUE))
+      {
+        variable.name <- clean.variable.name(sub(extension,
+                                                 '',
+                                                 cache.file,
+                                                 ignore.case = TRUE,
+                                                 perl = TRUE))
+        
+        # If this variable already exists in the global environment, don't load it from cache.
+        if (variable.name %in% ls(envir = .TargetEnv))
+        {
+          next()
+        }
+        
+        message(paste(" Loading cached data set: ", variable.name, sep = ''))
+        
+        do.call(extensions.dispatch.table[[extension]],
+                list(cache.file,
+                     filename,
+                     variable.name))
+        
+        cached.files <- c(cached.files, variable.name)
+        
+        break()
+      }
+    }
+  }
+  
+  cached.files
 }
