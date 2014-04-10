@@ -182,14 +182,7 @@ load.project <- function()
     }
 
     # If recursive_loading
-    if (config$recursive_loading)
-    {
-      data.files <- dir('data', recursive = TRUE)
-    }
-    else
-    {
-      data.files <- dir('data')
-    }
+    data.files <- dir('data', recursive = config$recursive_loading)
     my.project.info$data <- c()
 
     for (data.file in data.files)
