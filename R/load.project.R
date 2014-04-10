@@ -31,14 +31,16 @@ load.project <- function()
     config[missing.entries] <- default.config[missing.entries]
   }
   
-  config$libraries <- strsplit(config$libraries, '\\s*,\\s*')[[1]]
+  config <- .normalize.config(config,
+                              setdiff(names(default.config), "libraries"),
+                              .boolean.cfg)
+  config <- .normalize.config(config, "libraries",
+                              function (x) strsplit(x, '\\s*,\\s*')[[1]])
+  
   assign('config', config, envir = .TargetEnv)
   my.project.info$config <- config
   
-  if (! is.null(config$as_factors) && config$as_factors == 'off')
-  {
-    options(stringsAsFactors = FALSE)
-  }
+  options(stringsAsFactors = config$as_factors)
   
   if (file.exists('lib'))
   {
@@ -66,7 +68,7 @@ load.project <- function()
   }
 
   {
-    if (config$load_libraries == 'on')
+    if (config$load_libraries)
     {
       message('Autoloading packages')
       my.project.info$packages <- c()
@@ -82,7 +84,7 @@ load.project <- function()
     }
   }
 
-  if (config$data_loading != 'on' && config$cache_loading == 'on')
+  if (!config$data_loading && config$cache_loading)
   {
     message('Autoloading cache')
     
@@ -129,7 +131,7 @@ load.project <- function()
     }
   }
   
-  if (config$data_loading == 'on')
+  if (config$data_loading)
   {
     message('Autoloading data')
     
@@ -182,7 +184,7 @@ load.project <- function()
     }
 
     # If recursive_loading
-    if (config$recursive_loading == 'on')
+    if (config$recursive_loading)
     {
       data.files <- dir('data', recursive = TRUE)
     }
@@ -227,7 +229,7 @@ load.project <- function()
     }
   }
 
-  if (config$data_tables == 'on')
+  if (config$data_tables)
   {
     require.package('data.table')
     
@@ -245,7 +247,7 @@ load.project <- function()
     }
   }
 
-  if (config$munging == 'on')
+  if (config$munging)
   {
     message('Munging data')
     for (preprocessing.script in sort(dir('munge')))
@@ -258,7 +260,7 @@ load.project <- function()
     }
   }
 
-  if (config$logging == 'on')
+  if (config$logging)
   {
     message('Initializing logger')
     require.package('log4r')
@@ -276,4 +278,17 @@ load.project <- function()
   assign('project.info', my.project.info, envir = .TargetEnv)
   #assign('project.info', my.project.info, envir = parent.frame())
   #assign('project.info', my.project.info, envir = environment(create.project))
+}
+
+.normalize.config <- function(config, names, norm.fun) {
+  config[names] <- lapply(config[names], norm.fun)
+  config
+}
+
+.boolean.cfg <- function(x) {
+  ret <- if (x == 'on') TRUE
+  else if (x == 'off') FALSE
+  else as.logical(x)
+  if (is.na(ret)) stop('Cannot convert ', x, ' to logical value.')
+  ret
 }

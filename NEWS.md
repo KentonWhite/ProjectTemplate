@@ -1,3 +1,6 @@
+* All logical configuration options are now stored as Boolean values instead of
+  `'on'`/`'off'`.  Input values other than `'on'`/`'off'` are converted using
+  `as.logical`, invalid values result in an error.
 * Missing entries in the configuration file are substituted by defaults
   (with a warning).
 * New variable `default.config` that stores the default configuration used
