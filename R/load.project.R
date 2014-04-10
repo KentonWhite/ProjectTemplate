@@ -73,10 +73,7 @@ load.project <- function()
       for (package.to.load in config$libraries)
       {
         message(paste(' Loading package:', package.to.load))
-        if (!library(package.to.load, character.only = TRUE, logical.return = TRUE))
-        {
-          stop(paste('Failed to load package: ', package.to.load))
-        }
+        require.package(package.to.load)
         my.project.info$packages <- c(my.project.info$packages, package.to.load)
       }
     }
