@@ -33,7 +33,7 @@ load.project <- function()
   
   config$libraries <- strsplit(config$libraries, '\\s*,\\s*')[[1]]
   assign('config', config, envir = .TargetEnv)
-  my.project.info[['config']] <- config
+  my.project.info$config <- config
   
   if (! is.null(config$as_factors) && config$as_factors == 'off')
   {
@@ -44,7 +44,7 @@ load.project <- function()
   {
     message('Autoloading helper functions')
     
-    my.project.info[['helpers']] <- c()
+    my.project.info$helpers <- c()
     
     for (helper.script in dir('lib'))
     {
@@ -60,7 +60,7 @@ load.project <- function()
         }
         message(paste(' Running helper script:', helper.script))
         source(file.path('lib', helper.script))
-        my.project.info[['helpers']] <- c(my.project.info[['helpers']], helper.script)
+        my.project.info$helpers <- c(my.project.info$helpers, helper.script)
       }
     }
   }
@@ -69,7 +69,7 @@ load.project <- function()
     if (config$load_libraries == 'on')
     {
       message('Autoloading packages')
-      my.project.info[['packages']] <- c()
+      my.project.info$packages <- c()
       for (package.to.load in config$libraries)
       {
         message(paste(' Loading package:', package.to.load))
@@ -77,7 +77,7 @@ load.project <- function()
         {
           stop(paste('Failed to load package: ', package.to.load))
         }
-        my.project.info[['packages']] <- c(my.project.info[['packages']], package.to.load)
+        my.project.info$packages <- c(my.project.info$packages, package.to.load)
       }
     }
   }
@@ -92,7 +92,7 @@ load.project <- function()
       stop('You are missing a directory: cache')
     }
     cache.files <- dir('cache')
-    my.project.info[['cache']] <- c()
+    my.project.info$cache <- c()
     
     for (cache.file in cache.files)
     {
@@ -121,7 +121,7 @@ load.project <- function()
                        filename,
                        variable.name))
           
-          my.project.info[['cache']] <- c(my.project.info[['cache']], variable.name)
+          my.project.info$cache <- c(my.project.info$cache, variable.name)
           
           break()
         }
@@ -139,7 +139,7 @@ load.project <- function()
       stop('You are missing a directory: cache')
     }
     cache.files <- dir('cache')
-    my.project.info[['cache']] <- c()
+    my.project.info$cache <- c()
     
     for (cache.file in cache.files)
     {
@@ -168,7 +168,7 @@ load.project <- function()
                        filename,
                        variable.name))
           
-          my.project.info[['cache']] <- c(my.project.info[['cache']], variable.name)
+          my.project.info$cache <- c(my.project.info$cache, variable.name)
           
           break()
         }
@@ -190,7 +190,7 @@ load.project <- function()
     {
       data.files <- dir('data')
     }
-    my.project.info[['data']] <- c()
+    my.project.info$data <- c()
 
     for (data.file in data.files)
     {
@@ -219,7 +219,7 @@ load.project <- function()
                        filename,
                        variable.name))
 
-          my.project.info[['data']] <- c(my.project.info[['data']], variable.name)
+          my.project.info$data <- c(my.project.info$data, variable.name)
           
           break()
         }
@@ -231,7 +231,7 @@ load.project <- function()
   {
     require.package('data.table')
     
-    for (data.set in my.project.info[['data']])
+    for (data.set in my.project.info$data)
     {
       message('Converting data.frames to data.tables')
       
