@@ -91,48 +91,11 @@ load.project <- function()
   {
     message('Autoloading data')
     
+    # First, we load everything out of cache/.
     my.project.info$cache <- .load.cache()
 
     # Then we consider loading things from data/.
-    .provide.directory('data')
-
-    # If recursive_loading
-    data.files <- dir('data', recursive = config$recursive_loading)
-    my.project.info$data <- c()
-
-    for (data.file in data.files)
-    {
-      filename <- file.path('data', data.file)
-      
-      for (extension in names(extensions.dispatch.table))
-      {
-        if (grepl(extension, data.file, ignore.case = TRUE, perl = TRUE))
-        {
-          variable.name <- clean.variable.name(sub(extension,
-                                                   '',
-                                                   data.file,
-                                                   ignore.case = TRUE,
-                                                   perl = TRUE))
-
-          # If this variable already exists in cache, don't load it from data.
-          if (variable.name %in% ls(envir = .TargetEnv))
-          {
-            next()
-          }
-
-          message(paste(" Loading data set: ", variable.name, sep = ''))
-
-          do.call(extensions.dispatch.table[[extension]],
-                  list(data.file,
-                       filename,
-                       variable.name))
-
-          my.project.info$data <- c(my.project.info$data, variable.name)
-          
-          break()
-        }
-      }
-    }
+    my.project.info$data <- .load.data()
   }
 
   if (config$data_tables)
@@ -239,6 +202,48 @@ load.project <- function()
   }
   
   cached.files
+}
+
+.load.data <- function() {
+  .provide.directory('data')
+  data.files <- dir('data', recursive = config$recursive_loading)
+  data.files.loaded <- c()
+  
+  for (data.file in data.files)
+  {
+    filename <- file.path('data', data.file)
+    
+    for (extension in names(extensions.dispatch.table))
+    {
+      if (grepl(extension, data.file, ignore.case = TRUE, perl = TRUE))
+      {
+        variable.name <- clean.variable.name(sub(extension,
+                                                 '',
+                                                 data.file,
+                                                 ignore.case = TRUE,
+                                                 perl = TRUE))
+        
+        # If this variable already exists in cache, don't load it from data.
+        if (variable.name %in% ls(envir = .TargetEnv))
+        {
+          next()
+        }
+        
+        message(paste(" Loading data set: ", variable.name, sep = ''))
+        
+        do.call(extensions.dispatch.table[[extension]],
+                list(data.file,
+                     filename,
+                     variable.name))
+        
+        data.files.loaded <- c(data.files.loaded, variable.name)
+        
+        break()
+      }
+    }
+  }
+  
+  data.files.loaded
 }
 
 .provide.directory <- function(name) {
