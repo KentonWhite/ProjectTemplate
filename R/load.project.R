@@ -48,22 +48,19 @@ load.project <- function()
     
     my.project.info$helpers <- c()
     
-    for (helper.script in dir('lib'))
+    for (helper.script in dir('lib', pattern = '[.][rR]$'))
     {
-      if (grepl('\\.R$', helper.script, ignore.case = TRUE))
+      for (deprecated.file in c('boot.R', 'load_data.R', 'load_libraries.R', 'preprocess_data.R', 'run_tests.R'))
       {
-        for (deprecated.file in c('boot.R', 'load_data.R', 'load_libraries.R', 'preprocess_data.R', 'run_tests.R'))
+        if (grepl(deprecated.file, helper.script, ignore.case = TRUE))
         {
-          if (grepl(deprecated.file, helper.script, ignore.case = TRUE))
-          {
-            warning(paste('Skipping deprecated file:', deprecated.file))
-            next()
-          }
+          warning(paste('Skipping deprecated file:', deprecated.file))
+          next()
         }
-        message(paste(' Running helper script:', helper.script))
-        source(file.path('lib', helper.script))
-        my.project.info$helpers <- c(my.project.info$helpers, helper.script)
       }
+      message(paste(' Running helper script:', helper.script))
+      source(file.path('lib', helper.script))
+      my.project.info$helpers <- c(my.project.info$helpers, helper.script)
     }
   }
 
