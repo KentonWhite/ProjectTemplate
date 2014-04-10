@@ -65,17 +65,15 @@ load.project <- function()
     }
   }
 
+  if (config$load_libraries)
   {
-    if (config$load_libraries)
+    message('Autoloading packages')
+    my.project.info$packages <- c()
+    for (package.to.load in config$libraries)
     {
-      message('Autoloading packages')
-      my.project.info$packages <- c()
-      for (package.to.load in config$libraries)
-      {
-        message(paste(' Loading package:', package.to.load))
-        require.package(package.to.load)
-        my.project.info$packages <- c(my.project.info$packages, package.to.load)
-      }
+      message(paste(' Loading package:', package.to.load))
+      require.package(package.to.load)
+      my.project.info$packages <- c(my.project.info$packages, package.to.load)
     }
   }
 
