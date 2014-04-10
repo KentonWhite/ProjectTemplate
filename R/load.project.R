@@ -24,15 +24,15 @@ load.project <- function()
     stop('You are missing a configuration file: config/global.dcf')
   }
   config <- translate.dcf(file.path('config', 'global.dcf'))
-  if (is.null(config[['libraries']]))
+  if (is.null(config$libraries))
   {
     warning('Your configuration file is missing an entry: libraries')
   }
-  config[['libraries']] <- strsplit(config[['libraries']], '\\s*,\\s*')[[1]]
+  config$libraries <- strsplit(config$libraries, '\\s*,\\s*')[[1]]
   assign('config', config, envir = .TargetEnv)
   my.project.info[['config']] <- config
   
-  if (! is.null(config[['as_factors']]) && config[['as_factors']] == 'off')
+  if (! is.null(config$as_factors) && config$as_factors == 'off')
   {
     options(stringsAsFactors = FALSE)
   }
@@ -62,17 +62,17 @@ load.project <- function()
     }
   }
 
-  if (is.null(config[['load_libraries']]))
+  if (is.null(config$load_libraries))
   {
     warning('Your configuration file is missing an entry: load_libraries')
   }
   else
   {
-    if (config[['load_libraries']] == 'on')
+    if (config$load_libraries == 'on')
     {
       message('Autoloading packages')
       my.project.info[['packages']] <- c()
-      for (package.to.load in config[['libraries']])
+      for (package.to.load in config$libraries)
       {
         message(paste(' Loading package:', package.to.load))
         if (!library(package.to.load, character.only = TRUE, logical.return = TRUE))
@@ -84,16 +84,16 @@ load.project <- function()
     }
   }
 
-  if (is.null(config[['cache_loading']]))
+  if (is.null(config$cache_loading))
   {
     warning('Your configuration file is missing an entry: cache_loading')
   }
-  if (is.null(config[['data_loading']]))
+  if (is.null(config$data_loading))
   {
     warning('Your configuration file is missing an entry: data_loading')
   }
 
-  if (config[['data_loading']] != 'on' && config[['cache_loading']] == 'on')
+  if (config$data_loading != 'on' && config$cache_loading == 'on')
   {
     message('Autoloading cache')
     
@@ -140,7 +140,7 @@ load.project <- function()
     }
   }
   
-  if (config[['data_loading']] == 'on')
+  if (config$data_loading == 'on')
   {
     message('Autoloading data')
     
@@ -193,13 +193,13 @@ load.project <- function()
     }
 
     # If recursive_loading
-    if (is.null(config[['recursive_loading']]))
+    if (is.null(config$recursive_loading))
     {
       warning('Your configuration file is missing an entry: recursive_loading')
-      config[['recursive_loading']] <- 'off'
+      config$recursive_loading <- 'off'
     }
 
-    if (config[['recursive_loading']] == 'on')
+    if (config$recursive_loading == 'on')
     {
       data.files <- dir('data', recursive = TRUE)
     }
@@ -244,7 +244,7 @@ load.project <- function()
     }
   }
 
-  if (! is.null(config[['data_tables']]) && config[['data_tables']] == 'on')
+  if (! is.null(config$data_tables) && config$data_tables == 'on')
   {
     require.package('data.table')
     
@@ -262,11 +262,11 @@ load.project <- function()
     }
   }
 
-  if (is.null(config[['munging']]))
+  if (is.null(config$munging))
   {
     warning('Your configuration file is missing an entry: munging')
   }
-  if (config[['munging']] == 'on')
+  if (config$munging == 'on')
   {
     message('Munging data')
     for (preprocessing.script in sort(dir('munge')))
@@ -279,11 +279,11 @@ load.project <- function()
     }
   }
 
-  if (is.null(config[['logging']]))
+  if (is.null(config$logging))
   {
     warning('Your configuration file is missing an entry: logging')
   }
-  if (config[['logging']] == 'on')
+  if (config$logging == 'on')
   {
     message('Initializing logger')
     require.package('log4r')
