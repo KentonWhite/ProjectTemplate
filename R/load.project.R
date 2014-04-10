@@ -3,6 +3,9 @@
 #' This function automatically load all of the data and packages used by
 #' the project from which it is called.
 #'
+#' @param override.config Named list, allows overriding individual configuration
+#'   items.
+#' 
 #' @return No value is returned; this function is called for its side effects.
 #'
 #' @export
@@ -14,7 +17,7 @@
 #' library('ProjectTemplate')
 #'
 #' \dontrun{load.project()}
-load.project <- function()
+load.project <- function(override.config = NULL)
 {
   my.project.info <- list()
 
@@ -33,6 +36,10 @@ load.project <- function()
     warning('Your configuration file is missing the following entries: ',
             paste(missing.entries, collapse = ', '), '. Defaults will be used.')
     config[missing.entries] <- default.config[missing.entries]
+  }
+
+  if (length(override.config) > 0) {
+    config[names(override.config)] <- override.config
   }
   
   config <- .normalize.config(config,
