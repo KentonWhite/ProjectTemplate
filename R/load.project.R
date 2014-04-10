@@ -42,6 +42,13 @@ load.project <- function(override.config = NULL)
     config[names(override.config)] <- override.config
   }
   
+  extra.entries <- setdiff(names(config), names(default.config))
+  if (length(extra.entries) > 0) {
+    warning('Your configuration contains the following unused entries: ',
+            paste(missing.entries, collapse = ', '), '. These will be ignored.')
+    config[extra.entries] <- NULL
+  }
+
   config <- .normalize.config(config,
                               setdiff(names(default.config), "libraries"),
                               .boolean.cfg)

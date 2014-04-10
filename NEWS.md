@@ -5,7 +5,8 @@
   `'on'`/`'off'`.  Input values other than `'on'`/`'off'` are converted using
   `as.logical`, invalid values result in an error.
 * Missing entries in the configuration file, or a missing configuration file,
-  are substituted by defaults (with a warning).
+  are substituted by defaults (with a warning).  Extra entries are ignored
+  (with a warning).
 * New variable `default.config` that stores the default configuration used
   for a new project.
 
