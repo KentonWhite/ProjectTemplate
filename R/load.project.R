@@ -24,10 +24,13 @@ load.project <- function()
     stop('You are missing a configuration file: config/global.dcf')
   }
   config <- translate.dcf(file.path('config', 'global.dcf'))
-  if (is.null(config$libraries))
-  {
-    warning('Your configuration file is missing an entry: libraries')
+  missing.entries <- setdiff(names(default.config), names(config))
+  if (length(missing.entries) > 0) {
+    warning('Your configuration file is missing the following entries: ',
+            paste(missing.entries, collapse = ', '), '. Defaults will be used.')
+    config[missing.entries] <- default.config[missing.entries]
   }
+  
   config$libraries <- strsplit(config$libraries, '\\s*,\\s*')[[1]]
   assign('config', config, envir = .TargetEnv)
   my.project.info[['config']] <- config
@@ -62,11 +65,6 @@ load.project <- function()
     }
   }
 
-  if (is.null(config$load_libraries))
-  {
-    warning('Your configuration file is missing an entry: load_libraries')
-  }
-  else
   {
     if (config$load_libraries == 'on')
     {
@@ -82,15 +80,6 @@ load.project <- function()
         my.project.info[['packages']] <- c(my.project.info[['packages']], package.to.load)
       }
     }
-  }
-
-  if (is.null(config$cache_loading))
-  {
-    warning('Your configuration file is missing an entry: cache_loading')
-  }
-  if (is.null(config$data_loading))
-  {
-    warning('Your configuration file is missing an entry: data_loading')
   }
 
   if (config$data_loading != 'on' && config$cache_loading == 'on')
@@ -193,12 +182,6 @@ load.project <- function()
     }
 
     # If recursive_loading
-    if (is.null(config$recursive_loading))
-    {
-      warning('Your configuration file is missing an entry: recursive_loading')
-      config$recursive_loading <- 'off'
-    }
-
     if (config$recursive_loading == 'on')
     {
       data.files <- dir('data', recursive = TRUE)
@@ -244,7 +227,7 @@ load.project <- function()
     }
   }
 
-  if (! is.null(config$data_tables) && config$data_tables == 'on')
+  if (config$data_tables == 'on')
   {
     require.package('data.table')
     
@@ -262,10 +245,6 @@ load.project <- function()
     }
   }
 
-  if (is.null(config$munging))
-  {
-    warning('Your configuration file is missing an entry: munging')
-  }
   if (config$munging == 'on')
   {
     message('Munging data')
@@ -279,10 +258,6 @@ load.project <- function()
     }
   }
 
-  if (is.null(config$logging))
-  {
-    warning('Your configuration file is missing an entry: logging')
-  }
   if (config$logging == 'on')
   {
     message('Initializing logger')

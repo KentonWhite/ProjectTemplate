@@ -1,3 +1,8 @@
+* Missing entries in the configuration file are substituted by defaults
+  (with a warning).
+* New variable `default.config` that stores the default configuration used
+  for a new project.
+
 v0.5-1 (2014-03-17)
 ===
 
