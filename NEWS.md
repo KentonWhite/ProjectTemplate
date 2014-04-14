@@ -10,6 +10,9 @@
 * New variable `default.config` that stores the default configuration used
   for a new project.
 
+* Fixed error message when `require.package` is called from an anonymous
+  function and fails to load a package.  (Using `deparse(nlines = 1)` now.)
+
 v0.5-1 (2014-03-17)
 ===
 

@@ -21,7 +21,7 @@ require.package <- function(package.name)
   old.options <- options(warn=-1)
   on.exit(options(old.options))
   if (!require(package.name, character.only = TRUE)) {
-    function.name <- deparse(sys.calls()[[sys.nframe()-1]])
+    function.name <- deparse(sys.calls()[[sys.nframe()-1]], nlines = 1)
     stop(paste(function.name, ' requires package ', package.name, '.\nPlease install ', package.name, ' by running install.packages("', package.name, '") and then try re-running project.load()', sep = ''), call. = FALSE)
   }
 }
