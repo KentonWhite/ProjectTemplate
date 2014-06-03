@@ -95,22 +95,19 @@ load.project <- function(override.config = NULL)
     }
   }
 
-  if (!config$data_loading && config$cache_loading)
+  # First, we load everything out of cache/.
+  if (config$cache_loading)
   {
     message('Autoloading cache')
     
-    # First, we load everything out of cache/.
     my.project.info$cache <- .load.cache()
   }
   
+  # Then we consider loading things from data/.
   if (config$data_loading)
   {
     message('Autoloading data')
     
-    # First, we load everything out of cache/.
-    my.project.info$cache <- .load.cache()
-
-    # Then we consider loading things from data/.
     my.project.info$data <- .load.data()
   }
 
