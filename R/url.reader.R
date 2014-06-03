@@ -28,7 +28,7 @@ url.reader <- function(data.file, filename, variable.name)
   url.info <- translate.dcf(filename)
 
   file.type <- ""
-  
+
   for (extension in names(extensions.dispatch.table))
   {
     if(grepl(extension, url.info[['url']], ignore.case = TRUE, perl = TRUE))
@@ -36,14 +36,14 @@ url.reader <- function(data.file, filename, variable.name)
       file.type <- extension
     }
   }
-  
+
   if (file.type == "")
   {
     warning(paste("The source at",
                   url.info[['url']],
                   "was not processed properly."))
   }
-  else 
+  else
   {
     if (file.type %in% c("\\.Rdata$", "\\.Rda$"))
     {
@@ -62,7 +62,7 @@ url.reader <- function(data.file, filename, variable.name)
       download.file(url.info[['url']], file.path(tempdir(), "sqltmp.sql"))
       sql.reader(data.file, file.path(tempdir(), "sqltmp.sql"), variable.name)
     }
-    
+
     else
     {
       do.call(extensions.dispatch.table[[file.type]],

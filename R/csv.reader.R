@@ -23,7 +23,7 @@ csv.reader <- function(data.file, filename, variable.name)
     unzip(filename, exdir = tmp.dir)
     filename <- file.path(tmp.dir, sub('\\.zip$', '', data.file))
   }
-  
+
   assign(variable.name,
          read.csv(filename,
                   header = TRUE,

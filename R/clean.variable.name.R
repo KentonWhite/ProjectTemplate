@@ -7,7 +7,7 @@
 #'
 #' @param variable.name A character vector containing a variable's proposed
 #'  name that should be standardized.
-#' 
+#'
 #' @return A translated variable name.
 #'
 #' @examples

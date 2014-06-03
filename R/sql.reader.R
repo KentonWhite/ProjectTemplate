@@ -87,7 +87,7 @@
 #' password: tiger
 #' host: heroku.postgres.url
 #' port: 1234
-#' dbname: herokudb 
+#' dbname: herokudb
 #' query: select * from emp
 #'
 #' @param data.file The name of the data file to be read.
@@ -112,7 +112,7 @@ sql.reader <- function(data.file, filename, variable.name)
     connection.info <- translate.dcf(connection_filename)
 
     # Allow .sql to override options defined in .connection
-    database.info <- modifyList(connection.info, database.info) 
+    database.info <- modifyList(connection.info, database.info)
   }
 
   if (! (database.info[['type']] %in% c('mysql', 'sqlite', 'odbc', 'postgres', 'oracle', 'jdbc', 'heroku')))
@@ -142,19 +142,19 @@ sql.reader <- function(data.file, filename, variable.name)
            envir = .TargetEnv)
     return()
   }
-  
+
   if (database.info[['type']] == 'mysql')
   {
     require.package('RMySQL')
 
     mysql.driver <- dbDriver("MySQL")
-    
+
     # Default value for 'port' in mysqlNewConnection is 0.
     if (is.null(database.info[['port']]))
     {
       database.info[['port']] <- 0
     }
-    
+
     connection <- dbConnect(mysql.driver,
                             user = database.info[['user']],
                             password = database.info[['password']],
@@ -190,13 +190,13 @@ sql.reader <- function(data.file, filename, variable.name)
     require.package('RMySQL')
 
     oracle.driver <- dbDriver("Oracle")
-    
+
     # Default value for 'port' in mysqlNewConnection is 0.
     if (is.null(database.info[['port']]))
     {
       database.info[['port']] <- 0
     }
-    
+
     connection <- dbConnect(oracle.driver,
                             user = database.info[['user']],
                             password = database.info[['password']],
@@ -210,7 +210,7 @@ sql.reader <- function(data.file, filename, variable.name)
     ident.quote <- NA
     if('identquote' %in% names(database.info))
        ident.quote <- database.info[['identquote']]
-    
+
     if(is.null(database.info[['classpath']])) {
       database.info[['classpath']] = ''
     }
@@ -225,18 +225,18 @@ sql.reader <- function(data.file, filename, variable.name)
   if (database.info[['type']] == 'heroku')
   {
     require.package('RJDBC')
-    
+
     if(is.null(database.info[['classpath']])) {
       database.info[['classpath']] <- ''
   }
 
     database.info[['class']] <- 'org.postgresql.Driver'
-    
-    database.info[['url']] <- paste('jdbc:postgresql://', database.info[['host']], 
-        ':', database.info[['port']], 
-        '/', database.info[['dbname']], 
+
+    database.info[['url']] <- paste('jdbc:postgresql://', database.info[['host']],
+        ':', database.info[['port']],
+        '/', database.info[['dbname']],
         '?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory', sep = '')
-    
+
     rjdbc.driver <- JDBC(database.info[['class']], database.info[['classpath']])
     connection <- dbConnect(rjdbc.driver,
                             database.info[['url']],
@@ -248,7 +248,7 @@ sql.reader <- function(data.file, filename, variable.name)
   # User should specify either a table name or a query to execute, but not both.
   table <- database.info[['table']]
   query <- database.info[['query']]
-  
+
   # If both a table and a query are specified, favor the query.
   if (! is.null(table) && ! is.null(query))
   {
@@ -264,24 +264,24 @@ sql.reader <- function(data.file, filename, variable.name)
     warning("Either 'table' or 'query' must be specified in a .sql file")
     return()
   }
-  
+
   if (! is.null(table) && table == '*')
   {
     tables <- dbListTables(connection)
     for (table in tables)
     {
       message(paste('  Loading table:', table))
-      
+
       data.parcel <- dbReadTable(connection,
                                  table,
                                  row.names = NULL)
-    
+
       assign(clean.variable.name(table),
              data.parcel,
              envir = .TargetEnv)
     }
   }
-  
+
   # If table is specified, read the whole table.
   # Othwrwise, execute the specified query.
   if (! is.null(table) && table != '*')
@@ -291,7 +291,7 @@ sql.reader <- function(data.file, filename, variable.name)
       data.parcel <- dbReadTable(connection,
                                  table,
                                  row.names = NULL)
-      
+
       assign(variable.name,
              data.parcel,
              envir = .TargetEnv)
@@ -311,11 +311,11 @@ sql.reader <- function(data.file, filename, variable.name)
       query <- qq(query)
     } else if (length(grep('\\{\\{.*\\}\\}', query))) {
       require.package('whisker')
-      query <- whisker.render(query, data = .GlobalEnv, strict = FALSE)       
+      query <- whisker.render(query, data = .GlobalEnv, strict = FALSE)
     }
     data.parcel <- try(dbGetQuery(connection, query))
     err <- dbGetException(connection)
-    
+
     if (class(data.parcel) == 'data.frame' && (length(err) == 0 || err$errorNum == 0))
     {
       assign(variable.name,
