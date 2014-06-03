@@ -50,10 +50,21 @@ load.project <- function(override.config = NULL)
   }
 
   config <- .normalize.config(config,
-                              setdiff(names(default.config), "libraries"),
+                              setdiff(names(default.config), c("version", "libraries")),
                               .boolean.cfg)
   config <- .normalize.config(config, "libraries",
                               function (x) strsplit(x, '\\s*,\\s*')[[1]])
+
+  package.version <- as.character(read.dcf(system.file("DESCRIPTION", package = "ProjectTemplate"), fields = "Version"))
+  version.diff <- compareVersion(config$version, package.version)
+  if (version.diff < 0) {
+    warning('Your configuration is compatible with version ', config$version,
+            ' of the ProjectTemplate package.\n  Please run ProjectTemplate::migrate() to migrate to the installed version ',
+            package.version, '.')
+  } else if (version.diff > 0) {
+    stop('Your configuration is compatible with version ', config$version,
+         ' of the ProjectTemplate package.\n  Please upgrade ProjectTemplate to version ', config$version, ' or later.')
+  }
 
   assign('config', config, envir = .TargetEnv)
   my.project.info$config <- config
