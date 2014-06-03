@@ -54,8 +54,6 @@ create.project <- function(project.name = 'new-project', minimal = FALSE,
   } else
     .create.project.new(template.path, project.name)
 
-  file.copy(from = system.file('defaults/config/global.dcf', package = 'ProjectTemplate'), to = 'config/global.dcf')
-
   if (dump)
   {
     1; # Magic happens here to place all of the R files from ProjectTemplate in the current folder.
@@ -101,6 +99,9 @@ create.project <- function(project.name = 'new-project', minimal = FALSE,
   file.copy(file.path(template.path, template.files),
             project.path,
             recursive = TRUE, overwrite = FALSE)
+
+  file.copy(from = system.file('defaults/config/global.dcf', package = 'ProjectTemplate'),
+            to = file.path(project.path, 'config/global.dcf'))
 }
 
 .create.project.new <- function(template.path, project.name) {
