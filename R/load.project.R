@@ -55,7 +55,7 @@ load.project <- function(override.config = NULL)
   config <- .normalize.config(config, "libraries",
                               function (x) strsplit(x, '\\s*,\\s*')[[1]])
 
-  package.version <- as.character(read.dcf(system.file("DESCRIPTION", package = "ProjectTemplate"), fields = "Version"))
+  package.version <- .package.version()
   version.diff <- compareVersion(config$version, package.version)
   if (version.diff < 0) {
     warning('Your configuration is compatible with version ', config$version,
@@ -275,4 +275,8 @@ load.project <- function(override.config = NULL)
     warning("Creating missing directory ", name)
     dir.create(name)
   }
+}
+
+.package.version <- function() {
+  as.character(read.dcf(system.file("DESCRIPTION", package = "ProjectTemplate"), fields = "Version"))
 }
