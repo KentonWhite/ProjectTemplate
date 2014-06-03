@@ -22,16 +22,16 @@ db.reader <- function(data.file, filename, variable.name)
   sqlite.driver <- dbDriver("SQLite")
   connection <- dbConnect(sqlite.driver,
                           dbname = filename)
-  
+
   tables <- dbListTables(connection)
   for (table in tables)
   {
     message(paste('  Loading table:', table))
-    
+
     data.parcel <- dbReadTable(connection,
                                table,
                                row.names = NULL)
-    
+
     assign(clean.variable.name(table),
            data.parcel,
            envir = .TargetEnv)

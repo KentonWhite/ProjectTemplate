@@ -7,7 +7,7 @@
 #' all packages that were loaded automatically and all of the data sets that
 #' were loaded automatically. The information about autoloaded data sets
 #' is used by the \code{\link{cache.project}} function.
-#' 
+#'
 #' @details In previous releases this information has been available through the
 #'   global variable \code{project.info}.  Using this variable is now deprecated
 #'   and will result in a warning.
@@ -15,7 +15,7 @@
 #' @return A named list.
 #'
 #' @export
-#' 
+#'
 #' @seealso \code{\link{create.project}}, \code{\link{load.project}},
 #'   \code{\link{cache.project}}, \code{\link{show.project}}
 #'

@@ -19,7 +19,7 @@ xls.reader <- function(data.file, filename, workbook.name)
   require.package('gdata')
 
   sheets <- sheetNames(filename)
-  
+
   for (sheet.name in sheets)
   {
     variable.name <- paste(workbook.name, clean.variable.name(sheet.name), sep = ".")

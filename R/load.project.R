@@ -5,14 +5,14 @@
 #'
 #' @param override.config Named list, allows overriding individual configuration
 #'   items.
-#' 
+#'
 #' @return No value is returned; this function is called for its side effects.
 #'
 #' @export
 #'
 #' @seealso \code{\link{create.project}}, \code{\link{get.project}},
 #'   \code{\link{cache.project}}, \code{\link{show.project}}
-#'   
+#'
 #' @examples
 #' library('ProjectTemplate')
 #'
@@ -41,7 +41,7 @@ load.project <- function(override.config = NULL)
   if (length(override.config) > 0) {
     config[names(override.config)] <- override.config
   }
-  
+
   extra.entries <- setdiff(names(config), names(default.config))
   if (length(extra.entries) > 0) {
     warning('Your configuration contains the following unused entries: ',
@@ -54,18 +54,18 @@ load.project <- function(override.config = NULL)
                               .boolean.cfg)
   config <- .normalize.config(config, "libraries",
                               function (x) strsplit(x, '\\s*,\\s*')[[1]])
-  
+
   assign('config', config, envir = .TargetEnv)
   my.project.info$config <- config
-  
+
   options(stringsAsFactors = config$as_factors)
-  
+
   if (file.exists('lib'))
   {
     message('Autoloading helper functions')
-    
+
     my.project.info$helpers <- c()
-    
+
     helpers <- dir('lib', pattern = '[.][rR]$')
     deprecated.files <- intersect(
       helpers, c('boot.R', 'load_data.R', 'load_libraries.R',
@@ -74,7 +74,7 @@ load.project <- function(override.config = NULL)
       warning(paste('Skipping deprecated files:',
                     paste(deprecated.files, collapse = ', ')))
     }
-    
+
     for (helper.script in helpers)
     {
       message(paste(' Running helper script:', helper.script))
@@ -99,22 +99,22 @@ load.project <- function(override.config = NULL)
   if (config$cache_loading)
   {
     message('Autoloading cache')
-    
+
     my.project.info$cache <- .load.cache()
   }
-  
+
   # Then we consider loading things from data/.
   if (config$data_loading)
   {
     message('Autoloading data')
-    
+
     my.project.info$data <- .load.data()
   }
 
   if (config$data_tables)
   {
     require.package('data.table')
-    
+
     message('Converting data.frames to data.tables')
 
     .convert.to.data.table()
@@ -165,11 +165,11 @@ load.project <- function(override.config = NULL)
   .provide.directory('cache')
   cache.files <- dir('cache')
   cached.files <- c()
-  
+
   for (cache.file in cache.files)
   {
     filename <- file.path('cache', cache.file)
-    
+
     for (extension in names(extensions.dispatch.table))
     {
       if (grepl(extension, cache.file, ignore.case = TRUE, perl = TRUE))
@@ -179,27 +179,27 @@ load.project <- function(override.config = NULL)
                                                  cache.file,
                                                  ignore.case = TRUE,
                                                  perl = TRUE))
-        
+
         # If this variable already exists in the global environment, don't load it from cache.
         if (variable.name %in% ls(envir = .TargetEnv))
         {
           next()
         }
-        
+
         message(paste(" Loading cached data set: ", variable.name, sep = ''))
-        
+
         do.call(extensions.dispatch.table[[extension]],
                 list(cache.file,
                      filename,
                      variable.name))
-        
+
         cached.files <- c(cached.files, variable.name)
-        
+
         break()
       }
     }
   }
-  
+
   cached.files
 }
 
@@ -207,11 +207,11 @@ load.project <- function(override.config = NULL)
   .provide.directory('data')
   data.files <- dir('data', recursive = config$recursive_loading)
   data.files.loaded <- c()
-  
+
   for (data.file in data.files)
   {
     filename <- file.path('data', data.file)
-    
+
     for (extension in names(extensions.dispatch.table))
     {
       if (grepl(extension, data.file, ignore.case = TRUE, perl = TRUE))
@@ -221,27 +221,27 @@ load.project <- function(override.config = NULL)
                                                  data.file,
                                                  ignore.case = TRUE,
                                                  perl = TRUE))
-        
+
         # If this variable already exists in cache, don't load it from data.
         if (variable.name %in% ls(envir = .TargetEnv))
         {
           next()
         }
-        
+
         message(paste(" Loading data set: ", variable.name, sep = ''))
-        
+
         do.call(extensions.dispatch.table[[extension]],
                 list(data.file,
                      filename,
                      variable.name))
-        
+
         data.files.loaded <- c(data.files.loaded, variable.name)
-        
+
         break()
       }
     }
   }
-  
+
   data.files.loaded
 }
 

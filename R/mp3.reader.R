@@ -17,7 +17,7 @@
 mp3.reader <- function(data.file, filename, variable.name)
 {
   require.package('tuneR')
-  
+
   assign(variable.name,
          readMP3(filename),
          envir = .TargetEnv)

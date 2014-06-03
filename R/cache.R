@@ -5,7 +5,7 @@
 #' at load time when calling \code{\link{load.project}}. Cached data sets are
 #' stored as \code{.RData} files.
 #'
-#' @param variable A character vector containing the name of the variable to 
+#' @param variable A character vector containing the name of the variable to
 #'  be saved.
 #'
 #' @return No value is returned; this function is called for its side effects.

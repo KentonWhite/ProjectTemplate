@@ -2,6 +2,6 @@
 #'
 #' This list stores the configuration used for new projects or as default
 #' for missing items in the configuration of the current project.
-#' 
+#'
 #' @include translate.dcf.R
 default.config <- translate.dcf(system.file('defaults/config/global.dcf', package = 'ProjectTemplate'))

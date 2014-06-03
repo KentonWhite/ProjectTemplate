@@ -25,11 +25,11 @@ test.project <- function()
   # Versions of testhat <0.8.0 use global enclosure
   # >0.8.0 use parent of global
   # Need to call test_file appropriately
-  
+
   if (packageVersion('testthat') < '0.8.0')
   {
     invisible(lapply(files, test_file))
   } else {
     invisible(lapply(files, test_file, env = environment()))
-  }      
+  }
 }

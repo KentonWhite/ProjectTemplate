@@ -17,7 +17,7 @@
 xlsx.reader <- function(data.file, filename, workbook.name)
 {
   require.package('xlsx')
-  
+
   wb <- loadWorkbook(filename)
   sheets <- getSheets(wb)
 

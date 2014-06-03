@@ -6,7 +6,7 @@
 #'
 #' @param override.config Named list, allows overriding individual configuration
 #'   items.
-#' 
+#'
 #' @return No value is returned; this function is called for its side effects.
 #'
 #' @export
