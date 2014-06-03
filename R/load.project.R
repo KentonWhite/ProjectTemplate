@@ -25,16 +25,7 @@ load.project <- function(override.config = NULL)
 
   config <- .load.config()
 
-  package.version <- .package.version()
-  version.diff <- compareVersion(config$version, package.version)
-  if (version.diff < 0) {
-    warning('Your configuration is compatible with version ', config$version,
-            ' of the ProjectTemplate package.\n  Please run ProjectTemplate::migrate.project() to migrate to the installed version ',
-            package.version, '.')
-  } else if (version.diff > 0) {
-    stop('Your configuration is compatible with version ', config$version,
-         ' of the ProjectTemplate package.\n  Please upgrade ProjectTemplate to version ', config$version, ' or later.')
-  }
+  .check.version(config)
 
   assign('config', config, envir = .TargetEnv)
   my.project.info$config <- config
@@ -281,6 +272,21 @@ load.project <- function(override.config = NULL)
                               function (x) strsplit(x, '\\s*,\\s*')[[1]])
 
   config
+}
+
+.check.version <- function(config) {
+  package.version <- .package.version()
+  version.diff <- compareVersion(config$version, package.version)
+  if (version.diff < 0) {
+    warning('Your configuration is compatible with version ', config$version,
+            ' of the ProjectTemplate package.\n  Please run ProjectTemplate::migrate.project() to migrate to the installed version ',
+            package.version, '.')
+  } else if (version.diff > 0) {
+    stop('Your configuration is compatible with version ', config$version,
+         ' of the ProjectTemplate package.\n  Please upgrade ProjectTemplate to version ', config$version, ' or later.')
+  }
+
+  version.diff
 }
 
 .package.version <- function() {
