@@ -23,37 +23,7 @@ load.project <- function(override.config = NULL)
 
   message('Loading project configuration')
 
-  config.path <- file.path('config', 'global.dcf')
-  config <- if (file.exists(config.path)) {
-    translate.dcf(file.path('config', 'global.dcf'))
-  } else {
-    warning('You are missing a configuration file: ', config.path, ' . Defaults will be used.')
-    default.config
-  }
-
-  missing.entries <- setdiff(names(default.config), names(config))
-  if (length(missing.entries) > 0) {
-    warning('Your configuration file is missing the following entries: ',
-            paste(missing.entries, collapse = ', '), '. Defaults will be used.')
-    config[missing.entries] <- default.config[missing.entries]
-  }
-
-  if (length(override.config) > 0) {
-    config[names(override.config)] <- override.config
-  }
-
-  extra.entries <- setdiff(names(config), names(default.config))
-  if (length(extra.entries) > 0) {
-    warning('Your configuration contains the following unused entries: ',
-            paste(extra.entries, collapse = ', '), '. These will be ignored.')
-    config[extra.entries] <- NULL
-  }
-
-  config <- .normalize.config(config,
-                              setdiff(names(default.config), c("version", "libraries")),
-                              .boolean.cfg)
-  config <- .normalize.config(config, "libraries",
-                              function (x) strsplit(x, '\\s*,\\s*')[[1]])
+  config <- .load.config()
 
   package.version <- .package.version()
   version.diff <- compareVersion(config$version, package.version)
@@ -275,6 +245,42 @@ load.project <- function(override.config = NULL)
     warning("Creating missing directory ", name)
     dir.create(name)
   }
+}
+
+.load.config <- function() {
+  config.path <- file.path('config', 'global.dcf')
+  config <- if (file.exists(config.path)) {
+    translate.dcf(file.path('config', 'global.dcf'))
+  } else {
+    warning('You are missing a configuration file: ', config.path, ' . Defaults will be used.')
+    default.config
+  }
+
+  missing.entries <- setdiff(names(default.config), names(config))
+  if (length(missing.entries) > 0) {
+    warning('Your configuration file is missing the following entries: ',
+            paste(missing.entries, collapse = ', '), '. Defaults will be used.')
+    config[missing.entries] <- default.config[missing.entries]
+  }
+
+  if (length(override.config) > 0) {
+    config[names(override.config)] <- override.config
+  }
+
+  extra.entries <- setdiff(names(config), names(default.config))
+  if (length(extra.entries) > 0) {
+    warning('Your configuration contains the following unused entries: ',
+            paste(extra.entries, collapse = ', '), '. These will be ignored.')
+    config[extra.entries] <- NULL
+  }
+
+  config <- .normalize.config(config,
+                              setdiff(names(default.config), c("version", "libraries")),
+                              .boolean.cfg)
+  config <- .normalize.config(config, "libraries",
+                              function (x) strsplit(x, '\\s*,\\s*')[[1]])
+
+  config
 }
 
 .package.version <- function() {
