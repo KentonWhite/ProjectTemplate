@@ -6,9 +6,8 @@
 require.package(package.name)
 }
 \arguments{
-  \item{package.name}{A character vector containing the
-  package name.  Must be a valid package name installed on
-  the system.}
+\item{package.name}{A character vector containing the package name.
+Must be a valid package name installed on the system.}
 }
 \value{
 No value is returned; this function is called for its side effects.

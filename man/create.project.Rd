@@ -7,26 +7,24 @@ create.project(project.name = "new-project", minimal = FALSE,
   dump = FALSE, merge.strategy = c("require.empty", "allow.non.conflict"))
 }
 \arguments{
-  \item{project.name}{A character vector containing the
-  name for this new project. Must be a valid directory name
-  for your file system.}
+\item{project.name}{A character vector containing the name for this new
+project. Must be a valid directory name for your file system.}
 
-  \item{minimal}{A boolean value indicating whether to
-  create a minimal project or a full project. A minimal
-  project contains only the directories strictly necessary
-  to use ProjectTemplate and does not provide template code
-  for profiling, unit testing or documenting your project.}
+\item{minimal}{A boolean value indicating whether to create a minimal
+project or a full project. A minimal project contains only the
+directories strictly necessary to use ProjectTemplate and does not
+provide template code for profiling, unit testing or documenting your
+project.}
 
-  \item{dump}{A boolean value indicating whether the entire
-  functionality of ProjectTemplate should be written out to
-  flat files in the current project.}
+\item{dump}{A boolean value indicating whether the entire functionality
+of ProjectTemplate should be written out to flat files in the current
+project.}
 
-  \item{merge.strategy}{What should happen if the target
-  directory exists and is not empty?  If
-  \code{"force.empty"}, the target directory must be empty;
-  if \code{"allow.non.conflict"}, the method succeeds if no
-  files or directories with the same name exist in the
-  target directory.}
+\item{merge.strategy}{What should happen if the target directory exists and
+  is not empty?
+  If \code{"force.empty"}, the target directory must be empty;
+  if \code{"allow.non.conflict"}, the method succeeds if no files or
+  directories with the same name exist in the target directory.}
 }
 \value{
 No value is returned; this function is called for its side effects.
