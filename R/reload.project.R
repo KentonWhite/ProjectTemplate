@@ -4,6 +4,9 @@
 #' from scratch. This is useful when you've updated your data sets or
 #' changed your preprocessing scripts.
 #'
+#' @param override.config Named list, allows overriding individual configuration
+#'   items.
+#' 
 #' @return No value is returned; this function is called for its side effects.
 #'
 #' @export
@@ -14,8 +17,8 @@
 #' \dontrun{load.project()
 #'
 #' reload.project()}
-reload.project <- function()
+reload.project <- function(override.config = NULL)
 {
   rm(list = ls(.TargetEnv), pos = .TargetEnv)
-  load.project()
+  load.project(override.config = override.config)
 }

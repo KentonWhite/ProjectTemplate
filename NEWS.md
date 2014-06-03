@@ -1,3 +1,14 @@
+* New parameter `override.config` to `load.project()` and `reload.project()`
+  allows substitution of individual configuration items.
+* Missing but required directories are now created (with a warning).
+* All logical configuration options are now stored as Boolean values instead of
+  `'on'`/`'off'`.  Input values other than `'on'`/`'off'` are converted using
+  `as.logical`, invalid values result in an error.
+* Missing entries in the configuration file, or a missing configuration file,
+  are substituted by defaults (with a warning).  Extra entries are ignored
+  (with a warning).
+* New variable `default.config` that stores the default configuration used
+  for a new project.
 * Fixed error message when `require.package` is called from an anonymous
   function and fails to load a package.  (Using `deparse(nlines = 1)` now.)
 
