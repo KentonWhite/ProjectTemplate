@@ -250,7 +250,7 @@ load.project <- function(override.config = NULL)
 .load.config <- function() {
   config.path <- file.path('config', 'global.dcf')
   config <- if (file.exists(config.path)) {
-    translate.dcf(file.path('config', 'global.dcf'))
+    translate.dcf(config.path)
   } else {
     warning('You are missing a configuration file: ', config.path, ' . Defaults will be used.')
     default.config
