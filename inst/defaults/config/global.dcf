@@ -1,3 +1,4 @@
+version: 0.5-1
 data_loading: TRUE
 cache_loading: TRUE
 recursive_loading: FALSE
