@@ -122,7 +122,7 @@ load.project <- function(override.config = NULL)
     {
       message('Converting data.frames to data.tables')
       
-      if (class(get(data.set, envir = .TargetEnv)) == 'data.frame')
+      if (all(class(get(data.set, envir = .TargetEnv)) == 'data.frame'))
       {
         message(paste(' Translating data.frame:', data.set))
         assign(data.set,
