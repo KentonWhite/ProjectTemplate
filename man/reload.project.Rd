@@ -3,7 +3,11 @@
 \alias{reload.project}
 \title{Reload a project from scratch.}
 \usage{
-reload.project()
+reload.project(override.config = NULL)
+}
+\arguments{
+\item{override.config}{Named list, allows overriding individual configuration
+  items.}
 }
 \value{
 No value is returned; this function is called for its side effects.

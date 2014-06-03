@@ -3,6 +3,9 @@
 #' This function automatically load all of the data and packages used by
 #' the project from which it is called.
 #'
+#' @param override.config Named list, allows overriding individual configuration
+#'   items.
+#' 
 #' @return No value is returned; this function is called for its side effects.
 #'
 #' @export
@@ -14,285 +17,127 @@
 #' library('ProjectTemplate')
 #'
 #' \dontrun{load.project()}
-load.project <- function()
+load.project <- function(override.config = NULL)
 {
   my.project.info <- list()
 
   message('Loading project configuration')
-  if (!file.exists(file.path('config', 'global.dcf')))
-  {
-    stop('You are missing a configuration file: config/global.dcf')
+
+  config.path <- file.path('config', 'global.dcf')
+  config <- if (file.exists(config.path)) {
+    translate.dcf(file.path('config', 'global.dcf'))
+  } else {
+    warning('You are missing a configuration file: ', config.path, ' . Defaults will be used.')
+    default.config
   }
-  config <- translate.dcf(file.path('config', 'global.dcf'))
-  if (is.null(config[['libraries']]))
-  {
-    warning('Your configuration file is missing an entry: libraries')
+
+  missing.entries <- setdiff(names(default.config), names(config))
+  if (length(missing.entries) > 0) {
+    warning('Your configuration file is missing the following entries: ',
+            paste(missing.entries, collapse = ', '), '. Defaults will be used.')
+    config[missing.entries] <- default.config[missing.entries]
   }
-  config[['libraries']] <- strsplit(config[['libraries']], '\\s*,\\s*')[[1]]
-  assign('config', config, envir = .TargetEnv)
-  my.project.info[['config']] <- config
+
+  if (length(override.config) > 0) {
+    config[names(override.config)] <- override.config
+  }
   
-  if (! is.null(config[['as_factors']]) && config[['as_factors']] == 'off')
-  {
-    options(stringsAsFactors = FALSE)
+  extra.entries <- setdiff(names(config), names(default.config))
+  if (length(extra.entries) > 0) {
+    warning('Your configuration contains the following unused entries: ',
+            paste(extra.entries, collapse = ', '), '. These will be ignored.')
+    config[extra.entries] <- NULL
   }
+
+  config <- .normalize.config(config,
+                              setdiff(names(default.config), "libraries"),
+                              .boolean.cfg)
+  config <- .normalize.config(config, "libraries",
+                              function (x) strsplit(x, '\\s*,\\s*')[[1]])
+  
+  assign('config', config, envir = .TargetEnv)
+  my.project.info$config <- config
+  
+  options(stringsAsFactors = config$as_factors)
   
   if (file.exists('lib'))
   {
     message('Autoloading helper functions')
     
-    my.project.info[['helpers']] <- c()
+    my.project.info$helpers <- c()
     
-    for (helper.script in dir('lib'))
+    helpers <- dir('lib', pattern = '[.][rR]$')
+    deprecated.files <- intersect(
+      helpers, c('boot.R', 'load_data.R', 'load_libraries.R',
+                 'preprocess_data.R', 'run_tests.R'))
+    if (length(deprecated.files) > 0) {
+      warning(paste('Skipping deprecated files:',
+                    paste(deprecated.files, collapse = ', ')))
+    }
+    
+    for (helper.script in helpers)
     {
-      if (grepl('\\.R$', helper.script, ignore.case = TRUE))
-      {
-        for (deprecated.file in c('boot.R', 'load_data.R', 'load_libraries.R', 'preprocess_data.R', 'run_tests.R'))
-        {
-          if (grepl(deprecated.file, helper.script, ignore.case = TRUE))
-          {
-            warning(paste('Skipping deprecated file:', deprecated.file))
-            next()
-          }
-        }
-        message(paste(' Running helper script:', helper.script))
-        source(file.path('lib', helper.script))
-        my.project.info[['helpers']] <- c(my.project.info[['helpers']], helper.script)
-      }
+      message(paste(' Running helper script:', helper.script))
+      source(file.path('lib', helper.script))
+      my.project.info$helpers <- c(my.project.info$helpers, helper.script)
     }
   }
 
-  if (is.null(config[['load_libraries']]))
+  if (config$load_libraries)
   {
-    warning('Your configuration file is missing an entry: load_libraries')
-  }
-  else
-  {
-    if (config[['load_libraries']] == 'on')
+    message('Autoloading packages')
+    my.project.info$packages <- c()
+    for (package.to.load in config$libraries)
     {
-      message('Autoloading packages')
-      my.project.info[['packages']] <- c()
-      for (package.to.load in config[['libraries']])
-      {
-        message(paste(' Loading package:', package.to.load))
-        if (!library(package.to.load, character.only = TRUE, logical.return = TRUE))
-        {
-          stop(paste('Failed to load package: ', package.to.load))
-        }
-        my.project.info[['packages']] <- c(my.project.info[['packages']], package.to.load)
-      }
+      message(paste(' Loading package:', package.to.load))
+      require.package(package.to.load)
+      my.project.info$packages <- c(my.project.info$packages, package.to.load)
     }
   }
 
-  if (is.null(config[['cache_loading']]))
-  {
-    warning('Your configuration file is missing an entry: cache_loading')
-  }
-  if (is.null(config[['data_loading']]))
-  {
-    warning('Your configuration file is missing an entry: data_loading')
-  }
-
-  if (config[['data_loading']] != 'on' && config[['cache_loading']] == 'on')
+  # First, we load everything out of cache/.
+  if (config$cache_loading)
   {
     message('Autoloading cache')
     
-    # First, we load everything out of cache/.
-    if (!file.exists('cache'))
-    {
-      stop('You are missing a directory: cache')
-    }
-    cache.files <- dir('cache')
-    my.project.info[['cache']] <- c()
-    
-    for (cache.file in cache.files)
-    {
-      filename <- file.path('cache', cache.file)
-      
-      for (extension in names(extensions.dispatch.table))
-      {
-        if (grepl(extension, cache.file, ignore.case = TRUE, perl = TRUE))
-        {
-          variable.name <- clean.variable.name(sub(extension,
-                                                   '',
-                                                   cache.file,
-                                                   ignore.case = TRUE,
-                                                   perl = TRUE))
-
-          # If this variable already exists in the global environment, don't load it from cache.
-          if (variable.name %in% ls(envir = .TargetEnv))
-          {
-            next()
-          }
-          
-          message(paste(" Loading cached data set: ", variable.name, sep = ''))
-
-          do.call(extensions.dispatch.table[[extension]],
-                  list(cache.file,
-                       filename,
-                       variable.name))
-          
-          my.project.info[['cache']] <- c(my.project.info[['cache']], variable.name)
-          
-          break()
-        }
-      }
-    }
+    my.project.info$cache <- .load.cache()
   }
   
-  if (config[['data_loading']] == 'on')
+  # Then we consider loading things from data/.
+  if (config$data_loading)
   {
     message('Autoloading data')
     
-    # First, we load everything out of cache/.
-    if (!file.exists('cache'))
-    {
-      stop('You are missing a directory: cache')
-    }
-    cache.files <- dir('cache')
-    my.project.info[['cache']] <- c()
-    
-    for (cache.file in cache.files)
-    {
-      filename <- file.path('cache', cache.file)
-      
-      for (extension in names(extensions.dispatch.table))
-      {
-        if (grepl(extension, cache.file, ignore.case = TRUE, perl = TRUE))
-        {
-          variable.name <- clean.variable.name(sub(extension,
-                                                   '',
-                                                   cache.file,
-                                                   ignore.case = TRUE,
-                                                   perl = TRUE))
-
-          # If this variable already exists in the global environment, don't load it from cache.
-          if (variable.name %in% ls(envir = .TargetEnv))
-          {
-            next()
-          }
-          
-          message(paste(" Loading cached data set: ", variable.name, sep = ''))
-
-          do.call(extensions.dispatch.table[[extension]],
-                  list(cache.file,
-                       filename,
-                       variable.name))
-          
-          my.project.info[['cache']] <- c(my.project.info[['cache']], variable.name)
-          
-          break()
-        }
-      }
-    }
-
-    # Then we consider loading things from data/.
-    if (!file.exists('data'))
-    {
-      stop('You are missing a directory: data')
-    }
-
-    # If recursive_loading
-    if (is.null(config[['recursive_loading']]))
-    {
-      warning('Your configuration file is missing an entry: recursive_loading')
-      config[['recursive_loading']] <- 'off'
-    }
-
-    if (config[['recursive_loading']] == 'on')
-    {
-      data.files <- dir('data', recursive = TRUE)
-    }
-    else
-    {
-      data.files <- dir('data')
-    }
-    my.project.info[['data']] <- c()
-
-    for (data.file in data.files)
-    {
-      filename <- file.path('data', data.file)
-      
-      for (extension in names(extensions.dispatch.table))
-      {
-        if (grepl(extension, data.file, ignore.case = TRUE, perl = TRUE))
-        {
-          variable.name <- clean.variable.name(sub(extension,
-                                                   '',
-                                                   data.file,
-                                                   ignore.case = TRUE,
-                                                   perl = TRUE))
-
-          # If this variable already exists in cache, don't load it from data.
-          if (variable.name %in% ls(envir = .TargetEnv))
-          {
-            next()
-          }
-
-          message(paste(" Loading data set: ", variable.name, sep = ''))
-
-          do.call(extensions.dispatch.table[[extension]],
-                  list(data.file,
-                       filename,
-                       variable.name))
-
-          my.project.info[['data']] <- c(my.project.info[['data']], variable.name)
-          
-          break()
-        }
-      }
-    }
+    my.project.info$data <- .load.data()
   }
 
-  if (! is.null(config[['data_tables']]) && config[['data_tables']] == 'on')
+  if (config$data_tables)
   {
     require.package('data.table')
     
-    for (data.set in my.project.info[['data']])
-    {
-      message('Converting data.frames to data.tables')
-      
-      if (class(get(data.set, envir = .TargetEnv)) == 'data.frame')
-      {
-        message(paste(' Translating data.frame:', data.set))
-        assign(data.set,
-               data.table(get(data.set, envir = .TargetEnv)),
-               envir = .TargetEnv)
-      }
-    }
+    message('Converting data.frames to data.tables')
+
+    .convert.to.data.table()
   }
 
-  if (is.null(config[['munging']]))
-  {
-    warning('Your configuration file is missing an entry: munging')
-  }
-  if (config[['munging']] == 'on')
+  if (config$munging)
   {
     message('Munging data')
-    for (preprocessing.script in sort(dir('munge')))
+    for (preprocessing.script in sort(dir('munge', pattern = '[.][rR]$')))
     {
-      if (grepl('\\.R$', preprocessing.script, ignore.case = TRUE))
-      {
-        message(paste(' Running preprocessing script:', preprocessing.script))
-        source(file.path('munge', preprocessing.script))
-      }
+      message(paste(' Running preprocessing script:', preprocessing.script))
+      source(file.path('munge', preprocessing.script))
     }
   }
 
-  if (is.null(config[['logging']]))
-  {
-    warning('Your configuration file is missing an entry: logging')
-  }
-  if (config[['logging']] == 'on')
+  if (config$logging)
   {
     message('Initializing logger')
     require.package('log4r')
 
     logger <- create.logger()
-    if (!file.exists('logs'))
-    {
-      dir.create('logs')
-    }
+    .provide.directory('logs')
+
     logfile(logger) <- file.path('logs', 'project.log')
     level(logger) <- log4r:::INFO
     assign('logger', logger, envir = .TargetEnv)
@@ -301,4 +146,122 @@ load.project <- function()
   assign('project.info', my.project.info, envir = .TargetEnv)
   #assign('project.info', my.project.info, envir = parent.frame())
   #assign('project.info', my.project.info, envir = environment(create.project))
+}
+
+.normalize.config <- function(config, names, norm.fun) {
+  config[names] <- lapply(config[names], norm.fun)
+  config
+}
+
+.boolean.cfg <- function(x) {
+  ret <- if (x == 'on') TRUE
+  else if (x == 'off') FALSE
+  else as.logical(x)
+  if (is.na(ret)) stop('Cannot convert ', x, ' to logical value.')
+  ret
+}
+
+.load.cache <- function() {
+  .provide.directory('cache')
+  cache.files <- dir('cache')
+  cached.files <- c()
+  
+  for (cache.file in cache.files)
+  {
+    filename <- file.path('cache', cache.file)
+    
+    for (extension in names(extensions.dispatch.table))
+    {
+      if (grepl(extension, cache.file, ignore.case = TRUE, perl = TRUE))
+      {
+        variable.name <- clean.variable.name(sub(extension,
+                                                 '',
+                                                 cache.file,
+                                                 ignore.case = TRUE,
+                                                 perl = TRUE))
+        
+        # If this variable already exists in the global environment, don't load it from cache.
+        if (variable.name %in% ls(envir = .TargetEnv))
+        {
+          next()
+        }
+        
+        message(paste(" Loading cached data set: ", variable.name, sep = ''))
+        
+        do.call(extensions.dispatch.table[[extension]],
+                list(cache.file,
+                     filename,
+                     variable.name))
+        
+        cached.files <- c(cached.files, variable.name)
+        
+        break()
+      }
+    }
+  }
+  
+  cached.files
+}
+
+.load.data <- function() {
+  .provide.directory('data')
+  data.files <- dir('data', recursive = config$recursive_loading)
+  data.files.loaded <- c()
+  
+  for (data.file in data.files)
+  {
+    filename <- file.path('data', data.file)
+    
+    for (extension in names(extensions.dispatch.table))
+    {
+      if (grepl(extension, data.file, ignore.case = TRUE, perl = TRUE))
+      {
+        variable.name <- clean.variable.name(sub(extension,
+                                                 '',
+                                                 data.file,
+                                                 ignore.case = TRUE,
+                                                 perl = TRUE))
+        
+        # If this variable already exists in cache, don't load it from data.
+        if (variable.name %in% ls(envir = .TargetEnv))
+        {
+          next()
+        }
+        
+        message(paste(" Loading data set: ", variable.name, sep = ''))
+        
+        do.call(extensions.dispatch.table[[extension]],
+                list(data.file,
+                     filename,
+                     variable.name))
+        
+        data.files.loaded <- c(data.files.loaded, variable.name)
+        
+        break()
+      }
+    }
+  }
+  
+  data.files.loaded
+}
+
+.convert.to.data.table <- function() {
+  for (data.set in my.project.info$data)
+  {
+    if (all(class(get(data.set, envir = .TargetEnv)) == 'data.frame'))
+    {
+      message(paste(' Translating data.frame:', data.set))
+      assign(data.set,
+             data.table(get(data.set, envir = .TargetEnv)),
+             envir = .TargetEnv)
+    }
+  }
+}
+
+.provide.directory <- function(name) {
+  is.dir <- file.info(name)$isdir
+  if (is.na(is.dir) || !is.dir) {
+    warning("Creating missing directory ", name)
+    dir.create(name)
+  }
 }

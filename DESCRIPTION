@@ -78,6 +78,8 @@ Collate:
     'cache.project.R'
     'clean.variable.name.R'
     'create.project.R'
+    'translate.dcf.R'
+    'default.config.R'
     'get.project.R'
     'help.R'
     'load.project.R'
@@ -86,4 +88,3 @@ Collate:
     'show.project.R'
     'stub.tests.R'
     'test.project.R'
-    'translate.dcf.R'
