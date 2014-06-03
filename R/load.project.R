@@ -118,10 +118,10 @@ load.project <- function(override.config = NULL)
   {
     require.package('data.table')
     
+    message('Converting data.frames to data.tables')
+
     for (data.set in my.project.info$data)
     {
-      message('Converting data.frames to data.tables')
-      
       if (all(class(get(data.set, envir = .TargetEnv)) == 'data.frame'))
       {
         message(paste(' Translating data.frame:', data.set))
