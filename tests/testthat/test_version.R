@@ -37,6 +37,6 @@ test_that('Test new version of ProjectTemplate', {
   config$version <- '0.4'
   write.dcf(config, 'config/global.dcf')
 
-  expect_that(load.project(), gives_warning("ProjectTemplate::migrate()"))
+  expect_that(load.project(), gives_warning("ProjectTemplate::migrate.project()"))
 
 })
