@@ -3,6 +3,10 @@ layout: page
 ---
 Because ProjectTemplate is still beta software, there are a number of backwards incompatible changes introduced with each iteration of the package. The information below should help you upgrade an existing project to work with the newest version of ProjectTemplate.
 
+##### Updating a v0.3-5 (or later) Project
+
+* Simply call the new function `ProjectTemplate::migrate.project()`.  The functions `load.project()` and `reload.project()` will issue a warning if this is required.
+
 ##### Updating a v0.3-4 Project to a v0.3-5 Project
 
 * Add lubridate to the `libraries` configuration settings in `config/global.dcf`.
@@ -10,6 +14,7 @@ Because ProjectTemplate is still beta software, there are a number of backwards 
 * Add the `data_tables` configuration setting in `config/global.dcf`. Set it to "off".
 
 ##### Updating a v0.3-3 Project to a v0.3-4 Project
+
 * Change any calls to `run.tests()` to calls to `test.project()`. `run.tests()` has now been removed permanently from ProjectTemplate.
 
 ##### Updating a v0.3-1 Project to a v0.3-3 Project
