@@ -23,7 +23,7 @@ load.project <- function(override.config = NULL)
 
   message('Loading project configuration')
 
-  config <- .load.config()
+  config <- .load.config(override.config)
 
   .check.version(config)
 
@@ -238,7 +238,7 @@ load.project <- function(override.config = NULL)
   }
 }
 
-.load.config <- function() {
+.load.config <- function(override.config = NULL) {
   config.path <- file.path('config', 'global.dcf')
   config <- if (file.exists(config.path)) {
     translate.dcf(config.path)
