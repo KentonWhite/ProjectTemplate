@@ -274,13 +274,15 @@ load.project <- function(override.config = NULL)
   config
 }
 
-.check.version <- function(config) {
+.check.version <- function(config, warn.migrate = TRUE) {
   package.version <- .package.version()
   version.diff <- compareVersion(config$version, package.version)
   if (version.diff < 0) {
-    warning('Your configuration is compatible with version ', config$version,
-            ' of the ProjectTemplate package.\n  Please run ProjectTemplate::migrate.project() to migrate to the installed version ',
-            package.version, '.')
+    if (warn.migrate) {
+      warning('Your configuration is compatible with version ', config$version,
+              ' of the ProjectTemplate package.\n  Please run ProjectTemplate::migrate.project() to migrate to the installed version ',
+              package.version, '.')
+    }
   } else if (version.diff > 0) {
     stop('Your configuration is compatible with version ', config$version,
          ' of the ProjectTemplate package.\n  Please upgrade ProjectTemplate to version ', config$version, ' or later.')
