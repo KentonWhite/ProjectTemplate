@@ -32,7 +32,7 @@ load.project <- function(override.config = NULL)
 
   options(stringsAsFactors = config$as_factors)
 
-  if (file.exists('lib'))
+  if (file.exists(file.path('code', 'lib')))
   {
     message('Autoloading helper functions')
 
@@ -50,7 +50,7 @@ load.project <- function(override.config = NULL)
     for (helper.script in helpers)
     {
       message(paste(' Running helper script:', helper.script))
-      source(file.path('lib', helper.script))
+      source(file.path('code', 'lib', helper.script))
       my.project.info$helpers <- c(my.project.info$helpers, helper.script)
     }
   }
