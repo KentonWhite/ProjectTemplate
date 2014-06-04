@@ -1,3 +1,7 @@
+* New function `migrate.project()` that allows upgrading a project to the
+  current version of ProjectTemplate (#90)
+* The configuration now stores the version of ProjectTemplate in the `version`
+  field (#90).
 * New parameter `override.config` to `load.project()` and `reload.project()`
   allows substitution of individual configuration items.
 * Missing but required directories are now created (with a warning).

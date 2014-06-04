@@ -40,3 +40,19 @@ test_that('Test new version of ProjectTemplate', {
   expect_that(load.project(), gives_warning("ProjectTemplate::migrate.project()"))
 
 })
+
+test_that('Test migration', {
+
+  create.project('test_project', minimal = TRUE)
+  setwd('test_project')
+  on.exit(setwd('..'), add = TRUE)
+  on.exit(unlink('test_project', recursive = TRUE), add = TRUE)
+
+  config <- default.config
+  config$version <- '0.4'
+  write.dcf(config, 'config/global.dcf')
+
+  migrate.project()
+  expect_that(load.project(), not(gives_warning()))
+
+})
