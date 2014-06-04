@@ -3,6 +3,7 @@ layout: page
 ---
 The current configuration settings exist in the `config/global.dcf` file:
 
+* `version`: This is maintained by the `ProjectTemplate` package and denotes the package version this project depends on.  Do not edit this field!  To migrate a project to a later version of the package, call `ProjectTemplate::migrate()`.
 * `data_loading`: This can be set to 'on' or 'off'. If `data_loading` is on, the system will load data from both the `cache` and `data` directories with `cache` taking precedence in the case of name conflict. By default, `data_loading` is on.
 * `munging`: This can be set to 'on' or 'off'. If `munging` is on, the system will execute the files in the `munge` directory sequentially using the order implied by the `sort()` function. If `munging` is off, none of the files in the `munge` directory will be executed. By default, `munging` is on.
 * `logging`: This can be set to 'on' or 'off'. If `logging` is on, a logger object using the `log4r` package is automatically created when you run `load.project()`. This logger will write to the `logs` directory. By default, `logging` is off.

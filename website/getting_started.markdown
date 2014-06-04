@@ -29,7 +29,7 @@ As you can see, `create.project()` has set up a whole series of subdirectories f
 
 With the `letters.csv.bz2` data set in place, we can start to use ProjectTemplate's automated data loading features. Open up R again and type the following, where `PATH_TO_LETTERS_DIRECTORY` is the path of the folder in which you've expanded the `letters.csv` data set:
 
-    
+
         setwd("PATH_TO_LETTERS_DIRECTORY")
         library('ProjectTemplate')
         load.project()
@@ -58,7 +58,7 @@ Second, we need to make sure that the `plyr` package will be loaded automaticall
 
         libraries: reshape, plyr, ggplot2, stringr, lubridate
 
-After checking these settings, we know that we have the proper tools in place to compute aggregates. To make sure that this aggregation preprocessing step takes place as soon we run `load.project()`, we edit the `munge/01-A.R` script so that it contains the following two lines of code:
+After checking these settings, we know that we have the proper tools in place to compute aggregates. To make sure that this aggregation preprocessing step takes place as soon we run `load.project()`, we edit the `code/munge/01-A.R` script so that it contains the following two lines of code:
 
         first.letter.counts <- ddply(letters, c('FirstLetter'), nrow)
         second.letter.counts <- ddply(letters, c('SecondLetter'), nrow)
@@ -93,7 +93,7 @@ After doing that, we load our project again and see that things run a lot faster
 
 ![Munging Off Messages](./munging_off.png)
 
-Now that we've got interesting data in our hands, let's produce some simple density plots to see the shape of the first and second letter counts. To do that, we'll code up an analysis that we'll store inside of `src/generate_plots.R`. In general, you'll use the `src` directory to store any analyses that you run. The convention is that every analysis starts with the familiar two lines:
+Now that we've got interesting data in our hands, let's produce some simple density plots to see the shape of the first and second letter counts. To do that, we'll code up an analysis that we'll store inside of `code/src/generate_plots.R`. In general, you'll use the `src` directory (inside the `code` directory) to store any analyses that you run. The convention is that every analysis starts with the familiar two lines:
 
         library('ProjectTemplate')
         load.project()
@@ -102,15 +102,15 @@ And then goes on to do something original with the data:
 
         plot1 <- ggplot(first.letter.counts, aes(x = V1)) + geom_density()
         ggsave(file.path('graphs', 'plot1.pdf'))
-        
+
         plot2 <- ggplot(second.letter.counts, aes(x = V1)) + geom_density()
         ggsave(file.path('graphs', 'plot2.pdf'))
 
 Once we've saved our analysis in the `src` directory, we can run the analysis by opening R and typing the single line:
 
-        source('src/generate_plots.R')
+        source('code/src/generate_plots.R')
 
-As you'll notice, the code we put in `src/generate_plots.R` saved our plots to the `graphs` directory, which ProjectTemplate created automatically for us when we ran `create.project()`. We can see the plots we made by opening the `graphs` directory and looking inside:
+As you'll notice, the code we put in `code/src/generate_plots.R` saved our plots to the `graphs` directory, which ProjectTemplate created automatically for us when we ran `create.project()`. We can see the plots we made by opening the `graphs` directory and looking inside:
 
 ![Plot 1](./plot1.png)
 ![Plot 2](./plot2.png)
