@@ -38,7 +38,7 @@ load.project <- function(override.config = NULL)
 
     my.project.info$helpers <- c()
 
-    helpers <- dir('lib', pattern = '[.][rR]$')
+    helpers <- dir(file.path('code', 'lib'), pattern = '[.][rR]$')
     deprecated.files <- intersect(
       helpers, c('boot.R', 'load_data.R', 'load_libraries.R',
                  'preprocess_data.R', 'run_tests.R'))
