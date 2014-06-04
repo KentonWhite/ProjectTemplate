@@ -18,7 +18,7 @@ test_that('Test too old version of ProjectTemplate', {
   on.exit(setwd('..'), add = TRUE)
   on.exit(unlink('test_project', recursive = TRUE), add = TRUE)
 
-  config <- default.config
+  config <- new.config
   config$version <- paste0('1', config$version)
   write.dcf(config, 'config/global.dcf')
 
@@ -33,7 +33,7 @@ test_that('Test new version of ProjectTemplate', {
   on.exit(setwd('..'), add = TRUE)
   on.exit(unlink('test_project', recursive = TRUE), add = TRUE)
 
-  config <- default.config
+  config <- new.config
   config$version <- '0.4'
   write.dcf(config, 'config/global.dcf')
 
@@ -49,7 +49,7 @@ test_that('Test migration', {
   on.exit(setwd('..'), add = TRUE)
   on.exit(unlink('test_project', recursive = TRUE), add = TRUE)
 
-  config <- default.config
+  config <- new.config
   config$version <- '0.4'
   write.dcf(config, 'config/global.dcf')
 

@@ -18,6 +18,8 @@ v0.5-1.1 (2014-09-23)
   for a new project (#76).
 * Fixed error message when `require.package` is called from an anonymous
   function and fails to load a package.  (Using `deparse(nlines = 1)` now.)
+* New variables `default.config` and `new.config` that store the default
+  configuration used for missing configuration items or for a new project (#76, #89).
 
 v0.5-1 (2014-03-17)
 ===
