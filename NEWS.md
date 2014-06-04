@@ -29,12 +29,8 @@ Features
 * Missing entries in the configuration file, or a missing configuration file,
   are substituted by defaults (with a warning).  Extra entries are ignored
   (with a warning) (#76).
-
-Internal
----
-
-* New variable `default.config` that stores the default configuration used
-  for a new project (#76).
+* New variables `default.config` and `new.config` that store the default
+  configuration used for missing configuration items or for a new project (#76, #89).
 
 v0.5-1 (2014-03-17)
 ===

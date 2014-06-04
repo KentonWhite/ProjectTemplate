@@ -82,6 +82,7 @@ Collate:
     'help.R'
     'load.project.R'
     'migrate.project.R'
+    'new.config.R'
     'reload.project.R'
     'run.project.R'
     'show.project.R'
