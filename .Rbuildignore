@@ -5,6 +5,7 @@
 ^README\.markdown$
 ^roxygenate\.R$
 ^TODO\.markdown$
+^defaults$
 ^website$
 ^Makefile$
 ^NEWS\.md$

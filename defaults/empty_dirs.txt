@@ -1,0 +1,10 @@
+full/cache
+full/config
+full/data
+full/doc
+full/graphs
+full/logs
+full/reports
+minimal/cache
+minimal/config
+minimal/data
