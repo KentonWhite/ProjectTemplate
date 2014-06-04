@@ -1,5 +1,42 @@
 \name{NEWS}
 \title{News for Package 'ProjectTemplate'}
+\section{Changes in ProjectTemplate version 0.5-2 (2014-06-04)}{
+  \subsection{Breaking changes}{
+    \itemize{
+      \item Changed directory layout: All scripts are now in the new \code{code} subdirectory.
+    }
+  }
+  \subsection{Bug fixes}{
+    \itemize{
+      \item Fixed error message when \code{require.package} is called from an anonymous
+         function and fails to load a package.  (Using \code{deparse(nlines = 1)} now.)
+      \item Fixed rare error in automatic conversion to \code{data.frame}.
+    }
+  }
+  \subsection{Features}{
+    \itemize{
+      \item New function \code{migrate.project()} that allows upgrading a project to the
+         current version of ProjectTemplate (#90)
+      \item The configuration now stores the version of ProjectTemplate in the \code{version}
+         field (#90).
+      \item New parameter \code{override.config} to \code{load.project()} and \code{reload.project()}
+         allows substitution of individual configuration items (#76).
+      \item Missing but required directories are now created (with a warning) (#76).
+      \item All logical configuration options are now stored as Boolean values instead of
+         \code{'on'}/\code{'off'}.  Input values other than \code{'on'}/\code{'off'} are converted using
+         \code{as.logical}, invalid values result in an error (#76).
+      \item Missing entries in the configuration file, or a missing configuration file,
+         are substituted by defaults (with a warning).  Extra entries are ignored
+         (with a warning) (#76).
+    }
+  }
+  \subsection{Internal}{
+    \itemize{
+      \item New variable \code{default.config} that stores the default configuration used
+         for a new project (#76).
+    }
+  }
+}
 \section{Changes in ProjectTemplate version 0.5-1 (2014-03-17)}{
   \subsection{Bug fixes}{
     \itemize{

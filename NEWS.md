@@ -1,3 +1,21 @@
+v0.5-2 (2014-06-04)
+===
+
+Breaking changes
+---
+
+* Changed directory layout: All scripts are now in the new `code` subdirectory.
+
+Bug fixes
+---
+
+* Fixed error message when `require.package` is called from an anonymous
+  function and fails to load a package.  (Using `deparse(nlines = 1)` now.)
+* Fixed rare error in automatic conversion to `data.frame`.
+
+Features
+---
+
 * New function `migrate.project()` that allows upgrading a project to the
   current version of ProjectTemplate (#90)
 * The configuration now stores the version of ProjectTemplate in the `version`
@@ -11,10 +29,12 @@
 * Missing entries in the configuration file, or a missing configuration file,
   are substituted by defaults (with a warning).  Extra entries are ignored
   (with a warning) (#76).
+
+Internal
+---
+
 * New variable `default.config` that stores the default configuration used
   for a new project (#76).
-* Fixed error message when `require.package` is called from an anonymous
-  function and fails to load a package.  (Using `deparse(nlines = 1)` now.)
 
 v0.5-1 (2014-03-17)
 ===

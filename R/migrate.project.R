@@ -9,7 +9,7 @@
 #'
 #' @seealso \code{\link{create.project}}
 #'
-#' @include load.project.R
+#' @include create.project.R load.project.R
 #'
 #' @examples
 #' library('ProjectTemplate')
@@ -26,6 +26,15 @@ migrate.project <- function()
   if (.check.version(config, warn.migrate = FALSE) == 0) {
     message("Already up to date.")
     return(invisible(NULL))
+  }
+
+  if (compareVersion(config$version, "0.5-2") < 0) {
+    dir.create("code", showWarnings = FALSE)
+    for (d in c("diagnostics", "lib", "munge", "profiling", "src", "tests")) {
+      if (.is.dir(d)) {
+        file.rename(d, file.path("code", d))
+      }
+    }
   }
 
   config$version <- .package.version()
