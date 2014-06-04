@@ -1,4 +1,4 @@
-all: gh-pages rd inst
+all: rd inst
 
 gh-pages:
 	git subtree split --prefix website --branch gh-pages
