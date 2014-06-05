@@ -95,10 +95,10 @@ load.project <- function(override.config = NULL)
   if (config$munging)
   {
     message('Munging data')
-    for (preprocessing.script in sort(dir('munge', pattern = '[.][rR]$')))
+    for (preprocessing.script in sort(dir(file.path('code', 'munge'), pattern = '[.][rR]$')))
     {
       message(paste(' Running preprocessing script:', preprocessing.script))
-      source(file.path('munge', preprocessing.script))
+      source(file.path('code', 'munge', preprocessing.script))
     }
   }
 
