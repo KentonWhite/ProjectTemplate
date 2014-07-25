@@ -24,7 +24,7 @@
 #' unlink('tmp-project')}
 cache <- function(variable)
 {
-  save(list = variable,
+  save(list = deparse(substitute(variable)),
        envir = .TargetEnv,
        file = file.path('cache',
                         paste(variable, '.RData', sep = '')))
