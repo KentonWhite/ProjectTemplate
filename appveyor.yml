@@ -1,0 +1,18 @@
+init:
+  ps: |
+        date
+        $ErrorActionPreference = "Stop"
+
+install:
+  - ps: |
+        Import-Module '.\scripts\appveyor-tool.ps1'
+        Bootstrap
+
+build_script:
+  - travis-tool.sh install_deps
+
+test_script:
+  - travis-tool.sh run_tests
+
+on_failure:
+  - travis-tool.sh dump_logs
