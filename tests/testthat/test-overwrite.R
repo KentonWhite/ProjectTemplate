@@ -97,7 +97,7 @@ test_that('Test failure creating project in directory with existing empty direct
                               merge.strategy = "allow.non.conflict"), "overwrite")
 
   unlink('test_project', recursive = TRUE)
-  
+
 })
 
 test_that('Test failure creating project in directory with existing file matching the name of a template directory',{
@@ -127,7 +127,7 @@ test_that('Test failure creating project in directory with existing empty direct
                               merge.strategy = "allow.non.conflict"), "overwrite")
 
   unlink('test_project', recursive = TRUE)
-  
+
 })
 
 test_that('Test failure creating project in directory with existing file matching the name of a template file', {
@@ -142,5 +142,5 @@ test_that('Test failure creating project in directory with existing file matchin
                               merge.strategy = "allow.non.conflict"), "overwrite")
 
   unlink('test_project', recursive = TRUE)
-  
+
 })
