@@ -188,6 +188,7 @@ test_that('Example 09: WSV Data File', {
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
+  expect_false(any(is.na(as.matrix(get(variable.name)))))
   rm(example.09)
 
 })
