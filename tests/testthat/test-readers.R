@@ -6,16 +6,16 @@ library('Defaults')
 # This gives access to pacakges and keeps the test from polluting the global environment
 # However, the global environment is not in the test seach path
 # The global environment is needed for the objects created by the readers being tested
-# 
+#
 # Solution is to set the global environment as the parent of the test environment
 # Then the global environment is part of the test environment search path
 
 if (!identical(environment(), .GlobalEnv))
 {
-	test.env <- environment()
-	parent.env(test.env) <- .GlobalEnv
+  test.env <- environment()
+  parent.env(test.env) <- .GlobalEnv
 
-	setDefaults("rm", inherits = TRUE)	
+  setDefaults("rm", inherits = TRUE)
 }
 
 test_that('Test 1: CSV Data file', {
@@ -72,7 +72,7 @@ test_that('Test 3: csv.zip data', {
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
   rm(example.03)
-  
+
 })
 
 
@@ -188,6 +188,7 @@ test_that('Example 09: WSV Data File', {
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
+  expect_false(any(is.na(as.matrix(get(variable.name)))))
   rm(example.09)
 
 })
@@ -538,7 +539,7 @@ test_that('Example 27: Excel 2011 File with .xlsx Extension', {
 
 
 test_that('Example 28: SQLite3 Support with .sql Extension with table = "..."', {
-  
+
   sql.file <- data.frame(type = 'sqlite',
                          dbname = file.path(system.file('example_data',
                                                         package = 'ProjectTemplate'),
@@ -564,7 +565,7 @@ test_that('Example 28: SQLite3 Support with .sql Extension with table = "..."', 
 
 
 test_that('Example 29: SQLite3 Support with .sql Extension with query = "SELECT * FROM ..."', {
-  
+
   sql.file <- data.frame(type = 'sqlite',
                          dbname = file.path(system.file('example_data',
                                                         package = 'ProjectTemplate'),
@@ -590,7 +591,7 @@ test_that('Example 29: SQLite3 Support with .sql Extension with query = "SELECT 
 
 
 test_that('Example 30: SQLite3 Support with .sql Extension and table = "*"', {
-  
+
   sql.file <- data.frame(type = 'sqlite',
                          dbname = file.path(system.file('example_data',
                                                         package = 'ProjectTemplate'),

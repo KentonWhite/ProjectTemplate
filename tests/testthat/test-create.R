@@ -1,7 +1,7 @@
 context('Create project')
 
 test_that('Full project', {
-  create.project('test_project', minimal = FALSE)
+  suppressMessages(create.project('test_project', minimal = FALSE))
 
   expect_that(file.exists(file.path('test_project')), is_true())
   expect_that(file.exists(file.path('test_project', 'cache')), is_true())
@@ -28,8 +28,8 @@ test_that('Full project', {
 
   setwd('test_project')
 
-  load.project()
-  test.project()
+  suppressMessages(load.project())
+  suppressMessages(test.project())
 
   setwd('..')
 
@@ -39,7 +39,7 @@ test_that('Full project', {
 
 test_that('Miminal project', {
 
-  create.project('test_project', minimal = TRUE)
+  suppressMessages(create.project('test_project', minimal = TRUE))
 
   expect_that(file.exists(file.path('test_project')), is_true())
   expect_that(file.exists(file.path('test_project', 'cache')), is_true())
@@ -56,7 +56,7 @@ test_that('Miminal project', {
 
   setwd('test_project')
 
-  load.project()
+  suppressMessages(load.project())
 
   setwd('..')
 

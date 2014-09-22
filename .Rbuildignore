@@ -1,4 +1,5 @@
 ^\.travis\.yml$
+^appveyor\.yml$
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^build_script\.R$
