@@ -1,5 +1,6 @@
+* Dropped dependency on `Defaults` package (#100).
 * New function `migrate.project()` that allows upgrading a project to the
-  current version of ProjectTemplate (#90)
+  current version of ProjectTemplate (#90).
 * The configuration now stores the version of ProjectTemplate in the `version`
   field (#90).
 * New parameter `override.config` to `load.project()` and `reload.project()`
