@@ -32,7 +32,7 @@ test_that('Test full project into existing directory', {
   setwd('test_project')
 
   suppressMessages(load.project())
-  test.project()
+  suppressMessages(test.project())
 
   setwd('..')
 
@@ -80,7 +80,9 @@ test_that('Test failure creating project into existing directory with an unrelat
   dir.create(file.path('test_project', 'dummy_dir'))
   expect_that(file.exists(file.path('test_project', 'dummy_dir')), is_true())
 
-  expect_error(create.project('test_project', minimal = TRUE), "not empty")
+  expect_error(
+    suppressMessages(
+      create.project('test_project', minimal = TRUE), "not empty"))
 
   unlink('test_project', recursive = TRUE)
 })
@@ -93,8 +95,10 @@ test_that('Test failure creating project in directory with existing empty direct
   dir.create(file.path('test_project', 'munge'))
   expect_that(file.exists(file.path('test_project', 'munge')), is_true())
 
-  expect_error(create.project('test_project', minimal = TRUE,
-                              merge.strategy = "allow.non.conflict"), "overwrite")
+  expect_error(
+    suppressMessages(
+      create.project('test_project', minimal = TRUE,
+                     merge.strategy = "allow.non.conflict"), "overwrite"))
 
   unlink('test_project', recursive = TRUE)
 
@@ -108,8 +112,10 @@ test_that('Test failure creating project in directory with existing file matchin
   file.create(file.path('test_project', 'munge'))
   expect_that(file.exists(file.path('test_project', 'munge')), is_true())
 
-  expect_error(create.project('test_project', minimal = TRUE,
-                              merge.strategy = "allow.non.conflict"), "overwrite")
+  expect_error(
+    suppressMessages(
+      create.project('test_project', minimal = TRUE,
+                     merge.strategy = "allow.non.conflict"), "overwrite"))
 
   unlink('test_project', recursive = TRUE)
 
@@ -123,8 +129,10 @@ test_that('Test failure creating project in directory with existing empty direct
   dir.create(file.path('test_project', 'README'))
   expect_that(file.exists(file.path('test_project', 'README')), is_true())
 
-  expect_error(create.project('test_project', minimal = TRUE,
-                              merge.strategy = "allow.non.conflict"), "overwrite")
+  expect_error(
+    suppressMessages(
+      create.project('test_project', minimal = TRUE,
+                     merge.strategy = "allow.non.conflict"), "overwrite"))
 
   unlink('test_project', recursive = TRUE)
 
