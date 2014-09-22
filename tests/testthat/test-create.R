@@ -33,11 +33,11 @@ test_that('Full project', {
   setwd('..')
 
   unlink('test_project', recursive = TRUE)
-  
+
 })
 
 test_that('Miminal project', {
-  
+
   create.project('test_project', minimal = TRUE)
 
   expect_that(file.exists(file.path('test_project')), is_true())
@@ -57,5 +57,5 @@ test_that('Miminal project', {
   setwd('..')
 
   unlink('test_project', recursive = TRUE)
-  
+
 })

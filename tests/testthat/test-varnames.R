@@ -1,7 +1,7 @@
 context('Clean variable names')
 
 test_that('Cleans variable names', {
-  
+
   create.project('test_project')
 
   setwd('test_project')
