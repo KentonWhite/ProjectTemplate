@@ -10,7 +10,7 @@
   `as.logical`, invalid values result in an error (#76).
 * Missing entries in the configuration file, or a missing configuration file,
   are substituted by defaults (with a warning).  Extra entries are ignored
-  (with a warning) (#76).
+  (with a warning); entries that start with a hash (`#`) are silently ignored (#76, #74).
 * New variable `default.config` that stores the default configuration used
   for a new project (#76).
 * Fixed error message when `require.package` is called from an anonymous
