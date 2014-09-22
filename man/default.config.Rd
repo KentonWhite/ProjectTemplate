@@ -3,7 +3,8 @@
 \name{default.config}
 \alias{default.config}
 \title{Default configuration}
-\format{\preformatted{List of 9
+\format{\preformatted{List of 10
+ $ version          : chr "0.5-1"
  $ data_loading     : chr "TRUE"
  $ cache_loading    : chr "TRUE"
  $ recursive_loading: chr "FALSE"

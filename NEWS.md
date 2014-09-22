@@ -1,17 +1,21 @@
 * 0.6-0
 * Added .add.extension. This allows users to create custom readers for extensions, either locally in a project or as packages.
 
+* New function `migrate.project()` that allows upgrading a project to the
+  current version of ProjectTemplate (#90)
+* The configuration now stores the version of ProjectTemplate in the `version`
+  field (#90).
 * New parameter `override.config` to `load.project()` and `reload.project()`
-  allows substitution of individual configuration items.
-* Missing but required directories are now created (with a warning).
+  allows substitution of individual configuration items (#76).
+* Missing but required directories are now created (with a warning) (#76).
 * All logical configuration options are now stored as Boolean values instead of
   `'on'`/`'off'`.  Input values other than `'on'`/`'off'` are converted using
-  `as.logical`, invalid values result in an error.
+  `as.logical`, invalid values result in an error (#76).
 * Missing entries in the configuration file, or a missing configuration file,
   are substituted by defaults (with a warning).  Extra entries are ignored
-  (with a warning).
+  (with a warning) (#76).
 * New variable `default.config` that stores the default configuration used
-  for a new project.
+  for a new project (#76).
 * Fixed error message when `require.package` is called from an anonymous
   function and fails to load a package.  (Using `deparse(nlines = 1)` now.)
 
