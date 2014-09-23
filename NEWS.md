@@ -1,3 +1,6 @@
+v0.5-1.1 (2014-09-23)
+===
+
 * New function `migrate.project()` that allows upgrading a project to the
   current version of ProjectTemplate (#90)
 * The configuration now stores the version of ProjectTemplate in the `version`
