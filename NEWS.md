@@ -16,11 +16,22 @@ Bug fixes
 Features
 ---
 
+* Added .add.extension. This allows users to create custom readers for extensions, either locally in a project or as packages.
+* Can use mustache style templating in SQL calls to access project data structures (#50)
+* Support passwordless connection to postgresql databases (#30)
+
+v0.5-1.2 (2014-09-23)
+===
+
+* Suppress warnings in tests (#111).
+* Configuration entries that start with a hash (`#`) are silently ignored (#74).
+* Dropped dependency on `Defaults` package (#100).
+
 v0.5-1.1 (2014-09-23)
 ===
 
 * New function `migrate.project()` that allows upgrading a project to the
-  current version of ProjectTemplate (#90)
+  current version of ProjectTemplate (#90).
 * The configuration now stores the version of ProjectTemplate in the `version`
   field (#90).
 * New parameter `override.config` to `load.project()` and `reload.project()`
@@ -34,6 +45,12 @@ v0.5-1.1 (2014-09-23)
   (with a warning) (#76).
 * New variables `default.config` and `new.config` that store the default
   configuration used for missing configuration items or for a new project (#76, #89).
+* New variable `default.config` that stores the default configuration used
+  for a new project (#76).
+* Fixed error message when `require.package` is called from an anonymous
+  function and fails to load a package.  (Using `deparse(nlines = 1)` now.)
+* New variables `default.config` and `new.config` that store the default
+  configuration used for missing configuration items or for a new project (#76, #89).
 
 v0.5-1 (2014-03-17)
 ===
@@ -43,7 +60,6 @@ Bug fixes
 
 * Restore compatibility to R 2.15.3 by avoiding use of the `no..` parameter
   to `list.files()` in our `create.project()` function.
-
 
 v0.5 (2014-03-13)
 ===

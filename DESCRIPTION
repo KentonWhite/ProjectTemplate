@@ -2,7 +2,7 @@ Package: ProjectTemplate
 Type: Package
 Title: Automates the creation of new statistical analysis
     projects.
-Version: 0.5-1.1
+Version: 0.5-1.2
 Date: 2014-09-23
 Authors@R: c( person("Aleksandar", "Blagotic", role = "ctb"), person("Diego",
     "Valle-Jones", role = "ctb"), person("Jeffrey", "Breen", role = "ctb"),
@@ -41,24 +41,11 @@ Suggests:
     data.table,
     RPostgreSQL,
     GetoptLong,
-    testthat,
-    Defaults
+    whisker,
+    testthat
 URL: http://projecttemplate.net
 BugReports: https://github.com/johnmyleswhite/ProjectTemplate/issues
 Collate:
-    'arff.reader.R'
-    'cache.R'
-    'cache.name.R'
-    'cache.project.R'
-    'clean.variable.name.R'
-    'create.project.R'
-    'csv.reader.R'
-    'csv2.reader.R'
-    'db.reader.R'
-    'dbf.reader.R'
-    'translate.dcf.R'
-    'default.config.R'
-    'epiinfo.reader.R'
     'xport.reader.R'
     'xlsx.reader.R'
     'xls.reader.R'
@@ -77,7 +64,21 @@ Collate:
     'mtp.reader.R'
     'mp3.reader.R'
     'file.reader.R'
+    'epiinfo.reader.R'
+    'dbf.reader.R'
+    'db.reader.R'
+    'csv2.reader.R'
+    'csv.reader.R'
+    'arff.reader.R'
     'extensions.dispatch.table.R'
+    'add.extension.R'
+    'cache.R'
+    'cache.name.R'
+    'cache.project.R'
+    'clean.variable.name.R'
+    'create.project.R'
+    'translate.dcf.R'
+    'default.config.R'
     'get.project.R'
     'help.R'
     'load.project.R'

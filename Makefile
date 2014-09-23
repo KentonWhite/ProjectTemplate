@@ -17,6 +17,8 @@ inst/defaults/config/global.dcf: DESCRIPTION defaults/config/global.dcf
 	(echo "version: $$(sed -n '/^Version:/ s/Version: //p' DESCRIPTION)"; cat defaults/config/global.dcf) > inst/defaults/config/global.dcf
 	git add $@
 	git commit --amend --no-edit
+	crant -iC
+	crant -X
 
 tag:
 	git tag v$$(sed -n -r '/^Version: / {s/.* ([0-9.-]+)$$/\1/;p}' DESCRIPTION)
