@@ -710,7 +710,9 @@ test_that('Example 35: PPM Support with .ppm Extension', {
                         'example_35.ppm')
   variable.name <- ProjectTemplate:::clean.variable.name('example_35')
 
-  ProjectTemplate:::ppm.reader(data.file, filename, variable.name)
+  expect_warning(
+    ProjectTemplate:::ppm.reader(data.file, filename, variable.name),
+    " is NULL so the result will be NULL")
 
   expect_that(exists(variable.name), is_true())
   expect_that(as.character(class(get(variable.name))), equals('pixmapRGB'))
@@ -747,7 +749,9 @@ test_that('Example 37: SPSS Support with .sav Extension', {
                         'example_37.sav')
   variable.name <- ProjectTemplate:::clean.variable.name('example_37')
 
-  ProjectTemplate:::spss.reader(data.file, filename, variable.name)
+  expect_warning(
+    ProjectTemplate:::spss.reader(data.file, filename, variable.name),
+    "Unrecognized record type 7, subtype 18 encountered in system file")
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
@@ -767,7 +771,9 @@ test_that('Example 38: SPSS Support with .sav Extension / Alternative Generation
                         'example_38.sav')
   variable.name <- ProjectTemplate:::clean.variable.name('example_38')
 
-  ProjectTemplate:::spss.reader(data.file, filename, variable.name)
+  expect_warning(
+    ProjectTemplate:::spss.reader(data.file, filename, variable.name),
+    "Unrecognized record type 7, subtype 18 encountered in system file")
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
