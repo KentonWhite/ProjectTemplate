@@ -22,12 +22,15 @@ tag:
 	git tag v$$(sed -n -r '/^Version: / {s/.* ([0-9.-]+)$$/\1/;p}' DESCRIPTION)
 
 bump-cran-desc: rd
+	test $$(git rev-parse --abbrev-ref HEAD) = "master"
 	crant -u 2 -C
 
 bump-gh-desc: rd
+	test $$(git rev-parse --abbrev-ref HEAD) = "master"
 	crant -u 3 -C
 
 bump-desc: rd
+	test $$(git rev-parse --abbrev-ref HEAD) = "master"
 	test "$$(git status --porcelain | wc -c)" = "0"
 	sed -i -r '/^Version: / s/( [0-9.]+)$$/\1-0.0/' DESCRIPTION
 	git add DESCRIPTION
