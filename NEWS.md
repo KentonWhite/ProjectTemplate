@@ -1,11 +1,14 @@
 * Added .add.extension. This allows users to create custom readers for extensions, either locally in a project or as packages.
 * Can use mustache style templating in SQL calls to access project data structures
 
+* Configuration entries that start with a hash (`#`) are silently ignored (#74)
+
+* Dropped dependency on `Defaults` package (#100).
 v0.5-1.1 (2014-09-23)
 ===
 
 * New function `migrate.project()` that allows upgrading a project to the
-  current version of ProjectTemplate (#90)
+  current version of ProjectTemplate (#90).
 * The configuration now stores the version of ProjectTemplate in the `version`
   field (#90).
 * New parameter `override.config` to `load.project()` and `reload.project()`
