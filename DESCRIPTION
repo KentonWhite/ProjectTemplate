@@ -41,8 +41,7 @@ Suggests:
     data.table,
     RPostgreSQL,
     GetoptLong,
-    testthat,
-    Defaults
+    testthat
 URL: http://projecttemplate.net
 BugReports: https://github.com/johnmyleswhite/ProjectTemplate/issues
 Collate:
