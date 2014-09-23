@@ -306,12 +306,13 @@ sql.reader <- function(data.file, filename, variable.name)
   if (! is.null(query))
   {
     # Do string interpolation
+    # TODO: When whisker is updated add strict=FALSE
     if (length(grep('\\@\\{.*\\}', query)) != 0) {
       require.package('GetoptLong')
       query <- qq(query)
     } else if (length(grep('\\{\\{.*\\}\\}', query))) {
       require.package('whisker')
-      query <- whisker.render(query, data = .GlobalEnv, strict = FALSE)
+      query <- whisker.render(query, data = .GlobalEnv)
     }
     data.parcel <- try(dbGetQuery(connection, query))
     err <- dbGetException(connection)
