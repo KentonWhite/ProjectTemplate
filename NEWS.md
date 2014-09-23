@@ -1,5 +1,5 @@
-* 0.6-0
 * Added .add.extension. This allows users to create custom readers for extensions, either locally in a project or as packages.
+* Can use mustache style templating in SQL calls to access project data structures
 
 v0.5-1.1 (2014-09-23)
 ===
