@@ -49,7 +49,7 @@ create.project <- function(project.name = 'new-project', minimal = FALSE,
   template.path <- file.path(temp.dir, template.name)
 
   merge.strategy <- match.arg(merge.strategy)
-  if (file.exists(project.name) && file.info(project.name)$isdir) {
+  if (.is.dir(project.name)) {
     .create.project.existing(template.path, project.name, merge.strategy)
   } else
     .create.project.new(template.path, project.name)
@@ -129,6 +129,10 @@ create.project <- function(project.name = 'new-project', minimal = FALSE,
   files <- list.files(path = path, all.files = TRUE, include.dirs = TRUE)
   files <- grep("^[.][.]?$", files, value = TRUE, invert = TRUE)
   files
+}
+
+.is.dir <- function(path) {
+  file.exists(path) && file.info(path)$isdir
 }
 
 .dir.empty <- function(path) {
