@@ -6,11 +6,11 @@
 #' or one specific query against any set of tables may be executed to generate
 #' a data set.
 #'
-#' queries can support string interpolation to execute code snippets. This is used
-#' to create queries that depend on data from other sources. Code delimited is @@\{...\}
+#' queries can support string interpolation to execute code snippets using mustache syntax (http://mustache.github.io). This is used
+#' to create queries that depend on data from other sources. Code delimited is \{\{...\}\}
 #'
-#' Example: query: SELECT * FROM my_table WHERE id IN (@@\{paste(ids, collapse = ',')\}).
-#' Here ids is data previously loaded into ProjectTemplate
+#' Example: query: SELECT * FROM my_table WHERE id IN (\{\{ids\}\}).
+#' Here ids is a vector previously loaded into the Global Environment through ProjectTemplate
 #'
 #' Examples of the DCF format and settings used in a .sql file are shown
 #' below:
@@ -179,13 +179,10 @@ sql.reader <- function(data.file, filename, variable.name)
   {
     require.package('RPostgreSQL')
 
-    mysql.driver <- dbDriver("PostgreSQL")
+    pgsql.driver <- dbDriver("PostgreSQL")
 
-    connection <- dbConnect(mysql.driver,
-                            user = database.info[['user']],
-                            password = database.info[['password']],
-                            host = database.info[['host']],
-                            dbname = database.info[['dbname']])
+    args <- intersect(names(database.info), c('user', 'password', 'host', 'dbname'))
+    connection <- do.call(dbConnect, c(list(pgsql.driver), database.info[args]))
   }
 
   if (database.info[['type']] == 'oracle')
@@ -308,10 +305,14 @@ sql.reader <- function(data.file, filename, variable.name)
 
   if (! is.null(query))
   {
+    # Do string interpolation
+    # TODO: When whisker is updated add strict=FALSE
     if (length(grep('\\@\\{.*\\}', query)) != 0) {
-      # Do string interpolation
       require.package('GetoptLong')
       query <- qq(query)
+    } else if (length(grep('\\{\\{.*\\}\\}', query))) {
+      require.package('whisker')
+      query <- whisker.render(query, data = .GlobalEnv)
     }
     data.parcel <- try(dbGetQuery(connection, query))
     err <- dbGetException(connection)
