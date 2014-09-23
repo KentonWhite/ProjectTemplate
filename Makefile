@@ -15,6 +15,8 @@ inst/defaults/config/global.dcf: DESCRIPTION
 	mv $@.tmp $@
 	git add $@
 	git commit --amend --no-edit
+	crant -iC
+	crant -X
 
 tag:
 	git tag v$$(sed -n -r '/^Version: / {s/.* ([0-9.-]+)$$/\1/;p}' DESCRIPTION)

@@ -1,4 +1,4 @@
-version: 0.5-1.1
+version: 0.5-1.2
 data_loading: TRUE
 cache_loading: TRUE
 recursive_loading: FALSE

@@ -259,6 +259,7 @@ load.project <- function(override.config = NULL)
   }
 
   extra.entries <- setdiff(names(config), names(default.config))
+  extra.entries <- grep("^[^#]", extra.entries, value = TRUE)
   if (length(extra.entries) > 0) {
     warning('Your configuration contains the following unused entries: ',
             paste(extra.entries, collapse = ', '), '. These will be ignored.')
