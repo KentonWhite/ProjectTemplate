@@ -28,7 +28,8 @@
 #' @include xls.reader.R
 #' @include xlsx.reader.R
 #' @include xport.reader.R
-extensions.dispatch.table <- list("\\.csv$" = csv.reader,
+
+readers <- list("\\.csv$" = csv.reader,
                                   "\\.csv.bz2$" = csv.reader,
                                   "\\.csv.zip$" = csv.reader,
                                   "\\.csv.gz$" = csv.reader,
@@ -80,4 +81,11 @@ extensions.dispatch.table <- list("\\.csv$" = csv.reader,
                                   "\\.dat.bz2$" = wsv.reader,
                                   "\\.dat.zip$" = wsv.reader,
                                   "\\.dat.gz$" = wsv.reader)
+
+extensions.dispatch.table <- new.env()
+
+for(extension in names(readers)) {
+  extensions.dispatch.table[[extension]] <- readers[[extension]]
+}
+
 .TargetEnv <- .GlobalEnv

@@ -14,11 +14,6 @@
 #' @include extensions.dispatch.table.R
 
 .add.extension <- function(extension, reader) {
-	key <- paste('\\.', extension, '$', sep='')
-	extensions.dispatch.table[[key]] <- reader
-	unlockBinding('extensions.dispatch.table', asNamespace('ProjectTemplate'))
-	assign('extensions.dispatch.table', extensions.dispatch.table,
-		envir = asNamespace('ProjectTemplate')
-	)
-	lockBinding('extensions.dispatch.table', asNamespace('ProjectTemplate'))
+  key <- paste('\\.', extension, '$', sep='')
+  extensions.dispatch.table[[key]] <- reader
 }

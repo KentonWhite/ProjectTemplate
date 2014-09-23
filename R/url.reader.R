@@ -29,7 +29,7 @@ url.reader <- function(data.file, filename, variable.name)
 
   file.type <- ""
 
-  for (extension in names(extensions.dispatch.table))
+  for (extension in ls(extensions.dispatch.table))
   {
     if(grepl(extension, url.info[['url']], ignore.case = TRUE, perl = TRUE))
     {

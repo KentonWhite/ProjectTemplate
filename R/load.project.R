@@ -142,7 +142,7 @@ load.project <- function(override.config = NULL)
   {
     filename <- file.path('cache', cache.file)
 
-    for (extension in names(extensions.dispatch.table))
+    for (extension in ls(extensions.dispatch.table))
     {
       if (grepl(extension, cache.file, ignore.case = TRUE, perl = TRUE))
       {
@@ -184,7 +184,7 @@ load.project <- function(override.config = NULL)
   {
     filename <- file.path('data', data.file)
 
-    for (extension in names(extensions.dispatch.table))
+    for (extension in ls(extensions.dispatch.table))
     {
       if (grepl(extension, data.file, ignore.case = TRUE, perl = TRUE))
       {
