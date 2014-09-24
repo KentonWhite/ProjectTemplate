@@ -228,7 +228,7 @@ sql.reader <- function(data.file, filename, variable.name)
 
     if(is.null(database.info[['classpath']])) {
       database.info[['classpath']] <- ''
-  }
+    }
 
     database.info[['class']] <- 'org.postgresql.Driver'
 
