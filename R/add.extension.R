@@ -11,7 +11,7 @@
 #'
 #' @examples
 #' \dontrun{.add.extension('foo', foo.reader)}
-#' @include extensions.dispatch.table.R
+#' @include preinstalled.readers.R
 
 .add.extension <- function(extension, reader) {
   key <- paste('\\.', extension, '$', sep='')
