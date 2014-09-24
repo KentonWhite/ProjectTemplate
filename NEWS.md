@@ -1,3 +1,6 @@
+v0.5-1.3 (2014-09-24)
+===
+
 * Added .add.extension. This allows users to create custom readers for extensions, either locally in a project or as packages.
 * Can use mustache style templating in SQL calls to access project data structures (#50)
 * Support passwordless connection to postgresql databases (#115)
