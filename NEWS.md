@@ -1,3 +1,5 @@
+* Improved presentation of available readers in documentation (#119)
+
 v0.5-1.3 (2014-09-24)
 ===
 
