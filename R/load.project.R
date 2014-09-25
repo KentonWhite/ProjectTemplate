@@ -59,7 +59,7 @@ load.project <- function(override.config = NULL)
   {
     message('Autoloading packages')
     my.project.info$packages <- c()
-    for (package.to.load in config$libraries)
+    for (package.to.load in strsplit(config$libraries, '\\s*,\\s*')[[1]])
     {
       message(paste(' Loading package:', package.to.load))
       require.package(package.to.load)
@@ -269,8 +269,6 @@ load.project <- function(override.config = NULL)
   config <- .normalize.config(config,
                               setdiff(names(default.config), c("version", "libraries")),
                               .boolean.cfg)
-  config <- .normalize.config(config, "libraries",
-                              function (x) strsplit(x, '\\s*,\\s*')[[1]])
 
   config
 }
