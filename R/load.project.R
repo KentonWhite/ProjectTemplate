@@ -80,7 +80,7 @@ load.project <- function(override.config = NULL)
   {
     message('Autoloading data')
 
-    my.project.info$data <- .load.data()
+    my.project.info$data <- .load.data(config$recursive_loading)
   }
 
   if (config$data_tables)
@@ -175,9 +175,9 @@ load.project <- function(override.config = NULL)
   cached.files
 }
 
-.load.data <- function() {
+.load.data <- function(recursive) {
   .provide.directory('data')
-  data.files <- dir('data', recursive = config$recursive_loading)
+  data.files <- dir('data', recursive = recursive)
   data.files.loaded <- c()
 
   for (data.file in data.files)
