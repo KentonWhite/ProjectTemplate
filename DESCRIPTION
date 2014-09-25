@@ -70,7 +70,7 @@ Collate:
     'csv2.reader.R'
     'csv.reader.R'
     'arff.reader.R'
-    'extensions.dispatch.table.R'
+    'preinstalled.readers.R'
     'add.extension.R'
     'cache.R'
     'cache.name.R'
