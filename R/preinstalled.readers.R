@@ -91,6 +91,3 @@ for(extension in names(preinstalled.readers)) {
 }
 
 .TargetEnv <- .GlobalEnv
-
-.TargetEnv <- .GlobalEnv
-
