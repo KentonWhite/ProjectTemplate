@@ -89,7 +89,7 @@ load.project <- function(override.config = NULL)
 
     message('Converting data.frames to data.tables')
 
-    .convert.to.data.table()
+    .convert.to.data.table(my.project.info$data)
   }
 
   if (config$munging)
@@ -217,8 +217,8 @@ load.project <- function(override.config = NULL)
   data.files.loaded
 }
 
-.convert.to.data.table <- function() {
-  for (data.set in my.project.info$data)
+.convert.to.data.table <- function(data.sets) {
+  for (data.set in data.sets)
   {
     if (all(class(get(data.set, envir = .TargetEnv)) == 'data.frame'))
     {
