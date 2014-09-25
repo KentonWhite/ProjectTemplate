@@ -50,10 +50,12 @@ test_that('Test migration', {
   on.exit(unlink('test_project', recursive = TRUE), add = TRUE)
 
   config <- new.config
+  expect_true("version" %in% names(config))
   config$version <- '0.4'
   write.dcf(config, 'config/global.dcf')
 
   suppressMessages(migrate.project())
+  expect_equal(sum(grepl("^version: ", readLines('config/global.dcf'))), 1)
   expect_that(suppressMessages(load.project()), not(gives_warning()))
 
 })
