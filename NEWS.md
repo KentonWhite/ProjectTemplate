@@ -1,4 +1,5 @@
 * Improved presentation of available readers in documentation (#119)
+* `migrate.project()` does not mess up configuration file anymore (#121)
 
 v0.5-1.3 (2014-09-24)
 ===
