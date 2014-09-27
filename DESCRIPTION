@@ -29,7 +29,7 @@ Suggests:
     stringr,
     ggplot2,
     lubridate,
-    log4r,
+    log4r (>= 0.1-5),
     RMySQL,
     RSQLite,
     gdata,
