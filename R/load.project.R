@@ -111,7 +111,7 @@ load.project <- function(override.config = NULL)
     .provide.directory('logs')
 
     logfile(logger) <- file.path('logs', 'project.log')
-    level(logger) <- log4r:::INFO
+    level(logger) <- "INFO"
     assign('logger', logger, envir = .TargetEnv)
   }
 
