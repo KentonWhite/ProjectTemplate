@@ -80,7 +80,7 @@ load.project <- function(override.config = NULL)
   {
     message('Autoloading data')
 
-    my.project.info$data <- .load.data()
+    my.project.info$data <- .load.data(config$recursive_loading)
   }
 
   if (config$data_tables)
@@ -89,7 +89,7 @@ load.project <- function(override.config = NULL)
 
     message('Converting data.frames to data.tables')
 
-    .convert.to.data.table()
+    .convert.to.data.table(my.project.info$data)
   }
 
   if (config$munging)
@@ -111,7 +111,7 @@ load.project <- function(override.config = NULL)
     .provide.directory('logs')
 
     logfile(logger) <- file.path('logs', 'project.log')
-    level(logger) <- log4r:::INFO
+    level(logger) <- "INFO"
     assign('logger', logger, envir = .TargetEnv)
   }
 
@@ -175,9 +175,9 @@ load.project <- function(override.config = NULL)
   cached.files
 }
 
-.load.data <- function() {
+.load.data <- function(recursive) {
   .provide.directory('data')
-  data.files <- dir('data', recursive = config$recursive_loading)
+  data.files <- dir('data', recursive = recursive)
   data.files.loaded <- c()
 
   for (data.file in data.files)
@@ -217,8 +217,8 @@ load.project <- function(override.config = NULL)
   data.files.loaded
 }
 
-.convert.to.data.table <- function() {
-  for (data.set in my.project.info$data)
+.convert.to.data.table <- function(data.sets) {
+  for (data.set in data.sets)
   {
     if (all(class(get(data.set, envir = .TargetEnv)) == 'data.frame'))
     {
