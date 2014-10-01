@@ -1,55 +1,42 @@
-v0.5-1.6 (2014-10-01)
-===
+Bug fixes
+---
 
-* Add documentation for `.add.extension()` (#124)
+* Fixed error message when `require.package` is called from an anonymous
+  function and fails to load a package.  (Using `deparse(nlines = 1)` now.)
 
-v0.5-1.5 (2014-10-01)
-===
 
-* Fix CRAN issues (#117).
+Features
+---
 
-v0.5-1.4 (2014-09-25)
-===
-
-* Improved presentation of available readers in documentation (#119)
-* `migrate.project()` does not mess up configuration file anymore (#121)
-
-v0.5-1.3 (2014-09-24)
-===
-
-* Added .add.extension. This allows users to create custom readers for extensions, either locally in a project or as packages.
-* Can use mustache style templating in SQL calls to access project data structures (#50)
-* Support passwordless connection to postgresql databases (#115)
-
-v0.5-1.2 (2014-09-23)
-===
-
-* Suppress warnings in tests (#111).
-* Configuration entries that start with a hash (`#`) are silently ignored (#74).
-* Dropped dependency on `Defaults` package (#100).
-
-v0.5-1.1 (2014-09-23)
-===
-
-* New function `migrate.project()` that allows upgrading a project to the
-  current version of ProjectTemplate (#90).
+* Added functon `.add.extension()`. This allows users to create custom readers for extensions, either locally in a project or as packages.
 * The configuration now stores the version of ProjectTemplate in the `version`
   field (#90).
+* New function `migrate.project()` that allows upgrading a project to the
+  current version of ProjectTemplate (#90, #121).
 * New parameter `override.config` to `load.project()` and `reload.project()`
   allows substitution of individual configuration items (#76).
+* Can use mustache style templating in SQL calls to access project data structures (#50).
+* Support passwordless connection to postgresql databases (#115).
+* Configuration entries that start with a hash (`#`) are silently ignored (#74).
+* New variables `default.config` and `new.config` that store the default
+  configuration used for missing configuration items or for a new project (#76, #89).
 * Missing but required directories are now created (with a warning) (#76).
-* All logical configuration options are now stored as Boolean values instead of
-  `'on'`/`'off'`.  Input values other than `'on'`/`'off'` are converted using
-  `as.logical`, invalid values result in an error (#76).
 * Missing entries in the configuration file, or a missing configuration file,
   are substituted by defaults (with a warning).  Extra entries are ignored
   (with a warning) (#76).
-* New variable `default.config` that stores the default configuration used
-  for a new project (#76).
-* Fixed error message when `require.package` is called from an anonymous
-  function and fails to load a package.  (Using `deparse(nlines = 1)` now.)
-* New variables `default.config` and `new.config` that store the default
-  configuration used for missing configuration items or for a new project (#76, #89).
+* All logical configuration options are now stored as Boolean values instead of
+  `'on'`/`'off'`.  Input values other than `'on'`/`'off'` are converted using
+  `as.logical`, invalid values result in an error (#76).
+
+
+Internal
+---
+
+* Dropped dependency on `Defaults` package (#100).
+* Suppress warnings in tests (#111).
+* Fix CRAN check issues (#117).
+* Improved presentation of available readers in documentation (#119).
+
 
 v0.5-1 (2014-03-17)
 ===
