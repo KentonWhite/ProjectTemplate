@@ -46,6 +46,6 @@ require.package <- function(package.name, attach = TRUE)
 #' @rdname require.package
 .require.package <- function(package.name)
 {
-  my.config <- mget("config", envir = .TargetEnv, ifnotfound = list(new.config))
+  my.config <- mget("config", envir = .TargetEnv, ifnotfound = list(new.config))[[1]]
   require.package(package.name, my.config[['attach_internal_libraries']])
 }

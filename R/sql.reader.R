@@ -127,16 +127,16 @@ sql.reader <- function(data.file, filename, variable.name)
   # Draft code for ODBC support.
   if (database.info[['type']] == 'odbc')
   {
-    require.package('RODBC')
+    .require.package('RODBC')
 
     connection.string <- paste('DSN=', database.info[['dsn']], ';',
                                'UID=', database.info[['user']], ';',
                                'PWD=', database.info[['password']], ';',
                                'DATABASE=', database.info['dbname'],
                                sep = '')
-    connection <- odbcDriverConnect(connection.string)
-    results <- sqlQuery(connection, database.info[['query']])
-    odbcClose(connection)
+    connection <- RODBC::odbcDriverConnect(connection.string)
+    results <- RODBC::sqlQuery(connection, database.info[['query']])
+    RODBC::odbcClose(connection)
     assign(variable.name,
            results,
            envir = .TargetEnv)
@@ -145,9 +145,9 @@ sql.reader <- function(data.file, filename, variable.name)
 
   if (database.info[['type']] == 'mysql')
   {
-    require.package('RMySQL')
+    .require.package('RMySQL')
 
-    mysql.driver <- dbDriver("MySQL")
+    mysql.driver <- DBI::dbDriver("MySQL")
 
     # Default value for 'port' in mysqlNewConnection is 0.
     if (is.null(database.info[['port']]))
@@ -155,41 +155,41 @@ sql.reader <- function(data.file, filename, variable.name)
       database.info[['port']] <- 0
     }
 
-    connection <- dbConnect(mysql.driver,
+    connection <- DBI::dbConnect(mysql.driver,
                             user = database.info[['user']],
                             password = database.info[['password']],
                             host = database.info[['host']],
                             dbname = database.info[['dbname']],
                             port = as.integer(database.info[['port']]),
                             unix.socket = database.info[['socket']])
-    dbGetQuery(connection, "SET NAMES 'utf8'") # Switch to utf-8 strings
+    DBI::dbGetQuery(connection, "SET NAMES 'utf8'") # Switch to utf-8 strings
   }
 
   if (database.info[['type']] == 'sqlite')
   {
-    require.package('RSQLite')
+    .require.package('RSQLite')
 
-    sqlite.driver <- dbDriver("SQLite")
+    sqlite.driver <- DBI::dbDriver("SQLite")
 
-    connection <- dbConnect(sqlite.driver,
+    connection <- DBI::dbConnect(sqlite.driver,
                             dbname = database.info[['dbname']])
   }
 
   if (database.info[['type']] == 'postgres')
   {
-    require.package('RPostgreSQL')
+    .require.package('RPostgreSQL')
 
-    pgsql.driver <- dbDriver("PostgreSQL")
+    pgsql.driver <- DBI::dbDriver("PostgreSQL")
 
     args <- intersect(names(database.info), c('user', 'password', 'host', 'dbname'))
-    connection <- do.call(dbConnect, c(list(pgsql.driver), database.info[args]))
+    connection <- do.call(DBI::dbConnect, c(list(pgsql.driver), database.info[args]))
   }
 
   if (database.info[['type']] == 'oracle')
   {
-    require.package('RMySQL')
+    .require.package('ROracle')
 
-    oracle.driver <- dbDriver("Oracle")
+    oracle.driver <- DBI::dbDriver("Oracle")
 
     # Default value for 'port' in mysqlNewConnection is 0.
     if (is.null(database.info[['port']]))
@@ -197,7 +197,7 @@ sql.reader <- function(data.file, filename, variable.name)
       database.info[['port']] <- 0
     }
 
-    connection <- dbConnect(oracle.driver,
+    connection <- DBI::dbConnect(oracle.driver,
                             user = database.info[['user']],
                             password = database.info[['password']],
                             dbname = database.info[['dbname']])
@@ -205,7 +205,7 @@ sql.reader <- function(data.file, filename, variable.name)
 
   if (database.info[['type']] == 'jdbc')
   {
-    require.package('RJDBC')
+    .require.package('RJDBC')
 
     ident.quote <- NA
     if('identquote' %in% names(database.info))
@@ -215,8 +215,8 @@ sql.reader <- function(data.file, filename, variable.name)
       database.info[['classpath']] = ''
     }
 
-    rjdbc.driver <- JDBC(database.info[['class']], database.info[['classpath']], ident.quote)
-    connection <- dbConnect(rjdbc.driver,
+    rjdbc.driver <- RJDBC::JDBC(database.info[['class']], database.info[['classpath']], ident.quote)
+    connection <- DBI::dbConnect(rjdbc.driver,
                             database.info[['url']],
                             user = database.info[['user']],
                             password = database.info[['password']])
@@ -224,7 +224,7 @@ sql.reader <- function(data.file, filename, variable.name)
 
   if (database.info[['type']] == 'heroku')
   {
-    require.package('RJDBC')
+    .require.package('RJDBC')
 
     if(is.null(database.info[['classpath']])) {
       database.info[['classpath']] <- ''
@@ -237,8 +237,8 @@ sql.reader <- function(data.file, filename, variable.name)
         '/', database.info[['dbname']],
         '?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory', sep = '')
 
-    rjdbc.driver <- JDBC(database.info[['class']], database.info[['classpath']])
-    connection <- dbConnect(rjdbc.driver,
+    rjdbc.driver <- RJDBC::JDBC(database.info[['class']], database.info[['classpath']])
+    connection <- DBI::dbConnect(rjdbc.driver,
                             database.info[['url']],
                             user = database.info[['user']],
                             password = database.info[['password']])
@@ -267,12 +267,12 @@ sql.reader <- function(data.file, filename, variable.name)
 
   if (! is.null(table) && table == '*')
   {
-    tables <- dbListTables(connection)
+    tables <- DBI::dbListTables(connection)
     for (table in tables)
     {
       message(paste('  Loading table:', table))
 
-      data.parcel <- dbReadTable(connection,
+      data.parcel <- DBI::dbReadTable(connection,
                                  table,
                                  row.names = NULL)
 
@@ -286,9 +286,9 @@ sql.reader <- function(data.file, filename, variable.name)
   # Othwrwise, execute the specified query.
   if (! is.null(table) && table != '*')
   {
-    if (dbExistsTable(connection, table))
+    if (DBI::dbExistsTable(connection, table))
     {
-      data.parcel <- dbReadTable(connection,
+      data.parcel <- DBI::dbReadTable(connection,
                                  table,
                                  row.names = NULL)
 
@@ -308,14 +308,14 @@ sql.reader <- function(data.file, filename, variable.name)
     # Do string interpolation
     # TODO: When whisker is updated add strict=FALSE
     if (length(grep('\\@\\{.*\\}', query)) != 0) {
-      require.package('GetoptLong')
-      query <- qq(query)
+      .require.package('GetoptLong')
+      query <- GetoptLong::qq(query)
     } else if (length(grep('\\{\\{.*\\}\\}', query))) {
-      require.package('whisker')
-      query <- whisker.render(query, data = .GlobalEnv)
+      .require.package('whisker')
+      query <- whisker::whisker.render(query, data = .GlobalEnv)
     }
-    data.parcel <- try(dbGetQuery(connection, query))
-    err <- dbGetException(connection)
+    data.parcel <- try(DBI::dbGetQuery(connection, query))
+    err <- DBI::dbGetException(connection)
 
     if (class(data.parcel) == 'data.frame' && (length(err) == 0 || err$errorNum == 0))
     {
@@ -350,7 +350,7 @@ sql.reader <- function(data.file, filename, variable.name)
   }
 
   # Disconnect from database resources. Warn if failure.
-  disconnect.success <- dbDisconnect(connection)
+  disconnect.success <- DBI::dbDisconnect(connection)
 
   if (! disconnect.success)
   {

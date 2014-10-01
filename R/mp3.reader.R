@@ -16,9 +16,9 @@
 #' \dontrun{mp3.reader('example.mp3', 'data/example.mp3', 'example')}
 mp3.reader <- function(data.file, filename, variable.name)
 {
-  require.package('tuneR')
+  .require.package('tuneR')
 
   assign(variable.name,
-         readMP3(filename),
+         tuneR::readMP3(filename),
          envir = .TargetEnv)
 }

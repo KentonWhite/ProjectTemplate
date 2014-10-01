@@ -16,15 +16,15 @@
 #' \dontrun{xls.reader('example.xls', 'data/example.xls', 'example')}
 xls.reader <- function(data.file, filename, workbook.name)
 {
-  require.package('gdata')
+  .require.package('gdata')
 
-  sheets <- sheetNames(filename)
+  sheets <- gdata::sheetNames(filename)
 
   for (sheet.name in sheets)
   {
     variable.name <- paste(workbook.name, clean.variable.name(sheet.name), sep = ".")
     tryCatch(assign(variable.name,
-                    read.xls(filename,
+                    gdata::read.xls(filename,
                              sheet = sheet.name),
                     envir = .TargetEnv),
              error = function(e)
