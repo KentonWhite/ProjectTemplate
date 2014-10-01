@@ -2,6 +2,10 @@
 #'
 #' This function will associate an extension with a custom reader function.
 #'
+#' WARNING: This interface should not be considered as stable and is likely to be
+#' replaced by a different mechanism in a forthcoming version of this package.
+#'
+#' @rdname add.extension
 #' @param extension The extension of the new data file.
 #' @param reader The function to user when reading the data file.
 #'
