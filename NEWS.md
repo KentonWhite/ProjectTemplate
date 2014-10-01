@@ -1,6 +1,8 @@
 v0.5-1.6 (2014-10-01)
 ===
 
+* Add documentation for `.add.extension()` (#124)
+
 v0.5-1.5 (2014-10-01)
 ===
 
