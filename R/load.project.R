@@ -120,6 +120,10 @@ load.project <- function(override.config = NULL)
   #assign('project.info', my.project.info, envir = environment(create.project))
 }
 
+.unload.project <- function() {
+  suppressWarnings(rm(list = c("config", "logger", "project.info"), envir = .TargetEnv))
+}
+
 .normalize.config <- function(config, names, norm.fun) {
   config[names] <- lapply(config[names], norm.fun)
   config
