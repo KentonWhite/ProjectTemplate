@@ -14,7 +14,7 @@
  $ libraries                : chr "reshape, plyr, ggplot2, stringr, lubridate"
  $ as_factors               : chr "TRUE"
  $ data_tables              : chr "FALSE"
- $ attach_internal_libraries: chr "TRUE"
+ $ attach_internal_libraries: chr "FALSE"
 }}
 \usage{
 new.config
