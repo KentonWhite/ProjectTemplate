@@ -16,7 +16,9 @@ inst/defaults/config/global.dcf: DESCRIPTION
 	git add $@
 	git commit --amend --no-edit
 	crant -iC
-	crant -X
+	crant -XS
+	git add man
+	git commit --amend --no-edit
 
 tag:
 	git tag v$$(sed -n -r '/^Version: / {s/.* ([0-9.-]+)$$/\1/;p}' DESCRIPTION)
