@@ -1,3 +1,6 @@
+v0.6 (2014-10-05)
+===
+
 * Includes all modifications from v0.5-3 and v0.5-2.
 
 v0.5-3 (2014-10-05)
