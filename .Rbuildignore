@@ -10,3 +10,4 @@
 ^Makefile$
 ^NEWS\.md$
 ^NEWS\.md\.tmpl$
+^cran-comments\.md$
