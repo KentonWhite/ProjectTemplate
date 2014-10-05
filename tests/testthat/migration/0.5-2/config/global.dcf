@@ -1,4 +1,4 @@
-version: 0.5-2
+version: 0.5-1.9999
 data_loading: TRUE
 cache_loading: TRUE
 recursive_loading: FALSE
@@ -8,4 +8,3 @@ load_libraries: FALSE
 libraries: reshape, plyr, ggplot2, stringr, lubridate
 as_factors: TRUE
 data_tables: FALSE
-attach_internal_libraries: FALSE

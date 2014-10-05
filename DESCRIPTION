@@ -30,6 +30,7 @@ Suggests:
     ggplot2,
     lubridate,
     log4r (>= 0.1-5),
+    DBI,
     RMySQL,
     RSQLite,
     gdata,

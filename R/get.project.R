@@ -32,3 +32,8 @@ get.project <- function()
     error = function(e) stop("Project must be loaded using load.project().")
   )
 }
+
+.has.project <- function()
+{
+  exists("project.info", envir = .TargetEnv)
+}

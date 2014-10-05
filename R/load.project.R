@@ -105,19 +105,23 @@ load.project <- function(override.config = NULL)
   if (config$logging)
   {
     message('Initializing logger')
-    require.package('log4r')
+    .require.package('log4r')
 
-    logger <- create.logger()
+    logger <- log4r::create.logger()
     .provide.directory('logs')
 
-    logfile(logger) <- file.path('logs', 'project.log')
-    level(logger) <- "INFO"
+    log4r::logfile(logger) <- file.path('logs', 'project.log')
+    log4r::level(logger) <- "INFO"
     assign('logger', logger, envir = .TargetEnv)
   }
 
   assign('project.info', my.project.info, envir = .TargetEnv)
   #assign('project.info', my.project.info, envir = parent.frame())
   #assign('project.info', my.project.info, envir = environment(create.project))
+}
+
+.unload.project <- function() {
+  suppressWarnings(rm(list = c("config", "logger", "project.info"), envir = .TargetEnv))
 }
 
 .normalize.config <- function(config, names, norm.fun) {
@@ -218,13 +222,15 @@ load.project <- function(override.config = NULL)
 }
 
 .convert.to.data.table <- function(data.sets) {
+  .require.package("data.table")
+
   for (data.set in data.sets)
   {
     if (all(class(get(data.set, envir = .TargetEnv)) == 'data.frame'))
     {
       message(paste(' Translating data.frame:', data.set))
       assign(data.set,
-             data.table(get(data.set, envir = .TargetEnv)),
+             data.table::data.table(get(data.set, envir = .TargetEnv)),
              envir = .TargetEnv)
     }
   }

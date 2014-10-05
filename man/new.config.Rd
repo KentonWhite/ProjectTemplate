@@ -3,17 +3,18 @@
 \name{new.config}
 \alias{new.config}
 \title{Configuration for new projects}
-\format{\preformatted{List of 10
- $ version          : chr "0.5-2"
- $ data_loading     : chr "TRUE"
- $ cache_loading    : chr "TRUE"
- $ recursive_loading: chr "FALSE"
- $ munging          : chr "TRUE"
- $ logging          : chr "FALSE"
- $ load_libraries   : chr "FALSE"
- $ libraries        : chr "reshape, plyr, ggplot2, stringr, lubridate"
- $ as_factors       : chr "TRUE"
- $ data_tables      : chr "FALSE"
+\format{\preformatted{List of 11
+ $ version                  : chr "0.5-2"
+ $ data_loading             : chr "TRUE"
+ $ cache_loading            : chr "TRUE"
+ $ recursive_loading        : chr "FALSE"
+ $ munging                  : chr "TRUE"
+ $ logging                  : chr "FALSE"
+ $ load_libraries           : chr "FALSE"
+ $ libraries                : chr "reshape, plyr, ggplot2, stringr, lubridate"
+ $ as_factors               : chr "TRUE"
+ $ data_tables              : chr "FALSE"
+ $ attach_internal_libraries: chr "FALSE"
 }}
 \usage{
 new.config
