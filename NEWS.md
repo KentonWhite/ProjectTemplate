@@ -1,6 +1,3 @@
-v0.5-2.1 (2014-10-05)
-===
-
 * Packages required for loading data sources are attached to the search path (with a warning) only if the new compatibility setting `attach_internal_libraries` is set to `TRUE`.  Attaching packages to the search path seems to be unnecessary to achieve proper functionality, but users might rely on this behavior, and so this is the default for migrated projects but turned off for new projects (#104).
 
 v0.5-2 (2014-10-01)
