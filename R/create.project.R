@@ -106,7 +106,7 @@ create.project <- function(project.name = 'new-project', minimal = FALSE,
   # Add project name to header
   README.md <- file.path(project.path, "README.md")
   README <- readLines(README.md)
-  writeLines(c(sprintf("# %s\n", project.name), README), README.md)
+  writeLines(c(sprintf("# %s\n", basename(normalizePath(project.name))), README), README.md)
 }
 
 .create.project.new <- function(project.name, exclude) {
