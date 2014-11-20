@@ -18,7 +18,7 @@ inst/NEWS.Rd: git NEWS.md
 	git add $@
 	test "$$(git status --porcelain | wc -c)" = "0" || git commit -m "Update NEWS.Rd"
 
-inst/defaults/config/global.dcf: git DESCRIPTION
+inst/defaults/full/config/global.dcf: git DESCRIPTION
 	( echo -n "version: "; sed -n -r '/^Version: / {s/.* ([0-9.-]+)$$/\1/;p}' $(word 2,$^); tail -n +2 $@ ) > $@.tmp
 	mv $@.tmp $@
 	git add $@
@@ -44,8 +44,8 @@ bump-desc: master rd
 	test "$$(git status --porcelain | wc -c)" = "0" || git commit -m "Add suffix -0.0 to version"
 	crant -u 4 -C
 
-bump-cran: bump-cran-desc inst/defaults/config/global.dcf inst/NEWS.Rd tag
+bump-cran: bump-cran-desc inst/defaults/full/config/global.dcf inst/NEWS.Rd tag
 
-bump-gh: bump-gh-desc inst/defaults/config/global.dcf inst/NEWS.Rd tag
+bump-gh: bump-gh-desc inst/defaults/full/config/global.dcf inst/NEWS.Rd tag
 
-bump: bump-desc inst/defaults/config/global.dcf inst/NEWS.Rd tag
+bump: bump-desc inst/defaults/full/config/global.dcf inst/NEWS.Rd tag
