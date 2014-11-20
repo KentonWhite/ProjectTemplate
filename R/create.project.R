@@ -41,12 +41,19 @@
 create.project <- function(project.name = 'new-project', minimal = FALSE,
                            dump = FALSE, merge.strategy = c("require.empty", "allow.non.conflict"))
 {
-  template.name <- if (minimal) 'minimal' else 'full'
+  template.name <- 'full'
   temp.dir <- tempfile("ProjectTemplate")
   on.exit(unlink(temp.dir, recursive = TRUE), add = TRUE)
   untar(.get.template.tar.path(template.name), exdir = temp.dir,
         tar = "internal")
   template.path <- file.path(temp.dir, template.name)
+
+  if (minimal) {
+    minimal_exclude <- c("diagnostics", "doc", "graphs", "lib", "logs", "profiling",
+                          "reports", "tests", "TODO")
+    exclude = file.path(template.path, minimal_exclude)
+    unlink(exclude, force = TRUE)
+  }
 
   merge.strategy <- match.arg(merge.strategy)
   if (.is.dir(project.name)) {
