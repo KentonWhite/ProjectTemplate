@@ -21,7 +21,7 @@ test.project <- function()
   load.project()
   require.package('testthat', attach = TRUE)
 
-  files = dir('tests', full.names = TRUE)
+  files = dir('tests', pattern = "[.][rR]$", full.names = TRUE)
   # Versions of testhat <0.8.0 use global enclosure
   # >0.8.0 use parent of global
   # Need to call test_file appropriately
