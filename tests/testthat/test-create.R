@@ -30,7 +30,7 @@ test_that('Full project', {
   expect_that(file.exists(file.path('test_project', 'src', 'eda.R')), is_true())
   expect_that(file.exists(file.path('test_project', 'tests')), is_true())
   expect_that(file.exists(file.path('test_project', 'tests', '1.R')), is_true())
-  expect_that(file.exists(file.path('test_project', 'README')), is_true())
+  expect_that(file.exists(file.path('test_project', 'README.md')), is_true())
   expect_that(file.exists(file.path('test_project', 'TODO')), is_true())
 
   setwd('test_project')
@@ -59,7 +59,7 @@ test_that('Miminal project', {
   expect_that(file.exists(file.path('test_project', 'munge', '01-A.R')), is_true())
   expect_that(file.exists(file.path('test_project', 'src')), is_true())
   expect_that(file.exists(file.path('test_project', 'src', 'eda.R')), is_true())
-  expect_that(file.exists(file.path('test_project', 'README')), is_true())
+  expect_that(file.exists(file.path('test_project', 'README.md')), is_true())
 
   expect_that(file.exists(file.path('test_project', 'diagnostics')), is_false())
   expect_that(file.exists(file.path('test_project', 'doc')), is_false())
