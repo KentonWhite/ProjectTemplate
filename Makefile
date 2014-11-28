@@ -37,10 +37,12 @@ bump-cran-desc: master rd
 	crant -u 2 -C
 
 bump-gh-desc: master rd
+	sed -i -r '/^Version: / s/( [0-9.]+)$$/\1-0/' DESCRIPTION
+	git add DESCRIPTION
+	test "$$(git status --porcelain | wc -c)" = "0" || git commit -m "add suffix -0 to version"
 	crant -u 3 -C
 
 bump-desc: master rd
-	test "$$(git status --porcelain | wc -c)" = "0"
 	sed -i -r '/^Version: / s/( [0-9.]+)$$/\1-0.0/' DESCRIPTION
 	git add DESCRIPTION
 	test "$$(git status --porcelain | wc -c)" = "0" || git commit -m "add suffix -0.0 to version"
