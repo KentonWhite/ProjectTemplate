@@ -1,3 +1,6 @@
+* Migration to new versions is now tested based on full archives of the
+  then-current layout.
+
 v0.6-1 (2014-11-28)
 ===
 
