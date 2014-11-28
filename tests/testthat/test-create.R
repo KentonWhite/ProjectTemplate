@@ -7,22 +7,7 @@ expect_file <- function(..., condition = is_true()) {
 
 expect_no_file <- function(...) expect_file(..., condition = is_false())
 
-expect_dir <- function(...) {
-  x <- file.path(...)
-  expect_file(x)
-  expect_true(.is.dir(x))
-  expect_file(file.path(x, 'README.md'))
-}
-
-test_that('Full project', {
-
-  test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project, minimal = FALSE))
-  on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
-
-  oldwd <- setwd(test_project)
-  on.exit(setwd(oldwd), add = TRUE)
-
+expect_full <- function() {
   expect_dir('.')
   expect_dir('cache')
   expect_dir('config')
@@ -45,21 +30,9 @@ test_that('Full project', {
   expect_dir('tests')
   expect_file(file.path('tests', '1.R'))
   expect_file(file.path('TODO'))
+}
 
-  suppressMessages(load.project())
-  suppressMessages(test.project())
-
-})
-
-test_that('Miminal project', {
-
-  test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project, minimal = TRUE))
-  on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
-
-  oldwd <- setwd(test_project)
-  on.exit(setwd(oldwd), add = TRUE)
-
+expect_minimal <- function() {
   expect_dir('.')
   expect_dir('cache')
   expect_dir('config')
@@ -79,6 +52,41 @@ test_that('Miminal project', {
   expect_no_file('reports')
   expect_no_file('tests')
   expect_no_file('TODO')
+}
+
+expect_dir <- function(...) {
+  x <- file.path(...)
+  expect_file(x)
+  expect_true(.is.dir(x))
+  expect_file(file.path(x, 'README.md'))
+}
+
+test_that('Full project', {
+
+  test_project <- tempfile('test_project')
+  suppressMessages(create.project(test_project, minimal = FALSE))
+  on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
+
+  oldwd <- setwd(test_project)
+  on.exit(setwd(oldwd), add = TRUE)
+
+  expect_full()
+
+  suppressMessages(load.project())
+  suppressMessages(test.project())
+
+})
+
+test_that('Miminal project', {
+
+  test_project <- tempfile('test_project')
+  suppressMessages(create.project(test_project, minimal = TRUE))
+  on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
+
+  oldwd <- setwd(test_project)
+  on.exit(setwd(oldwd), add = TRUE)
+
+  expect_minimal()
 
   suppressMessages(load.project())
 
