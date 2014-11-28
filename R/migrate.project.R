@@ -28,7 +28,7 @@ migrate.project <- function()
     return(invisible(NULL))
   }
 
-  if (compareVersion(config$version, "0.5-2") < 0) {
+  if (compareVersion(config$version, "0.6-2") < 0) {
     dir.create("code", showWarnings = FALSE)
     for (d in c("diagnostics", "lib", "munge", "profiling", "src", "tests")) {
       if (.is.dir(d)) {
