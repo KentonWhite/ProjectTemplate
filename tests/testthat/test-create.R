@@ -1,10 +1,8 @@
 context('Create project')
 
-test_project <- tempfile('test_project')
-
 expect_file <- function(..., condition = is_true()) {
   x <- file.path(...)
-  expect_that(file.exists(file.path(test_project, x)), condition, x)
+  expect_that(file.exists(x), condition, x)
 }
 
 expect_no_file <- function(...) expect_file(..., condition = is_false())
@@ -12,14 +10,18 @@ expect_no_file <- function(...) expect_file(..., condition = is_false())
 expect_dir <- function(...) {
   x <- file.path(...)
   expect_file(x)
-  expect_true(.is.dir(file.path(test_project, x)))
+  expect_true(.is.dir(x))
   expect_file(file.path(x, 'README.md'))
 }
 
 test_that('Full project', {
 
+  test_project <- tempfile('test_project')
   suppressMessages(create.project(test_project, minimal = FALSE))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
+
+  oldwd <- setwd(test_project)
+  on.exit(setwd(oldwd), add = TRUE)
 
   expect_dir('.')
   expect_dir('cache')
@@ -44,9 +46,6 @@ test_that('Full project', {
   expect_file(file.path('tests', '1.R'))
   expect_file(file.path('TODO'))
 
-  oldwd <- setwd(test_project)
-  on.exit(setwd(oldwd), add = TRUE)
-
   suppressMessages(load.project())
   suppressMessages(test.project())
 
@@ -54,8 +53,12 @@ test_that('Full project', {
 
 test_that('Miminal project', {
 
+  test_project <- tempfile('test_project')
   suppressMessages(create.project(test_project, minimal = TRUE))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
+
+  oldwd <- setwd(test_project)
+  on.exit(setwd(oldwd), add = TRUE)
 
   expect_dir('.')
   expect_dir('cache')
@@ -76,9 +79,6 @@ test_that('Miminal project', {
   expect_no_file('reports')
   expect_no_file('tests')
   expect_no_file('TODO')
-
-  oldwd <- setwd(test_project)
-  on.exit(setwd(oldwd), add = TRUE)
 
   suppressMessages(load.project())
 
