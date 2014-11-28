@@ -1,4 +1,4 @@
-* Changed directory layout: All scripts are now in the new `code` subdirectory.
+* Changed directory layout: All scripts are now in the new `code` subdirectory (#85).
 
 v0.6-1 (2014-11-28)
 ===
