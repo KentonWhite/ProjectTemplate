@@ -26,7 +26,7 @@ test_that('Test full project into existing directory', {
   expect_that(file.exists(file.path('test_project', 'src')), is_true())
   expect_that(file.exists(file.path('test_project', 'tests')), is_true())
   expect_that(file.exists(file.path('test_project', 'tests', '1.R')), is_true())
-  expect_that(file.exists(file.path('test_project', 'README')), is_true())
+  expect_that(file.exists(file.path('test_project', 'README.md')), is_true())
   expect_that(file.exists(file.path('test_project', 'TODO')), is_true())
 
   setwd('test_project')
@@ -59,7 +59,7 @@ test_that('Test minimal project into existing directory with an unrelated entry'
   expect_that(file.exists(file.path('test_project', 'munge')), is_true())
   expect_that(file.exists(file.path('test_project', 'munge', '01-A.R')), is_true())
   expect_that(file.exists(file.path('test_project', 'src')), is_true())
-  expect_that(file.exists(file.path('test_project', 'README')), is_true())
+  expect_that(file.exists(file.path('test_project', 'README.md')), is_true())
 
   setwd('test_project')
 
@@ -126,8 +126,8 @@ test_that('Test failure creating project in directory with existing empty direct
   expect_that(file.exists(file.path('test_project')), is_false())
   dir.create('test_project')
   expect_that(file.exists(file.path('test_project')), is_true())
-  dir.create(file.path('test_project', 'README'))
-  expect_that(file.exists(file.path('test_project', 'README')), is_true())
+  dir.create(file.path('test_project', 'README.md'))
+  expect_that(file.exists(file.path('test_project', 'README.md')), is_true())
 
   expect_error(
     suppressMessages(
@@ -143,8 +143,8 @@ test_that('Test failure creating project in directory with existing file matchin
   expect_that(file.exists(file.path('test_project')), is_false())
   dir.create('test_project')
   expect_that(file.exists(file.path('test_project')), is_true())
-  file.create(file.path('test_project', 'README'))
-  expect_that(file.exists(file.path('test_project', 'README')), is_true())
+  file.create(file.path('test_project', 'README.md'))
+  expect_that(file.exists(file.path('test_project', 'README.md')), is_true())
 
   expect_error(
     suppressMessages(

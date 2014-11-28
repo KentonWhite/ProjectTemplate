@@ -41,18 +41,20 @@
 create.project <- function(project.name = 'new-project', minimal = FALSE,
                            dump = FALSE, merge.strategy = c("require.empty", "allow.non.conflict"))
 {
-  template.name <- if (minimal) 'minimal' else 'full'
   temp.dir <- tempfile("ProjectTemplate")
-  on.exit(unlink(temp.dir, recursive = TRUE), add = TRUE)
-  untar(.get.template.tar.path(template.name), exdir = temp.dir,
-        tar = "internal")
-  template.path <- file.path(temp.dir, template.name)
+
+  if (minimal) {
+    exclude <- c("diagnostics", "doc", "graphs", "lib", "logs", "profiling",
+                 "reports", "tests", "TODO")
+  } else {
+    exclude <- c()
+  }
 
   merge.strategy <- match.arg(merge.strategy)
   if (.is.dir(project.name)) {
-    .create.project.existing(template.path, project.name, merge.strategy)
+    .create.project.existing(project.name, merge.strategy, exclude)
   } else
-    .create.project.new(template.path, project.name)
+    .create.project.new(project.name, exclude)
 
   if (dump)
   {
@@ -74,9 +76,10 @@ create.project <- function(project.name = 'new-project', minimal = FALSE,
   invisible(NULL)
 }
 
-.create.project.existing <- function(template.path, project.name,
-                                     merge.strategy) {
-  template.files <- .list.files.and.dirs(path = template.path)
+.create.project.existing <- function(project.name, merge.strategy, exclude) {
+  template.path <- system.file('defaults/full', package = 'ProjectTemplate')
+  template.files.all <- .list.files.and.dirs(path = template.path)
+  template.files <- setdiff(template.files.all, exclude)
 
   project.path <- file.path(project.name)
 
@@ -100,20 +103,22 @@ create.project <- function(project.name = 'new-project', minimal = FALSE,
             project.path,
             recursive = TRUE, overwrite = FALSE)
 
-  file.copy(from = system.file('defaults/config/global.dcf', package = 'ProjectTemplate'),
-            to = file.path(project.path, 'config/global.dcf'))
+  # Add project name to header
+  README.md <- file.path(project.path, "README.md")
+  README <- readLines(README.md)
+  writeLines(c(sprintf("# %s\n", basename(normalizePath(project.name))), README), README.md)
 }
 
-.create.project.new <- function(template.path, project.name) {
+.create.project.new <- function(project.name, exclude) {
   if (file.exists(project.name)) {
     stop(paste("Cannot run create.project() from a directory containing", project.name))
   }
 
   dir.create(project.name)
   tryCatch(
-    .create.project.existing(template.path = template.path,
-                             project.name = project.name,
-                             merge.strategy = "require.empty"),
+    .create.project.existing(project.name = project.name,
+                             merge.strategy = "require.empty",
+                             exclude = exclude),
     error = function(e) {
       unlink(project.name, recursive = TRUE)
       stop(e)
