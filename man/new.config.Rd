@@ -5,7 +5,7 @@
 \alias{new.config}
 \title{Configuration for new projects}
 \format{\preformatted{List of 11
- $ version                  : chr "0.6"
+ $ version                  : chr "0.6-1"
  $ data_loading             : chr "TRUE"
  $ cache_loading            : chr "TRUE"
  $ recursive_loading        : chr "FALSE"
