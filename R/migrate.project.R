@@ -21,7 +21,7 @@ migrate.project <- function()
 
   message('Migrating project configuration')
 
-  config <- .load.config()
+  config <- .load.config(warn = FALSE)
 
   if (.check.version(config, warn.migrate = FALSE) == 0) {
     message("Already up to date.")
