@@ -1,5 +1,13 @@
 \name{NEWS}
 \title{News for Package 'ProjectTemplate'}
+\section{Changes in ProjectTemplate version 0.6-1 (2014-11-28)}{
+  \itemize{
+    \item \code{create.project()} creates \code{README.md} files are created in each subdirectory (#128)
+    \item README file in main directory is now also formatted as Markdown, with the project name as title
+    \item Code that creates and runs tests now also allows non-R files in \code{libs} and \code{tests} subdirectories
+    \item libraries from the \code{libraries} section are loaded before sourcing \code{lib/} files
+  }
+}
 \section{Changes in ProjectTemplate version 0.6 (2014-10-05)}{
   \itemize{
     \item Includes all modifications from v0.5-3 and v0.5-2.
