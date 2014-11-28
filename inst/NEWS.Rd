@@ -1,39 +1,59 @@
 \name{NEWS}
 \title{News for Package 'ProjectTemplate'}
-\section{Changes in ProjectTemplate version 0.5-2 (2014-06-04)}{
-  \subsection{Breaking changes}{
-    \itemize{
-      \item Changed directory layout: All scripts are now in the new \code{code} subdirectory.
-    }
+\section{Changes in ProjectTemplate version 0.6-1 (2014-11-28)}{
+  \itemize{
+    \item \code{create.project()} creates \code{README.md} files are created in each subdirectory (#128)
+    \item README file in main directory is now also formatted as Markdown, with the project name as title
+    \item Code that creates and runs tests now also allows non-R files in \code{libs} and \code{tests} subdirectories
+    \item libraries from the \code{libraries} section are loaded before sourcing \code{lib/} files
   }
+}
+\section{Changes in ProjectTemplate version 0.6 (2014-10-05)}{
+  \itemize{
+    \item Includes all modifications from v0.5-3 and v0.5-2.
+  }
+}
+\section{Changes in ProjectTemplate version 0.5-3 (2014-10-05)}{
+  \itemize{
+    \item Packages required for loading data sources are attached to the search path (with a warning) only if the new compatibility setting \code{attach_internal_libraries} is set to \code{TRUE}.  Attaching packages to the search path seems to be unnecessary to achieve proper functionality, but users might rely on this behavior, and so this is the default for migrated projects but turned off for new projects (#104).
+  }
+}
+\section{Changes in ProjectTemplate version 0.5-2 (2014-10-01)}{
   \subsection{Bug fixes}{
     \itemize{
       \item Fixed error message when \code{require.package} is called from an anonymous
          function and fails to load a package.  (Using \code{deparse(nlines = 1)} now.)
-      \item Fixed rare error in automatic conversion to \code{data.frame}.
     }
   }
   \subsection{Features}{
     \itemize{
-      \item New function \code{migrate.project()} that allows upgrading a project to the
-         current version of ProjectTemplate (#90)
+      \item Added functon \code{.add.extension()}. This allows users to create custom readers for extensions, either locally in a project or as packages.
       \item The configuration now stores the version of ProjectTemplate in the \code{version}
          field (#90).
+      \item New function \code{migrate.project()} that allows upgrading a project to the
+         current version of ProjectTemplate (#90, #121).
       \item New parameter \code{override.config} to \code{load.project()} and \code{reload.project()}
          allows substitution of individual configuration items (#76).
+      \item Can use mustache style templating in SQL calls to access project data structures (#50).
+      \item Support passwordless connection to postgresql databases (#115).
+      \item Configuration entries that start with a hash (\code{#}) are silently ignored (#74).
+      \item New variables \code{default.config} and \code{new.config} that store the default
+         configuration used for missing configuration items or for a new project (#76, #89).
       \item Missing but required directories are now created (with a warning) (#76).
-      \item All logical configuration options are now stored as Boolean values instead of
-         \code{'on'}/\code{'off'}.  Input values other than \code{'on'}/\code{'off'} are converted using
-         \code{as.logical}, invalid values result in an error (#76).
       \item Missing entries in the configuration file, or a missing configuration file,
          are substituted by defaults (with a warning).  Extra entries are ignored
          (with a warning) (#76).
+      \item All logical configuration options are now stored as Boolean values instead of
+         \code{'on'}/\code{'off'}.  Input values other than \code{'on'}/\code{'off'} are converted using
+         \code{as.logical}, invalid values result in an error (#76).
     }
   }
   \subsection{Internal}{
     \itemize{
-      \item New variable \code{default.config} that stores the default configuration used
-         for a new project (#76).
+      \item Dropped dependency on \code{Defaults} package (#100).
+      \item Suppress warnings in tests (#111).
+      \item Fix CRAN check issues (#117).
+      \item Improved presentation of available readers in documentation (#119).
     }
   }
 }
