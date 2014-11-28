@@ -106,6 +106,7 @@ create.project <- function(project.name = 'new-project', minimal = FALSE,
             recursive = TRUE, overwrite = FALSE)
   # KISS. Copy and then delete is wasteful, but I haven't found a more elegant
   # solution in reasonable time.
+  stopifnot(file.exists(file.path(project.path, exclude)))
   unlink(file.path(project.path, exclude), recursive = TRUE)
 
   # Add project name to header
