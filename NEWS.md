@@ -1,24 +1,5 @@
-v0.5-2 (2014-06-04)
-===
-
-Breaking changes
----
-
 * Changed directory layout: All scripts are now in the new `code` subdirectory.
 
-Bug fixes
----
-
-* Fixed error message when `require.package` is called from an anonymous
-  function and fails to load a package.  (Using `deparse(nlines = 1)` now.)
-* Fixed rare error in automatic conversion to `data.frame`.
-
-Features
----
-
-* Added .add.extension. This allows users to create custom readers for extensions, either locally in a project or as packages.
-* Can use mustache style templating in SQL calls to access project data structures (#50)
-* Support passwordless connection to postgresql databases (#30)
 v0.6-1 (2014-11-28)
 ===
 
@@ -66,14 +47,6 @@ Features
 * Missing entries in the configuration file, or a missing configuration file,
   are substituted by defaults (with a warning).  Extra entries are ignored
   (with a warning) (#76).
-* New variables `default.config` and `new.config` that store the default
-  configuration used for missing configuration items or for a new project (#76, #89).
-* New variable `default.config` that stores the default configuration used
-  for a new project (#76).
-* Fixed error message when `require.package` is called from an anonymous
-  function and fails to load a package.  (Using `deparse(nlines = 1)` now.)
-* New variables `default.config` and `new.config` that store the default
-  configuration used for missing configuration items or for a new project (#76, #89).
 * All logical configuration options are now stored as Boolean values instead of
   `'on'`/`'off'`.  Input values other than `'on'`/`'off'` are converted using
   `as.logical`, invalid values result in an error (#76).
