@@ -16,13 +16,13 @@ test_that('Test 1: Add an extension', {
                         'foo.reader.R'), file.path(test_project, 'code', 'lib', 'foo.reader.R'))
   file.copy(file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
-                        'example.foo'), file.path(test_project, 'data', 'example.foo'))
+                        'example.foo'), file.path(test_project, 'input', 'data', 'example.foo'))
 
   oldwd <- setwd(test_project)
   on.exit(setwd(oldwd), add = TRUE)
 
   expect_that(file.exists(file.path('code', 'lib', 'foo.reader.R')), is_true())
-  expect_that(file.exists(file.path('data', 'example.foo')), is_true())
+  expect_that(file.exists(file.path('input', 'data', 'example.foo')), is_true())
 
   load.project()
   expect_that(ProjectTemplate:::extensions.dispatch.table[['\\.foo$']], equals('foo.reader'))

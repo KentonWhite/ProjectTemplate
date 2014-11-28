@@ -138,13 +138,14 @@ load.project <- function(override.config = NULL)
 }
 
 .load.cache <- function() {
-  .provide.directory('cache')
-  cache.files <- dir('cache')
+  cache_dir <- file.path('input', 'cache')
+  .provide.directory(cache_dir)
+  cache.files <- dir(cache_dir)
   cached.files <- c()
 
   for (cache.file in cache.files)
   {
-    filename <- file.path('cache', cache.file)
+    filename <- file.path(cache_dir, cache.file)
 
     for (extension in ls(extensions.dispatch.table))
     {
@@ -180,13 +181,14 @@ load.project <- function(override.config = NULL)
 }
 
 .load.data <- function(recursive) {
-  .provide.directory('data')
-  data.files <- dir('data', recursive = recursive)
+  data_dir <- file.path('input', 'data')
+  .provide.directory(data_dir)
+  data.files <- dir(data_dir, recursive = recursive)
   data.files.loaded <- c()
 
   for (data.file in data.files)
   {
-    filename <- file.path('data', data.file)
+    filename <- file.path(data_dir, data.file)
 
     for (extension in ls(extensions.dispatch.table))
     {
