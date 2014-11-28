@@ -246,19 +246,21 @@ load.project <- function(override.config = NULL)
   }
 }
 
-.load.config <- function(override.config = NULL) {
+.load.config <- function(override.config = NULL, warn = TRUE) {
+  my_warning <- if (warn) warning else function(...) invisible(NULL)
+
   config.path <- file.path('config', 'global.dcf')
   config <- if (file.exists(config.path)) {
     translate.dcf(config.path)
   } else {
-    warning('You are missing a configuration file: ', config.path, ' . Defaults will be used.')
+    my_warning('You are missing a configuration file: ', config.path, ' . Defaults will be used.')
     default.config
   }
 
   missing.entries <- setdiff(names(default.config), names(config))
   if (length(missing.entries) > 0) {
-    warning('Your configuration file is missing the following entries: ',
-            paste(missing.entries, collapse = ', '), '. Defaults will be used.')
+    my_warning('Your configuration file is missing the following entries: ',
+               paste(missing.entries, collapse = ', '), '. Defaults will be used.')
     config[missing.entries] <- default.config[missing.entries]
   }
 
@@ -269,8 +271,8 @@ load.project <- function(override.config = NULL)
   extra.entries <- setdiff(names(config), names(default.config))
   extra.entries <- grep("^[^#]", extra.entries, value = TRUE)
   if (length(extra.entries) > 0) {
-    warning('Your configuration contains the following unused entries: ',
-            paste(extra.entries, collapse = ', '), '. These will be ignored.')
+    my_warning('Your configuration contains the following unused entries: ',
+               paste(extra.entries, collapse = ', '), '. These will be ignored.')
     config[extra.entries] <- NULL
   }
 

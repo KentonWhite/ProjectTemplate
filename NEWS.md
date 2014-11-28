@@ -2,6 +2,11 @@
   and all results are in the new `output` subdirectory (#93).
 * Changed directory layout: All scripts are now in the new `code` subdirectory (#85).
 
+* Migration to new versions is now tested based on full archives of the
+  then-current layout.
+* Migration doesn't warn anymore on missing configuration entries, a successful
+  migration is silent.
+
 v0.6-1 (2014-11-28)
 ===
 
