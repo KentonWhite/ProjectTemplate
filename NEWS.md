@@ -1,8 +1,6 @@
 * `create.project()` creates `README.md` files are created in each subdirectory (#128)
 * README file in main directory is now also formatted as Markdown, with the project name as title
 * Code that creates and runs tests now also allows non-R files in `libs` and `tests` subdirectories
-
-
 * libraries from the `libraries` section are loaded before sourcing `lib/` files
 
 v0.6 (2014-10-05)
