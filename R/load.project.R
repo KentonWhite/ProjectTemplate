@@ -32,7 +32,7 @@ load.project <- function(override.config = NULL)
 
   options(stringsAsFactors = config$as_factors)
 
-if (config$load_libraries)
+  if (config$load_libraries)
   {
     message('Autoloading packages')
     my.project.info$packages <- c()
@@ -66,8 +66,6 @@ if (config$load_libraries)
       my.project.info$helpers <- c(my.project.info$helpers, helper.script)
     }
   }
-
-  
 
   # First, we load everything out of cache/.
   if (config$cache_loading)
