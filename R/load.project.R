@@ -32,6 +32,18 @@ load.project <- function(override.config = NULL)
 
   options(stringsAsFactors = config$as_factors)
 
+if (config$load_libraries)
+  {
+    message('Autoloading packages')
+    my.project.info$packages <- c()
+    for (package.to.load in strsplit(config$libraries, '\\s*,\\s*')[[1]])
+    {
+      message(paste(' Loading package:', package.to.load))
+      require.package(package.to.load)
+      my.project.info$packages <- c(my.project.info$packages, package.to.load)
+    }
+  }
+
   if (file.exists('lib'))
   {
     message('Autoloading helper functions')
@@ -55,17 +67,7 @@ load.project <- function(override.config = NULL)
     }
   }
 
-  if (config$load_libraries)
-  {
-    message('Autoloading packages')
-    my.project.info$packages <- c()
-    for (package.to.load in strsplit(config$libraries, '\\s*,\\s*')[[1]])
-    {
-      message(paste(' Loading package:', package.to.load))
-      require.package(package.to.load)
-      my.project.info$packages <- c(my.project.info$packages, package.to.load)
-    }
-  }
+  
 
   # First, we load everything out of cache/.
   if (config$cache_loading)
