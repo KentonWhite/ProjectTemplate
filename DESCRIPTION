@@ -15,7 +15,7 @@ Authors@R: c( person("Aleksandar", "Blagotic", role = "ctb"),
     person("Matteo", "Redaelli", role = "ctb"),
     person("Noah", "Lorang", role = "ctb"),
     person("Patrick", "Schalk", role = "ctb"),
-    person("Dominik","Schneider",role="ctb"))
+    person("Dominik", "Schneider", role="ctb"))
 Description: ProjectTemplate provides functions to
     automatically build a directory structure for a new R
     project. Using this structure, ProjectTemplate

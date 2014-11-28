@@ -1,3 +1,5 @@
+* libraries from the `libraries` section are loaded before sourcing `lib/` files
+
 v0.6 (2014-10-05)
 ===
 
