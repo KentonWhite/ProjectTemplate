@@ -7,6 +7,13 @@ expect_file <- function(..., condition = is_true()) {
 
 expect_no_file <- function(...) expect_file(..., condition = is_false())
 
+expect_dir <- function(...) {
+  x <- file.path(...)
+  expect_file(x)
+  expect_true(.is.dir(x))
+  expect_file(file.path(x, 'README.md'))
+}
+
 expect_full <- function() {
   expect_dir('.')
   expect_dir('cache')
@@ -52,13 +59,6 @@ expect_minimal <- function() {
   expect_no_file('reports')
   expect_no_file('tests')
   expect_no_file('TODO')
-}
-
-expect_dir <- function(...) {
-  x <- file.path(...)
-  expect_file(x)
-  expect_true(.is.dir(x))
-  expect_file(file.path(x, 'README.md'))
 }
 
 test_that('Full project', {
