@@ -19,27 +19,50 @@ Features
 * Added .add.extension. This allows users to create custom readers for extensions, either locally in a project or as packages.
 * Can use mustache style templating in SQL calls to access project data structures (#50)
 * Support passwordless connection to postgresql databases (#30)
-
-v0.5-1.2 (2014-09-23)
+v0.6-1 (2014-11-28)
 ===
 
-* Suppress warnings in tests (#111).
-* Configuration entries that start with a hash (`#`) are silently ignored (#74).
-* Dropped dependency on `Defaults` package (#100).
+* `create.project()` creates `README.md` files are created in each subdirectory (#128)
+* README file in main directory is now also formatted as Markdown, with the project name as title
+* Code that creates and runs tests now also allows non-R files in `libs` and `tests` subdirectories
+* libraries from the `libraries` section are loaded before sourcing `lib/` files
 
-v0.5-1.1 (2014-09-23)
+v0.6 (2014-10-05)
 ===
 
-* New function `migrate.project()` that allows upgrading a project to the
-  current version of ProjectTemplate (#90).
+* Includes all modifications from v0.5-3 and v0.5-2.
+
+v0.5-3 (2014-10-05)
+===
+
+* Packages required for loading data sources are attached to the search path (with a warning) only if the new compatibility setting `attach_internal_libraries` is set to `TRUE`.  Attaching packages to the search path seems to be unnecessary to achieve proper functionality, but users might rely on this behavior, and so this is the default for migrated projects but turned off for new projects (#104).
+
+v0.5-2 (2014-10-01)
+===
+
+Bug fixes
+---
+
+* Fixed error message when `require.package` is called from an anonymous
+  function and fails to load a package.  (Using `deparse(nlines = 1)` now.)
+
+
+Features
+---
+
+* Added functon `.add.extension()`. This allows users to create custom readers for extensions, either locally in a project or as packages.
 * The configuration now stores the version of ProjectTemplate in the `version`
   field (#90).
+* New function `migrate.project()` that allows upgrading a project to the
+  current version of ProjectTemplate (#90, #121).
 * New parameter `override.config` to `load.project()` and `reload.project()`
   allows substitution of individual configuration items (#76).
+* Can use mustache style templating in SQL calls to access project data structures (#50).
+* Support passwordless connection to postgresql databases (#115).
+* Configuration entries that start with a hash (`#`) are silently ignored (#74).
+* New variables `default.config` and `new.config` that store the default
+  configuration used for missing configuration items or for a new project (#76, #89).
 * Missing but required directories are now created (with a warning) (#76).
-* All logical configuration options are now stored as Boolean values instead of
-  `'on'`/`'off'`.  Input values other than `'on'`/`'off'` are converted using
-  `as.logical`, invalid values result in an error (#76).
 * Missing entries in the configuration file, or a missing configuration file,
   are substituted by defaults (with a warning).  Extra entries are ignored
   (with a warning) (#76).
@@ -51,6 +74,19 @@ v0.5-1.1 (2014-09-23)
   function and fails to load a package.  (Using `deparse(nlines = 1)` now.)
 * New variables `default.config` and `new.config` that store the default
   configuration used for missing configuration items or for a new project (#76, #89).
+* All logical configuration options are now stored as Boolean values instead of
+  `'on'`/`'off'`.  Input values other than `'on'`/`'off'` are converted using
+  `as.logical`, invalid values result in an error (#76).
+
+
+Internal
+---
+
+* Dropped dependency on `Defaults` package (#100).
+* Suppress warnings in tests (#111).
+* Fix CRAN check issues (#117).
+* Improved presentation of available readers in documentation (#119).
+
 
 v0.5-1 (2014-03-17)
 ===

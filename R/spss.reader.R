@@ -16,9 +16,9 @@
 #' \dontrun{spss.reader('example.sav', 'data/example.sav', 'example')}
 spss.reader <- function(data.file, filename, variable.name)
 {
-  require.package('foreign')
+  .require.package('foreign')
 
   assign(variable.name,
-         read.spss(filename, to.data.frame = TRUE),
+         foreign::read.spss(filename, to.data.frame = TRUE),
          envir = .TargetEnv)
 }

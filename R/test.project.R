@@ -19,17 +19,17 @@
 test.project <- function()
 {
   load.project()
-  require.package('testthat')
+  require.package('testthat', attach = TRUE)
 
-  files = dir(file.path('code', 'tests'), full.names = TRUE)
+  files = dir(file.path('code', 'tests'), pattern = "[.][rR]$", full.names = TRUE)
   # Versions of testhat <0.8.0 use global enclosure
   # >0.8.0 use parent of global
   # Need to call test_file appropriately
 
   if (packageVersion('testthat') < '0.8.0')
   {
-    invisible(lapply(files, test_file))
+    invisible(lapply(files, testthat::test_file))
   } else {
-    invisible(lapply(files, test_file, env = environment()))
+    invisible(lapply(files, testthat::test_file, env = environment()))
   }
 }

@@ -1,0 +1,1 @@
+Here you can store a log file of any work you've done on this project. If you'll be logging your work, we recommend using the [log4r](https://github.com/johnmyleswhite/log4r) package, which ProjectTemplate will automatically load for you if you turn the `logging` configuration setting on.

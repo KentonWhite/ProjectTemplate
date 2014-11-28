@@ -3,8 +3,8 @@ context('AddExtension')
 test_that('Test 1: Add an extension', {
   foo1.reader <- function() {}
 	
-  .add.extension('foo1', foo1.reader)
-  expect_that(ProjectTemplate:::extensions.dispatch.table[['\\.foo1$']], equals(foo1.reader))
+  .add.extension('foo1', 'foo1.reader')
+  expect_that(ProjectTemplate:::extensions.dispatch.table[['\\.foo1$']], equals('foo1.reader'))
 
   create.project('test_project', minimal = FALSE)
   file.copy(file.path(system.file('example_data',
@@ -20,7 +20,7 @@ test_that('Test 1: Add an extension', {
   setwd('test_project')
 
   load.project()
-  expect_that(ProjectTemplate:::extensions.dispatch.table[['\\.foo$']], equals(foo.reader))
+  expect_that(ProjectTemplate:::extensions.dispatch.table[['\\.foo$']], equals('foo.reader'))
   expect_that(get('example',envir = .GlobalEnv), equals("bar"))
   setwd('..')
 

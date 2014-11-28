@@ -32,6 +32,18 @@ load.project <- function(override.config = NULL)
 
   options(stringsAsFactors = config$as_factors)
 
+  if (config$load_libraries)
+  {
+    message('Autoloading packages')
+    my.project.info$packages <- c()
+    for (package.to.load in strsplit(config$libraries, '\\s*,\\s*')[[1]])
+    {
+      message(paste(' Loading package:', package.to.load))
+      require.package(package.to.load)
+      my.project.info$packages <- c(my.project.info$packages, package.to.load)
+    }
+  }
+
   if (file.exists(file.path('code', 'lib')))
   {
     message('Autoloading helper functions')
@@ -55,18 +67,6 @@ load.project <- function(override.config = NULL)
     }
   }
 
-  if (config$load_libraries)
-  {
-    message('Autoloading packages')
-    my.project.info$packages <- c()
-    for (package.to.load in config$libraries)
-    {
-      message(paste(' Loading package:', package.to.load))
-      require.package(package.to.load)
-      my.project.info$packages <- c(my.project.info$packages, package.to.load)
-    }
-  }
-
   # First, we load everything out of cache/.
   if (config$cache_loading)
   {
@@ -80,7 +80,7 @@ load.project <- function(override.config = NULL)
   {
     message('Autoloading data')
 
-    my.project.info$data <- .load.data()
+    my.project.info$data <- .load.data(config$recursive_loading)
   }
 
   if (config$data_tables)
@@ -89,7 +89,7 @@ load.project <- function(override.config = NULL)
 
     message('Converting data.frames to data.tables')
 
-    .convert.to.data.table()
+    .convert.to.data.table(my.project.info$data)
   }
 
   if (config$munging)
@@ -105,19 +105,23 @@ load.project <- function(override.config = NULL)
   if (config$logging)
   {
     message('Initializing logger')
-    require.package('log4r')
+    .require.package('log4r')
 
-    logger <- create.logger()
+    logger <- log4r::create.logger()
     .provide.directory('logs')
 
-    logfile(logger) <- file.path('logs', 'project.log')
-    level(logger) <- log4r:::INFO
+    log4r::logfile(logger) <- file.path('logs', 'project.log')
+    log4r::level(logger) <- "INFO"
     assign('logger', logger, envir = .TargetEnv)
   }
 
   assign('project.info', my.project.info, envir = .TargetEnv)
   #assign('project.info', my.project.info, envir = parent.frame())
   #assign('project.info', my.project.info, envir = environment(create.project))
+}
+
+.unload.project <- function() {
+  suppressWarnings(rm(list = c("config", "logger", "project.info"), envir = .TargetEnv))
 }
 
 .normalize.config <- function(config, names, norm.fun) {
@@ -175,9 +179,9 @@ load.project <- function(override.config = NULL)
   cached.files
 }
 
-.load.data <- function() {
+.load.data <- function(recursive) {
   .provide.directory('data')
-  data.files <- dir('data', recursive = config$recursive_loading)
+  data.files <- dir('data', recursive = recursive)
   data.files.loaded <- c()
 
   for (data.file in data.files)
@@ -217,14 +221,16 @@ load.project <- function(override.config = NULL)
   data.files.loaded
 }
 
-.convert.to.data.table <- function() {
-  for (data.set in my.project.info$data)
+.convert.to.data.table <- function(data.sets) {
+  .require.package("data.table")
+
+  for (data.set in data.sets)
   {
     if (all(class(get(data.set, envir = .TargetEnv)) == 'data.frame'))
     {
       message(paste(' Translating data.frame:', data.set))
       assign(data.set,
-             data.table(get(data.set, envir = .TargetEnv)),
+             data.table::data.table(get(data.set, envir = .TargetEnv)),
              envir = .TargetEnv)
     }
   }
@@ -269,8 +275,6 @@ load.project <- function(override.config = NULL)
   config <- .normalize.config(config,
                               setdiff(names(default.config), c("version", "libraries")),
                               .boolean.cfg)
-  config <- .normalize.config(config, "libraries",
-                              function (x) strsplit(x, '\\s*,\\s*')[[1]])
 
   config
 }
