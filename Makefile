@@ -1,45 +1,65 @@
-all: rd inst
+all: rd
+
+git:
+	test "$$(git status --porcelain | wc -c)" = "0"
+
+master: git
+	test $$(git rev-parse --abbrev-ref HEAD) = "master"
 
 gh-pages:
 	git subtree split --prefix website --branch gh-pages
 
-rd:
-	crant -X
+rd: git
+	Rscript -e "library(methods); devtools::document()"
+	git add man/ NAMESPACE
+	test "$$(git status --porcelain | wc -c)" = "0" || git commit -m "document"
 
-inst: inst/NEWS.Rd inst/defaults/config/global.dcf .FORCE
-	cd defaults && mkdir -p $$(cat empty_dirs.txt) && for f in full minimal; do tar cf ../inst/defaults/$${f}.tar $$f; done
-
-inst/NEWS.Rd: NEWS.md
-	Rscript -e "tools:::news2Rd('$<', '$@')"
+inst/NEWS.Rd: git NEWS.md
+	Rscript -e "tools:::news2Rd('$(word 2,$^)', '$@')"
 	sed -r -i 's/`([^`]+)`/\\code{\1}/g' $@
+	git add $@
+	test "$$(git status --porcelain | wc -c)" = "0" || git commit -m "update NEWS.Rd"
 
-inst/defaults/config/global.dcf: DESCRIPTION defaults/config/global.dcf
-	(echo "version: $$(sed -n '/^Version:/ s/Version: //p' DESCRIPTION)"; cat defaults/config/global.dcf) > inst/defaults/config/global.dcf
+inst/defaults/full/config/global.dcf: git DESCRIPTION
+	( echo -n "version: "; sed -n -r '/^Version: / {s/.* ([0-9.-]+)$$/\1/;p}' $(word 2,$^); tail -n +2 $@ ) > $@.tmp
+	mv $@.tmp $@
 	git add $@
 	git commit --amend --no-edit
 	crant -iC
-	crant -X
+	crant -XS
+	git add man
+	git commit --amend --no-edit
 
 tag:
-	git tag v$$(sed -n -r '/^Version: / {s/.* ([0-9.-]+)$$/\1/;p}' DESCRIPTION)
+	(echo Release v$$(sed -n -r '/^Version: / {s/.* ([0-9.-]+)$$/\1/;p}' DESCRIPTION); echo; sed -n '/^===/,/^===/{:a;N;/\n===/!ba;p;q}' NEWS.md | head -n -3 | tail -n +3) | git tag -a -F /dev/stdin v$$(sed -n -r '/^Version: / {s/.* ([0-9.-]+)$$/\1/;p}' DESCRIPTION)
 
-bump-cran-desc: rd
+bump-cran-desc: master rd
 	crant -u 2 -C
 
-bump-gh-desc: rd
+bump-gh-desc: master rd
+	sed -i -r '/^Version: / s/( [0-9.]+)$$/\1-0/' DESCRIPTION
+	git add DESCRIPTION
+	test "$$(git status --porcelain | wc -c)" = "0" || git commit -m "add suffix -0 to version"
 	crant -u 3 -C
 
-bump-desc: rd
-	test "$$(git status --porcelain | wc -c)" = "0"
+bump-desc: master rd
 	sed -i -r '/^Version: / s/( [0-9.]+)$$/\1-0.0/' DESCRIPTION
 	git add DESCRIPTION
-	test "$$(git status --porcelain | wc -c)" = "0" || git commit -m "Add suffix -0.0 to version"
+	test "$$(git status --porcelain | wc -c)" = "0" || git commit -m "add suffix -0.0 to version"
 	crant -u 4 -C
 
-bump-cran: bump-cran-desc inst/defaults/config/global.dcf tag
+bump-cran: bump-cran-desc inst/defaults/full/config/global.dcf inst/NEWS.Rd tag
 
-bump-gh: bump-gh-desc inst/defaults/config/global.dcf tag
+bump-gh: bump-gh-desc inst/defaults/full/config/global.dcf inst/NEWS.Rd tag
 
-bump: bump-desc inst/defaults/config/global.dcf tag
+bump: bump-desc inst/defaults/full/config/global.dcf inst/NEWS.Rd tag
 
-.FORCE:
+bootstrap_snap:
+	curl -L https://raw.githubusercontent.com/krlmlr/r-snap-texlive/master/install.sh | sh
+	curl -L https://raw.githubusercontent.com/krlmlr/r-snap/master/install.sh | sh
+
+test:
+	Rscript -e "update.packages(repos = 'http://cran.rstudio.com')"
+	Rscript -e "options(repos = 'http://cran.rstudio.com'); devtools::install_deps(dependencies = TRUE)"
+	Rscript -e "devtools::check(document = FALSE, check_dir = '.', cleanup = FALSE)"
+	! egrep -A 5 "ERROR|WARNING|NOTE" ../*.Rcheck/00check.log
