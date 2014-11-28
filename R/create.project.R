@@ -82,6 +82,7 @@ create.project <- function(project.name = 'new-project', minimal = FALSE,
   template.files.all <- .list.files.and.dirs(path = template.path)
   # This doesn't capture subdirectories to be excluded, they need to be
   # deleted afterwards
+  not_excluded_by_diff <- setdiff(exclude, template.files.all)
   template.files <- setdiff(template.files.all, exclude)
 
   project.path <- file.path(project.name)
@@ -107,7 +108,8 @@ create.project <- function(project.name = 'new-project', minimal = FALSE,
             recursive = TRUE, overwrite = FALSE)
   # KISS. Copy and then delete is wasteful, but I haven't found a more elegant
   # solution in reasonable time.
-  stopifnot(file.exists(file.path(project.path, exclude)))
+  if (length(not_excluded_by_diff) > 0)
+    stopifnot(file.exists(file.path(project.path, not_excluded_by_diff)))
   unlink(file.path(project.path, exclude), recursive = TRUE)
 
   # Add project name to header
