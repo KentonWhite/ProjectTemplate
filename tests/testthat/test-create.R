@@ -2,14 +2,17 @@ context('Create project')
 
 test_project <- tempfile('test_project')
 
-expect_file <- function(x, condition = is_true()) {
+expect_file <- function(..., condition = is_true()) {
+  x <- file.path(...)
   expect_that(file.exists(file.path(test_project, x)), condition, x)
 }
 
-expect_no_file <- function(x) expect_file(x, is_false())
+expect_no_file <- function(...) expect_file(..., condition = is_false())
 
-expect_dir <- function(x) {
+expect_dir <- function(...) {
+  x <- file.path(...)
   expect_file(x)
+  expect_true(.is.dir(file.path(test_project, x)))
   expect_file(file.path(x, 'README.md'))
 }
 
