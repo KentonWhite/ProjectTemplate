@@ -56,12 +56,12 @@ expect_minimal <- function() {
   expect_file('code', 'src', 'eda.R')
 
   expect_no_file('code', 'diagnostics')
-  expect_no_file('doc')
-  expect_no_file('graphs')
+  expect_no_file('code', 'doc')
+  expect_no_file('results', 'graphs')
   expect_no_file('code', 'lib')
-  expect_no_file('logs')
+  expect_no_file('results', 'logs')
   expect_no_file('code', 'profiling')
-  expect_no_file('reports')
+  expect_no_file('results', 'reports')
   expect_no_file('code', 'tests')
   expect_no_file('TODO')
 }

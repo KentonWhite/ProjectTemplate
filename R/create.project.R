@@ -44,8 +44,9 @@ create.project <- function(project.name = 'new-project', minimal = FALSE,
   temp.dir <- tempfile("ProjectTemplate")
 
   if (minimal) {
-    exclude <- c("doc", "graphs", "logs", "reports", "TODO",
-                 file.path("code", c("diagnostics", "lib", "profiling", "tests")))
+    exclude <- c("TODO",
+                 file.path("code", c("diagnostics", "doc", "lib", "profiling", "tests")),
+                 file.path("results", c("graphs", "logs", "reports")))
   } else {
     exclude <- c()
   }
