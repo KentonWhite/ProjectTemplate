@@ -84,7 +84,7 @@ Now when we reload our project we see the following:
 
 Unfortunately, the preprocessing step still seems to go slowly. That's because, even though we're pulling `first.letter.counts` and `second.letter.counts` from `cache`, we're also still running the munging steps to create those variables at runtime. To stop recomputing work we've already cached, we edit our configuration file and turn `munging` off:
 
-        munging: off
+        munging: FALSE
 
 After doing that, we load our project again and see that things run a lot faster because the munging step is skipped:
 
