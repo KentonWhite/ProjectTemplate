@@ -52,7 +52,7 @@ As you can see, we've got a data frame that contains 233,614 words along with th
 
 To use `plyr`, we need to load the package. ProjectTemplate makes it easy to automate this step. First, we have to edit the `config/global.dcf` file to make sure that the `load_libraries` setting is turned on:
 
-        load_libraries: on
+        load_libraries: TRUE
 
 Second, we need to make sure that the `plyr` package will be loaded automatically when we run `load.project()`. To do that, we check that the value of the `libraries` configuration setting contains plyr. We see that it does list plyr, along with reshape, ggplot2, stringr and lubridate:
 
