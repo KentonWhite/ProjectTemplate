@@ -187,8 +187,12 @@ sql.reader <- function(data.file, filename, variable.name)
       database.info[['port']] <- 5432
     }
 
-    args <- intersect(names(database.info), c('user', 'password', 'host', 'dbname', 'port'))
-    connection <- do.call(DBI::dbConnect, c(list(pgsql.driver), database.info[args]))
+    connection <- DBI::dbConnect(pgsql.driver,
+                            user = database.info[['user']],
+                            password = database.info[['password']],
+                            host = database.info[['host']],
+                            dbname = database.info[['dbname']],
+                            port = as.integer(database.info[['port']]))
   }
 
   if (database.info[['type']] == 'oracle')
