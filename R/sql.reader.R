@@ -56,13 +56,11 @@
 #' dbname: sample_database
 #' table: sample_table
 #'
-#' Example 7
+#' Example 7 ## adapted for database particulars
 #' type: odbc
-#' dsn: sample_dsn
-#' user: sample_user
-#' password: sample_password
-#' dbname: sample_database
-#' query: SELECT * FROM sample_table
+#' driver: {Some driver}
+#' server: server
+#' database: database
 #'
 #' Example 8
 #' type: oracle
@@ -129,10 +127,10 @@ sql.reader <- function(data.file, filename, variable.name)
   {
     .require.package('RODBC')
 
-    connection.string <- paste('DSN=', database.info[['dsn']], ';',
-                               'UID=', database.info[['user']], ';',
-                               'PWD=', database.info[['password']], ';',
-                               'DATABASE=', database.info['dbname'],
+    connection.string <- paste('driver=', database.info[['driver']], ';',
+                               'server=', database.info[['server']], ';',
+                               'database=', database.info[['database']], ';',
+                               'trusted_connection=TRUE',
                                sep = '')
     connection <- RODBC::odbcDriverConnect(connection.string)
     results <- RODBC::sqlQuery(connection, database.info[['query']])
