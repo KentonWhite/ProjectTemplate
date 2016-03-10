@@ -20,9 +20,7 @@
 #'  e <- NA
 #'  f <- NULL
 #'
-#'  database.info <- list(somedcfoutput...)
-#'
-#'  separated.list(sep = ";", a, b, d)}
+#'  separated.list(sep = ";", database.info = "database.info", a, b, d)}
 #'
 
 separated.list <- function(sepchar = ";", database.info, ...){
