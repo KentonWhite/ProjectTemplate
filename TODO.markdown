@@ -51,5 +51,13 @@
 ## Scaffolding
 * Compact directories.
 * .gitignore, .gitkeep
+* R Script templates that can be created through the command line:
+  * data
+  * src
+  * munge
+  * test
+  * Rmd templates
+  * graphs
+  * etc...
 
 * CSV quote character control.

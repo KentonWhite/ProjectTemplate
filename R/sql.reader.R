@@ -56,11 +56,16 @@
 #' dbname: sample_database
 #' table: sample_table
 #'
-#' Example 7 ## adapted for database particulars
+#' Example 7
 #' type: odbc
+#' dsn: sample_dsn
+#' user: sample_user
+#' password: sample_password
+#' database: sample_database
 #' driver: {Some driver}
 #' server: server
-#' database: database
+#' trusted_connection: TRUE
+#' query: SELECT * FROM some_table
 #'
 #' Example 8
 #' type: oracle
@@ -127,11 +132,24 @@ sql.reader <- function(data.file, filename, variable.name)
   {
     .require.package('RODBC')
 
-    connection.string <- paste('driver=', database.info[['driver']], ';',
-                               'server=', database.info[['server']], ';',
-                               'database=', database.info[['database']], ';',
-                               'trusted_connection=TRUE',
+    server <- .include.if.not.blank("server")
+    driver <- .include.if.not.blank("driver")
+    dbname <- .include.if.not.blank("database")
+    t_c    <- .include.if.not.blank("trusted_connection")
+    dsn    <- .include.if.not.blank("dsn")
+    user   <- .include.if.not.blank("user")
+    pwd    <- .include.if.not.blank("password")
+
+    connection.string <- paste(
+                               server,
+                               driver,
+                               dbname,
+                               t_c,
+                               dsn,
+                               user,
+                               pwd,
                                sep = '')
+
     connection <- RODBC::odbcDriverConnect(connection.string)
     results <- RODBC::sqlQuery(connection, database.info[['query']])
     RODBC::odbcClose(connection)
@@ -364,5 +382,15 @@ sql.reader <- function(data.file, filename, variable.name)
   {
     warning(paste('Unable to disconnect from database:',
                   database.info[['dbname']]))
+  }
+}
+
+.include.if.not.blank <- function(field){
+  # look in the field, if blank return nothing else
+  # return string in form: "field = field;"
+  if(field != ""){
+    return(paste(field, "=", field, ";", sep = ""))
+  } else {
+    return("")
   }
 }
