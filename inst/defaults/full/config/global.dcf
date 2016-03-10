@@ -5,7 +5,7 @@ recursive_loading: FALSE
 munging: TRUE
 logging: FALSE
 load_libraries: FALSE
-libraries: reshape, plyr, dplyr, ggplot2, stringr, lubridate
-as_factors: TRUE
+libraries: reshape, plyr, dplyr, ggplot2, stringr, lubridate, tidyr
+as_factors: FALSE
 data_tables: FALSE
 attach_internal_libraries: FALSE
