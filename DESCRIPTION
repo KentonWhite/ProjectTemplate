@@ -91,6 +91,8 @@ Collate:
     'new.config.R'
     'reload.project.R'
     'run.project.R'
+    'separated.list.R'
     'show.project.R'
     'stub.tests.R'
     'test.project.R'
+RoxygenNote: 5.0.1
