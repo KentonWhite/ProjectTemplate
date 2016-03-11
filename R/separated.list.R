@@ -6,7 +6,7 @@
 #' list elements that are blank.
 #' It means that the \code{sql.reader} functions can be more flexible when
 #' reading .sql dcf files, as the user can specify the inputs for
-#' \code{\link{odbcDriverConnect}}.
+#' \code{\link[RODBC]{odbcDriverConnect}}.
 #'
 #' @param sepchar this is the character with which you wish to separate list.
 #' @param target.list this is a list to be concatenated. It is in the form

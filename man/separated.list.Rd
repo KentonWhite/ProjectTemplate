@@ -23,7 +23,7 @@ need a concatenated string separated by a semi-colon. It ignores
 list elements that are blank.
 It means that the \code{sql.reader} functions can be more flexible when
 reading .sql dcf files, as the user can specify the inputs for
-\code{\link{odbcDriverConnect}}.
+\code{\link[RODBC]{odbcDriverConnect}}.
 }
 \examples{
 library('ProjectTemplate')
