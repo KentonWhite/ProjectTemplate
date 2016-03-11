@@ -56,7 +56,6 @@
 #' dbname: sample_database
 #' table: sample_table
 #'
-#' Example 7 ## adapted for database particulars
 #' Example 7
 #' type: odbc
 #' dsn: sample_dsn
