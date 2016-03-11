@@ -127,14 +127,15 @@ sql.reader <- function(data.file, filename, variable.name)
     return()
   }
 
-  # Draft code for ODBC support.
+  # Code for ODBC support.
   if (database.info[['type']] == 'odbc')
   {
     .require.package('RODBC')
 
-    connection.string <- .separated.list(sepchar = ";",
+    connection.string <- .separated.list(sepchar = ';',
                                          target.list = database.info,
-                                         ignore = c("type", "query"))
+                                         ignore = c('type', 'query'))
+
     connection <- RODBC::odbcDriverConnect(connection.string)
     results <- RODBC::sqlQuery(connection, database.info[['query']])
     RODBC::odbcClose(connection)
