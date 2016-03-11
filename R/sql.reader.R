@@ -133,7 +133,8 @@ sql.reader <- function(data.file, filename, variable.name)
     .require.package('RODBC')
 
     connection.string <- .separated.list(sepchar = ";",
-                                         target.list = database.info)
+                                         target.list = database.info,
+                                         ignore = c("type", "query"))
     connection <- RODBC::odbcDriverConnect(connection.string)
     results <- RODBC::sqlQuery(connection, database.info[['query']])
     RODBC::odbcClose(connection)

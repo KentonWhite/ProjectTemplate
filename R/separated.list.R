@@ -34,6 +34,7 @@ separated.list <- function(sepchar = ";", target.list, ignore){
   # look in the field, if blank return nothing else
   # return string in form: "field=target.list[['field']];"
   input_list <- names(target.list)
+  input_list[which(!(input_list %in% ignore))]
   output_list <- NULL
 
   for(i in 1:length(input_list)){
