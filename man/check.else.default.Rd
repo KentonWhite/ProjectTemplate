@@ -34,6 +34,6 @@ library(ProjectTemplate)
 
 }
 \seealso{
-\link{\code{sql.reader}}
+\code{\link{sql.reader}}
 }
 

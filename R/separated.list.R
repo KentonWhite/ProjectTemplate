@@ -7,8 +7,8 @@
 #' when reading .sql dcf files, as the user can specify the inputs for
 #' \code{\link[RODBC]{odbcDriverConnect}}.
 #'
-#' @usage separated.list(target.list, ignore = NULL, colchar = ";", sepchar =
-#'   "=")
+#' @usage separated.list(target.list, ignore = NULL,sepchar = "=", colchar =
+#'   ";")
 #'
 #' @param sepchar This is the character with which you wish to separate the list
 #'   element names and the list elements.

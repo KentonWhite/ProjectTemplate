@@ -4,8 +4,8 @@
 \alias{separated.list}
 \title{Create a concatenated string from an R list.}
 \usage{
-separated.list(target.list, ignore = NULL, colchar = ";", sepchar =
-  "=")
+separated.list(target.list, ignore = NULL,sepchar = "=", colchar =
+  ";")
 }
 \arguments{
 \item{target.list}{This is a list to be concatenated. It is in the form of

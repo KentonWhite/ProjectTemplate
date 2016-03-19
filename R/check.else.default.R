@@ -23,7 +23,7 @@
 #'          b <- list(qr = FALSE) # list where arg 'qr' is declared
 #'          check.else.default(arg = 'qr', default = a, options = b)}
 #'
-#' @seealso \link{\code{sql.reader}}
+#' @seealso \code{\link{sql.reader}}
 #'
 check.else.default <- function(arg, default, options){
 
