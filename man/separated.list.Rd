@@ -4,40 +4,49 @@
 \alias{separated.list}
 \title{Create a concatenated string from an R list.}
 \usage{
-separated.list(sepchar = ";", target.list, ignore)
+separated.list(target.list, ignore = NULL, colchar = ";", sepchar =
+  "=")
 }
 \arguments{
-\item{sepchar}{this is the character with which you wish to separate list.}
-
-\item{target.list}{this is a list to be concatenated. It is in the form
-of the information translated from a .dcf file using
+\item{target.list}{This is a list to be concatenated. It is in the form of
+the information translated from a .dcf file using
 \code{\link{translate.dcf}}}
 
-\item{ignore}{this is an optional character vector to ignore particular
+\item{ignore}{This is an optional character vector to ignore particular
 elements in the list.}
+
+\item{sepchar}{This is the character with which you wish to separate the list
+element names and the list elements.}
+
+\item{colchar}{A character to collapse the list, as in \code{paste}}
+}
+\value{
+Returns a string with the list element name and list element value
+  connected together with a separating character. These elements are then
+  separated from all the list element blocks with a specified character.
 }
 \description{
 This creates a list separated by the specified \code{sepchar}, which is
-useful for specifying \code{\link{sql.reader}} odbc connections which
-need a concatenated string separated by a semi-colon. It ignores
-list elements that are blank.
-It means that the \code{sql.reader} functions can be more flexible when
-reading .sql dcf files, as the user can specify the inputs for
+useful for specifying \code{\link{sql.reader}} odbc connections which need a
+concatenated string separated by a semi-colon. It ignores list elements that
+are blank. It means that the \code{sql.reader} functions can be more flexible
+when reading .sql dcf files, as the user can specify the inputs for
 \code{\link[RODBC]{odbcDriverConnect}}.
 }
 \examples{
 library('ProjectTemplate')
 
 \dontrun{
- separated.list(sepchar = ";",
+ separated.list(
    target.list = database.info,
-   ignore = c("ridiculousoption")
+   ignore = c("ridiculousoption"),
+   sepchar = "=", colchar = ";"
    )
    }
 
 }
 \seealso{
 \code{\link[ProjectTemplate]{sql.reader}} for useage and
-\code{\link[ProjectTemplate]{translate.dcf}} for \code{database.info} form.
+  \code{\link[ProjectTemplate]{translate.dcf}} for \code{database.info} form.
 }
 

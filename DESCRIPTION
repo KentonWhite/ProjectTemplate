@@ -80,6 +80,7 @@ Collate:
     'cache.R'
     'cache.name.R'
     'cache.project.R'
+    'check.else.default.R'
     'clean.variable.name.R'
     'create.project.R'
     'translate.dcf.R'

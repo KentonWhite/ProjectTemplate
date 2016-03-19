@@ -132,11 +132,35 @@ sql.reader <- function(data.file, filename, variable.name)
   {
     .require.package('RODBC')
 
-    connection.string <- .separated.list(sepchar = ';',
-                                         target.list = database.info,
-                                         ignore = c('type', 'query'))
+    # list of rodbc options to ignore
+    odbcDC_default_args <-
+      as.list(formals(RODBC::odbcDriverConnect))
+    arg_names <- formalArgs(RODBC::odbcDriverConnect)
 
-    connection <- RODBC::odbcDriverConnect(connection.string)
+    # define args: each element is an arg from odbcDriverConnect, and takes the
+    # value of the default, unless specified in database.info
+    odbcDC_args <-
+      lapply(
+        names(odbcDC_default_args),
+        ".check.else.default",
+        default = odbcDC_default_args,
+        options = database.info
+      )
+    names(odbcDC_args) <- names(odbcDC_default_args)
+
+    # create connection.string from args that are not odbcDriverConnect
+    # or query args
+    connection.string <-
+      .separated.list(
+        target.list = database.info,
+        ignore = c(arg_names, 'query'),
+        sepchar = ';',
+        colchar = '='
+      )
+    odbcDC_args[['connection']] <- connection.string
+
+    # open the connection
+    connection <- do.call(RODBC::odbcDriverConnect, odbcDC_args)
     results <- RODBC::sqlQuery(connection, database.info[['query']])
     RODBC::odbcClose(connection)
     assign(variable.name,
