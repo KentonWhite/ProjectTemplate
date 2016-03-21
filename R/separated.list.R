@@ -51,10 +51,10 @@ separated.list <-
 
     config_param <-
       paste(input_list,
-            sepchar,
+            colchar,
             target.list[input_list],
             sep = "",
-            collapse = colchar)
+            collapse = sepchar)
 
     config_param
 
