@@ -138,8 +138,8 @@ sql.reader <- function(data.file, filename, variable.name)
     arg_names <- formalArgs(RODBC::odbcDriverConnect)
     
     # colQuote default
-    odbcDC_args[['colQuote']] <- '\"'
-    odbcDC_args[['tabQuote']] <- odbcDC_args[['colQuote']]
+    odbcDC_default_args[['colQuote']] <- '\"'
+    odbcDC_default_args[['tabQuote']] <- odbcDC_default_args[['colQuote']]
     
     # define args: each element is an arg from odbcDriverConnect, and takes the
     # value of the default, unless specified in database.info
