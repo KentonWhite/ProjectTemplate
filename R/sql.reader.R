@@ -142,7 +142,7 @@ sql.reader <- function(data.file, filename, variable.name)
     odbcDC_args <-
       lapply(
         names(odbcDC_default_args),
-        .check.else.default,
+        check.else.default,
         default = odbcDC_default_args,
         options = database.info
       )
@@ -151,7 +151,7 @@ sql.reader <- function(data.file, filename, variable.name)
     # create connection.string from args that are not odbcDriverConnect
     # or query args
     connection.string <-
-      .separated.list(
+      separated.list(
         target.list = database.info,
         ignore = c(arg_names, 'query'),
         sepchar = ';',
