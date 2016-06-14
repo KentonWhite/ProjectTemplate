@@ -38,8 +38,11 @@ require.package <- function(package.name, attach = TRUE)
   }
 
   if (!success) {
-    function.name <- deparse(sys.calls()[[sys.nframe()-1]], nlines = 1)
-    stop(paste(function.name, ' requires package ', package.name, '.\nPlease install ', package.name, ' by running install.packages("', package.name, '") and then try re-running load.project()', sep = ''), call. = FALSE)
+    install.packages(package.name)
+    #function.name <- deparse(sys.calls()[[sys.nframe()-1]], nlines = 1)
+    message('We load or install the required libraries')
+    #stop(paste(function.name, ' requires package ', package.name, '.\nPlease install ', package.name, ' by running install.packages("', package.name, '") and then try re-running load.project()', sep = ''), call. = FALSE)
+    require(package.name,character.only = T)
   }
 
   invisible(NULL)
