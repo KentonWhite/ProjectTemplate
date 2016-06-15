@@ -17,12 +17,12 @@ run.project <- function()
 {
   message('Running project analyses from src')
 
-  for (analysis.script in dir('src'))
+  for (analysis.script in dir(file.path('code', 'src')))
   {
     if (grepl('\\.R$', analysis.script, ignore.case = TRUE))
     {
       message(paste(' Running analysis script:', analysis.script))
-      system(paste('Rscript', file.path('src', analysis.script)))
+      system(paste('Rscript', file.path('code', 'src', analysis.script)))
     }
   }
 }

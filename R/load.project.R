@@ -44,13 +44,13 @@ load.project <- function(override.config = NULL)
     }
   }
 
-  if (file.exists('lib'))
+  if (file.exists(file.path('code', 'lib')))
   {
     message('Autoloading helper functions')
 
     my.project.info$helpers <- c()
 
-    helpers <- dir('lib', pattern = '[.][rR]$')
+    helpers <- dir(file.path('code', 'lib'), pattern = '[.][rR]$')
     deprecated.files <- intersect(
       helpers, c('boot.R', 'load_data.R', 'load_libraries.R',
                  'preprocess_data.R', 'run_tests.R'))
@@ -62,7 +62,7 @@ load.project <- function(override.config = NULL)
     for (helper.script in helpers)
     {
       message(paste(' Running helper script:', helper.script))
-      source(file.path('lib', helper.script))
+      source(file.path('code', 'lib', helper.script))
       my.project.info$helpers <- c(my.project.info$helpers, helper.script)
     }
   }
@@ -95,10 +95,10 @@ load.project <- function(override.config = NULL)
   if (config$munging)
   {
     message('Munging data')
-    for (preprocessing.script in sort(dir('munge', pattern = '[.][rR]$')))
+    for (preprocessing.script in sort(dir(file.path('code', 'munge'), pattern = '[.][rR]$')))
     {
       message(paste(' Running preprocessing script:', preprocessing.script))
-      source(file.path('munge', preprocessing.script))
+      source(file.path('code', 'munge', preprocessing.script))
     }
   }
 
@@ -138,13 +138,14 @@ load.project <- function(override.config = NULL)
 }
 
 .load.cache <- function() {
-  .provide.directory('cache')
-  cache.files <- dir('cache')
+  cache_dir <- file.path('input', 'cache')
+  .provide.directory(cache_dir)
+  cache.files <- dir(cache_dir)
   cached.files <- c()
 
   for (cache.file in cache.files)
   {
-    filename <- file.path('cache', cache.file)
+    filename <- file.path(cache_dir, cache.file)
 
     for (extension in ls(extensions.dispatch.table))
     {
@@ -180,13 +181,14 @@ load.project <- function(override.config = NULL)
 }
 
 .load.data <- function(recursive) {
-  .provide.directory('data')
-  data.files <- dir('data', recursive = recursive)
+  data_dir <- file.path('input', 'data')
+  .provide.directory(data_dir)
+  data.files <- dir(data_dir, recursive = recursive)
   data.files.loaded <- c()
 
   for (data.file in data.files)
   {
-    filename <- file.path('data', data.file)
+    filename <- file.path(data_dir, data.file)
 
     for (extension in ls(extensions.dispatch.table))
     {
@@ -244,19 +246,21 @@ load.project <- function(override.config = NULL)
   }
 }
 
-.load.config <- function(override.config = NULL) {
+.load.config <- function(override.config = NULL, warn = TRUE) {
+  my_warning <- if (warn) warning else function(...) invisible(NULL)
+
   config.path <- file.path('config', 'global.dcf')
   config <- if (file.exists(config.path)) {
     translate.dcf(config.path)
   } else {
-    warning('You are missing a configuration file: ', config.path, ' . Defaults will be used.')
+    my_warning('You are missing a configuration file: ', config.path, ' . Defaults will be used.')
     default.config
   }
 
   missing.entries <- setdiff(names(default.config), names(config))
   if (length(missing.entries) > 0) {
-    warning('Your configuration file is missing the following entries: ',
-            paste(missing.entries, collapse = ', '), '. Defaults will be used.')
+    my_warning('Your configuration file is missing the following entries: ',
+               paste(missing.entries, collapse = ', '), '. Defaults will be used.')
     config[missing.entries] <- default.config[missing.entries]
   }
 
@@ -267,8 +271,8 @@ load.project <- function(override.config = NULL)
   extra.entries <- setdiff(names(config), names(default.config))
   extra.entries <- grep("^[^#]", extra.entries, value = TRUE)
   if (length(extra.entries) > 0) {
-    warning('Your configuration contains the following unused entries: ',
-            paste(extra.entries, collapse = ', '), '. These will be ignored.')
+    my_warning('Your configuration contains the following unused entries: ',
+               paste(extra.entries, collapse = ', '), '. These will be ignored.')
     config[extra.entries] <- NULL
   }
 

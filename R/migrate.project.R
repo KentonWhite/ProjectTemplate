@@ -9,7 +9,7 @@
 #'
 #' @seealso \code{\link{create.project}}
 #'
-#' @include load.project.R
+#' @include create.project.R load.project.R
 #'
 #' @examples
 #' library('ProjectTemplate')
@@ -21,11 +21,34 @@ migrate.project <- function()
 
   message('Migrating project configuration')
 
-  config <- .load.config()
+  config <- .load.config(warn = FALSE)
 
   if (.check.version(config, warn.migrate = FALSE) == 0) {
-    message("Already up to date.")
+    message('Already up to date.')
     return(invisible(NULL))
+  }
+
+  if (compareVersion(config$version, '0.6-1.0') < 0) {
+    dir.create('code', showWarnings = FALSE)
+    for (d in c('diagnostics', 'doc', 'lib', 'munge', 'profiling', 'src', 'tests')) {
+      if (.is.dir(d)) {
+        file.rename(d, file.path('code', d))
+      }
+    }
+
+    dir.create('input', showWarnings = FALSE)
+    for (d in c('cache', 'data')) {
+      if (.is.dir(d)) {
+        file.rename(d, file.path('input', d))
+      }
+    }
+
+    dir.create('results', showWarnings = FALSE)
+    for (d in c('graphs', 'logs', 'reports')) {
+      if (.is.dir(d)) {
+        file.rename(d, file.path('results', d))
+      }
+    }
   }
 
   config$version <- .package.version()
