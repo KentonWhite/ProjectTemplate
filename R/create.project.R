@@ -44,8 +44,8 @@ create.project <- function(project.name = 'new-project', minimal = FALSE,
   temp.dir <- tempfile("ProjectTemplate")
 
   if (minimal) {
-    exclude <- c("diagnostics", "doc", "graphs", "lib", "logs", "profiling",
-                 "reports", "tests", "TODO")
+    exclude <- c("doc", "graphs", "logs", "reports", "TODO",
+                 file.path("code", c("diagnostics", "lib", "profiling", "tests")))
   } else {
     exclude <- c()
   }
@@ -79,6 +79,8 @@ create.project <- function(project.name = 'new-project', minimal = FALSE,
 .create.project.existing <- function(project.name, merge.strategy, exclude) {
   template.path <- system.file('defaults/full', package = 'ProjectTemplate')
   template.files.all <- .list.files.and.dirs(path = template.path)
+  # This doesn't capture subdirectories to be excluded, they need to be
+  # deleted afterwards
   template.files <- setdiff(template.files.all, exclude)
 
   project.path <- file.path(project.name)
@@ -102,6 +104,9 @@ create.project <- function(project.name = 'new-project', minimal = FALSE,
   file.copy(file.path(template.path, template.files),
             project.path,
             recursive = TRUE, overwrite = FALSE)
+  # KISS. Copy and then delete is wasteful, but I haven't found a more elegant
+  # solution in reasonable time.
+  unlink(file.path(project.path, exclude), recursive = TRUE)
 
   # Add project name to header
   README.md <- file.path(project.path, "README.md")

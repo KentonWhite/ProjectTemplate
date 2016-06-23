@@ -44,13 +44,13 @@ load.project <- function(override.config = NULL)
     }
   }
 
-  if (file.exists('lib'))
+  if (file.exists(file.path('code', 'lib')))
   {
     message('Autoloading helper functions')
 
     my.project.info$helpers <- c()
 
-    helpers <- dir('lib', pattern = '[.][rR]$')
+    helpers <- dir(file.path('code', 'lib'), pattern = '[.][rR]$')
     deprecated.files <- intersect(
       helpers, c('boot.R', 'load_data.R', 'load_libraries.R',
                  'preprocess_data.R', 'run_tests.R'))
@@ -62,7 +62,7 @@ load.project <- function(override.config = NULL)
     for (helper.script in helpers)
     {
       message(paste(' Running helper script:', helper.script))
-      source(file.path('lib', helper.script))
+      source(file.path('code', 'lib', helper.script))
       my.project.info$helpers <- c(my.project.info$helpers, helper.script)
     }
   }
@@ -95,10 +95,10 @@ load.project <- function(override.config = NULL)
   if (config$munging)
   {
     message('Munging data')
-    for (preprocessing.script in sort(dir('munge', pattern = '[.][rR]$')))
+    for (preprocessing.script in sort(dir(file.path('code', 'munge'), pattern = '[.][rR]$')))
     {
       message(paste(' Running preprocessing script:', preprocessing.script))
-      source(file.path('munge', preprocessing.script))
+      source(file.path('code', 'munge', preprocessing.script))
     }
   }
 
