@@ -14,7 +14,7 @@
 * Clean up DB code in `sql.reader.R`.
 * Improve ODBC support.
 * Add JDBC support.
- 
+
 ## Allow Users to Dump Static Project
 * Add `create.project(dump = TRUE)` feature.
 
@@ -24,6 +24,7 @@
 * Produce a screencast featuring SQLite and SPSS autoloading and letters data.
 * Document overriding a default reader.
 * Create a tarball of the final state of the walkthrough project for the intro tutorial.
+* Check website documentation for `sql.reader` and `separated.list`
 
 ## Internal State
 * `cache.project()` needs to deal with tools that generate data sets that don't meet naming conventions: e.g. `.db` files.

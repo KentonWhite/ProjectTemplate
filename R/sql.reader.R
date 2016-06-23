@@ -61,8 +61,11 @@
 #' dsn: sample_dsn
 #' user: sample_user
 #' password: sample_password
-#' dbname: sample_database
-#' query: SELECT * FROM sample_table
+#' database: sample_database
+#' driver: {Some driver}
+#' server: server
+#' trusted_connection: TRUE
+#' query: SELECT * FROM some_table
 #'
 #' Example 8
 #' type: oracle
@@ -105,16 +108,16 @@
 sql.reader <- function(data.file, filename, variable.name)
 {
   database.info <- translate.dcf(filename)
-
+  
   if (! is.null(database.info[['connection']]))
   {
     connection_filename <- paste("data/", database.info[['connection']],".sql-connection", sep="")
     connection.info <- translate.dcf(connection_filename)
-
+    
     # Allow .sql to override options defined in .connection
     database.info <- modifyList(connection.info, database.info)
   }
-
+  
   if (! (database.info[['type']] %in% c('mysql', 'sqlite', 'odbc', 'postgres', 'oracle', 'jdbc', 'heroku')))
   {
     warning('Only databases reachable through RMySQL, RSQLite, RODBC ROracle or RPostgreSQL are currently supported.')
@@ -123,18 +126,45 @@ sql.reader <- function(data.file, filename, variable.name)
            envir = .TargetEnv)
     return()
   }
-
-  # Draft code for ODBC support.
+  
+  # Code for ODBC support.
   if (database.info[['type']] == 'odbc')
   {
     .require.package('RODBC')
-
-    connection.string <- paste('DSN=', database.info[['dsn']], ';',
-                               'UID=', database.info[['user']], ';',
-                               'PWD=', database.info[['password']], ';',
-                               'DATABASE=', database.info['dbname'],
-                               sep = '')
-    connection <- RODBC::odbcDriverConnect(connection.string)
+    
+    # list of rodbc options to ignore
+    odbcDC_default_args <-
+      as.list(formals(RODBC::odbcDriverConnect))
+    arg_names <- formalArgs(RODBC::odbcDriverConnect)
+    
+    # colQuote default
+    odbcDC_default_args[['colQuote']] <- '\"'
+    odbcDC_default_args[['tabQuote']] <- odbcDC_default_args[['colQuote']]
+    
+    # define args: each element is an arg from odbcDriverConnect, and takes the
+    # value of the default, unless specified in database.info
+    odbcDC_args <-
+      lapply(
+        names(odbcDC_default_args),
+        check.else.default,
+        default = odbcDC_default_args,
+        options = database.info
+      )
+    names(odbcDC_args) <- names(odbcDC_default_args)
+    
+    # create connection.string from args that are not odbcDriverConnect
+    # or query args
+    connection.string <-
+      separated.list(
+        target.list = database.info,
+        ignore = c(arg_names, 'type', 'query'),
+        sepchar = ';',
+        colchar = '='
+      )
+    odbcDC_args[['connection']] <- connection.string
+    
+    # open the connection
+    connection <- do.call(RODBC::odbcDriverConnect, odbcDC_args)
     results <- RODBC::sqlQuery(connection, database.info[['query']])
     RODBC::odbcClose(connection)
     assign(variable.name,
@@ -142,156 +172,156 @@ sql.reader <- function(data.file, filename, variable.name)
            envir = .TargetEnv)
     return()
   }
-
+  
   if (database.info[['type']] == 'mysql')
   {
     .require.package('RMySQL')
-
+    
     mysql.driver <- DBI::dbDriver("MySQL")
-
+    
     # Default value for 'port' in mysqlNewConnection is 0.
     if (is.null(database.info[['port']]))
     {
       database.info[['port']] <- 0
     }
-
+    
     connection <- DBI::dbConnect(mysql.driver,
-                            user = database.info[['user']],
-                            password = database.info[['password']],
-                            host = database.info[['host']],
-                            dbname = database.info[['dbname']],
-                            port = as.integer(database.info[['port']]),
-                            unix.socket = database.info[['socket']])
+                                 user = database.info[['user']],
+                                 password = database.info[['password']],
+                                 host = database.info[['host']],
+                                 dbname = database.info[['dbname']],
+                                 port = as.integer(database.info[['port']]),
+                                 unix.socket = database.info[['socket']])
     DBI::dbGetQuery(connection, "SET NAMES 'utf8'") # Switch to utf-8 strings
   }
-
+  
   if (database.info[['type']] == 'sqlite')
   {
     .require.package('RSQLite')
-
+    
     sqlite.driver <- DBI::dbDriver("SQLite")
-
+    
     connection <- DBI::dbConnect(sqlite.driver,
-                            dbname = database.info[['dbname']])
+                                 dbname = database.info[['dbname']])
   }
-
+  
   if (database.info[['type']] == 'postgres')
   {
     .require.package('RPostgreSQL')
-
+    
     pgsql.driver <- DBI::dbDriver("PostgreSQL")
-
+    
     # Default value for 'port' for Postgres is 5432.
     if (is.null(database.info[['port']]))
     {
       database.info[['port']] <- 5432
     }
-
+    
     connection <- DBI::dbConnect(pgsql.driver,
-                            user = database.info[['user']],
-                            password = database.info[['password']],
-                            host = database.info[['host']],
-                            dbname = database.info[['dbname']],
-                            port = as.integer(database.info[['port']]))
+                                 user = database.info[['user']],
+                                 password = database.info[['password']],
+                                 host = database.info[['host']],
+                                 dbname = database.info[['dbname']],
+                                 port = as.integer(database.info[['port']]))
   }
-
+  
   if (database.info[['type']] == 'oracle')
   {
     .require.package('ROracle')
-
+    
     oracle.driver <- DBI::dbDriver("Oracle")
-
+    
     # Default value for 'port' in mysqlNewConnection is 0.
     if (is.null(database.info[['port']]))
     {
       database.info[['port']] <- 0
     }
-
+    
     connection <- DBI::dbConnect(oracle.driver,
-                            user = database.info[['user']],
-                            password = database.info[['password']],
-                            dbname = database.info[['dbname']])
+                                 user = database.info[['user']],
+                                 password = database.info[['password']],
+                                 dbname = database.info[['dbname']])
   }
-
+  
   if (database.info[['type']] == 'jdbc')
   {
     .require.package('RJDBC')
-
+    
     ident.quote <- NA
     if('identquote' %in% names(database.info))
-       ident.quote <- database.info[['identquote']]
-
+      ident.quote <- database.info[['identquote']]
+    
     if(is.null(database.info[['classpath']])) {
       database.info[['classpath']] = ''
     }
-
+    
     rjdbc.driver <- RJDBC::JDBC(database.info[['class']], database.info[['classpath']], ident.quote)
     connection <- DBI::dbConnect(rjdbc.driver,
-                            database.info[['url']],
-                            user = database.info[['user']],
-                            password = database.info[['password']])
+                                 database.info[['url']],
+                                 user = database.info[['user']],
+                                 password = database.info[['password']])
   }
-
+  
   if (database.info[['type']] == 'heroku')
   {
     .require.package('RJDBC')
-
+    
     if(is.null(database.info[['classpath']])) {
       database.info[['classpath']] <- ''
     }
-
+    
     database.info[['class']] <- 'org.postgresql.Driver'
-
+    
     database.info[['url']] <- paste('jdbc:postgresql://', database.info[['host']],
-        ':', database.info[['port']],
-        '/', database.info[['dbname']],
-        '?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory', sep = '')
-
+                                    ':', database.info[['port']],
+                                    '/', database.info[['dbname']],
+                                    '?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory', sep = '')
+    
     rjdbc.driver <- RJDBC::JDBC(database.info[['class']], database.info[['classpath']])
     connection <- DBI::dbConnect(rjdbc.driver,
-                            database.info[['url']],
-                            user = database.info[['user']],
-                            password = database.info[['password']])
+                                 database.info[['url']],
+                                 user = database.info[['user']],
+                                 password = database.info[['password']])
   }
-
+  
   # Added support for queries.
   # User should specify either a table name or a query to execute, but not both.
   table <- database.info[['table']]
   query <- database.info[['query']]
-
+  
   # If both a table and a query are specified, favor the query.
   if (! is.null(table) && ! is.null(query))
   {
-      warning(paste("'query' parameter in ",
-                    filename,
-                    " overrides 'table' parameter.",
-                    sep = ''))
-      table <- NULL
+    warning(paste("'query' parameter in ",
+                  filename,
+                  " overrides 'table' parameter.",
+                  sep = ''))
+    table <- NULL
   }
-
+  
   if (is.null(table) && is.null(query))
   {
     warning("Either 'table' or 'query' must be specified in a .sql file")
     return()
   }
-
+  
   if (! is.null(table) && table == '*')
   {
     tables <- DBI::dbListTables(connection)
     for (table in tables)
     {
       message(paste('  Loading table:', table))
-
+      
       data.parcel <- DBI::dbReadTable(connection,
-                                 table,
-                                 row.names = NULL)
-
+                                      table,
+                                      row.names = NULL)
+      
       assign(clean.variable.name(table),
              data.parcel,
              envir = .TargetEnv)
     }
   }
-
+  
   # If table is specified, read the whole table.
   # Othwrwise, execute the specified query.
   if (! is.null(table) && table != '*')
@@ -299,9 +329,9 @@ sql.reader <- function(data.file, filename, variable.name)
     if (DBI::dbExistsTable(connection, table))
     {
       data.parcel <- DBI::dbReadTable(connection,
-                                 table,
-                                 row.names = NULL)
-
+                                      table,
+                                      row.names = NULL)
+      
       assign(variable.name,
              data.parcel,
              envir = .TargetEnv)
@@ -312,7 +342,7 @@ sql.reader <- function(data.file, filename, variable.name)
       return()
     }
   }
-
+  
   if (! is.null(query))
   {
     # Do string interpolation
@@ -326,7 +356,7 @@ sql.reader <- function(data.file, filename, variable.name)
     }
     data.parcel <- try(DBI::dbGetQuery(connection, query))
     err <- DBI::dbGetException(connection)
-
+    
     if (class(data.parcel) == 'data.frame' && (length(err) == 0 || err$errorNum == 0))
     {
       assign(variable.name,
@@ -348,7 +378,7 @@ sql.reader <- function(data.file, filename, variable.name)
       return()
     }
   }
-
+  
   # If the table exists but is empty, do not create a variable.
   # Or if the query returned no results, do not create a variable.
   if (nrow(data.parcel) == 0)
@@ -358,10 +388,10 @@ sql.reader <- function(data.file, filename, variable.name)
            envir = .TargetEnv)
     return()
   }
-
+  
   # Disconnect from database resources. Warn if failure.
   disconnect.success <- DBI::dbDisconnect(connection)
-
+  
   if (! disconnect.success)
   {
     warning(paste('Unable to disconnect from database:',
