@@ -8,6 +8,8 @@
 #' @param variable A character vector containing the name of the variable to
 #'  be saved.
 #'
+#' @param ... additional arguments passed to \code{\link{save}}
+#'
 #' @return No value is returned; this function is called for its side effects.
 #'
 #' @export
@@ -22,10 +24,11 @@
 #'
 #' setwd('..')
 #' unlink('tmp-project')}
-cache <- function(variable)
+cache <- function(variable, ...)
 {
+  stopifnot(length(variable) == 1)
   save(list = variable,
        envir = .TargetEnv,
-       file = file.path('cache',
-                        paste(variable, '.RData', sep = '')))
+       file = file.path('cache', paste0(variable, '.RData')),
+       ...)
 }

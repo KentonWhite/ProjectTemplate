@@ -31,18 +31,28 @@ require.package <- function(package.name, attach = TRUE)
   # Temporarily disable warnings
   old.options <- options(warn=-1)
   on.exit(options(old.options))
+
+  success <- .attach.or.add.namespace(package.name, attach)
+  if (!success) {
+    install.packages(package.name)
+    message(paste('Trying to install the', package.name, sep = ' '))
+    success <- .attach.or.add.namespace(package.name, attach)
+    if(!success) {
+      function.name <- deparse(sys.calls()[[sys.nframe()-1]], nlines = 1)
+      stop(paste(function.name, ' requires package ', package.name, '.\nPlease install ', package.name, ' by running install.packages("', package.name, '") and then try re-running load.project()', sep = ''), call. = FALSE)
+    }
+  }
+
+  invisible(NULL)
+}
+
+.attach.or.add.namespace <- function(package.name, attach) {
   if (attach) {
     success <- require(package.name, character.only = TRUE)
   } else {
     success <- requireNamespace(package.name)
   }
-
-  if (!success) {
-    function.name <- deparse(sys.calls()[[sys.nframe()-1]], nlines = 1)
-    stop(paste(function.name, ' requires package ', package.name, '.\nPlease install ', package.name, ' by running install.packages("', package.name, '") and then try re-running load.project()', sep = ''), call. = FALSE)
-  }
-
-  invisible(NULL)
+  return(success)
 }
 
 #' @rdname require.package
