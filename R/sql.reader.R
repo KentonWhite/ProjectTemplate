@@ -102,6 +102,7 @@
 #' \dontrun{sql.reader('example.sql', 'data/example.sql', 'example')}
 #'
 #' @include require.package.R
+#' @importFrom utils modifyList
 sql.reader <- function(data.file, filename, variable.name)
 {
   database.info <- translate.dcf(filename)

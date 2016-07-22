@@ -279,6 +279,7 @@ load.project <- function(override.config = NULL)
   config
 }
 
+#' @importFrom utils compareVersion
 .check.version <- function(config, warn.migrate = TRUE) {
   package.version <- .package.version()
   version.diff <- compareVersion(config$version, package.version)
