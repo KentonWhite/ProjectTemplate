@@ -11,18 +11,18 @@ test_that('Test 1: Add an extension', {
   suppressMessages(create.project(test_project, minimal = FALSE))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
-  file.copy(file.path(system.file('example_data',
-                                    package = 'ProjectTemplate'),
-                        'foo.reader.R'), file.path(test_project, 'lib', 'foo.reader.R'))
-  file.copy(file.path(system.file('example_data',
-                                    package = 'ProjectTemplate'),
-                        'example.foo'), file.path(test_project, 'data', 'example.foo'))
-
-  expect_that(file.exists(file.path(test_project, 'lib', 'foo.reader.R')), is_true())
-  expect_that(file.exists(file.path(test_project, 'data', 'example.foo')), is_true())
-
   oldwd <- setwd(test_project)
   on.exit(setwd(oldwd), add = TRUE)
+
+  file.copy(file.path(system.file('example_data',
+                                    package = 'ProjectTemplate'),
+                        'foo.reader.R'), file.path('lib', 'foo.reader.R'))
+  file.copy(file.path(system.file('example_data',
+                                    package = 'ProjectTemplate'),
+                        'example.foo'), file.path('data', 'example.foo'))
+
+  expect_that(file.exists(file.path('lib', 'foo.reader.R')), is_true())
+  expect_that(file.exists(file.path('data', 'example.foo')), is_true())
 
   load.project()
   expect_that(ProjectTemplate:::extensions.dispatch.table[['\\.foo$']], equals('foo.reader'))
