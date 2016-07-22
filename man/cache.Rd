@@ -4,11 +4,13 @@
 \alias{cache}
 \title{Cache a data set for faster loading.}
 \usage{
-cache(variable)
+cache(variable, ...)
 }
 \arguments{
 \item{variable}{A character vector containing the name of the variable to
 be saved.}
+
+\item{...}{additional arguments passed to \code{\link{save}}}
 }
 \value{
 No value is returned; this function is called for its side effects.
