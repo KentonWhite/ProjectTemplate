@@ -1,3 +1,10 @@
+# ProjectTemplate 0.6-3 (2016-07-23)
+
+* `cache()` gains a new `...` argument which is passed to `save()` (#148, @eribul).
+* Missing packages are installed automatically (#146, @wilmeragsgh).
+* Added `dplyr` to the list of default libraries in `global.dcf` (#143, @pavopax).
+
+
 # ProjectTemplate 0.6-2 (2016-07-22)
 
 * The `port` option is now used for `RPostgreSQL` connections.
