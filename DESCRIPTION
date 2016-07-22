@@ -1,7 +1,7 @@
 Package: ProjectTemplate
 Type: Package
 Title: Automates the creation of new statistical analysis
-    projects.
+    projects
 Version: 0.6-2
 Date: 2016-07-22
 Authors@R: c( person("Aleksandar", "Blagotic", role = "ctb"),
@@ -16,9 +16,9 @@ Authors@R: c( person("Aleksandar", "Blagotic", role = "ctb"),
     person("Noah", "Lorang", role = "ctb"),
     person("Patrick", "Schalk", role = "ctb"),
     person("Dominik", "Schneider", role="ctb"))
-Description: ProjectTemplate provides functions to
+Description: Provides functions to
     automatically build a directory structure for a new R
-    project. Using this structure, ProjectTemplate
+    project. Using this structure, 'ProjectTemplate'
     automates data loading, preprocessing, library
     importing and unit testing.
 License: Artistic-2.0
