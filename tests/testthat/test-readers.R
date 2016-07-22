@@ -1,19 +1,5 @@
 context('Readers')
 
-# testthat by default runs tests in the parent environment to global
-# This gives access to packages and keeps the test from polluting the global environment
-# However, the global environment is not in the test seach path
-# The global environment is needed for the objects created by the readers being tested
-#
-# Solution is to set the global environment as the parent of the test environment
-# Then the global environment is part of the test environment search path
-
-if (!identical(environment(), .GlobalEnv))
-{
-  test.env <- environment()
-  parent.env(test.env) <- .GlobalEnv
-}
-
 test_that('Test 1: CSV Data file', {
 
   data.file <- 'example_01.csv'
@@ -29,7 +15,7 @@ test_that('Test 1: CSV Data file', {
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.01, inherits = TRUE)
+  rm(example.01, envir = .TargetEnv)
 })
 
 
@@ -48,7 +34,7 @@ test_that('Test 2: .csv.bz2', {
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.02, inherits = TRUE)
+  rm(example.02, envir = .TargetEnv)
 
 })
 
@@ -67,7 +53,7 @@ test_that('Test 3: csv.zip data', {
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.03, inherits = TRUE)
+  rm(example.03, envir = .TargetEnv)
 
 })
 
@@ -87,7 +73,7 @@ test_that('Example 04: CSV Data File with GZip Compression', {
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.04, inherits = TRUE)
+  rm(example.04, envir = .TargetEnv)
 
 })
 
@@ -107,7 +93,7 @@ test_that('Example 05: TSV Data File', {
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.05, inherits = TRUE)
+  rm(example.05, envir = .TargetEnv)
 
 })
 
@@ -127,7 +113,7 @@ test_that('Example 06: TSV Data File with BZip2 Compression', {
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.06, inherits = TRUE)
+  rm(example.06, envir = .TargetEnv)
 
 })
 
@@ -146,7 +132,7 @@ test_that('Example 07: TSV Data File with Zip Compression', {
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.07, inherits = TRUE)
+  rm(example.07, envir = .TargetEnv)
 
 })
 
@@ -166,7 +152,7 @@ test_that('Example 08: TSV Data File with GZip Compression', {
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.08, inherits = TRUE)
+  rm(example.08, envir = .TargetEnv)
 
 })
 
@@ -185,7 +171,7 @@ test_that('Example 09: WSV Data File', {
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
   expect_false(any(is.na(as.matrix(get(variable.name)))))
-  rm(example.09, inherits = TRUE)
+  rm(example.09, envir = .TargetEnv)
 
 })
 
@@ -205,7 +191,7 @@ test_that('Example 10: WSV Data File with BZip2 Compression', {
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.10, inherits = TRUE)
+  rm(example.10, envir = .TargetEnv)
 
 })
 
@@ -225,7 +211,7 @@ test_that('Example 11: WSV Data File with Zip Compression', {
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.11, inherits = TRUE)
+  rm(example.11, envir = .TargetEnv)
 })
 
 
@@ -243,7 +229,7 @@ test_that('Example 12: WSV Data File with GZip Compression', {
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.12, inherits = TRUE)
+  rm(example.12, envir = .TargetEnv)
 
 })
 
@@ -263,7 +249,7 @@ test_that('Example 13: RData Data File with .RData Extension', {
   expect_that(nrow(get('m')), equals(5))
   expect_that(ncol(get('m')), equals(2))
   expect_that(get('m')[5, 2], equals(11))
-  rm('m', inherits = TRUE)
+  rm('m', envir = .TargetEnv)
 
 })
 
@@ -283,7 +269,7 @@ test_that('Example 14: RData Data File with .rda Extension', {
   expect_that(nrow(get('n')), equals(5))
   expect_that(ncol(get('n')), equals(2))
   expect_that(get('n')[5, 2], equals(11))
-  rm('n', inherits = TRUE)
+  rm('n', envir = .TargetEnv)
 
 })
 
@@ -308,7 +294,7 @@ test_that('Example 16: TSV File with .tab Extension', {
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.16, inherits = TRUE)
+  rm(example.16, envir = .TargetEnv)
 })
 
 
@@ -327,7 +313,7 @@ test_that('Example 17: TSV File with .tab Extension and BZip2 Compression', {
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.17, inherits = TRUE)
+  rm(example.17, envir = .TargetEnv)
 })
 
 
@@ -346,7 +332,7 @@ test_that('Example 18: TSV File with .tab Extension and Zip Compression', {
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.18, inherits = TRUE)
+  rm(example.18, envir = .TargetEnv)
 })
 
 
@@ -365,7 +351,7 @@ test_that('Example 19: TSV File with .tab Extension and GZip Compression', {
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.19, inherits = TRUE)
+  rm(example.19, envir = .TargetEnv)
 
 })
 
@@ -385,7 +371,7 @@ test_that('Example 20: WSV File with .txt Extension', {
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.20, inherits = TRUE)
+  rm(example.20, envir = .TargetEnv)
 
 })
 
@@ -405,7 +391,7 @@ test_that('Example 21: WSV File with .txt Extension and BZip2 Compression', {
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.21, inherits = TRUE)
+  rm(example.21, envir = .TargetEnv)
 
 })
 
@@ -425,7 +411,7 @@ test_that('Example 22: WSV File with .txt Extension and Zip Compression', {
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.22, inherits = TRUE)
+  rm(example.22, envir = .TargetEnv)
 
 })
 
@@ -445,7 +431,7 @@ test_that('Example 23: WSV File with .txt Extension and GZip Compression', {
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.23, inherits = TRUE)
+  rm(example.23, envir = .TargetEnv)
 
 })
 
@@ -465,7 +451,7 @@ test_that('Example 24: R File with .R Extension', {
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.24, inherits = TRUE)
+  rm(example.24, envir = .TargetEnv)
 
 })
 
@@ -485,7 +471,7 @@ test_that('Example 25: R File with .r Extension', {
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.25, inherits = TRUE)
+  rm(example.25, envir = .TargetEnv)
 
 })
 
@@ -507,7 +493,7 @@ test_that('Example 26: Excel 2007 File with .xls Extension', {
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.26.Sheet1, inherits = TRUE)
+  rm(example.26.Sheet1, envir = .TargetEnv)
 
 })
 
@@ -529,7 +515,7 @@ test_that('Example 27: Excel 2011 File with .xlsx Extension', {
   #expect_that(nrow(get(variable.name)), equals(5))
   #expect_that(ncol(get(variable.name)), equals(2))
   #expect_that(get(variable.name)[5, 2], equals(11))
-  #rm(example.27.Sheet1, inherits = TRUE)
+  #rm(example.27.Sheet1, envir = .TargetEnv)
 
 })
 
@@ -554,7 +540,7 @@ test_that('Example 28: SQLite3 Support with .sql Extension with table = "..."', 
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.28, inherits = TRUE)
+  rm(example.28, envir = .TargetEnv)
   unlink('example_28.sql')
 
 })
@@ -580,7 +566,7 @@ test_that('Example 29: SQLite3 Support with .sql Extension with query = "SELECT 
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.29, inherits = TRUE)
+  rm(example.29, envir = .TargetEnv)
   unlink('example_29.sql')
 
 })
@@ -608,14 +594,14 @@ test_that('Example 30: SQLite3 Support with .sql Extension and table = "*"', {
   expect_that(nrow(get(variable1.name)), equals(5))
   expect_that(ncol(get(variable1.name)), equals(2))
   expect_that(get(variable1.name)[5, 2], equals(11))
-  rm(example.30a, inherits = TRUE)
+  rm(example.30a, envir = .TargetEnv)
   expect_that(exists(variable2.name), is_true())
   expect_that(names(get(variable2.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable2.name)), equals(5))
   expect_that(ncol(get(variable2.name)), equals(2))
   expect_that(get(variable2.name)[5, 2], equals(11))
-  rm(example.30b, inherits = TRUE)
-  rm(example.30, inherits = TRUE)
+  rm(example.30b, envir = .TargetEnv)
+  rm(example.30, envir = .TargetEnv)
   unlink('example_30.sql')
 
 })
@@ -638,13 +624,13 @@ test_that('Example 31: SQLite3 Support with .db Extension', {
   expect_that(nrow(get(variable1.name)), equals(5))
   expect_that(ncol(get(variable1.name)), equals(2))
   expect_that(get(variable1.name)[5, 2], equals(11))
-  rm(example.31a, inherits = TRUE)
+  rm(example.31a, envir = .TargetEnv)
   expect_that(exists(variable2.name), is_true())
   expect_that(names(get(variable2.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable2.name)), equals(5))
   expect_that(ncol(get(variable2.name)), equals(2))
   expect_that(get(variable2.name)[5, 2], equals(11))
-  rm(example.31b, inherits = TRUE)
+  rm(example.31b, envir = .TargetEnv)
 })
 
 
@@ -663,7 +649,7 @@ test_that('Example 32: Weka Support with .arff Extension', {
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.32, inherits = TRUE)
+  rm(example.32, envir = .TargetEnv)
 
 })
 
@@ -687,7 +673,7 @@ test_that('Example 33: Arbitary File Support with .file File Pointing to .db Fil
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.28, inherits = TRUE)
+  rm(example.28, envir = .TargetEnv)
   unlink('example_33.file')
 
 })
@@ -712,7 +698,7 @@ test_that('Example 35: PPM Support with .ppm Extension', {
 
   expect_that(exists(variable.name), is_true())
   expect_that(as.character(class(get(variable.name))), equals('pixmapRGB'))
-  rm(example.35, inherits = TRUE)
+  rm(example.35, envir = .TargetEnv)
 
 })
 
@@ -732,7 +718,7 @@ test_that('Example 36: dBase Support with .dbf Extension', {
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.36, inherits = TRUE)
+  rm(example.36, envir = .TargetEnv)
 
 })
 
@@ -754,7 +740,7 @@ test_that('Example 37: SPSS Support with .sav Extension', {
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.37, inherits = TRUE)
+  rm(example.37, envir = .TargetEnv)
 
 })
 
@@ -776,7 +762,7 @@ test_that('Example 38: SPSS Support with .sav Extension / Alternative Generation
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.38, inherits = TRUE)
+  rm(example.38, envir = .TargetEnv)
 
 })
 
@@ -796,7 +782,7 @@ test_that('Example 39: Stata Support with .dta Extension', {
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.39, inherits = TRUE)
+  rm(example.39, envir = .TargetEnv)
 
 })
 
@@ -816,7 +802,7 @@ test_that('Example 40: Stata Support with .dta Extension / Alternative Generatio
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.40, inherits = TRUE)
+  rm(example.40, envir = .TargetEnv)
 
 })
 
@@ -836,7 +822,7 @@ test_that('Example 41: SAS Support with .xport Extension', {
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.41, inherits = TRUE)
+  rm(example.41, envir = .TargetEnv)
 
 })
 
@@ -856,7 +842,7 @@ test_that('Example 42: SAS Support with .xpt Extension', {
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.42, inherits = TRUE)
+  rm(example.42, envir = .TargetEnv)
 
 })
 
