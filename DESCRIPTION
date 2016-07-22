@@ -2,8 +2,8 @@ Package: ProjectTemplate
 Type: Package
 Title: Automates the creation of new statistical analysis
     projects.
-Version: 0.6-1
-Date: 2014-11-28
+Version: 0.6-2
+Date: 2016-07-22
 Authors@R: c( person("Aleksandar", "Blagotic", role = "ctb"),
     person("Diego", "Valle-Jones", role = "ctb"),
     person("Jeffrey", "Breen", role = "ctb"),
@@ -94,3 +94,4 @@ Collate:
     'show.project.R'
     'stub.tests.R'
     'test.project.R'
+RoxygenNote: 5.0.1

@@ -28,7 +28,7 @@
 get.project <- function()
 {
   tryCatch(
-    get("project.info", envir = .TargetEnv),
+    get("project.info", envir = .TargetEnv, inherits = FALSE),
     error = function(e) stop("Project must be loaded using load.project().")
   )
 }
