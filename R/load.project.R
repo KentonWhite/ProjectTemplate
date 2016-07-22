@@ -228,11 +228,11 @@ load.project <- function(override.config = NULL)
 
   for (data.set in data.sets)
   {
-    if (all(class(get(data.set, envir = .TargetEnv)) == 'data.frame'))
+    if (all(class(get(data.set, envir = .TargetEnv, inherits = FALSE)) == 'data.frame'))
     {
       message(paste(' Translating data.frame:', data.set))
       assign(data.set,
-             data.table::data.table(get(data.set, envir = .TargetEnv)),
+             data.table::data.table(get(data.set, envir = .TargetEnv, inherits = FALSE)),
              envir = .TargetEnv)
     }
   }

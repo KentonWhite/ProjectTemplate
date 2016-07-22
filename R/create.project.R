@@ -69,7 +69,7 @@ create.project <- function(project.name = 'new-project', minimal = FALSE,
 
     for (item in pt.contents)
     {
-      cat(deparse(get(item, envir = e)),
+      cat(deparse(get(item, envir = e, inherits = FALSE)),
           file = file.path(project.name, paste(item, '.R', sep = '')))
     }
   }
