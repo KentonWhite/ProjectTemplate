@@ -181,8 +181,18 @@ sql.reader <- function(data.file, filename, variable.name)
 
     pgsql.driver <- DBI::dbDriver("PostgreSQL")
 
-    args <- intersect(names(database.info), c('user', 'password', 'host', 'dbname'))
-    connection <- do.call(DBI::dbConnect, c(list(pgsql.driver), database.info[args]))
+    # Default value for 'port' for Postgres is 5432.
+    if (is.null(database.info[['port']]))
+    {
+      database.info[['port']] <- 5432
+    }
+
+    connection <- DBI::dbConnect(pgsql.driver,
+                            user = database.info[['user']],
+                            password = database.info[['password']],
+                            host = database.info[['host']],
+                            dbname = database.info[['dbname']],
+                            port = as.integer(database.info[['port']]))
   }
 
   if (database.info[['type']] == 'oracle')

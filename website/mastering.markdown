@@ -126,7 +126,7 @@ After editing your tests, you can call `test.project()` to run all of the unit t
 #### Logging Your Work
 If you want to log your work, ProjectTemplate will automatically load a [log4r](https://github.com/johnmyleswhite/log4r) logger object into the `logger` variable that will write to a plain text stored at the `logs/project.log`. To use this logger, you only need to change the configuration file to specify:
 
-        logging: on
+        logging: TRUE
 
 After making this change, the `logger` object will be created once you call `load.project()`:
 
