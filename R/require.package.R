@@ -26,6 +26,7 @@
 #' library('ProjectTemplate')
 #'
 #' \dontrun{require.package('PackageName')}
+#' @importFrom utils install.packages
 require.package <- function(package.name, attach = TRUE)
 {
   # Temporarily disable warnings
