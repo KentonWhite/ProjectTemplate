@@ -9,7 +9,18 @@ script: _R_CHECK_CRAN_INCOMING_=FALSE ./travis-tool.sh run_tests
 env:
   global:
     - WARNINGS_ARE_ERRORS=1
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - gcc-4.9
+      - g++-4.9
 before_install:
+  - mkdir ~/.R
+  - cat <<EOF > ~/.R/Makevars
+  - CXX1X=g++-4.9
+  - CXX1XSTD=-std=c++11
   - curl -OL http://raw.github.com/craigcitro/r-travis/master/scripts/travis-tool.sh
   - chmod 755 ./travis-tool.sh
   - ./travis-tool.sh bootstrap
@@ -18,7 +29,7 @@ before_install:
   - if IsSourceInstall; then export FORCE_SOURCE_INSTALL=1; fi
 install:
   - if IsSourceInstall; then (
-    sudo apt-get install --no-install-recommends texinfo texlive-latex-recommended texlive-latex-extra lmodern texlive-fonts-recommended texlive-fonts-extra;
+    sudo apt-get install --no-install-recommends texinfo texlive-latex-recommended texlive-latex-extra lmodern texlive-fonts-recommended texlive-fonts-extra ubuntu-toolchain-r-test;
     cd ~ &&
     svn co -q https://svn.r-project.org/R/${RELEASE}/ r-source &&
     cd r-source &&
@@ -49,6 +60,9 @@ install:
   - ./travis-tool.sh install_deps
   - Rscript -e "library(RJDBC); library(xlsx); library(RODBC)"
     - ./travis-tool.sh dump_sysinfo
+
+r_packages:
+  - feather
 notifications:
   email:
     on_success: change
