@@ -864,3 +864,21 @@ test_that('Example 42: SAS Support with .xpt Extension', {
 test_that('Example 43: ElasticSearch Support with .es Extension', {
 
 })
+
+test_that('Example 44: Feather Support with .feather Extension', {
+
+  data.file <- 'example_44.feather'
+  filename <- file.path(system.file('example_data',
+                                    package = 'ProjectTemplate'),
+                        'example_44.feather')
+  variable.name <- ProjectTemplate:::clean.variable.name('example_44')
+
+  ProjectTemplate:::feather.reader(data.file, filename, variable.name)
+
+  expect_that(exists(variable.name), is_true())
+  expect_that(names(get(variable.name)), equals(names(iris)))
+  expect_that(nrow(get(variable.name)), equals(nrow(iris)))
+  expect_that(ncol(get(variable.name)), equals(ncol(iris)))
+
+  rm(example.44, inherits = TRUE)
+})
