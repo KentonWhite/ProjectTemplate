@@ -57,6 +57,8 @@ Please note that several of file formats have not been tested yet, including Wek
 * `.sas`: SAS Xport files.
 * `.xport`: SAS Xport files.
 * `.xpt`: SAS Xport files
+* `.feather`: Feather files.
+* `.feather.zip`: Feather files that are compressed using zip.
 * `.db`: A SQLite3 database in binary format.
 * `.file`: A DCF file describing the location of another file that should be loaded.
 * `.mp3`: MP3 audio files. (Uses the tuneR package.)
