@@ -47,10 +47,12 @@ Suggests:
     RPostgreSQL,
     GetoptLong,
     whisker,
-    testthat
+    testthat,
+    feather
 URL: http://projecttemplate.net
 BugReports: https://github.com/johnmyleswhite/ProjectTemplate/issues
 Collate:
+    'feather.reader.R'
     'xport.reader.R'
     'xlsx.reader.R'
     'xls.reader.R'

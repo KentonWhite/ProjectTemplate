@@ -28,12 +28,15 @@
 #' @include xls.reader.R
 #' @include xlsx.reader.R
 #' @include xport.reader.R
+#' @include feather.reader.R
 
-preinstalled.readers <- 
+preinstalled.readers <-
 list("*.csv" = "csv.reader",
      "*.csv.bz2" = "csv.reader",
      "*.csv.zip" = "csv.reader",
      "*.csv.gz" = "csv.reader",
+     "*.feather" = "feather.reader",
+     "*.feather.zip" = "feather.reader",
      "*.csv2" = "csv2.reader",
      "*.csv2.bz2" = "csv2.reader",
      "*.csv2.zip" = "csv2.reader",
