@@ -13,6 +13,8 @@
 #' library('ProjectTemplate')
 #'
 #' \dontrun{tsv.reader('example.tsv', 'data/example.tsv', 'example')}
+#' @importFrom utils read.csv
+#' @importFrom utils unzip
 tsv.reader <- function(data.file, filename, variable.name)
 {
   if (grepl('\\.zip$', filename))

@@ -1,35 +1,21 @@
 context('Readers')
 
-# testthat by default runs tests in the parent environment to global
-# This gives access to packages and keeps the test from polluting the global environment
-# However, the global environment is not in the test seach path
-# The global environment is needed for the objects created by the readers being tested
-#
-# Solution is to set the global environment as the parent of the test environment
-# Then the global environment is part of the test environment search path
-
-if (!identical(environment(), .GlobalEnv))
-{
-  test.env <- environment()
-  parent.env(test.env) <- .GlobalEnv
-}
-
 test_that('Test 1: CSV Data file', {
 
   data.file <- 'example_01.csv'
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_01.csv')
-  variable.name <- ProjectTemplate:::clean.variable.name('example_01')
+  variable.name <- clean.variable.name('example_01')
 
-  ProjectTemplate:::csv.reader(data.file, filename, variable.name)
+  csv.reader(data.file, filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.01, inherits = TRUE)
+  rm(example.01, envir = .TargetEnv)
 })
 
 
@@ -39,16 +25,16 @@ test_that('Test 2: .csv.bz2', {
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_02.csv.bz2')
-  variable.name <- ProjectTemplate:::clean.variable.name('example_02')
+  variable.name <- clean.variable.name('example_02')
 
-  ProjectTemplate:::csv.reader(data.file, filename, variable.name)
+  csv.reader(data.file, filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.02, inherits = TRUE)
+  rm(example.02, envir = .TargetEnv)
 
 })
 
@@ -58,16 +44,16 @@ test_that('Test 3: csv.zip data', {
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_03.csv.zip')
-  variable.name <- ProjectTemplate:::clean.variable.name('example_03')
+  variable.name <- clean.variable.name('example_03')
 
-  ProjectTemplate:::csv.reader(data.file, filename, variable.name)
+  csv.reader(data.file, filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.03, inherits = TRUE)
+  rm(example.03, envir = .TargetEnv)
 
 })
 
@@ -78,16 +64,16 @@ test_that('Example 04: CSV Data File with GZip Compression', {
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_04.csv.gz')
-  variable.name <- ProjectTemplate:::clean.variable.name('example_04')
+  variable.name <- clean.variable.name('example_04')
 
-  ProjectTemplate:::csv.reader(data.file, filename, variable.name)
+  csv.reader(data.file, filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.04, inherits = TRUE)
+  rm(example.04, envir = .TargetEnv)
 
 })
 
@@ -98,16 +84,16 @@ test_that('Example 05: TSV Data File', {
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_05.tsv')
-  variable.name <- ProjectTemplate:::clean.variable.name('example_05')
+  variable.name <- clean.variable.name('example_05')
 
-  ProjectTemplate:::tsv.reader(data.file, filename, variable.name)
+  tsv.reader(data.file, filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.05, inherits = TRUE)
+  rm(example.05, envir = .TargetEnv)
 
 })
 
@@ -118,16 +104,16 @@ test_that('Example 06: TSV Data File with BZip2 Compression', {
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_06.tsv.bz2')
-  variable.name <- ProjectTemplate:::clean.variable.name('example_06')
+  variable.name <- clean.variable.name('example_06')
 
-  ProjectTemplate:::tsv.reader(data.file, filename, variable.name)
+  tsv.reader(data.file, filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.06, inherits = TRUE)
+  rm(example.06, envir = .TargetEnv)
 
 })
 
@@ -137,16 +123,16 @@ test_that('Example 07: TSV Data File with Zip Compression', {
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_07.tsv.zip')
-  variable.name <- ProjectTemplate:::clean.variable.name('example_07')
+  variable.name <- clean.variable.name('example_07')
 
-  ProjectTemplate:::tsv.reader(data.file, filename, variable.name)
+  tsv.reader(data.file, filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.07, inherits = TRUE)
+  rm(example.07, envir = .TargetEnv)
 
 })
 
@@ -157,16 +143,16 @@ test_that('Example 08: TSV Data File with GZip Compression', {
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_08.tsv.gz')
-  variable.name <- ProjectTemplate:::clean.variable.name('example_08')
+  variable.name <- clean.variable.name('example_08')
 
-  ProjectTemplate:::tsv.reader(data.file, filename, variable.name)
+  tsv.reader(data.file, filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.08, inherits = TRUE)
+  rm(example.08, envir = .TargetEnv)
 
 })
 
@@ -175,9 +161,9 @@ test_that('Example 09: WSV Data File', {
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_09.wsv')
-  variable.name <- ProjectTemplate:::clean.variable.name('example_09')
+  variable.name <- clean.variable.name('example_09')
 
-  ProjectTemplate:::wsv.reader(data.file, filename, variable.name)
+  wsv.reader(data.file, filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
@@ -185,7 +171,7 @@ test_that('Example 09: WSV Data File', {
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
   expect_false(any(is.na(as.matrix(get(variable.name)))))
-  rm(example.09, inherits = TRUE)
+  rm(example.09, envir = .TargetEnv)
 
 })
 
@@ -196,16 +182,16 @@ test_that('Example 10: WSV Data File with BZip2 Compression', {
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_10.wsv.bz2')
-  variable.name <- ProjectTemplate:::clean.variable.name('example_10')
+  variable.name <- clean.variable.name('example_10')
 
-  ProjectTemplate:::wsv.reader(data.file, filename, variable.name)
+  wsv.reader(data.file, filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.10, inherits = TRUE)
+  rm(example.10, envir = .TargetEnv)
 
 })
 
@@ -216,16 +202,16 @@ test_that('Example 11: WSV Data File with Zip Compression', {
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_11.wsv.zip')
-  variable.name <- ProjectTemplate:::clean.variable.name('example_11')
+  variable.name <- clean.variable.name('example_11')
 
-  ProjectTemplate:::wsv.reader(data.file, filename, variable.name)
+  wsv.reader(data.file, filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.11, inherits = TRUE)
+  rm(example.11, envir = .TargetEnv)
 })
 
 
@@ -234,16 +220,16 @@ test_that('Example 12: WSV Data File with GZip Compression', {
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_12.wsv.gz')
-  variable.name <- ProjectTemplate:::clean.variable.name('example_12')
+  variable.name <- clean.variable.name('example_12')
 
-  ProjectTemplate:::wsv.reader(data.file, filename, variable.name)
+  wsv.reader(data.file, filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.12, inherits = TRUE)
+  rm(example.12, envir = .TargetEnv)
 
 })
 
@@ -254,16 +240,16 @@ test_that('Example 13: RData Data File with .RData Extension', {
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_13.RData')
-  variable.name <- ProjectTemplate:::clean.variable.name('example_13')
+  variable.name <- clean.variable.name('example_13')
 
-  ProjectTemplate:::rdata.reader(data.file, filename, variable.name)
+  rdata.reader(data.file, filename, variable.name)
 
   expect_that(exists('m'), is_true())
   expect_that(names(get('m')), equals(c('N', 'Prime')))
   expect_that(nrow(get('m')), equals(5))
   expect_that(ncol(get('m')), equals(2))
   expect_that(get('m')[5, 2], equals(11))
-  rm('m', inherits = TRUE)
+  rm('m', envir = .TargetEnv)
 
 })
 
@@ -274,16 +260,16 @@ test_that('Example 14: RData Data File with .rda Extension', {
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_14.rda')
-  variable.name <- ProjectTemplate:::clean.variable.name('example_14')
+  variable.name <- clean.variable.name('example_14')
 
-  ProjectTemplate:::rdata.reader(data.file, filename, variable.name)
+  rdata.reader(data.file, filename, variable.name)
 
   expect_that(exists('n'), is_true())
   expect_that(names(get('n')), equals(c('N', 'Prime')))
   expect_that(nrow(get('n')), equals(5))
   expect_that(ncol(get('n')), equals(2))
   expect_that(get('n')[5, 2], equals(11))
-  rm('n', inherits = TRUE)
+  rm('n', envir = .TargetEnv)
 
 })
 
@@ -299,16 +285,16 @@ test_that('Example 16: TSV File with .tab Extension', {
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_16.tab')
-  variable.name <- ProjectTemplate:::clean.variable.name('example_16')
+  variable.name <- clean.variable.name('example_16')
 
-  ProjectTemplate:::tsv.reader(data.file, filename, variable.name)
+  tsv.reader(data.file, filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.16, inherits = TRUE)
+  rm(example.16, envir = .TargetEnv)
 })
 
 
@@ -318,16 +304,16 @@ test_that('Example 17: TSV File with .tab Extension and BZip2 Compression', {
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_17.tab.bz2')
-  variable.name <- ProjectTemplate:::clean.variable.name('example_17')
+  variable.name <- clean.variable.name('example_17')
 
-  ProjectTemplate:::tsv.reader(data.file, filename, variable.name)
+  tsv.reader(data.file, filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.17, inherits = TRUE)
+  rm(example.17, envir = .TargetEnv)
 })
 
 
@@ -337,16 +323,16 @@ test_that('Example 18: TSV File with .tab Extension and Zip Compression', {
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_18.tab.zip')
-  variable.name <- ProjectTemplate:::clean.variable.name('example_18')
+  variable.name <- clean.variable.name('example_18')
 
-  ProjectTemplate:::tsv.reader(data.file, filename, variable.name)
+  tsv.reader(data.file, filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.18, inherits = TRUE)
+  rm(example.18, envir = .TargetEnv)
 })
 
 
@@ -356,16 +342,16 @@ test_that('Example 19: TSV File with .tab Extension and GZip Compression', {
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_19.tab.gz')
-  variable.name <- ProjectTemplate:::clean.variable.name('example_19')
+  variable.name <- clean.variable.name('example_19')
 
-  ProjectTemplate:::tsv.reader(data.file, filename, variable.name)
+  tsv.reader(data.file, filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.19, inherits = TRUE)
+  rm(example.19, envir = .TargetEnv)
 
 })
 
@@ -376,16 +362,16 @@ test_that('Example 20: WSV File with .txt Extension', {
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_20.txt')
-  variable.name <- ProjectTemplate:::clean.variable.name('example_20')
+  variable.name <- clean.variable.name('example_20')
 
-  ProjectTemplate:::wsv.reader(data.file, filename, variable.name)
+  wsv.reader(data.file, filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.20, inherits = TRUE)
+  rm(example.20, envir = .TargetEnv)
 
 })
 
@@ -396,16 +382,16 @@ test_that('Example 21: WSV File with .txt Extension and BZip2 Compression', {
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_21.txt.bz2')
-  variable.name <- ProjectTemplate:::clean.variable.name('example_21')
+  variable.name <- clean.variable.name('example_21')
 
-  ProjectTemplate:::wsv.reader(data.file, filename, variable.name)
+  wsv.reader(data.file, filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.21, inherits = TRUE)
+  rm(example.21, envir = .TargetEnv)
 
 })
 
@@ -416,16 +402,16 @@ test_that('Example 22: WSV File with .txt Extension and Zip Compression', {
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_22.txt.zip')
-  variable.name <- ProjectTemplate:::clean.variable.name('example_22')
+  variable.name <- clean.variable.name('example_22')
 
-  ProjectTemplate:::wsv.reader(data.file, filename, variable.name)
+  wsv.reader(data.file, filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.22, inherits = TRUE)
+  rm(example.22, envir = .TargetEnv)
 
 })
 
@@ -436,16 +422,16 @@ test_that('Example 23: WSV File with .txt Extension and GZip Compression', {
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_23.txt.gz')
-  variable.name <- ProjectTemplate:::clean.variable.name('example_23')
+  variable.name <- clean.variable.name('example_23')
 
-  ProjectTemplate:::wsv.reader(data.file, filename, variable.name)
+  wsv.reader(data.file, filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.23, inherits = TRUE)
+  rm(example.23, envir = .TargetEnv)
 
 })
 
@@ -456,16 +442,16 @@ test_that('Example 24: R File with .R Extension', {
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_24.R')
-  variable.name <- ProjectTemplate:::clean.variable.name('example_24')
+  variable.name <- clean.variable.name('example_24')
 
-  ProjectTemplate:::r.reader(data.file, filename, variable.name)
+  r.reader(data.file, filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.24, inherits = TRUE)
+  rm(example.24, envir = .TargetEnv)
 
 })
 
@@ -476,16 +462,16 @@ test_that('Example 25: R File with .r Extension', {
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_25.r')
-  variable.name <- ProjectTemplate:::clean.variable.name('example_25')
+  variable.name <- clean.variable.name('example_25')
 
-  ProjectTemplate:::r.reader(data.file, filename, variable.name)
+  r.reader(data.file, filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.25, inherits = TRUE)
+  rm(example.25, envir = .TargetEnv)
 
 })
 
@@ -496,9 +482,9 @@ test_that('Example 26: Excel 2007 File with .xls Extension', {
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_26.xls')
-  variable.name <- ProjectTemplate:::clean.variable.name('example_26')
+  variable.name <- clean.variable.name('example_26')
 
-  ProjectTemplate:::xls.reader(data.file, filename, variable.name)
+  xls.reader(data.file, filename, variable.name)
 
   variable.name <- paste(variable.name, '.Sheet1', sep = '')
 
@@ -507,7 +493,7 @@ test_that('Example 26: Excel 2007 File with .xls Extension', {
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.26.Sheet1, inherits = TRUE)
+  rm(example.26.Sheet1, envir = .TargetEnv)
 
 })
 
@@ -518,9 +504,9 @@ test_that('Example 27: Excel 2011 File with .xlsx Extension', {
   #filename <- file.path(system.file('example_data',
   #                                  package = 'ProjectTemplate'),
   #                      'example_27.xlsx')
-  #variable.name <- ProjectTemplate:::clean.variable.name('example_27')
+  #variable.name <- clean.variable.name('example_27')
   #
-  #ProjectTemplate:::xlsx.reader(data.file, filename, variable.name)
+  #xlsx.reader(data.file, filename, variable.name)
   #
   #variable.name <- paste(variable.name, '.Sheet1', sep = '')
   #
@@ -529,7 +515,7 @@ test_that('Example 27: Excel 2011 File with .xlsx Extension', {
   #expect_that(nrow(get(variable.name)), equals(5))
   #expect_that(ncol(get(variable.name)), equals(2))
   #expect_that(get(variable.name)[5, 2], equals(11))
-  #rm(example.27.Sheet1, inherits = TRUE)
+  #rm(example.27.Sheet1, envir = .TargetEnv)
 
 })
 
@@ -545,16 +531,16 @@ test_that('Example 28: SQLite3 Support with .sql Extension with table = "..."', 
 
   data.file <- 'example_28.sql'
   filename <- 'example_28.sql'
-  variable.name <- ProjectTemplate:::clean.variable.name('example_28')
+  variable.name <- clean.variable.name('example_28')
 
-  ProjectTemplate:::sql.reader(data.file, filename, variable.name)
+  sql.reader(data.file, filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.28, inherits = TRUE)
+  rm(example.28, envir = .TargetEnv)
   unlink('example_28.sql')
 
 })
@@ -571,16 +557,16 @@ test_that('Example 29: SQLite3 Support with .sql Extension with query = "SELECT 
 
   data.file <- 'example_29.sql'
   filename <- 'example_29.sql'
-  variable.name <- ProjectTemplate:::clean.variable.name('example_29')
+  variable.name <- clean.variable.name('example_29')
 
-  ProjectTemplate:::sql.reader(data.file, filename, variable.name)
+  sql.reader(data.file, filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.29, inherits = TRUE)
+  rm(example.29, envir = .TargetEnv)
   unlink('example_29.sql')
 
 })
@@ -597,25 +583,25 @@ test_that('Example 30: SQLite3 Support with .sql Extension and table = "*"', {
 
   data.file <- 'example_30.sql'
   filename <- 'example_30.sql'
-  variable.name <- ProjectTemplate:::clean.variable.name('example_30')
+  variable.name <- clean.variable.name('example_30')
 
-  ProjectTemplate:::sql.reader(data.file, filename, variable.name)
+  sql.reader(data.file, filename, variable.name)
 
-  variable1.name <- ProjectTemplate:::clean.variable.name('example_30a')
-  variable2.name <- ProjectTemplate:::clean.variable.name('example_30b')
+  variable1.name <- clean.variable.name('example_30a')
+  variable2.name <- clean.variable.name('example_30b')
   expect_that(exists(variable1.name), is_true())
   expect_that(names(get(variable1.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable1.name)), equals(5))
   expect_that(ncol(get(variable1.name)), equals(2))
   expect_that(get(variable1.name)[5, 2], equals(11))
-  rm(example.30a, inherits = TRUE)
+  rm(example.30a, envir = .TargetEnv)
   expect_that(exists(variable2.name), is_true())
   expect_that(names(get(variable2.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable2.name)), equals(5))
   expect_that(ncol(get(variable2.name)), equals(2))
   expect_that(get(variable2.name)[5, 2], equals(11))
-  rm(example.30b, inherits = TRUE)
-  rm(example.30, inherits = TRUE)
+  rm(example.30b, envir = .TargetEnv)
+  rm(example.30, envir = .TargetEnv)
   unlink('example_30.sql')
 
 })
@@ -627,24 +613,24 @@ test_that('Example 31: SQLite3 Support with .db Extension', {
   filename <- file.path(system.file('example_data',
                                   package = 'ProjectTemplate'),
                         'example_31.db')
-  variable.name <- ProjectTemplate:::clean.variable.name('example_31')
+  variable.name <- clean.variable.name('example_31')
 
-  ProjectTemplate:::db.reader(data.file, filename, variable.name)
+  db.reader(data.file, filename, variable.name)
 
-  variable1.name <- ProjectTemplate:::clean.variable.name('example_31a')
-  variable2.name <- ProjectTemplate:::clean.variable.name('example_31b')
+  variable1.name <- clean.variable.name('example_31a')
+  variable2.name <- clean.variable.name('example_31b')
   expect_that(exists(variable1.name), is_true())
   expect_that(names(get(variable1.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable1.name)), equals(5))
   expect_that(ncol(get(variable1.name)), equals(2))
   expect_that(get(variable1.name)[5, 2], equals(11))
-  rm(example.31a, inherits = TRUE)
+  rm(example.31a, envir = .TargetEnv)
   expect_that(exists(variable2.name), is_true())
   expect_that(names(get(variable2.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable2.name)), equals(5))
   expect_that(ncol(get(variable2.name)), equals(2))
   expect_that(get(variable2.name)[5, 2], equals(11))
-  rm(example.31b, inherits = TRUE)
+  rm(example.31b, envir = .TargetEnv)
 })
 
 
@@ -654,16 +640,16 @@ test_that('Example 32: Weka Support with .arff Extension', {
   filename <- file.path(system.file('example_data',
                                   package = 'ProjectTemplate'),
                         'example_32.arff')
-  variable.name <- ProjectTemplate:::clean.variable.name('example_32')
+  variable.name <- clean.variable.name('example_32')
 
-  ProjectTemplate:::arff.reader(data.file, filename, variable.name)
+  arff.reader(data.file, filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.32, inherits = TRUE)
+  rm(example.32, envir = .TargetEnv)
 
 })
 
@@ -678,16 +664,16 @@ test_that('Example 33: Arbitary File Support with .file File Pointing to .db Fil
 
   data.file <- 'example_33.file'
   filename <- 'example_33.file'
-  variable.name <- ProjectTemplate:::clean.variable.name('example_28')
+  variable.name <- clean.variable.name('example_28')
 
-  ProjectTemplate:::file.reader(data.file, filename, variable.name)
+  file.reader(data.file, filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.28, inherits = TRUE)
+  rm(example.28, envir = .TargetEnv)
   unlink('example_33.file')
 
 })
@@ -704,15 +690,15 @@ test_that('Example 35: PPM Support with .ppm Extension', {
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_35.ppm')
-  variable.name <- ProjectTemplate:::clean.variable.name('example_35')
+  variable.name <- clean.variable.name('example_35')
 
   expect_warning(
-    ProjectTemplate:::ppm.reader(data.file, filename, variable.name),
+    ppm.reader(data.file, filename, variable.name),
     " is NULL so the result will be NULL")
 
   expect_that(exists(variable.name), is_true())
   expect_that(as.character(class(get(variable.name))), equals('pixmapRGB'))
-  rm(example.35, inherits = TRUE)
+  rm(example.35, envir = .TargetEnv)
 
 })
 
@@ -723,16 +709,16 @@ test_that('Example 36: dBase Support with .dbf Extension', {
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_36.dbf')
-  variable.name <- ProjectTemplate:::clean.variable.name('example_36')
+  variable.name <- clean.variable.name('example_36')
 
-  ProjectTemplate:::dbf.reader(data.file, filename, variable.name)
+  dbf.reader(data.file, filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.36, inherits = TRUE)
+  rm(example.36, envir = .TargetEnv)
 
 })
 
@@ -743,10 +729,10 @@ test_that('Example 37: SPSS Support with .sav Extension', {
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_37.sav')
-  variable.name <- ProjectTemplate:::clean.variable.name('example_37')
+  variable.name <- clean.variable.name('example_37')
 
   expect_warning(
-    ProjectTemplate:::spss.reader(data.file, filename, variable.name),
+    spss.reader(data.file, filename, variable.name),
     "Unrecognized record type 7, subtype 18 encountered in system file")
 
   expect_that(exists(variable.name), is_true())
@@ -754,7 +740,7 @@ test_that('Example 37: SPSS Support with .sav Extension', {
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.37, inherits = TRUE)
+  rm(example.37, envir = .TargetEnv)
 
 })
 
@@ -765,10 +751,10 @@ test_that('Example 38: SPSS Support with .sav Extension / Alternative Generation
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_38.sav')
-  variable.name <- ProjectTemplate:::clean.variable.name('example_38')
+  variable.name <- clean.variable.name('example_38')
 
   expect_warning(
-    ProjectTemplate:::spss.reader(data.file, filename, variable.name),
+    spss.reader(data.file, filename, variable.name),
     "Unrecognized record type 7, subtype 18 encountered in system file")
 
   expect_that(exists(variable.name), is_true())
@@ -776,7 +762,7 @@ test_that('Example 38: SPSS Support with .sav Extension / Alternative Generation
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.38, inherits = TRUE)
+  rm(example.38, envir = .TargetEnv)
 
 })
 
@@ -787,16 +773,16 @@ test_that('Example 39: Stata Support with .dta Extension', {
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_39.dta')
-  variable.name <- ProjectTemplate:::clean.variable.name('example_39')
+  variable.name <- clean.variable.name('example_39')
 
-  ProjectTemplate:::stata.reader(data.file, filename, variable.name)
+  stata.reader(data.file, filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.39, inherits = TRUE)
+  rm(example.39, envir = .TargetEnv)
 
 })
 
@@ -807,16 +793,16 @@ test_that('Example 40: Stata Support with .dta Extension / Alternative Generatio
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_40.dta')
-  variable.name <- ProjectTemplate:::clean.variable.name('example_40')
+  variable.name <- clean.variable.name('example_40')
 
-  ProjectTemplate:::stata.reader(data.file, filename, variable.name)
+  stata.reader(data.file, filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.40, inherits = TRUE)
+  rm(example.40, envir = .TargetEnv)
 
 })
 
@@ -827,16 +813,16 @@ test_that('Example 41: SAS Support with .xport Extension', {
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_41.xport')
-  variable.name <- ProjectTemplate:::clean.variable.name('example_41')
+  variable.name <- clean.variable.name('example_41')
 
-  ProjectTemplate:::xport.reader(data.file, filename, variable.name)
+  xport.reader(data.file, filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'PRIME')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.41, inherits = TRUE)
+  rm(example.41, envir = .TargetEnv)
 
 })
 
@@ -847,16 +833,16 @@ test_that('Example 42: SAS Support with .xpt Extension', {
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_42.xpt')
-  variable.name <- ProjectTemplate:::clean.variable.name('example_42')
+  variable.name <- clean.variable.name('example_42')
 
-  ProjectTemplate:::xport.reader(data.file, filename, variable.name)
+  xport.reader(data.file, filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'PRIME')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
   expect_that(get(variable.name)[5, 2], equals(11))
-  rm(example.42, inherits = TRUE)
+  rm(example.42, envir = .TargetEnv)
 
 })
 

@@ -13,6 +13,8 @@
 #' library('ProjectTemplate')
 #'
 #' \dontrun{wsv.reader('example.wsv', 'data/example.wsv', 'example')}
+#' @importFrom utils read.table
+#' @importFrom utils unzip
 wsv.reader <- function(data.file, filename, variable.name)
 {
   if (grepl('\\.zip$', filename))

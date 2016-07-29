@@ -23,6 +23,7 @@
 #' library('ProjectTemplate')
 #'
 #' \dontrun{url.reader('example.url', 'data/example.url', 'example')}
+#' @importFrom utils download.file
 url.reader <- function(data.file, filename, variable.name)
 {
   url.info <- translate.dcf(filename)

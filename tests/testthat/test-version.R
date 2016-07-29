@@ -7,7 +7,7 @@ test_that('Test matching version field', {
   on.exit(setwd('..'), add = TRUE)
   on.exit(unlink('test_project', recursive = TRUE), add = TRUE)
 
-  expect_that(suppressMessages(load.project()), not(gives_warning()))
+  expect_warning(suppressMessages(load.project()), NA)
 
 })
 
@@ -56,6 +56,6 @@ test_that('Test migration', {
 
   suppressMessages(migrate.project())
   expect_equal(sum(grepl("^version: ", readLines('config/global.dcf'))), 1)
-  expect_that(suppressMessages(load.project()), not(gives_warning()))
+  expect_warning(suppressMessages(load.project()), NA)
 
 })

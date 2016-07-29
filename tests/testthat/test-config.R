@@ -21,6 +21,6 @@ test_that('Unknown fields give a warning, except if start with hash', {
   config.dcf <- c(config.dcf, "# comment: A comment",
                   "#: Yet another comment")
   writeLines(config.dcf, 'config/global.dcf')
-  expect_that(load.project(), not(gives_warning()))
+  expect_warning(load.project(), NA)
 
 })
