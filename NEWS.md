@@ -1,31 +1,29 @@
-# ProjectTemplate 0.6-4 (2016-07-29)
+# ProjectTemplate 0.7 (2016-07-29)
 
-- Satisfy `R CMD check`.
+Features
+--------
 
-
-# ProjectTemplate 0.6-3 (2016-07-23)
-
-* `cache()` gains a new `...` argument which is passed to `save()` (#148, @eribul).
+* `create.project()` creates `README.md` files in each subdirectory (#128). The README file in the main directory is now also formatted as Markdown, with the project name as title.
+* Code that creates and runs tests now also allows non-R files in `libs` and `tests` subdirectories.
+* Libraries from the `libraries` section are loaded before sourcing `lib/` files (#130).
 * Missing packages are installed automatically (#146, @wilmeragsgh).
 * Added `dplyr` to the list of default libraries in `global.dcf` (#143, @pavopax).
-
-
-# ProjectTemplate 0.6-2 (2016-07-22)
-
+* `cache()` gains a new `...` argument which is passed to `save()` (#148, @eribul).
+* Use `inherits = FALSE` in `get()` calls within specific environments (#139, @famuvie)
 * The `port` option is now used for `RPostgreSQL` connections.
+
+Documentation
+-------------
+
 * Update to getting-started/mastering documentation (#142, @matt-jay).
 * Fix typo in error msg (#141, @famuvie).
-* Use `inherits = FALSE` in `get()` calls within specific environments (#139, @famuvie)
+
+Internal
+--------
+
 * Isolate tests by using temporary directories and properly undoing `setwd()` calls (#132).
+* `R CMD check` shows no errors, warnings, or notes.
 
-
-v0.6-1 (2014-11-28)
-===
-
-* `create.project()` creates `README.md` files are created in each subdirectory (#128).
-* README file in main directory is now also formatted as Markdown, with the project name as title.
-* Code that creates and runs tests now also allows non-R files in `libs` and `tests` subdirectories.
-* libraries from the `libraries` section are loaded before sourcing `lib/` files (#130).
 
 v0.6 (2014-10-05)
 ===
