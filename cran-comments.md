@@ -1,3 +1,13 @@
-Maintainer e-mail address has changed.
+## Test environments
+* local Ubuntu install, R 3.3.1
+* ubuntu 12.04 (on travis-ci), R 3.3.1
+* win-builder (devel and release)
 
-Tested with R 3.1.1 on Ubuntu 14.04, with R-devel, R 3.1.1 and R 3.1.0 on Ubuntu 12.04, and with win-builder.
+## R CMD check results
+
+0 errors | 0 warnings | 0 notes
+
+## Reverse dependencies
+
+* I have run R CMD check on the one downstream dependency, `reports`. The check
+  found a NOTE that is most likely unrelated to the `ProjectTemplate` update.

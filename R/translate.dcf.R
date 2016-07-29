@@ -15,6 +15,7 @@
 #' library('ProjectTemplate')
 #'
 #' \dontrun{translate.dcf(file.path('config', 'global.dcf'))}
+#' @importFrom stats setNames
 translate.dcf <- function(filename)
 {
   settings <- read.dcf(filename)
