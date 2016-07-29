@@ -14,12 +14,6 @@ rd: git
 	git add man/ NAMESPACE
 	test "$$(git status --porcelain | wc -c)" = "0" || git commit -m "document"
 
-inst/NEWS.Rd: git NEWS.md
-	Rscript -e "tools:::news2Rd('$(word 2,$^)', '$@')"
-	sed -r -i 's/`([^`]+)`/\\code{\1}/g' $@
-	git add $@
-	test "$$(git status --porcelain | wc -c)" = "0" || git commit -m "update NEWS.Rd"
-
 inst/defaults/full/config/global.dcf: git DESCRIPTION
 	( echo -n "version: "; sed -n -r '/^Version: / {s/.* ([0-9.-]+)$$/\1/;p}' $(word 2,$^); tail -n +2 $@ ) > $@.tmp
 	mv $@.tmp $@
