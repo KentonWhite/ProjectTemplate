@@ -1,3 +1,8 @@
+# ProjectTemplate 0.6-4 (2016-07-29)
+
+- Satisfy `R CMD check`.
+
+
 # ProjectTemplate 0.6-3 (2016-07-23)
 
 * `cache()` gains a new `...` argument which is passed to `save()` (#148, @eribul).
