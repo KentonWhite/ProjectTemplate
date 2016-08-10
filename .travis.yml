@@ -1,59 +1,20 @@
-# Sample .travis.yml for R projects.
-#
-# See README.md for instructions, or for more configuration options,
-# see the wiki:
-#   https://github.com/craigcitro/r-travis/wiki
-
-language: java
-script: _R_CHECK_CRAN_INCOMING_=FALSE ./travis-tool.sh run_tests
-env:
-  global:
-    - WARNINGS_ARE_ERRORS=1
-before_install:
-  - curl -OL http://raw.github.com/craigcitro/r-travis/master/scripts/travis-tool.sh
-  - chmod 755 ./travis-tool.sh
-  - ./travis-tool.sh bootstrap
-  - sudo apt-get install liblzma-dev
-  - IsSourceInstall() { [[ -n "${RELEASE}" ]]; }
-  - if IsSourceInstall; then export FORCE_SOURCE_INSTALL=1; fi
-install:
-  - if IsSourceInstall; then (
-    sudo apt-get install --no-install-recommends texinfo texlive-latex-recommended texlive-latex-extra lmodern texlive-fonts-recommended texlive-fonts-extra;
-    cd ~ &&
-    svn co -q https://svn.r-project.org/R/${RELEASE}/ r-source &&
-    cd r-source &&
-    tools/rsync-recommended &&
-    R_BATCHSAVE="--no-save --no-restore"
-      R_BROWSER=xdg-open
-      PAGER=/usr/bin/pager
-      PERL=/usr/bin/perl
-      R_UNZIPCMD=/usr/bin/unzip
-      R_ZIPCMD=/usr/bin/zip
-      R_PRINTCMD=/usr/bin/lpr
-      LIBnn=lib
-      AWK=/usr/bin/awk
-      CC=gcc
-      CFLAGS="-ggdb -pipe -std=gnu99 -Wall -pedantic"
-      CXX=g++
-      CXXFLAGS="-ggdb -pipe -Wall -pedantic"
-      FC=gfortran
-      F77=gfortran
-       ./configure --enable-R-shlib &&
-     make -j2 &&
-     sudo make install
-   ); fi
-  - ./travis-tool.sh r_binary_install colorspace RColorBrewer dichromat munsell labeling Formula sp mvtnorm TH.data sandwich formatR highr markdown zoo bit gtable reshape2 scales proto quantreg Hmisc mapproj maps hexbin maptools multcomp knitr DBI RUnit gtools signal pastecs chron fastmatch xts reshape ggplot2 lubridate RMySQL RSQLite gdata RODBC pixmap data.table testthat
-  - ./travis-tool.sh aptget_install unixodbc-dev
-  - sudo R CMD javareconf
-  - ./travis-tool.sh install_github johnmyleswhite/log4r
-  - ./travis-tool.sh install_deps
-  - Rscript -e "library(RJDBC); library(xlsx); library(RODBC)"
-    - ./travis-tool.sh dump_sysinfo
-notifications:
-  email:
-    on_success: change
-    on_failure: always
-after_error:
-  - ./travis-tool.sh dump_logs
-after_failure:
-  - cat ~/r-source/config.log || true
+language: r
+sudo: required 
+cache: packages
+warnings_are_errors: true
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - gcc-4.9
+      - g++-4.9
+      - r-cran-rodbc
+before_install: |
+  mkdir ~/.R
+  cat <<EOF > ~/.R/Makevars
+  CXX=g++-4.9
+  CXX1X=g++-4.9
+  CXX1XSTD=-std=c++11
+r_github_packages:
+  - johnmyleswhite/log4r
