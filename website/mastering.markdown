@@ -20,13 +20,13 @@ Then we'll shift into the relevant directory, move our database over and uncompr
         cd PhilaPD
         mv ~/Downloads/philapd.db.zip data
         unzip data/philapd.db.zip -d data
-        rm data/philapd.db.zip 
-    
+        rm data/philapd.db.zip
+
 Then we reload R and load the project. You'll see ProjectTemplate automatically load the two tables found in our SQLite database:
 
         library('ProjectTemplate')
         load.project()
-        
+
 ![Autoloading](./mastering1.png)
 
 For most users, this automatic loading procedure is probably enough. But if you need more fine-grained control, you can use the `.sql` ad hoc file type to load specific tables from a SQLite database. You can also specify an exact SQL query to run against the database. We'll go through all three cases below.
@@ -131,6 +131,11 @@ If you want to log your work, ProjectTemplate will automatically load a [log4r](
 After making this change, the `logger` object will be created once you call `load.project()`:
 
 ![Logging](./logging.png)
+
+The default loglevel can be set through the configuration file by setting the
+`logging_level` flag to one of the valid levels for `log4r`, by default it is
+set to "INFO"
+
 
 #### Data Tables
 The `data.table` package allows you to create a variant of the typical R data frame that provides indices. Indices make locating and selecting subsets of your data much faster than the typical vector scan that R uses when working with data frames. To automatically convert all of the data frames loaded from the `data` directory into `data.table`s, change the configuration option in `config/global.dcf` to `data_tables: on`. After that, you can check for tables by calling the `tables()` function.
