@@ -2,16 +2,16 @@
 % Please edit documentation in R/clear.cache.R
 \name{clear.cache}
 \alias{clear.cache}
-\title{Clear data sets from the cache.}
+\title{Clear data sets from the cache}
 \usage{
 clear.cache(variables = NULL)
 }
 \arguments{
 \item{variables}{A character vector containing the name of the variable to
-be removed from the cache.}
+be removed from the cache.  If NULL, then all items in the cache will be removed.}
 }
 \value{
-No value is returned; this function is called for its side effects.
+Success or failure is reported
 }
 \description{
 This function remove specific (or all by default) named data sets from the \code{cache}
@@ -20,6 +20,8 @@ next time \code{\link{load.project}} is called.
 }
 \examples{
 library('ProjectTemplate')
-\dontrun{clear.cache()}
+\dontrun{
+clear.cache()
+}
 }
 
