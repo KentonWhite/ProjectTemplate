@@ -93,4 +93,5 @@ Collate:
     'show.project.R'
     'stub.tests.R'
     'test.project.R'
+    'clear.cache.R'
 RoxygenNote: 5.0.1
