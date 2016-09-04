@@ -3,6 +3,7 @@
 export(.add.extension)
 export(cache)
 export(cache.project)
+export(clear.cache)
 export(create.project)
 export(get.project)
 export(load.project)
