@@ -21,7 +21,5 @@ next time \code{\link{load.project}} is called.
 \examples{
 library('ProjectTemplate')
 \dontrun{clear.cache()}
-
-
 }
 

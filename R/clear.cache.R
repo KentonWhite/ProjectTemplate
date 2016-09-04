@@ -14,8 +14,6 @@
 #' @examples
 #' library('ProjectTemplate')
 #' \dontrun{clear.cache()}
-#'
-#' 
 clear.cache <- function (variables=NULL){
         cache_dir <- "./cache"
         
