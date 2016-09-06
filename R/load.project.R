@@ -44,6 +44,19 @@ load.project <- function(override.config = NULL)
     }
   }
 
+  if (config$logging)
+  {
+    message('Initializing logger')
+    require.package('log4r')
+
+    logger <- log4r::create.logger()
+    .provide.directory('logs')
+
+    log4r::logfile(logger) <- file.path('logs', 'project.log')
+    log4r::level(logger) <- config$logging_level
+    assign('logger', logger, envir = .TargetEnv)
+  }
+
   if (file.exists('lib'))
   {
     message('Autoloading helper functions')
@@ -100,19 +113,6 @@ load.project <- function(override.config = NULL)
       message(paste(' Running preprocessing script:', preprocessing.script))
       source(file.path('munge', preprocessing.script))
     }
-  }
-
-  if (config$logging)
-  {
-    message('Initializing logger')
-    .require.package('log4r')
-
-    logger <- log4r::create.logger()
-    .provide.directory('logs')
-
-    log4r::logfile(logger) <- file.path('logs', 'project.log')
-    log4r::level(logger) <- "INFO"
-    assign('logger', logger, envir = .TargetEnv)
   }
 
   assign('project.info', my.project.info, envir = .TargetEnv)
@@ -273,7 +273,7 @@ load.project <- function(override.config = NULL)
   }
 
   config <- .normalize.config(config,
-                              setdiff(names(default.config), c("version", "libraries")),
+                              setdiff(names(default.config), c("version", "libraries", "logging_level")),
                               .boolean.cfg)
 
   config
