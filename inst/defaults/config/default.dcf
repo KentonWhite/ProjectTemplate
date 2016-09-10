@@ -4,6 +4,7 @@ cache_loading: TRUE
 recursive_loading: FALSE
 munging: TRUE
 logging: FALSE
+logging_level: INFO
 load_libraries: FALSE
 libraries: reshape, plyr, ggplot2, stringr, lubridate
 as_factors: TRUE
