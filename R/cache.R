@@ -43,11 +43,4 @@ cache <- function(variable, always=TRUE, ...)
 }
 
 
-update_cache <- function(objs)
-{
-        for (o in objs) {
-        }      
-        
-}
-
 
