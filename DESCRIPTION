@@ -81,6 +81,7 @@ Collate:
     'cache.project.R'
     'clean.variable.name.R'
     'clear.cache.R'
+    'create.config.R'
     'create.project.R'
     'translate.dcf.R'
     'default.config.R'

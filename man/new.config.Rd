@@ -4,7 +4,7 @@
 \name{new.config}
 \alias{new.config}
 \title{Configuration for new projects}
-\format{An object of class \code{list} of length 11.}
+\format{An object of class \code{list} of length 12.}
 \usage{
 new.config
 }

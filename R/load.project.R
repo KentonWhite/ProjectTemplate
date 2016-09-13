@@ -276,24 +276,7 @@ load.project <- function(override.config = NULL)
                               setdiff(names(default.config), c("version", "libraries", "logging_level")),
                               .boolean.cfg)
   
-  # add some project config if it exists in a file called custom.dcf
-  custom_cfg <- file.path('config', 'custom.dcf') 
-  if (file.exists(custom_cfg)) {
-        custom_cfg <- translate.dcf(custom_cfg)
- 
-        # all items are char, so convert them if they look like logical or numeric
-        convert_type <- function(v){
-                  
-                  if(!is.na(as.logical(v))) return (as.logical(v))
-                  if(!is.na(as.numeric(v))) return (as.numeric(v))
-                  v
-        }
-        # Add custom config to global config variable
-        # warnings about NA from the convert type function can be ignored
-        config <- c(config, suppressWarnings(lapply(custom_cfg, convert_type)))
-          
-  }
-  
+
   config
 }
 
