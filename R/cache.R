@@ -34,13 +34,34 @@
 cache <- function(variable, always=TRUE, ...)
 {
   stopifnot(length(variable) == 1)
-  cache_file <- file.path('cache', paste0(variable, '.RData'))
-  if (!file.exists(cache_file) | always)
+  if (!is.cached(variable) | always)
        save(list = variable,
        envir = .TargetEnv,
-       file = cache_file,
+       file = .cache.file(variable),
        ...)
 }
 
+#' Check whether a variable is in the cache
+#'
+#' This function will determine if a variable is stored in the \code{cache}
+#' directory. 
+#' 
+#' @param variable A character string containing the name of the variable to
+#'  be checked.
+#' 
+#' @return \code{TRUE} if the variable exists in the cache, \code{FALSE} otherwise
+#'
+#' @export
+#' @examples
+#' library('ProjectTemplate')
+#' \dontrun{is.cached('mapdata')
+#' }
+is.cached <- function(variable)
+{
+  stopifnot(length(variable) == 1)
+  if (file.exists(.cache.file(variable))) return (TRUE)
+  return (FALSE)
+}
 
+.cache.file <- function(variable) file.path('cache', paste0(variable, '.RData'))
 
