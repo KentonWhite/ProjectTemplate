@@ -13,8 +13,4 @@ This branch was submitted to the master Project as a pull request:
 
 https://github.com/johnmyleswhite/ProjectTemplate/pull/152
 
-Branch ProjectTemplate 2
-========================
-
-* Add in a function to copy in a template structure from a file location during create.project()
 
