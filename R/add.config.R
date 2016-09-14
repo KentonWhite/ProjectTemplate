@@ -12,12 +12,12 @@
 #' @examples
 #' library('ProjectTemplate')
 #' \dontrun{
-#' create.config(
+#' add.config(
 #'     keep_bigdata=TRUE,     # Whether to keep the big data file in memory
 #'     parse=7                # number of fields to parse 
 #' )
 #' }
-create.config <- function(...){
+add.config <- function(...){
         project_config <- list(...)
         config <- get('config', envir = .TargetEnv)
         assign('config', c(config, project_config), envir = .TargetEnv)
