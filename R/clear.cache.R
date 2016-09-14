@@ -32,12 +32,12 @@ clear.cache <- function (variables=NULL){
         files_to_delete <-file.path(rep(cache_dir, length(files)), files)
         
         # Delete them
-        success <- do.call(file.remove,list(files_to_delete))
-        if (sum(success)==length(success)) {
-                message(paste0("Removed ", variables, " from cache\n"))
-        }
-        else {
-                message(paste0("Unable to remove ", variables, " from cache\n"))
+        success <- suppressWarnings(do.call(file.remove,list(files_to_delete)))
+        
+        message(paste0("Removed ", variables[success], " from cache\n"))
+        
+        if (sum(success)!=length(success)) {
+                message(paste0("Unable to remove ", variables[!success], " from cache\n"))
         }
 }
 
