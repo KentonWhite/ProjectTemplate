@@ -1,7 +1,13 @@
 ---
 layout: page
 ---
-The current configuration settings exist in the `config/global.dcf` file:
+There are two types of configuration in:
+
+* `ProjectTemplate configuration` are the settings which alter how `load.project()` behaves when executed.  For example, whether to have logging enabled.  
+* `Project specific configuration` are the settings which make sense only to a particular project, but you would like to change them easily in `src` or `munge` scripts.  For example, you may define `plot_footnote="My Proj"` to control a consistent look and feel for plots. 
+Both types are stored in the `config` object accessible from the global environment.
+
+The current `ProjectTemplate` configuration settings exist in the `config/global.dcf` file:
 
 * `data_loading`: This can be set to 'on' or 'off'. If `data_loading` is on, the system will load data from both the `cache` and `data` directories with `cache` taking precedence in the case of name conflict. By default, `data_loading` is on.
 * `munging`: This can be set to 'on' or 'off'. If `munging` is on, the system will execute the files in the `munge` directory sequentially using the order implied by the `sort()` function. If `munging` is off, none of the files in the `munge` directory will be executed. By default, `munging` is on.
@@ -10,6 +16,22 @@ The current configuration settings exist in the `config/global.dcf` file:
 * `libraries`: This is a comma separated list of all the R packages that the user wants to automatically load when `load.project()` is called. These packages must already be installed before calling `load.project()`. By default, the reshape, plyr, ggplot2, stringr and lubridate packages are included in this list.
 * `as_factors`: This can be set to 'on' or 'off'. If `as_factors` is on, the system will convert every character vector into a factor when creating data frames; most importantly, this automatic conversion occurs when reading in data automatically. If 'off', character vectors will remain character vectors. By default, `as_factors` is on.
 * `data_tables`: This can be set to 'on' or 'off'. If `data_tables` is on, the system will convert every data set loaded from the `data` directory into a `data.table`. By default, `data_tables` is off.
+
+The project specific configuration is specified in the `lib/globals.R` file using the `add.config` function.  This will contain whatever is relevant for your project, and will look something like this:
+
+        add.config(
+                keep_data=FALSE,                # should temporary data be kept?
+                header="Private & Confidential" # header in reports
+        )
+
+Note that commas need to be present after each config item except the last.  Comments can also be inserted to document what each config variable does.
+
+To use project specific configuaration in any `lib`, `munge` or `src` script, simply use the form `config$keep_data`.
+
+`ProjectTemplate` will automatically load project specific content in `lib/globals.R` before any other file in `lib`, so the filename should not be changed.
+
+The `add.config()` function can also be used anywhere in the project.  So if a particular analysis in `src` wanted to override the value in `globals.R`, you can simply add the relevant `add.config()` command to the top of that script.
+
 
 The following configuration settings still require documentation:
 * `cache_loading`
