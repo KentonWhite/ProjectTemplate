@@ -4,14 +4,11 @@
 \alias{cache}
 \title{Cache a data set for faster loading.}
 \usage{
-cache(variable, always = TRUE, ...)
+cache(variable, ...)
 }
 \arguments{
 \item{variable}{A character vector containing the name of the variable to
 be saved.}
-
-\item{always}{if \code{TRUE} then the cache is always updated, otherwise it is not
-if there the variable has been cached previously}
 
 \item{...}{additional arguments passed to \code{\link{save}}}
 }
@@ -23,13 +20,6 @@ This function will store a copy of the named data set in the \code{cache}
 directory. This cached copy of the data set will then be given precedence
 at load time when calling \code{\link{load.project}}. Cached data sets are
 stored as \code{.RData} files.
-}
-\details{
-Sometimes it can take a while to cache large variables, which causes 
-\code{load.project()} to run slowly if values are cached during munging.  If the
-\code{always} variable is set to \code{FALSE}, then caching is skipped if the 
-variable is already in the cache.  The \code{clear.cache("variable")} command
-can be run to flush individual items from the cache.
 }
 \examples{
 library('ProjectTemplate')
