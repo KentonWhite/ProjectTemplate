@@ -11,10 +11,13 @@
 #' variable is already in the cache.  The \code{clear.cache("variable")} command
 #' can be run to flush individual items from the cache.
 #'
-#' @param variable A character vector containing the name of the variable to
-#'  be saved.
-#' @param always if \code{TRUE} then the cache is always updated, otherwise it is not
-#'  if there the variable has been cached previously
+#' @param variable A character string containing the name of the variable to
+#'  be saved.  If the CODE parameter is defined, it is evaluated and saved, otherwise
+#'  the variable with that name in the global environment is used.
+#' @param CODE A sequence of R statements enclosed in {..} which produce the object to be
+#' cached.  
+#' @param depends A character vector of other global environment objects that the CODE
+#' depends upon. Caching will be forced if those objects have changed since last caching
 #' @param ... additional arguments passed to \code{\link{save}}
 #'
 #' @return No value is returned; this function is called for its side effects.
@@ -31,15 +34,82 @@
 #'
 #' setwd('..')
 #' unlink('tmp-project')}
-cache <- function(variable, always=TRUE, ...)
+cache <- function(variable, depends=NULL, CODE=NULL, ...)
 {
   stopifnot(length(variable) == 1)
+  .require.package("digest")
+  
+  cache <- .get.cache.info(variable)
+  
+  # The idea is to only cache if you need to, making scripts faster.
+  # 
+  # cache rules:
+  #    - if variable not in cache:
+  #              if CODE==NULL & variable in globenv:
+  #                          save(variable)
+  #                          save(hash(variable))
+  #              if CODE==NULL & variable not in globenv:
+  #                          error:  variable doesn't exist
+  #              Otherwise:
+  #                          save(variable=eval(CODE))
+  #                          save(hash(variable))
+  #                          save(hash(each var in depends))
+  #              
+  #    - if variable in cache:                           
+  #              if CODE==NULL & variable in globenv:
+  #                          if hash(globalenv(variable))==hash(cached(variable)):
+  #                                   msg:  Skipping caching of variable:  up to date
+  #                          Otherwise:
+  #                                   save(variable)
+  #                                   save(hash(variable))
+  #              if CODE==NULL & variable not in globenv:
+  #                          msg:  cached variable not updated
+  #              Otherwise:
+  #                          if hash(eval(CODE))==hash(cached(variable)):
+  #                                   msg:  Skipping caching of variable:  up to date
+  #                          Otherwise:
+  #                                  save(variable=eval(CODE))
+  #                                  save(hash(variable))
+  #                                  save(hash(each var in depends))
+  #  
+  #                    
+  #                      
+
+  if (!is.null(CODE)) {
+          assign(variable, CODE, envir=.TargetEnv)
+  }
+  
+  
   if (!is.cached(variable) | always)
        save(list = variable,
        envir = .TargetEnv,
        file = .cache.file(variable),
        ...)
 }
+
+.TargetEnv <- ProjectTemplate:::.TargetEnv
+
+.in.globalenv <- function(variable){
+        exists(variable, envir = .TargetEnv)
+}
+
+.write.cache <- function(var_hashes, ...){
+        # var_hashes is a data frame with two columns:  variable and hash
+        # First row is the name of the variable to save
+        # Subsequent rows are any dependent variables to record at the same time
+        # hash information is stored in a seperate file to the data is so
+        # it can be retrieved quickly when things need to be read from the cache
+        
+        variable <- as.character(var_hashes[1,1])
+        cache_filename <- .cache.filename(variable)
+        save(list = variable,
+             envir = .TargetEnv,
+             file = cache_filename$obj,
+             ...)
+        write.dcf(var_hashes, cache_filename$hash)
+}
+
+
 
 #' Check whether a variable is in the cache
 #'
@@ -63,5 +133,9 @@ is.cached <- function(variable)
   return (FALSE)
 }
 
-.cache.file <- function(variable) file.path('cache', paste0(variable, '.RData'))
-
+.cache.filename <- function(variable) {
+        list(
+                obj=file.path('cache', paste0(variable, '.RData')),
+                hash=file.path('cache', paste0(variable, '.hash'))
+        )
+}
