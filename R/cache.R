@@ -37,9 +37,9 @@
 cache <- function(variable, depends=NULL, CODE=NULL, ...)
 {
   stopifnot(length(variable) == 1)
-  .require.package("digest")
   
-  cache <- .get.cache.info(variable)
+  
+  cache <- .read.cache.info(variable)
   
   # The idea is to only cache if you need to, making scripts faster.
   # 
@@ -80,14 +80,9 @@ cache <- function(variable, depends=NULL, CODE=NULL, ...)
   }
   
   
-  if (!is.cached(variable) | always)
-       save(list = variable,
-       envir = .TargetEnv,
-       file = .cache.file(variable),
-       ...)
+  
 }
 
-.TargetEnv <- ProjectTemplate:::.TargetEnv
 
 .in.globalenv <- function(variable){
         exists(variable, envir = .TargetEnv)
@@ -107,6 +102,24 @@ cache <- function(variable, depends=NULL, CODE=NULL, ...)
              file = cache_filename$obj,
              ...)
         write.dcf(var_hashes, cache_filename$hash)
+}
+
+.create.variable.hash <- function (variables, env=.TargetEnv) {
+        # input is a vector of variable names  
+        # check if they exist in the supplied environment
+        # and return a dataframe of their hash values
+        .require.package("digest")
+        variables <- variables[sapply(variables, exists, envir=env)]
+        hashes <- sapply(
+                        sapply(variables, get, envir=env),
+                        digest
+                        )
+        data.frame(variable=variables, hash=hashes)
+}
+
+
+.read.cache.info <- function (variable) {
+        
 }
 
 
