@@ -88,38 +88,82 @@ cache <- function(variable, depends=NULL, CODE=NULL, ...)
         exists(variable, envir = .TargetEnv)
 }
 
-.write.cache <- function(var_hashes, ...){
-        # var_hashes is a data frame with two columns:  variable and hash
-        # First row is the name of the variable to save
-        # Subsequent rows are any dependent variables to record at the same time
-        # hash information is stored in a seperate file to the data is so
-        # it can be retrieved quickly when things need to be read from the cache
+.write.cache <- function(variable.hash, ...){
+        # variable.hash is a data frame with two columns:  variable and hash.
+        # Row name VAR is the name of the variable to save.
+        # Row name CODE is the hash value of the code to compute variable.
+        # Row name DEPENDS.* are the dependent variables that CODE depends on.
+        # The helper function .create.variable.hash creates a suitable dataframe
         
-        variable <- as.character(var_hashes[1,1])
+        variable <- as.character(variable.hash["VAR",]$variable)
         cache_filename <- .cache.filename(variable)
+        
+        # cache the variable
         save(list = variable,
              envir = .TargetEnv,
              file = cache_filename$obj,
              ...)
-        write.dcf(var_hashes, cache_filename$hash)
+        
+        # hash information is stored in a separate file to the data is so
+        # it can be retrieved quickly when things need to be read from the cache
+        save(list = "variable.hash",
+             envir = environment(),
+             file = cache_filename$hash
+             )
 }
 
-.create.variable.hash <- function (variables, env=.TargetEnv) {
+.create.variable.hash <- function(variable, depends, CODE) {
+        # This function prepares a variable.hash suitable for
+        # saving to the cache
+        # It loops through each of the inputs and computes the hash
+        # using the .variable.hash helper function
+        
+        variable.hash <- .variable.hash(variable)
+        row.names(variable.hash) <- "VAR"
+        if (!is.null(CODE)){
+                code.hash <- .variable.hash("CODE", environment())
+                row.names(code.hash) <- "CODE"
+                variable.hash <- rbind(variable.hash, code.hash)
+        }
+        if (!is.null(depends)){
+                depends.hash <- .variable.hash(depends)
+                row.names(depends.hash) <- paste0("DEPENDS.", 1:nrow(depends.hash))
+                variable.hash <- rbind(variable.hash, depends.hash)
+        }
+        variable.hash
+}
+
+
+.variable.hash <- function (variables, env=.TargetEnv) {
         # input is a vector of variable names  
         # check if they exist in the supplied environment
         # and return a dataframe of their hash values
         .require.package("digest")
         variables <- variables[sapply(variables, exists, envir=env)]
-        hashes <- sapply(
-                        sapply(variables, get, envir=env),
-                        digest
-                        )
+        hashes <- c()
+        for (var in variables) {
+                hashes <- c(hashes, digest(get(var, envir=env)))
+        }
+        
         data.frame(variable=variables, hash=hashes)
 }
 
 
 .read.cache.info <- function (variable) {
         
+        cache_name <- .cache.filename(variable)
+        
+        in.cache <- FALSE
+        if (file.exists(cache_name$obj)) in.cache <- TRUE
+        
+        hash <- FALSE
+        variable.hash <- NULL
+        if (file.exists(cache_name$hash) & in.cache) {
+                # hash data frame will be loaded into variable.hash
+                load(cache_name$hash, envir = environment())
+        }
+        
+        list(in.cache=in.cache, hash=variable.hash)
 }
 
 
