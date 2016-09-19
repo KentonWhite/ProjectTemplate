@@ -2,7 +2,7 @@ Package: ProjectTemplate
 Type: Package
 Title: Automates the Creation of New Statistical Analysis Projects
 Version: 0.7
-Date: 2016-07-29
+Date: 2016-09-04
 Authors@R: c( person("Aleksandar", "Blagotic", role = "ctb"),
     person("Diego", "Valle-Jones", role = "ctb"),
     person("Jeffrey", "Breen", role = "ctb"),
@@ -50,6 +50,7 @@ Suggests:
 URL: http://projecttemplate.net
 BugReports: https://github.com/johnmyleswhite/ProjectTemplate/issues
 Collate:
+    'add.config.R'
     'xport.reader.R'
     'xlsx.reader.R'
     'xls.reader.R'

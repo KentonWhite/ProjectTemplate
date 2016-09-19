@@ -64,6 +64,12 @@ load.project <- function(override.config = NULL)
     my.project.info$helpers <- c()
 
     helpers <- dir('lib', pattern = '[.][rR]$')
+    
+    # force globals.R to be read first, if it exists
+    if ("globals.R" %in% helpers) {
+            helpers<-c("globals.R", helpers[!(helpers %in% "globals.R")])
+    }
+    
     deprecated.files <- intersect(
       helpers, c('boot.R', 'load_data.R', 'load_libraries.R',
                  'preprocess_data.R', 'run_tests.R'))
@@ -275,6 +281,7 @@ load.project <- function(override.config = NULL)
   config <- .normalize.config(config,
                               setdiff(names(default.config), c("version", "libraries", "logging_level")),
                               .boolean.cfg)
+  
 
   config
 }
