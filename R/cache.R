@@ -79,7 +79,16 @@ cache <- function(variable, depends=NULL, CODE=NULL, ...)
           assign(variable, CODE, envir=.TargetEnv)
   }
   
-  
+  # f variable not in cache:
+          #              if CODE==NULL & variable in globenv:
+          #                          save(variable)
+          #                          save(hash(variable))
+          #              if CODE==NULL & variable not in globenv:
+          #                          error:  variable doesn't exist
+          #              Otherwise:
+          #                          save(variable=eval(CODE))
+          #                          save(hash(variable))
+          #                          save(hash(each var in depends))
   
 }
 
@@ -119,6 +128,8 @@ cache <- function(variable, depends=NULL, CODE=NULL, ...)
         # using the .variable.hash helper function
         
         variable.hash <- .variable.hash(variable)
+        if (nrow(variable.hash)==0) return(FALSE)
+        
         row.names(variable.hash) <- "VAR"
         if (!is.null(CODE)){
                 code.hash <- .variable.hash("CODE", environment())
@@ -127,8 +138,10 @@ cache <- function(variable, depends=NULL, CODE=NULL, ...)
         }
         if (!is.null(depends)){
                 depends.hash <- .variable.hash(depends)
-                row.names(depends.hash) <- paste0("DEPENDS.", 1:nrow(depends.hash))
-                variable.hash <- rbind(variable.hash, depends.hash)
+                if (nrow(depends.hash)>=1) {
+                        row.names(depends.hash) <- paste0("DEPENDS.", 1:nrow(depends.hash))
+                        variable.hash <- rbind(variable.hash, depends.hash)
+                }
         }
         variable.hash
 }
@@ -145,7 +158,7 @@ cache <- function(variable, depends=NULL, CODE=NULL, ...)
                 hashes <- c(hashes, digest(get(var, envir=env)))
         }
         
-        data.frame(variable=variables, hash=hashes)
+        data.frame(variable=variables, hash=hashes, stringsAsFactors = FALSE)
 }
 
 
@@ -166,6 +179,28 @@ cache <- function(variable, depends=NULL, CODE=NULL, ...)
         list(in.cache=in.cache, hash=variable.hash)
 }
 
+.evaluate.code <- function (code, variable.hash) {
+        ev <- FALSE
+        cached_code_hash <- variable.hash["CODE",]$hash
+        
+        .create.variable.hash(variable, depends, CODE)
+        
+        if (is.na(cached_code_hash)) ev<-TRUE
+        else {
+              current_code_hash <- digest(code)
+              if (cached_code_hash!=current_code_hash) ev<-TRUE
+              else {
+                      cached_depends_hash <- variable.hash["DEPENDS",]
+                      if (!is.na(cached_depends_hash)) {
+                              current_depends_hash <- .variable.hash(cached_depends_hash$variable)
+                              if (!identical(current_depends_hash, cached_depends_hash)) ev<-TRUE
+                      }
+                      
+              }
+        }
+        if (!ev) return (NULL)
+        eval(parse(text=code))
+}
 
 
 #' Check whether a variable is in the cache
