@@ -4,11 +4,11 @@
 \alias{clear.cache}
 \title{Clear data sets from the cache}
 \usage{
-clear.cache(variables = NULL)
+clear.cache(...)
 }
 \arguments{
-\item{variables}{A character vector containing the name of the variable to
-be removed from the cache.  If NULL, then all items in the cache will be removed.}
+\item{...}{A sequence of character strings  of the variables to
+be removed from the cache.  If none given, then all items in the cache will be removed.}
 }
 \value{
 Success or failure is reported
@@ -21,7 +21,7 @@ next time \code{\link{load.project}} is called.
 \examples{
 library('ProjectTemplate')
 \dontrun{
-clear.cache()
+clear.cache("x", "y", "z")
 }
 }
 

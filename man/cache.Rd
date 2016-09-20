@@ -4,14 +4,18 @@
 \alias{cache}
 \title{Cache a data set for faster loading.}
 \usage{
-cache(variable, always = TRUE, ...)
+cache(variable, depends = NULL, CODE = NULL, ...)
 }
 \arguments{
-\item{variable}{A character vector containing the name of the variable to
-be saved.}
+\item{variable}{A character string containing the name of the variable to
+be saved.  If the CODE parameter is defined, it is evaluated and saved, otherwise
+the variable with that name in the global environment is used.}
 
-\item{always}{if \code{TRUE} then the cache is always updated, otherwise it is not
-if there the variable has been cached previously}
+\item{depends}{A character vector of other global environment objects that the CODE
+depends upon. Caching will be forced if those objects have changed since last caching}
+
+\item{CODE}{A sequence of R statements enclosed in {..} which produce the object to be
+cached.}
 
 \item{...}{additional arguments passed to \code{\link{save}}}
 }
@@ -25,10 +29,11 @@ at load time when calling \code{\link{load.project}}. Cached data sets are
 stored as \code{.RData} files.
 }
 \details{
-Sometimes it can take a while to cache large variables, which causes 
-\code{load.project()} to run slowly if values are cached during munging.  If the
-\code{always} variable is set to \code{FALSE}, then caching is skipped if the 
-variable is already in the cache.  The \code{clear.cache("variable")} command
+Usually you will want to cache datasets during munging.  This can be the raw
+data just loaded, or it can be the result of further processing during munge.  Either
+way, it can take a while to cache large variables, so cache will only cache when it
+needs to.  
+The \code{clear.cache("variable")} command
 can be run to flush individual items from the cache.
 }
 \examples{

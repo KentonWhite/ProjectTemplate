@@ -29,6 +29,7 @@ Suggests:
     foreign,
     reshape,
     plyr,
+    digest,
     stringr,
     ggplot2,
     lubridate,

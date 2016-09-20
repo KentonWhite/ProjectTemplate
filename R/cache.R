@@ -5,10 +5,11 @@
 #' at load time when calling \code{\link{load.project}}. Cached data sets are
 #' stored as \code{.RData} files.
 #' 
-#' Sometimes it can take a while to cache large variables, which causes 
-#' \code{load.project()} to run slowly if values are cached during munging.  If the
-#' \code{always} variable is set to \code{FALSE}, then caching is skipped if the 
-#' variable is already in the cache.  The \code{clear.cache("variable")} command
+#' Usually you will want to cache datasets during munging.  This can be the raw
+#' data just loaded, or it can be the result of further processing during munge.  Either
+#' way, it can take a while to cache large variables, so cache will only cache when it
+#' needs to.  
+#' The \code{clear.cache("variable")} command
 #' can be run to flush individual items from the cache.
 #'
 #' @param variable A character string containing the name of the variable to
@@ -187,7 +188,7 @@ cache <- function(variable, depends=NULL, CODE=NULL, ...)
         variables <- variables[sapply(variables, exists, envir=env)]
         hashes <- c()
         for (var in variables) {
-                hashes <- c(hashes, digest(get(var, envir=env)))
+                hashes <- c(hashes, digest::digest(get(var, envir=env)))
         }
         
         data.frame(variable=variables, hash=hashes, stringsAsFactors = FALSE)
