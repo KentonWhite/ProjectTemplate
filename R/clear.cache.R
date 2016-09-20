@@ -25,7 +25,8 @@ clear.cache <- function (variables=NULL){
         }
         else {
                 # Add the .RData cache extension to the objects to delete
-                files <- paste0(variables, rep(".RData", length(variables)))
+                files <- paste0(variables, rep("\\.RData", length(variables)))
+                files <- c(files, paste0(variables, rep("\\.hash", length(variables))))
         }
         
         # List of files to delete

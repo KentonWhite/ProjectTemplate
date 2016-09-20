@@ -37,9 +37,7 @@
 cache <- function(variable, depends=NULL, CODE=NULL, ...)
 {
   stopifnot(length(variable) == 1)
-  
-  
-  cache <- .read.cache.info(variable)
+  stored <- .read.cache.info(variable)
   
   # The idea is to only cache if you need to, making scripts faster.
   # 
@@ -73,38 +71,72 @@ cache <- function(variable, depends=NULL, CODE=NULL, ...)
   #                                  save(hash(each var in depends))
   #  
   #                    
-  #                      
+  #  Each code block below either exits early with an appropriate message why the
+  #  cache wasn't updated, or the appropriate cache.hash object is created for saving
+  #  at the end.
+  #  See the .write.cache function for a description of the cache.hash object
+  #  which is saved in the cache directory along with the cached variable.
 
-  if (!is.null(CODE)) {
-          assign(variable, CODE, envir=.TargetEnv)
+  if (!stored$in.cache) {
+          if (is.null(CODE)){
+                  # genv.hash contains the current hash value from the global env
+                  # which can be compared to the stored value for variable
+                  genv.hash <- .create.cache.hash(variable, NULL, NULL)
+                  if (is.null(genv.hash)) {
+                          message(paste0("Cannot cache ", variable, 
+                                         ": Does not exist in global environment and no code to create it"))
+                          return()
+                  }
+                  cache.hash <- genv.hash
+          }
+          else {
+                  .evaluate.code(variable, CODE)
+                  cache.hash <- .create.cache.hash(variable, depends, CODE)
+          }
+  }         
+  else {
+          if (is.null(CODE)) {
+                  genv.hash <- .create.cache.hash(variable, NULL, NULL)
+                  if (is.null(genv.hash)) {
+                          message(paste0("Unable to update cache for ", variable, 
+                                         ": Does not exist in global environment and no code to create it"))
+                          return()
+                  }
+                  if (stored$hash["VAR",]$hash == genv.hash["VAR",]$hash) {
+                          message(paste0("Skipping cache update for ", variable, 
+                                         ": up to date"))
+                          return()
+                  }
+                  cache.hash <- genv.hash
+          }
+          else {
+                  genv.hash <- .create.cache.hash(variable, depends, CODE)
+                  genv.hash <- genv.hash[!grepl("VAR", row.names(genv.hash)),]
+                  stored.hash <- stored$hash[!grepl("VAR", row.names(stored$hash)),]
+                  if (isTRUE(all.equal(genv.hash, stored.hash))) {
+                          message(paste0("Skipping cache update for ", variable, 
+                                         ": up to date"))
+                          return()
+                  }
+                  .evaluate.code(variable, CODE)
+                  cache.hash <- .create.cache.hash(variable, depends, CODE)
+          }
+          
   }
-  
-  # f variable not in cache:
-          #              if CODE==NULL & variable in globenv:
-          #                          save(variable)
-          #                          save(hash(variable))
-          #              if CODE==NULL & variable not in globenv:
-          #                          error:  variable doesn't exist
-          #              Otherwise:
-          #                          save(variable=eval(CODE))
-          #                          save(hash(variable))
-          #                          save(hash(each var in depends))
-  
+
+  # if we end up here then save the variable to the cache          
+  .write.cache(cache.hash, ...)
 }
 
 
-.in.globalenv <- function(variable){
-        exists(variable, envir = .TargetEnv)
-}
-
-.write.cache <- function(variable.hash, ...){
-        # variable.hash is a data frame with two columns:  variable and hash.
+.write.cache <- function(cache.hash, ...){
+        # cache.hash is a data frame with two columns:  variable and hash.
         # Row name VAR is the name of the variable to save.
         # Row name CODE is the hash value of the code to compute variable.
         # Row name DEPENDS.* are the dependent variables that CODE depends on.
-        # The helper function .create.variable.hash creates a suitable dataframe
+        # The helper function .create.cache.hash creates a suitable dataframe
         
-        variable <- as.character(variable.hash["VAR",]$variable)
+        variable <- as.character(cache.hash["VAR",]$variable)
         cache_filename <- .cache.filename(variable)
         
         # cache the variable
@@ -115,39 +147,39 @@ cache <- function(variable, depends=NULL, CODE=NULL, ...)
         
         # hash information is stored in a separate file to the data is so
         # it can be retrieved quickly when things need to be read from the cache
-        save(list = "variable.hash",
+        save(list = "cache.hash",
              envir = environment(),
              file = cache_filename$hash
              )
 }
 
-.create.variable.hash <- function(variable, depends, CODE) {
-        # This function prepares a variable.hash suitable for
+.create.cache.hash <- function(variable, depends, CODE) {
+        # This function prepares a cache.hash suitable for
         # saving to the cache
         # It loops through each of the inputs and computes the hash
-        # using the .variable.hash helper function
+        # using the .cache.hash helper function
         
-        variable.hash <- .variable.hash(variable)
-        if (nrow(variable.hash)==0) return(FALSE)
+        cache.hash <- .cache.hash(variable)
+        if (nrow(cache.hash)==0) return(NULL)
         
-        row.names(variable.hash) <- "VAR"
+        row.names(cache.hash) <- "VAR"
         if (!is.null(CODE)){
-                code.hash <- .variable.hash("CODE", environment())
+                code.hash <- .cache.hash("CODE", environment())
                 row.names(code.hash) <- "CODE"
-                variable.hash <- rbind(variable.hash, code.hash)
+                cache.hash <- rbind(cache.hash, code.hash)
         }
         if (!is.null(depends)){
-                depends.hash <- .variable.hash(depends)
+                depends.hash <- .cache.hash(depends)
                 if (nrow(depends.hash)>=1) {
                         row.names(depends.hash) <- paste0("DEPENDS.", 1:nrow(depends.hash))
-                        variable.hash <- rbind(variable.hash, depends.hash)
+                        cache.hash <- rbind(cache.hash, depends.hash)
                 }
         }
-        variable.hash
+        cache.hash
 }
 
 
-.variable.hash <- function (variables, env=.TargetEnv) {
+.cache.hash <- function (variables, env=.TargetEnv) {
         # input is a vector of variable names  
         # check if they exist in the supplied environment
         # and return a dataframe of their hash values
@@ -170,59 +202,19 @@ cache <- function(variable, depends=NULL, CODE=NULL, ...)
         if (file.exists(cache_name$obj)) in.cache <- TRUE
         
         hash <- FALSE
-        variable.hash <- NULL
+        cache.hash <- NULL
         if (file.exists(cache_name$hash) & in.cache) {
-                # hash data frame will be loaded into variable.hash
+                # hash data frame will be loaded into cache.hash
                 load(cache_name$hash, envir = environment())
         }
         
-        list(in.cache=in.cache, hash=variable.hash)
+        list(in.cache=in.cache, hash=cache.hash)
 }
 
-.evaluate.code <- function (code, variable.hash) {
-        ev <- FALSE
-        cached_code_hash <- variable.hash["CODE",]$hash
-        
-        .create.variable.hash(variable, depends, CODE)
-        
-        if (is.na(cached_code_hash)) ev<-TRUE
-        else {
-              current_code_hash <- digest(code)
-              if (cached_code_hash!=current_code_hash) ev<-TRUE
-              else {
-                      cached_depends_hash <- variable.hash["DEPENDS",]
-                      if (!is.na(cached_depends_hash)) {
-                              current_depends_hash <- .variable.hash(cached_depends_hash$variable)
-                              if (!identical(current_depends_hash, cached_depends_hash)) ev<-TRUE
-                      }
-                      
-              }
-        }
-        if (!ev) return (NULL)
-        eval(parse(text=code))
-}
-
-
-#' Check whether a variable is in the cache
-#'
-#' This function will determine if a variable is stored in the \code{cache}
-#' directory. 
-#' 
-#' @param variable A character string containing the name of the variable to
-#'  be checked.
-#' 
-#' @return \code{TRUE} if the variable exists in the cache, \code{FALSE} otherwise
-#'
-#' @export
-#' @examples
-#' library('ProjectTemplate')
-#' \dontrun{is.cached('mapdata')
-#' }
-is.cached <- function(variable)
-{
-  stopifnot(length(variable) == 1)
-  if (file.exists(.cache.file(variable))) return (TRUE)
-  return (FALSE)
+.evaluate.code <- function (variable, CODE) {
+        # run code and assignthe results to variable in the global env
+        result <- eval(parse(text=CODE), envir = .TargetEnv)
+        assign(variable, result, envir = .TargetEnv)
 }
 
 .cache.filename <- function(variable) {
