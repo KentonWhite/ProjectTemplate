@@ -84,7 +84,7 @@ cache <- function(variable, depends=NULL, CODE=NULL, ...)
                   # which can be compared to the stored value for variable
                   genv.hash <- .create.cache.hash(variable, NULL, NULL)
                   if (is.null(genv.hash)) {
-                          message(paste0("Cannot cache ", variable, 
+                          message(paste0("  Cannot cache ", variable, 
                                          ": Does not exist in global environment and no code to create it"))
                           return()
                   }
@@ -99,12 +99,12 @@ cache <- function(variable, depends=NULL, CODE=NULL, ...)
           if (is.null(CODE)) {
                   genv.hash <- .create.cache.hash(variable, NULL, NULL)
                   if (is.null(genv.hash)) {
-                          message(paste0("Unable to update cache for ", variable, 
+                          message(paste0("  Unable to update cache for ", variable, 
                                          ": Does not exist in global environment and no code to create it"))
                           return()
                   }
                   if (stored$hash["VAR",]$hash == genv.hash["VAR",]$hash) {
-                          message(paste0("Skipping cache update for ", variable, 
+                          message(paste0("  Skipping cache update for ", variable, 
                                          ": up to date"))
                           return()
                   }
@@ -115,7 +115,7 @@ cache <- function(variable, depends=NULL, CODE=NULL, ...)
                   genv.hash <- genv.hash[!grepl("VAR", row.names(genv.hash)),]
                   stored.hash <- stored$hash[!grepl("VAR", row.names(stored$hash)),]
                   if (isTRUE(all.equal(genv.hash, stored.hash))) {
-                          message(paste0("Skipping cache update for ", variable, 
+                          message(paste0("  Skipping cache update for ", variable, 
                                          ": up to date"))
                           return()
                   }
