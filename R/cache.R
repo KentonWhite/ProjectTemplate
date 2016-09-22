@@ -88,9 +88,11 @@ cache <- function(variable, depends=NULL, CODE=NULL, ...)
                                          ": Does not exist in global environment and no code to create it"))
                           return()
                   }
+                  message(paste0("  Creating cache entry from global environment: ", variable))
                   cache.hash <- genv.hash
           }
           else {
+                  message(paste0("  Creating cache entry from CODE: ", variable))
                   .evaluate.code(variable, CODE)
                   cache.hash <- .create.cache.hash(variable, depends, CODE)
           }
@@ -108,6 +110,7 @@ cache <- function(variable, depends=NULL, CODE=NULL, ...)
                                          ": up to date"))
                           return()
                   }
+                  message(paste0("  Updating existing cache entry from global environment: ", variable))
                   cache.hash <- genv.hash
           }
           else {
@@ -119,13 +122,14 @@ cache <- function(variable, depends=NULL, CODE=NULL, ...)
                                          ": up to date"))
                           return()
                   }
+                  message(paste0("  Updating existing cache entry from CODE: ", variable))
                   .evaluate.code(variable, CODE)
                   cache.hash <- .create.cache.hash(variable, depends, CODE)
           }
           
   }
 
-  # if we end up here then save the variable to the cache          
+  # if we end up here then save the variable to the cache
   .write.cache(cache.hash, ...)
 }
 
