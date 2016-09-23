@@ -188,8 +188,15 @@ cache <- function(variable, depends=NULL, CODE=NULL, ...)
         # input is a vector of variable names  
         # check if they exist in the supplied environment
         # and return a dataframe of their hash values
-        .require.package("digest")
-        variables <- variables[sapply(variables, exists, envir=env)]
+        suppressWarnings(.require.package("digest"))
+        #variables <- variables[sapply(variables, exists, envir=env)]
+        missing <- variables[!sapply(variables, exists, envir=env)]
+        if (length(missing)>0){
+                stop("Missing variables : ",
+                     paste0(missing, sep=" "))
+        }
+
+        
         hashes <- c()
         for (var in variables) {
                 hashes <- c(hashes, digest::digest(get(var, envir=env)))
