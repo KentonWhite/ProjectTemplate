@@ -38,6 +38,18 @@
 cache <- function(variable, depends=NULL, CODE=NULL, ...)
 {
   stopifnot(length(variable) == 1)
+  
+  # strip out comments and newlines from CODE so that changes to those
+  # don't force a re-evaluation of CODE unncessarily.
+  if (!is.null(CODE)){
+          .require.package("formatR")
+          CODE <- formatR::tidy_source(text = CODE, comment = FALSE,
+                                      blank = FALSE, brace.newline = FALSE,
+                                      output = FALSE, width.cutoff = 500)
+          CODE <- paste(CODE$text.tidy, sep="", collapse="\n")
+  }
+  
+  # Check what's already in the cache for variable
   stored <- .read.cache.info(variable)
   
   # The idea is to only cache if you need to, making scripts faster.
@@ -188,7 +200,7 @@ cache <- function(variable, depends=NULL, CODE=NULL, ...)
         # input is a vector of variable names  
         # check if they exist in the supplied environment
         # and return a dataframe of their hash values
-        suppressWarnings(.require.package("digest"))
+        .require.package("digest")
         #variables <- variables[sapply(variables, exists, envir=env)]
         missing <- variables[!sapply(variables, exists, envir=env)]
         if (length(missing)>0){
