@@ -17,7 +17,7 @@
 #' @param variable A character string containing the name of the variable to
 #'  be saved.  If the CODE parameter is defined, it is evaluated and saved, otherwise
 #'  the variable with that name in the global environment is used.
-#' @param CODE A sequence of R statements enclosed in {..} which produce the object to be
+#' @param CODE A sequence of R statements enclosed in \code{\{..\}} which produce the object to be
 #' cached.  
 #' @param depends A character vector of other global environment objects that the CODE
 #' depends upon. Caching will be forced if those objects have changed since last caching
@@ -43,10 +43,15 @@ cache <- function(variable=NULL, depends=NULL, CODE=NULL, ...)
         
   stopifnot(length(variable) == 1)
   
+  CODE <- paste0(deparse(substitute(CODE)), collapse ="\n")
+  if (CODE=="NULL") CODE <- NULL
+  
   # strip out comments and newlines from CODE so that changes to those
   # don't force a re-evaluation of CODE unncessarily.
+  
   if (!is.null(CODE)){
           .require.package("formatR")
+          
           CODE <- formatR::tidy_source(text = CODE, comment = FALSE,
                                       blank = FALSE, brace.newline = FALSE,
                                       output = FALSE, width.cutoff = 500)

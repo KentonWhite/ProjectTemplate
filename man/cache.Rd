@@ -14,7 +14,7 @@ the variable with that name in the global environment is used.}
 \item{depends}{A character vector of other global environment objects that the CODE
 depends upon. Caching will be forced if those objects have changed since last caching}
 
-\item{CODE}{A sequence of R statements enclosed in {..} which produce the object to be
+\item{CODE}{A sequence of R statements enclosed in \code{\{..\}} which produce the object to be
 cached.}
 
 \item{...}{additional arguments passed to \code{\link{save}}}
