@@ -11,6 +11,8 @@
 #' needs to.  
 #' The \code{clear.cache("variable")} command
 #' can be run to flush individual items from the cache.
+#' 
+#' Calling \code{cache()} with no arguments returns the current status of the cache.
 #'
 #' @param variable A character string containing the name of the variable to
 #'  be saved.  If the CODE parameter is defined, it is evaluated and saved, otherwise
@@ -35,8 +37,10 @@
 #'
 #' setwd('..')
 #' unlink('tmp-project')}
-cache <- function(variable, depends=NULL, CODE=NULL, ...)
+cache <- function(variable=NULL, depends=NULL, CODE=NULL, ...)
 {
+  if (is.null(variable)) return(.cache.status())
+        
   stopifnot(length(variable) == 1)
   
   # strip out comments and newlines from CODE so that changes to those
@@ -201,7 +205,7 @@ cache <- function(variable, depends=NULL, CODE=NULL, ...)
         # check if they exist in the supplied environment
         # and return a dataframe of their hash values
         .require.package("digest")
-        #variables <- variables[sapply(variables, exists, envir=env)]
+ 
         missing <- variables[!sapply(variables, exists, envir=env)]
         if (length(missing)>0){
                 stop("Missing variables : ",
@@ -247,3 +251,38 @@ cache <- function(variable, depends=NULL, CODE=NULL, ...)
                 hash=file.path('cache', paste0(variable, '.hash'))
         )
 }
+
+.cache.status <- function () {
+        cached_variables <- .cached.variables()
+        if (length(cached_variables)==0) {
+                return(message("No variables in cache"))
+        }
+        status <- ""
+        for (var in cached_variables) {
+                var_info <- .read.cache.info(var)
+                status <- paste0(status, "Variable: ", var, "\n")
+                if(is.data.frame(var_info$hash)) {
+                        code <- var_info$hash[grepl("CODE", row.names(var_info$hash)),]
+                        depends <- var_info$hash[grepl("DEPENDS", row.names(var_info$hash)),]
+                        if (nrow(code) > 0) {
+                                status <- paste0(status, "  Generated from supplied CODE\n")
+                        }
+                        if (nrow(depends) > 0) {
+                                status <- paste0(status, "    Depends on variable: ", depends$variable, "\n")
+                        }
+                }
+                else {
+                        status <- paste0(status, "  Incomplete cache record.  Recommend running clear.cache('", var, "') and load.project()\n")
+                }
+                
+        }
+        message(status)
+}
+
+.cached.variables <- function(){
+        # get all relevant cache files
+        cache_files <- list.files("cache", pattern="\\.(RData|hash)$")
+        # and return the variable names
+        unique(sub("^(.*)\\..*$", "\\1", cache_files))
+}
+

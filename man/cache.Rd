@@ -4,7 +4,7 @@
 \alias{cache}
 \title{Cache a data set for faster loading.}
 \usage{
-cache(variable, depends = NULL, CODE = NULL, ...)
+cache(variable = NULL, depends = NULL, CODE = NULL, ...)
 }
 \arguments{
 \item{variable}{A character string containing the name of the variable to
@@ -35,6 +35,8 @@ way, it can take a while to cache large variables, so cache will only cache when
 needs to.  
 The \code{clear.cache("variable")} command
 can be run to flush individual items from the cache.
+
+Calling \code{cache()} with no arguments returns the current status of the cache.
 }
 \examples{
 library('ProjectTemplate')
