@@ -29,6 +29,8 @@ Suggests:
     foreign,
     reshape,
     plyr,
+    digest,
+    formatR,
     stringr,
     ggplot2,
     lubridate,
@@ -81,6 +83,7 @@ Collate:
     'cache.name.R'
     'cache.project.R'
     'clean.variable.name.R'
+    'clear.cache.R'
     'create.project.R'
     'translate.dcf.R'
     'default.config.R'
