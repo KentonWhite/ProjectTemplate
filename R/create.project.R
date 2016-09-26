@@ -143,3 +143,60 @@ create.project <- function(project.name = 'new-project', minimal = FALSE,
 .dir.empty <- function(path) {
   length(.list.files.and.dirs(path = path)) == 0
 }
+
+
+# Helper functions for custom template functionality
+
+.root.template.file <- file.path(.libPaths(), "ProjectTemplate", 
+                                   "defaults", "customtemplate", 
+                                   "templateconfig.dcf")
+
+
+.get.template.locations <- function (template.file) {
+        location <- as.data.frame(read.dcf(template.file), 
+                                  stringsAsFactors = FALSE)
+        invalid_types <- setdiff(location$type, c("file", "github"))
+        if(length(invalid_types)>0) {
+                stop(paste0("Invalid template types in ", template.file, ": ", invalid_types))
+        }
+        location
+}
+
+.set.root.location <- function (location, type) {
+        location <- data.frame(location=location, type=type)
+        write.dcf(location, .root.template.file)
+}
+
+.get.root.location <- function () {
+        location <- .get.template.locations(.root.template.file)
+        location <- location[1,]
+        if(location$location == "NULL") return (NULL)
+        location
+}
+
+.get.template.names <- function () {
+        template.root <- .get.root.location()
+        if (is.null(template.root)) return(NULL)
+        
+        if (template.root$type == "github") {
+                templates <- .download.github(template.root$location)
+        }
+        else {
+                templates <- template.root$location
+        }
+        
+        template.names <- sort(list.dirs(templates))
+        
+        template.info <- data.frame(
+                clean.names = sub("(.*)_default$", "\\1", template.names)
+                default = default grepl("_default$", template.names)
+                path = file.path("templates", template.names)
+        )
+        
+        
+        
+}
+
+.download.github <- function (location) {
+        stop(".download.github not implemented")
+}
