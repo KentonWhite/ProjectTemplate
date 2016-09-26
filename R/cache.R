@@ -37,7 +37,7 @@
 #'
 #' setwd('..')
 #' unlink('tmp-project')}
-cache <- function(variable=NULL, depends=NULL, CODE=NULL, ...)
+cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
 {
   if (is.null(variable)) return(.cache.status())
         

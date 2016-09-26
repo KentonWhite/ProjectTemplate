@@ -4,18 +4,18 @@
 \alias{cache}
 \title{Cache a data set for faster loading.}
 \usage{
-cache(variable = NULL, depends = NULL, CODE = NULL, ...)
+cache(variable = NULL, CODE = NULL, depends = NULL, ...)
 }
 \arguments{
 \item{variable}{A character string containing the name of the variable to
 be saved.  If the CODE parameter is defined, it is evaluated and saved, otherwise
 the variable with that name in the global environment is used.}
 
-\item{depends}{A character vector of other global environment objects that the CODE
-depends upon. Caching will be forced if those objects have changed since last caching}
-
 \item{CODE}{A sequence of R statements enclosed in \code{\{..\}} which produce the object to be
 cached.}
+
+\item{depends}{A character vector of other global environment objects that the CODE
+depends upon. Caching will be forced if those objects have changed since last caching}
 
 \item{...}{additional arguments passed to \code{\link{save}}}
 }
