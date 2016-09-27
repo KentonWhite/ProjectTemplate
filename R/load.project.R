@@ -19,8 +19,19 @@
 #' \dontrun{load.project()}
 load.project <- function(override.config = NULL)
 {
+  this_dir <- .project.info(getwd())
+  if (!this_dir$is.ProjectTemplate) {
+          return(
+          message(paste0(c("Current directory is not a ProjectTemplate directory",
+                         "Please change to correct directory and re-run load.project()"),
+                         collapse = "\n")
+                  )
+          )
+  }
+        
   my.project.info <- list()
 
+  message(paste0('Project name: ', this_dir$name))
   message('Loading project configuration')
 
   config <- .load.config(override.config)
@@ -306,4 +317,19 @@ load.project <- function(override.config = NULL)
 
 .package.version <- function() {
   as.character(read.dcf(system.file("DESCRIPTION", package = "ProjectTemplate"), fields = "Version"))
+}
+
+.mandatory.files <- c("config/global.dcf", "lib", "cache", "data")
+
+.project.info <- function (path) {
+        is.ProjectTemplate <- .is.ProjectTemplate(path)
+        name <- ifelse(is.ProjectTemplate, basename(path), "")
+        list(is.ProjectTemplate=is.ProjectTemplate, name=name) 
+}
+
+.is.ProjectTemplate <- function (path) {
+        path.files <- c(basename(list.dirs(path)), dir(path, recursive = TRUE))
+        missing_files <- setdiff(.mandatory.files, path.files)
+        if (length(missing_files)==0) return (TRUE)
+        return(FALSE)
 }
