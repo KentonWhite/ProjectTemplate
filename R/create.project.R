@@ -147,15 +147,18 @@ create.project <- function(project.name = 'new-project', minimal = FALSE,
 
 # Helper functions for custom template functionality
 
-.root.template.file <- file.path(.libPaths(), "ProjectTemplate", 
-                                   "defaults", "customtemplate", 
-                                   "templateconfig.dcf")
+.root.template.dir <- file.path(.libPaths(), "ProjectTemplate", "defaults", "customtemplate")
+.root.template.file <- file.path(.root.template.dir, "templateconfig.dcf")
 
+.root.templatebackup.dir <- file.path(.libPaths(), "ProjectTemplateRootTemplateBackup")
+.root.templatebackup.file <- file.path(.root.template.dir, "templateconfig.dcf")
+
+.available.types <- c("local", "github")
 
 .get.template.locations <- function (template.file) {
         location <- as.data.frame(read.dcf(template.file), 
                                   stringsAsFactors = FALSE)
-        invalid_types <- setdiff(location$type, c("file", "github"))
+        invalid_types <- setdiff(location$type, .available.types)
         if(length(invalid_types)>0) {
                 stop(paste0("Invalid template types in ", template.file, ": ", invalid_types))
         }
@@ -163,8 +166,24 @@ create.project <- function(project.name = 'new-project', minimal = FALSE,
 }
 
 .set.root.location <- function (location, type) {
+        if (!(type %in% .available.types)) {
+                message(paste0("Invalid type: ", type))
+                return(invisible(NULL))
+        }
+        if (is.null(location)) {
+                location <- "NULL"
+        }
+        else if (!.is.dir(location)) {
+                message(paste0("Invalid template location: ", location))
+                return(invisible(NULL))
+        }
+
         location <- data.frame(location=location, type=type)
         write.dcf(location, .root.template.file)
+        
+        # Create a backup of the root location
+        if(!.is.dir(.root.templatebackup.dir)) dir.create(.root.templatebackup.dir)
+        write.dcf(location, .root.templatebackup.file)
 }
 
 .get.root.location <- function () {
@@ -187,11 +206,11 @@ create.project <- function(project.name = 'new-project', minimal = FALSE,
         
         template.names <- sort(list.dirs(templates))
         
-        template.info <- data.frame(
-                clean.names = sub("(.*)_default$", "\\1", template.names)
-                default = default grepl("_default$", template.names)
-                path = file.path("templates", template.names)
-        )
+        #template.info <- data.frame(
+        #        clean.names = sub("(.*)_default$", "\\1", template.names)
+        #        default = default grepl("_default$", template.names)
+        #        path = file.path("templates", template.names)
+        #)
         
         
         
