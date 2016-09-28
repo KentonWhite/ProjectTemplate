@@ -46,7 +46,8 @@ create.project <- function(project.name = 'new-project', minimal = FALSE,
   this_dir <- .project.info(getwd())
   if (parent_dir$is.ProjectTemplate | this_dir$is.ProjectTemplate) {
           return(
-                  message(paste0(c("Current directory is a ProjectTemplate directory",
+                  message(paste0(c(paste0("Current directory: ", basename(getwd()),
+                                          " is a ProjectTemplate directory"),
                                    "Cannot create a new project inside an existing one",
                                    "Please change to another directory and re-run create.project()"),
                                  collapse = "\n")

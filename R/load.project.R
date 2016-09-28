@@ -22,7 +22,8 @@ load.project <- function(override.config = NULL)
   this_dir <- .project.info(getwd())
   if (!this_dir$is.ProjectTemplate) {
           return(
-          message(paste0(c("Current directory is not a ProjectTemplate directory",
+          message(paste0(c(paste0("Current directory: ", basename(getwd()),
+                                  " is not a ProjectTemplate directory"),
                          "Please change to correct directory and re-run load.project()"),
                          collapse = "\n")
                   )
@@ -319,15 +320,18 @@ load.project <- function(override.config = NULL)
   as.character(read.dcf(system.file("DESCRIPTION", package = "ProjectTemplate"), fields = "Version"))
 }
 
+# files that determine whether a directory is a ProjectTemplate project
 .mandatory.files <- c("config/global.dcf", "lib", "cache", "data")
 
-.project.info <- function (path) {
+# List of information about a project
+.project.info <- function (path=getwd()) {
         is.ProjectTemplate <- .is.ProjectTemplate(path)
         name <- ifelse(is.ProjectTemplate, basename(path), "")
         list(is.ProjectTemplate=is.ProjectTemplate, name=name) 
 }
 
-.is.ProjectTemplate <- function (path) {
+# Test whether a given path is a ProjectTemplate project
+.is.ProjectTemplate <- function (path=getwd()) {
         path.files <- c(basename(list.dirs(path)), dir(path, recursive = TRUE))
         missing_files <- setdiff(.mandatory.files, path.files)
         if (length(missing_files)==0) return (TRUE)
