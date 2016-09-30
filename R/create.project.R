@@ -148,10 +148,10 @@ create.project <- function(project.name = 'new-project', minimal = FALSE,
 # Helper functions for custom template functionality
 
 .root.template.dir <- file.path(.libPaths(), "ProjectTemplate", "defaults", "customtemplate")
-.root.template.file <- file.path(.root.template.dir, "templateconfig.dcf")
+.root.template.file <- file.path(.root.template.dir, "RootConfig.dcf")
 
-.root.templatebackup.dir <- file.path(.libPaths(), "ProjectTemplateRootTemplateBackup")
-.root.templatebackup.file <- file.path(.root.template.dir, "templateconfig.dcf")
+.root.templatebackup.dir <- file.path(R.home(), "etc")
+.root.templatebackup.file <- file.path(.root.templatebackup.dir, "ProjectTemplateRootConfig.dcf")
 
 .available.types <- c("local", "github")
 
@@ -202,17 +202,20 @@ create.project <- function(project.name = 'new-project', minimal = FALSE,
         }
         else {
                 templates <- template.root$location
+                sub.dirs <- list.dirs(templates)
+                template.names <- basename(sort(sub.dirs[2:length(sub.dirs)]))
+                template.info <- data.frame(
+                clean.names = sub("(.*)_default$", "\\1", template.names),
+                default = grepl("_default$", template.names),
+                path = file.path(templates, template.names)
+                )        
         }
         
-        template.names <- sort(list.dirs(templates))
-        
-        #template.info <- data.frame(
-        #        clean.names = sub("(.*)_default$", "\\1", template.names)
-        #        default = default grepl("_default$", template.names)
-        #        path = file.path("templates", template.names)
-        #)
         
         
+        
+        
+        template.info
         
 }
 
