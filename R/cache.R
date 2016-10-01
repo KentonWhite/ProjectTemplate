@@ -107,7 +107,7 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
                   if (is.null(genv.hash)) {
                           message(paste0("  Cannot cache ", variable, 
                                          ": Does not exist in global environment and no code to create it"))
-                          return()
+                          return(invisible(NULL))
                   }
                   message(paste0("  Creating cache entry from global environment: ", variable))
                   cache.hash <- genv.hash
@@ -124,12 +124,12 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
                   if (is.null(genv.hash)) {
                           message(paste0("  Unable to update cache for ", variable, 
                                          ": Does not exist in global environment and no code to create it"))
-                          return()
+                          return(invisible(NULL))
                   }
                   if (stored$hash["VAR",]$hash == genv.hash["VAR",]$hash) {
                           message(paste0("  Skipping cache update for ", variable, 
                                          ": up to date"))
-                          return()
+                          return(invisible(NULL))
                   }
                   message(paste0("  Updating existing cache entry from global environment: ", variable))
                   cache.hash <- genv.hash
@@ -141,7 +141,7 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
                   if (isTRUE(all.equal(genv.hash, stored.hash))) {
                           message(paste0("  Skipping cache update for ", variable, 
                                          ": up to date"))
-                          return()
+                          return(invisible(NULL))
                   }
                   message(paste0("  Updating existing cache entry from CODE: ", variable))
                   .evaluate.code(variable, CODE)
@@ -186,7 +186,7 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
         # using the .cache.hash helper function
         
         cache.hash <- .cache.hash(variable)
-        if (nrow(cache.hash)==0) return(NULL)
+        if (is.null(cache.hash)) return(NULL)
         
         row.names(cache.hash) <- "VAR"
         if (!is.null(CODE)){
@@ -213,8 +213,7 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
  
         missing <- variables[!sapply(variables, exists, envir=env)]
         if (length(missing)>0){
-                stop("Missing variables : ",
-                     paste0(missing, sep=" "))
+                return(NULL)
         }
 
         
