@@ -193,29 +193,63 @@ create.project <- function(project.name = 'new-project', minimal = FALSE,
         location
 }
 
+.remove.first <- function (x) rev(head(rev(x), -1))
+
 .get.template.names <- function () {
         template.root <- .get.root.location()
         if (is.null(template.root)) return(NULL)
         
+        # read raw template information
         if (template.root$type == "github") {
                 templates <- .download.github(template.root$location)
         }
-        else {
+        else if (template.root$type == "local") {
                 templates <- template.root$location
                 sub.dirs <- list.dirs(templates)
-                template.names <- basename(sort(sub.dirs[2:length(sub.dirs)]))
+                template.names <- basename(.remove.first(sub.dirs))
                 template.info <- data.frame(
-                clean.names = sub("(.*)_default$", "\\1", template.names),
-                default = grepl("_default$", template.names),
-                path = file.path(templates, template.names)
-                )        
+                                        clean.names = sub("(.*)_default$", "\\1", 
+                                                          template.names),
+                                        default = grepl("_default$", template.names),
+                                        path = file.path(templates, template.names)
+                                  )        
         }
-        
-        
-        
-        
-        
+        else {
+                template.info <- NULL
+        }
+        if (nrow(template.info)>0){
+                # sort into order - default first
+                template.info <- template.info[with(template.info, 
+                                                    order(-default, clean.names)),]
+                # and make sure there is only one default
+                template.info$default <- c(TRUE, rep(FALSE, nrow(template.info)-1))
+        }
         template.info
+}
+
+.show.templates <- function () {
+        template.info <- .get.template.names()
+        if (is.null(template.info)) {
+                return(
+                message(paste0(c("Custom Templates not configured for this installation.",
+                               "Run template.root() to set up where ProjectTemplate should look for your custom templates"),
+                               collapse = "\n"))
+                )
+        }
+        if (nrow(template.info)==0) {
+                return(
+                        message(paste0(c(paste0("No templates are located at ", .get.root.location()$location),
+                                         "Add sub directories there to start using custom templates"),
+                                       collapse = "\n"))
+                )
+        }
+        templates <- ifelse(template.info$default, 
+                            paste0("(*) ", template.info$clean.names),
+                            paste0("    ", template.info$clean.names))
+        message(paste0(c("The following templates are available:", 
+                         templates,
+                         "If no template specified in create.project(), the default (*) will be used"),
+                       collapse = "\n"))
         
 }
 
