@@ -321,7 +321,7 @@ load.project <- function(override.config = NULL)
 }
 
 # files that determine whether a directory is a ProjectTemplate project
-.mandatory.files <- c("config/global.dcf", "lib", "cache", "data")
+.mandatory.files <- c("config/global.dcf", "cache", "data")
 
 # List of information about a project
 .project.info <- function (path=getwd()) {
@@ -332,8 +332,7 @@ load.project <- function(override.config = NULL)
 
 # Test whether a given path is a ProjectTemplate project
 .is.ProjectTemplate <- function (path=getwd()) {
-        path.files <- c(basename(list.dirs(path)), dir(path, recursive = TRUE))
-        missing_files <- setdiff(.mandatory.files, path.files)
-        if (length(missing_files)==0) return (TRUE)
+        check_files <- file.path(path, .mandatory.files)
+        if(sum(file.exists(check_files))==length(check_files)) return(TRUE)
         return(FALSE)
 }
