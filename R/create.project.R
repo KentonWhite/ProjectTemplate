@@ -145,24 +145,48 @@ create.project <- function(project.name = 'new-project', minimal = FALSE,
 }
 
 
-# Helper functions for custom template functionality
+# Custom template functionality
 
+# Custom templates can be configured for each different installation of ProjectTemplate
+# There can be multiple templates, and one of them is a default.  They are invoked by
+#     create.project("project-name", "template name")
+# or
+#     create.project("project-name") to invoke the default template
+#
+# First of all, the standard ProjectTemplate structure is created.  Then the structure
+# defined for each template name is copied into the standard structure, overwriting 
+# anything already there, and adding any new files.
+#
+# The location of the templates is a single location on the local file system or github.
+# This is called the root template location.  Each sub directory under the root 
+# location is the template-name used in the call to create.project.
+#
+
+# First, Some short cut definitions to aid readability
+
+# Where is the root template location defined
 .root.template.dir <- file.path(.libPaths(), "ProjectTemplate", "defaults", "customtemplate")
 .root.template.file <- file.path(.root.template.dir, "RootConfig.dcf")
 
+# A backup is needed otherwise it will be overwritten when ProjectTemplate is updated 
 .root.templatebackup.dir <- file.path(R.home(), "etc")
 .root.templatebackup.file <- file.path(.root.templatebackup.dir, "ProjectTemplateRootConfig.dcf")
 
-.available.types <- c("local", "github")
+# allow templates to be defined in the local filesystem, or on github
+.available.location.types <- c("local", "github")
 
-.get.template.locations <- function (template.file) {
-        location <- as.data.frame(read.dcf(template.file), 
+# Helper function to remove the first item in a list
+.remove.first <- function (x) rev(head(rev(x), -1))
+
+# Read a template definition file and return the contents as a dataframe
+.read.template.definition <- function (template.file=.get.root.location()) {
+        definition <- as.data.frame(read.dcf(template.file), 
                                   stringsAsFactors = FALSE)
-        invalid_types <- setdiff(location$type, .available.types)
+        invalid_types <- setdiff(definition$type, .available.location.types)
         if(length(invalid_types)>0) {
                 stop(paste0("Invalid template types in ", template.file, ": ", invalid_types))
         }
-        location
+        definition
 }
 
 .set.root.location <- function (location, type) {
@@ -193,9 +217,8 @@ create.project <- function(project.name = 'new-project', minimal = FALSE,
         location
 }
 
-.remove.first <- function (x) rev(head(rev(x), -1))
 
-.get.template.names <- function () {
+.read.template.info <- function () {
         template.root <- .get.root.location()
         if (is.null(template.root)) return(NULL)
         
@@ -227,29 +250,30 @@ create.project <- function(project.name = 'new-project', minimal = FALSE,
         template.info
 }
 
-.show.templates <- function () {
+.template.status <- function () {
         template.info <- .get.template.names()
         if (is.null(template.info)) {
-                return(
-                message(paste0(c("Custom Templates not configured for this installation.",
-                               "Run template.root() to set up where ProjectTemplate should look for your custom templates"),
+                message <- paste0(c("Custom Templates not configured for this installation.",
+                               "Run configure.template() to set up where ProjectTemplate should look for your custom templates"),
                                collapse = "\n"))
-                )
+                root <- "no_root"
         }
-        if (nrow(template.info)==0) {
+        else if (nrow(template.info)==0) {
                 return(
                         message(paste0(c(paste0("No templates are located at ", .get.root.location()$location),
                                          "Add sub directories there to start using custom templates"),
                                        collapse = "\n"))
                 )
         }
-        templates <- ifelse(template.info$default, 
-                            paste0("(*) ", template.info$clean.names),
-                            paste0("    ", template.info$clean.names))
-        message(paste0(c("The following templates are available:", 
-                         templates,
-                         "If no template specified in create.project(), the default (*) will be used"),
-                       collapse = "\n"))
+        else {
+                templates <- ifelse(template.info$default, 
+                                    paste0("(*) ", template.info$clean.names),
+                                    paste0("    ", template.info$clean.names))
+                message(paste0(c("The following templates are available:", 
+                                 templates,
+                                 "If no template specified in create.project(), the default (*) will be used"),
+                               collapse = "\n"))
+        }
         
 }
 
