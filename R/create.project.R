@@ -42,6 +42,18 @@ create.project <- function(project.name = 'new-project', minimal = FALSE,
                            dump = FALSE, merge.strategy = c("require.empty", "allow.non.conflict"))
 {
   temp.dir <- tempfile("ProjectTemplate")
+  parent_dir <- .project.info(dirname(getwd()))
+  this_dir <- .project.info(getwd())
+  if (parent_dir$is.ProjectTemplate | this_dir$is.ProjectTemplate) {
+          return(
+                  message(paste0(c(paste0("Current directory: ", basename(getwd()),
+                                          " is a ProjectTemplate directory"),
+                                   "Cannot create a new project inside an existing one",
+                                   "Please change to another directory and re-run create.project()"),
+                                 collapse = "\n")
+                  )
+          )
+  }
 
   if (minimal) {
     exclude <- c("diagnostics", "doc", "graphs", "lib", "logs", "profiling",

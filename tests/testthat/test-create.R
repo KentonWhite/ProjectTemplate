@@ -222,3 +222,19 @@ test_that('Test failure creating project in directory with existing file matchin
                      merge.strategy = "allow.non.conflict"), "overwrite"))
 
 })
+
+test_that('Dont create projects inside other projects', {
+        test_project <- tempfile('test_project')
+        suppressMessages(create.project(test_project, minimal = FALSE))
+        on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
+        
+        oldwd <- setwd(test_project)
+        on.exit(setwd(oldwd), add = TRUE)
+ 
+        # shouldn't be able to create a new project inside this one       
+        expect_message(create.project("new_project"), "Cannot create a new project inside an existing one")
+        
+        # Also shouldn't be able to create one inside a sub directory of an existing project
+        setwd(file.path(test_project, 'lib'))
+        expect_message(create.project("new_project"), "Cannot create a new project inside an existing one")
+})
