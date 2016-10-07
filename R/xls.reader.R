@@ -1,7 +1,7 @@
 #' Read an Excel 2004 file with a .xls file extension.
 #'
 #' This function will load the specified Excel file into memory using the
-#' gdata package. Each sheet of the Excel workbook will be read into a
+#' readxl package. Each sheet of the Excel workbook will be read into a
 #' separate variable in the global environment.
 #'
 #' @param data.file The name of the data file to be read.
@@ -16,16 +16,16 @@
 #' \dontrun{xls.reader('example.xls', 'data/example.xls', 'example')}
 xls.reader <- function(data.file, filename, workbook.name)
 {
-  .require.package('gdata')
+  .require.package('readxl')
 
-  sheets <- gdata::sheetNames(filename)
+  sheets <- readxl::excel_sheets(filename)
 
   for (sheet.name in sheets)
   {
     variable.name <- paste(workbook.name, clean.variable.name(sheet.name), sep = ".")
     tryCatch(assign(variable.name,
-                    gdata::read.xls(filename,
-                             sheet = sheet.name),
+                    data.frame(readxl::read_excel(filename,
+                                       sheet = sheet.name)),
                     envir = .TargetEnv),
              error = function(e)
              {
