@@ -33,7 +33,7 @@ migrate.project <- function()
                      warning=function(w) {
                        # set up some variables to help process the migration warnings
                        assign("no_config_problems", FALSE, envir = env)
-                       assign("wanings_encountered", w, envir = env)
+                       assign("warnings_encountered", w, envir = env)
                        assign("cache_loaded_data", FALSE, envir = env)
                        
                        # specific config item migration can be added here
@@ -85,7 +85,7 @@ migrate.project <- function()
           ),
           collapse="\n"))
           
-          sapply(wanings_encountered, warning)
+          sapply(warnings_encountered, warning)
           
           
   }
