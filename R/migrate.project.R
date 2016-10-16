@@ -27,6 +27,9 @@ migrate.project <- function()
   # if something other than the default is appropriate for existing projects)
   
   no_config_problems <- TRUE
+  warnings_encountered <- NULL
+  cache_loaded_data <- NULL
+  
   env <- environment()
   
   config <- tryCatch(.load.config(),
