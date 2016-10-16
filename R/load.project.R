@@ -122,7 +122,14 @@ load.project <- function(override.config = NULL)
 
     .convert.to.data.table(my.project.info$data)
   }
-
+  
+  # If we have just loaded data from the data directory, cache it straight away
+  # if the cache_loaded_data config is TRUE
+  if (config$cache_loaded_data && ("data" %in% names(my.project.info)))
+  {
+          sapply(my.project.info$data, cache)
+  }
+  
   if (config$munging)
   {
     message('Munging data')
@@ -216,7 +223,7 @@ load.project <- function(override.config = NULL)
                                                  ignore.case = TRUE,
                                                  perl = TRUE))
 
-        # If this variable already exists in cache, don't load it from data.
+        # If this variable already exists in global env, don't load it from data.
         if (variable.name %in% ls(envir = .TargetEnv))
         {
           next()
