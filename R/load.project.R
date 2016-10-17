@@ -107,6 +107,10 @@ load.project <- function(override.config = NULL)
   }
 
   # Then we consider loading things from data/.
+  
+  # First save the variables already in the global env
+  before.data.load <- .var.diff.from()
+  
   if (config$data_loading)
   {
     message('Autoloading data')
@@ -125,9 +129,12 @@ load.project <- function(override.config = NULL)
   
   # If we have just loaded data from the data directory, cache it straight away
   # if the cache_loaded_data config is TRUE
-  if (config$cache_loaded_data && ("data" %in% names(my.project.info)))
+  
+  # First see if there are any new variables created
+  new.vars <- .var.diff.from(before.data.load)
+  if (config$cache_loaded_data && (length(new.vars)>0))
   {
-          sapply(my.project.info$data, cache)
+          sapply(new.vars, cache)
   }
   
   if (config$munging)
@@ -343,3 +350,16 @@ load.project <- function(override.config = NULL)
         if(sum(file.exists(check_files))==length(check_files)) return(TRUE)
         return(FALSE)
 }
+
+# Compare the variables (excluding functions) in the global env with a passed
+# in string of names and return the difference
+.var.diff.from <- function(given.var.list="", env=.TargetEnv) {
+        # Get variables in target environment of determine if they are a function
+        current.var.list <- sapply(ls(envir = env), function(x) is.function(get(x)))
+        current.var.list <- names(current.var.list[current.var.list==FALSE])
+        
+        # return those not in list
+        setdiff(current.var.list, given.var.list)
+}
+
+

@@ -73,3 +73,46 @@ test_that('auto loaded data is not cached when cached_loaded_data is FALSE', {
         
 
 })
+
+
+
+test_that('auto loaded data from an R script is cached correctly', {
+        test_project <- tempfile('test_project')
+        suppressMessages(create.project(test_project, minimal = FALSE))
+        on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
+        
+        oldwd <- setwd(test_project)
+        on.exit(setwd(oldwd), add = TRUE)
+        
+        # clear the global environment
+        rm(list=ls(envir = .TargetEnv), envir = .TargetEnv)
+        
+        # create some variables in the global env that shouldn't be cached
+        test_data11 <- data.frame(Names=c("a", "b", "c"), Ages=c(20,30,40))
+        test_data21 <- data.frame(Names=c("a1", "b1", "c1"), Ages=c(20,30,40))
+        
+        # Create some R code and put in data directory 
+        CODE <- paste0(deparse(substitute({
+                test_data12 <- data.frame(Names=c("a", "b", "c"), Ages=c(20,30,40))
+                test_data22 <- data.frame(Names=c("a1", "b1", "c1"), Ages=c(20,30,40))        
+                
+        })), collapse ="\n")
+        
+        # save R code in the data directory
+        writeLines(CODE, "data/test.R")
+        
+        # load the project and R code
+        suppressMessages(load.project())
+        
+        # check that the test variables have been cached correctly
+        expect_error(load("cache/test_data12.RData", envir = environment()), NA)
+        expect_error(load("cache/test_data22.RData", envir = environment()), NA)
+        
+        # check that the other test variables have not been cached 
+        expect_error(load("cache/test_data11.RData", envir = environment()), 
+                     "cannot open the connection")
+        expect_error(load("cache/test_data21.RData", envir = environment()),
+                     "cannot open the connection")
+})
+
+
