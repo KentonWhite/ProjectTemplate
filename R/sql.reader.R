@@ -174,6 +174,11 @@ sql.reader <- function(data.file, filename, variable.name)
 
     connection <- DBI::dbConnect(sqlite.driver,
                             dbname = database.info[['dbname']])
+
+    if (!is.null(database.info[['plugin']]) && database.info[['plugin']] == 'extension')
+    {
+      RSQLite::initExtension(connection)
+    }
   }
 
   if (database.info[['type']] == 'postgres')
