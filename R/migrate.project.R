@@ -22,40 +22,48 @@ migrate.project <- function()
   message('Migrating project configuration')
 
   # Load the config and look for specific problems in the configuration that
-  # should be fixed (missing files, missing config item)
+  # should be fixed (e.g. missing files, missing config item)
   # Also flag up if any items need special handling during migration (for example
   # if something other than the default is appropriate for existing projects)
   
-  no_config_problems <- TRUE
+  # Initialise migration flags
+  config_conflicts <- FALSE
   warnings_encountered <- NULL
-  cache_loaded_data <- NULL
   
+  
+  # Flags stored in environment env
   env <- environment()
   
-  config <- tryCatch(.load.config(),
-                     warning=function(w) {
-                       # set up some variables to help process the migration warnings
-                       assign("no_config_problems", FALSE, envir = env)
-                       assign("warnings_encountered", w, envir = env)
-                       assign("cache_loaded_data", FALSE, envir = env)
-                       
-                       # specific config item migration can be added here
-                       if (any(grepl("cache_loaded_data", w))) {
-                               assign("cache_loaded_data", TRUE, envir = env)
+  
+  # Detect any conflicts with the old config file (flag for now and process later on)
+  tryCatch(config <- .load.config(),
+                      warning=function(w) {
+                          # set up some variables to help process the 
+                          # migration warnings later
+                          assign("config_conflicts", TRUE, envir = env)
+                          assign("warnings_encountered", w, envir = env)
                                
-                       }
-                             
-                       # re-run to get the config, this time without warnings
-                       return(suppressWarnings(.load.config()))
-                     })
-           
+                          # specific config item flags can be added here
 
-  if ((.check.version(config, warn.migrate = FALSE) == 0) && no_config_problems) {
-    message("Already up to date.")
-    return(invisible(NULL))
+                      })
+          
+  # Detect other migration issues 
+  
+  
+
+  # Exit if everything up to date
+  if ((
+          .check.version(config, warn.migrate = FALSE) == 0) 
+       && !config_conflicts
+      ) {
+          message("Already up to date.")
+          return(invisible(NULL))
   }
   
-  if (!no_config_problems) {
+  # Otherwise ....
+  
+  # Process config conflicts
+  if (config_conflicts) {
           # Tell the user about problems with their old config
           
           message(paste0(c(
@@ -66,20 +74,9 @@ migrate.project <- function()
                   collapse="\n"))
           
           
-          # Specific logic here for new config
+          # Specific logic here for new config items
           
-          if (cache_loaded_data) {
-                  # switch the setting to FALSE so as to not mess up any existing
-                  # munge script, but warn the user
-                  config$cache_loaded_data <- FALSE
-                  message(paste0(c(
-                          "\n",
-                          "There is a new config item called cache_loaded_data which auto-caches data",
-                          "after it has been loaded from the data directory.  This has been switched",
-                          "off for this project in case it breaks your scripts.  However you can switch",
-                          "it on manually by editing global.dcf"),
-                          collapse="\n"))
-          }
+          
           
           message(paste0(c(
                   "\n",
@@ -92,8 +89,19 @@ migrate.project <- function()
           
           
   }
+  
+  # Process other migration conflicts
+  
+  
+  
+  # save the configuration
+  .save.config(config)
+}
 
-  config$version <- .package.version()
-  write.dcf(config, 'config/global.dcf')
 
+# save config and update package version
+.save.config <- function (config) {
+        config$version <- .package.version()
+        write.dcf(config, .config.path)
+        
 }
