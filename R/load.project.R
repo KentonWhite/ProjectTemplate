@@ -128,15 +128,22 @@ load.project <- function(override.config = NULL)
   }
   
   # If we have just loaded data from the data directory, cache it straight away
-  # if the cache_loaded_data config is TRUE
-  
-  # First see if there are any new variables created
+  # if the cache_loaded_data config is TRUE. 
   new.vars <- .var.diff.from(before.data.load)
   if (config$cache_loaded_data && (length(new.vars)>0))
   {
           sapply(new.vars, cache)
   }
   
+  # update project.info$data with any additional datasets generated during autoload
+  if (length(new.vars) > 0)
+        my.project.info$data <- unique(c(my.project.info$data, new.vars))
+  
+  # remove any items in project.info$data which are not in the global environment
+  remove <- setdiff(my.project.info$data, .var.diff.from())
+  my.project.info$data <- my.project.info$data[! (my.project.info$data %in% remove)] 
+  
+ 
   if (config$munging)
   {
     message('Munging data')
