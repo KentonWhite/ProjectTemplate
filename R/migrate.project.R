@@ -28,23 +28,23 @@ migrate.project <- function()
   
   # Initialise migration flags
   config_conflicts <- FALSE
-  warnings_encountered <- NULL
+  config_warnings <- NULL
   
   
   # Flags stored in environment env
   env <- environment()
   
+  # Detect any conflicts with the existing config file once it has been processed
+  # during load.project() (flag for now and handle later on)
   
-  # Detect any conflicts with the old config file (flag for now and process later on)
-  tryCatch(config <- .load.config(),
+  loaded.config <- tryCatch(.load.config(),
                       warning=function(w) {
                           # set up some variables to help process the 
                           # migration warnings later
+                          
                           assign("config_conflicts", TRUE, envir = env)
-                          assign("warnings_encountered", w, envir = env)
-                               
-                          # specific config item flags can be added here
-
+                          assign("config_warnings", w$message, envir = env)
+                          suppressWarnings(.load.config())
                       })
           
   # Detect other migration issues 
@@ -53,7 +53,7 @@ migrate.project <- function()
 
   # Exit if everything up to date
   if ((
-          .check.version(config, warn.migrate = FALSE) == 0) 
+          .check.version(loaded.config, warn.migrate = FALSE) == 0) 
        && !config_conflicts
       ) {
           message("Already up to date.")
@@ -64,28 +64,49 @@ migrate.project <- function()
   
   # Process config conflicts
   if (config_conflicts) {
+          
           # Tell the user about problems with their old config
           
           message(paste0(c(
-                  "Your existing project configuration in globals.dcf does not contain the",
-                  "new configuration settings in this version of ProjectTemplate.  They will",
+                  "Your existing project configuration in globals.dcf does not contain up to",
+                  paste0("date configuration settings in this version ",
+                  .package.version(),
+                  " of ProjectTemplate.  They will"),
                   "be added automatically during migration, but you should review afterward."
                   ),
                   collapse="\n"))
           
+          if(grepl("missing a configuration file", config_warnings)) {
+                  message(paste0(c(
+                          "You didn't have a config.dcf file.  One has been created",
+                          "for you using default values"
+                          ),
+                  collapse="\n"))
+          }
           
-          # Specific logic here for new config items
+         
+          if(grepl("missing the following entries", config_warnings)) {
+                  message(paste0(c(
+                          "Your config.dcf file was missing entries and defaults",
+                          "have been used.  The missing entries are:"
+                          ),
+                  collapse="\n"))
+                  missing <- sub(".*missing the following entries:([^.]*)\\.(.*)$", "\\1", config_warnings)
+                  message(missing)
+          }
           
+          if(grepl("contains the following unused entries", config_warnings)) {
+                  message(paste0(c(
+                          "Your config.dcf file contained unused entries which have been",
+                          "removed.  The unused entries are:"
+                          ),
+                  collapse="\n"))
+                  unused <- sub(".*contains the following unused entries:([^.]*)\\.(.*)$", "\\1", config_warnings)
+                  message(unused)
+          }
           
-          
-          message(paste0(c(
-                  "\n",
-                  "The following warnings were detected with your configuration prior to migration:",
-                  "\n"
-          ),
-          collapse="\n"))
-          
-          sapply(warnings_encountered, warning)
+                    
+          # Specific logic here for new config items that need special migration treatment
           
           
   }
@@ -94,8 +115,9 @@ migrate.project <- function()
   
   
   
-  # save the configuration
-  .save.config(config)
+  # Finally, save the validated configuration with the updated version number
+  .save.config(loaded.config)   
+  
 }
 
 
@@ -103,5 +125,10 @@ migrate.project <- function()
 .save.config <- function (config) {
         config$version <- .package.version()
         write.dcf(config, .config.path)
-        
 }
+
+# read in a config file and return a config object
+.read.config <- function () {
+        translate.dcf(.config.path)
+}
+

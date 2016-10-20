@@ -18,7 +18,7 @@ lapply(
       expect_that(suppressMessages(load.project()), gives_warning("migrate.project"))
       on.exit(.unload.project(), add = TRUE)
 
-      expect_warning(suppressMessages(migrate.project()), "missing the following entries")
+      expect_message(migrate.project(), "file was missing entries")
       expect_warning(suppressMessages(load.project()), NA)
       expect_defaults(get.project()$config)
     })
