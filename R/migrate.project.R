@@ -128,7 +128,11 @@ migrate.project <- function()
 }
 
 # read in a config file and return a config object
-.read.config <- function () {
-        translate.dcf(.config.path)
+.read.config <- function (file=.config.path) {
+        config <- translate.dcf(file)
+        config <- .normalize.config(config,
+                          setdiff(names(default.config), c("version", "libraries", "logging_level")),
+                          .boolean.cfg)
+        config
 }
 
