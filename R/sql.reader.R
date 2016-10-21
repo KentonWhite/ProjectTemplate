@@ -90,6 +90,17 @@
 #' dbname: herokudb
 #' query: select * from emp
 #'
+#' Example 11
+#' In this example RSQLite::initExtension() is automatically called on the established connection.
+#'
+#' Liam Healy has written extension-functions.c, which is available on http://www.sqlite.org/contrib.
+#' It provides mathematical and string extension functions for SQL queries using the loadable extensions mechanism.
+#'
+#' type: sqlite
+#' dbname: /path/to/sample_database
+#' plugin: extension
+#' query: SELECT *,STDEV(value1) FROM example_table
+#'
 #' @param data.file The name of the data file to be read.
 #' @param filename The path to the data set to be loaded.
 #' @param variable.name The name to be assigned to in the global environment.
@@ -174,6 +185,11 @@ sql.reader <- function(data.file, filename, variable.name)
 
     connection <- DBI::dbConnect(sqlite.driver,
                             dbname = database.info[['dbname']])
+
+    if (!is.null(database.info[['plugin']]) && database.info[['plugin']] == 'extension')
+    {
+      RSQLite::initExtension(connection)
+    }
   }
 
   if (database.info[['type']] == 'postgres')
