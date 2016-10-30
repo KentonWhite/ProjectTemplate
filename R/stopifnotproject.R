@@ -1,4 +1,4 @@
-# This file contains helper functions to determine whether a given path is a ProjectTemplate directory
+# This file contains internal helper functions to determine whether a given path is a ProjectTemplate directory
 # or not.
 
 # The purpose is to allow user functions (load.project etc) to exit cleanly rather than try and perform their
