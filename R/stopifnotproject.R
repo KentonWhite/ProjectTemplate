@@ -66,8 +66,8 @@
 # stop silently
 .quietstop <- function () {
         
-        opt <- options(show.error.messages=FALSE)
-        on.exit(options(opt))
+        few <- options(show.error.messages=FALSE)
+        on.exit(options(few))
         stop()
 }
 
