@@ -20,6 +20,9 @@
 #' cache.project()}
 cache.project <- function()
 {
+  
+  project_name <- .stopifnotproject("Change to a valid ProjectTemplate directory and run cache.project() again.")
+        
   for (dataset in get.project()[['data']])
   {
     message(paste('Caching', dataset))
