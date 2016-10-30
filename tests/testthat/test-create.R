@@ -232,9 +232,9 @@ test_that('Dont create projects inside other projects', {
         on.exit(setwd(oldwd), add = TRUE)
  
         # shouldn't be able to create a new project inside this one       
-        expect_message(create.project("new_project"), "Cannot create a new project inside an existing one")
+        expect_error(create.project("new_project"))
         
         # Also shouldn't be able to create one inside a sub directory of an existing project
         setwd(file.path(test_project, 'lib'))
-        expect_message(create.project("new_project"), "Cannot create a new project inside an existing one")
+        expect_error(create.project("new_project"))
 })

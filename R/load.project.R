@@ -19,20 +19,11 @@
 #' \dontrun{load.project()}
 load.project <- function(override.config = NULL)
 {
-  this_dir <- .project.info(getwd())
-  if (!this_dir$is.ProjectTemplate) {
-          return(
-          message(paste0(c(paste0("Current directory: ", basename(getwd()),
-                                  " is not a ProjectTemplate directory"),
-                         "Please change to correct directory and re-run load.project()"),
-                         collapse = "\n")
-                  )
-          )
-  }
+  project_name <- .stopifnotproject ("Please change to correct directory and re-run load.project()")
         
   my.project.info <- list()
 
-  message(paste0('Project name: ', this_dir$name))
+  message(paste0('Project name: ', project_name))
   message('Loading project configuration')
 
   config <- .load.config(override.config)
@@ -323,16 +314,58 @@ load.project <- function(override.config = NULL)
 # files that determine whether a directory is a ProjectTemplate project
 .mandatory.files <- c("config/global.dcf", "cache", "data")
 
-# List of information about a project
-.project.info <- function (path=getwd()) {
-        is.ProjectTemplate <- .is.ProjectTemplate(path)
-        name <- ifelse(is.ProjectTemplate, basename(path), "")
-        list(is.ProjectTemplate=is.ProjectTemplate, name=name) 
-}
-
 # Test whether a given path is a ProjectTemplate project
 .is.ProjectTemplate <- function (path=getwd()) {
         check_files <- file.path(path, .mandatory.files)
         if(sum(file.exists(check_files))==length(check_files)) return(TRUE)
         return(FALSE)
 }
+
+# Function to stop processing if the path is not a Project Template
+# return the project name if it is a Project Template directory
+.stopifnotproject <- function(additional_message="", path=getwd()) {
+
+        is.ProjectTemplate <- .is.ProjectTemplate(path)
+        
+        if (!is.ProjectTemplate) {
+                directory <- ifelse(path==getwd(), "Current Directory: ", "Directory: ")
+                
+                message(
+                     paste0(c(paste0(directory, basename(path),
+                                                " is not a ProjectTemplate directory"),
+                                     additional_message),
+                            sep = "\n")
+                )
+                
+                .quietstop()
+        }
+        basename(path)
+}
+
+# Function to stop processing if the path is a Project Template
+.stopifproject <- function(additional_message="", path=getwd()) {
+        
+        is.ProjectTemplate <- .is.ProjectTemplate(path)
+        
+        if (is.ProjectTemplate) {
+                directory <- ifelse(path==getwd(), "Current Directory: ", "Directory: ")
+                
+                message(
+                        paste0(c(paste0(directory, basename(path),
+                                        " is a ProjectTemplate directory"),
+                                 additional_message),
+                               collapse = "\n")
+                )
+                
+                .quietstop()
+        }
+}
+
+# stop silently
+.quietstop <- function () {
+        
+        opt <- options(show.error.messages=FALSE)
+        on.exit(options(opt))
+        stop()
+}
+
