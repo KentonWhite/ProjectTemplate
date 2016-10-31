@@ -262,12 +262,13 @@ load.project <- function(override.config = NULL)
   }
 }
 
+.config.path <- file.path('config', 'global.dcf')
+
 .load.config <- function(override.config = NULL) {
-  config.path <- file.path('config', 'global.dcf')
-  config <- if (file.exists(config.path)) {
-    translate.dcf(config.path)
+  config <- if (file.exists(.config.path)) {
+    translate.dcf(.config.path)
   } else {
-    warning('You are missing a configuration file: ', config.path, ' . Defaults will be used.')
+    warning('You are missing a configuration file: ', .config.path, ' . Defaults will be used.')
     default.config
   }
 
