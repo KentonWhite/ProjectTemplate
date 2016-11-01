@@ -111,7 +111,7 @@ migrate.project <- function()
           if(grepl("cache_loaded_data", config_warnings)) {
                   # switch the setting to FALSE so as to not mess up any existing
                   # munge script, but warn the user
-                  config$cache_loaded_data <- FALSE
+                  loaded.config$cache_loaded_data <- FALSE
                   message(paste0(c(
                           "\n",
                           "There is a new config item called cache_loaded_data which auto-caches data",
