@@ -47,6 +47,53 @@ test_that('migrating a project which doesnt need config update results in an Up 
 })
 
 
+
+test_that('projects without the cached_loaded_data config have their migrated config set to FALSE ', {
+        
+        test_project <- tempfile('test_project')
+        suppressMessages(create.project(test_project, minimal = FALSE))
+        on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
+        
+        oldwd <- setwd(test_project)
+        on.exit(setwd(oldwd), add = TRUE)
+
+        # Read the config data and remove the cache_loaded_data flag
+        config <- as.data.frame(read.dcf("config/global.dcf"))
+        expect_error(config$cache_loaded_data <- NULL, NA)
+        write.dcf(config, "config/global.dcf" )
+        
+        # should get a warning because of the missing cache_loaded_data
+        expect_warning(suppressMessages(load.project()), "missing the following entries")
+        
+        test_data <- data.frame(Names=c("a", "b", "c"), Ages=c(20,30,40))
+        
+        # save test data as a csv in the data directory
+        write.csv(test_data, file="data/test.csv", row.names = FALSE)
+        
+        
+        # run load.project again and check that the the test variable has not been cached
+        # because the default should be FALSE if the missing_loaded_data is missing before migrate.project
+        # is called
+        suppressMessages(load.project())
+        expect_error(load("cache/test.RData", envir = environment()), "cannot open the connection")
+        
+        # Migrate the project
+        expect_message(migrate.project(), "new config item called cache_loaded_data")
+        
+        # Read the config data and check cached_loaded_data is FALSE
+        config <- as.data.frame(read.dcf("config/global.dcf"), stringsAsFactors=FALSE)
+        expect_equal(config$cache_loaded_data, "FALSE")
+        
+        # Should be a clean load.project
+        expect_warning(suppressMessages(load.project()), NA)
+        
+        # check that the the test variable has not been cached
+        expect_error(load("cache/test.RData", envir = environment()), "cannot open the connection")
+        
+        
+})
+
+
 test_that('migrating a project with a missing config file results in a message to user', {
         
         test_project <- tempfile('test_project')
@@ -55,7 +102,7 @@ test_that('migrating a project with a missing config file results in a message t
         
         oldwd <- setwd(test_project)
         on.exit(setwd(oldwd), add = TRUE)
-        
+
         # remove the config file
         unlink('config/global.dcf')
         
