@@ -11,7 +11,7 @@
 # It is intended that user functions will call one of these as appropriate near the beginning of their 
 # execution and they can supply an additional message to display to the user to tell them how to rectify
 # the situation which caused their command to stop
-
+#
 
 # files that determine whether a directory is a ProjectTemplate project
 .mandatory.files <- c("config/global.dcf", "cache", "data")
