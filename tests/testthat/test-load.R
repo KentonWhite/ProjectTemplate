@@ -35,6 +35,9 @@ test_that('user commands fail when not in ProjectTemplate directory', {
         # Check reload.project()
         expect_error(test.project())
         
+        # Check stub.tests()
+        expect_error(stub.tests())
+        
 })
 
 test_that('auto loaded data is cached by default', {
