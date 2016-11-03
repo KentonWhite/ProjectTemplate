@@ -108,6 +108,18 @@ migrate.project <- function()
                     
           # Specific logic here for new config items that need special migration treatment
           
+          if(grepl("cache_loaded_data", config_warnings)) {
+                  # switch the setting to FALSE so as to not mess up any existing
+                  # munge script, but warn the user
+                  loaded.config$cache_loaded_data <- FALSE
+                  message(paste0(c(
+                          "\n",
+                          "There is a new config item called cache_loaded_data which auto-caches data",
+                          "after it has been loaded from the data directory.  This has been switched",
+                          "off for this project in case it breaks your scripts.  However you can switch",
+                          "it on manually by editing global.dcf"),
+                          collapse="\n"))
+          }
           
   }
   

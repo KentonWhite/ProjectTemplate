@@ -10,3 +10,4 @@ libraries: reshape, plyr, dplyr, ggplot2, stringr, lubridate
 as_factors: TRUE
 data_tables: FALSE
 attach_internal_libraries: FALSE
+cache_loaded_data:  TRUE

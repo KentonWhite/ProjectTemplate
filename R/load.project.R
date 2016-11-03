@@ -107,6 +107,10 @@ load.project <- function(override.config = NULL)
   }
 
   # Then we consider loading things from data/.
+  
+  # First save the variables already in the global env
+  before.data.load <- .var.diff.from()
+  
   if (config$data_loading)
   {
     message('Autoloading data')
@@ -122,7 +126,24 @@ load.project <- function(override.config = NULL)
 
     .convert.to.data.table(my.project.info$data)
   }
-
+  
+  # If we have just loaded data from the data directory, cache it straight away
+  # if the cache_loaded_data config is TRUE. 
+  new.vars <- .var.diff.from(before.data.load)
+  if (config$cache_loaded_data && (length(new.vars)>0))
+  {
+          sapply(new.vars, cache)
+  }
+  
+  # update project.info$data with any additional datasets generated during autoload
+  if (length(new.vars) > 0)
+        my.project.info$data <- unique(c(my.project.info$data, new.vars))
+  
+  # remove any items in project.info$data which are not in the global environment
+  remove <- setdiff(my.project.info$data, .var.diff.from())
+  my.project.info$data <- my.project.info$data[! (my.project.info$data %in% remove)] 
+  
+ 
   if (config$munging)
   {
     message('Munging data')
@@ -216,7 +237,7 @@ load.project <- function(override.config = NULL)
                                                  ignore.case = TRUE,
                                                  perl = TRUE))
 
-        # If this variable already exists in cache, don't load it from data.
+        # If this variable already exists in global env, don't load it from data.
         if (variable.name %in% ls(envir = .TargetEnv))
         {
           next()
@@ -337,3 +358,16 @@ load.project <- function(override.config = NULL)
         if(sum(file.exists(check_files))==length(check_files)) return(TRUE)
         return(FALSE)
 }
+
+# Compare the variables (excluding functions) in the global env with a passed
+# in string of names and return the difference
+.var.diff.from <- function(given.var.list="", env=.TargetEnv) {
+        # Get variables in target environment of determine if they are a function
+        current.var.list <- sapply(ls(envir = env), function(x) is.function(get(x)))
+        current.var.list <- names(current.var.list[current.var.list==FALSE])
+        
+        # return those not in list
+        setdiff(current.var.list, given.var.list)
+}
+
+
