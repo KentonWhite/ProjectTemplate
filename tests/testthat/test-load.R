@@ -12,7 +12,7 @@ test_that('All elements have length 1', {
   expect_equal(unname(vapply(config, length, integer(1))), rep(1L, length(config)))
 })
 
-test_that('Dont load when not in ProjectTemplate directory', {
+test_that('user commands fail when not in ProjectTemplate directory', {
         test_project <- tempfile('test_project')
         dir.create(test_project)
         on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
@@ -20,7 +20,23 @@ test_that('Dont load when not in ProjectTemplate directory', {
         oldwd <- setwd(test_project)
         on.exit(setwd(oldwd), add = TRUE)
         
-        expect_message(load.project(), "is not a ProjectTemplate directory")
+        # Check load.project()
+        expect_error(load.project())
+
+        # Check clear.cache()
+        expect_error(clear.cache())
+
+        # Check cache()
+        expect_error(cache())
+        
+        # Check reload.project()
+        expect_error(reload.project())
+        
+        # Check reload.project()
+        expect_error(test.project())
+        
+        # Check stub.tests()
+        expect_error(stub.tests())
         
 })
 

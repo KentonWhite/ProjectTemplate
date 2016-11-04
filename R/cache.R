@@ -39,6 +39,9 @@
 #' unlink('tmp-project')}
 cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
 {
+  
+  project_name <- .stopifnotproject("Change to a valid ProjectTemplate directory and run cache() again.")
+        
   if (is.null(variable)) return(.cache.status())
         
   stopifnot(length(variable) == 1)

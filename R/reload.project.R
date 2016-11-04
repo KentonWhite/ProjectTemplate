@@ -19,6 +19,9 @@
 #' reload.project()}
 reload.project <- function(override.config = NULL)
 {
+  
+  project_name <- .stopifnotproject("Change to a valid ProjectTemplate directory and run reload.project() again.")
+
   rm(list = ls(.TargetEnv), pos = .TargetEnv)
   load.project(override.config = override.config)
 }

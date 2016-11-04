@@ -19,20 +19,11 @@
 #' \dontrun{load.project()}
 load.project <- function(override.config = NULL)
 {
-  this_dir <- .project.info(getwd())
-  if (!this_dir$is.ProjectTemplate) {
-          return(
-          message(paste0(c(paste0("Current directory: ", basename(getwd()),
-                                  " is not a ProjectTemplate directory"),
-                         "Please change to correct directory and re-run load.project()"),
-                         collapse = "\n")
-                  )
-          )
-  }
+  project_name <- .stopifnotproject ("Please change to correct directory and re-run load.project()")
         
   my.project.info <- list()
 
-  message(paste0('Project name: ', this_dir$name))
+  message(paste0('Project name: ', project_name))
   message('Loading project configuration')
 
   config <- .load.config(override.config)
@@ -342,22 +333,6 @@ load.project <- function(override.config = NULL)
   as.character(read.dcf(system.file("DESCRIPTION", package = "ProjectTemplate"), fields = "Version"))
 }
 
-# files that determine whether a directory is a ProjectTemplate project
-.mandatory.files <- c("config/global.dcf", "cache", "data")
-
-# List of information about a project
-.project.info <- function (path=getwd()) {
-        is.ProjectTemplate <- .is.ProjectTemplate(path)
-        name <- ifelse(is.ProjectTemplate, basename(path), "")
-        list(is.ProjectTemplate=is.ProjectTemplate, name=name) 
-}
-
-# Test whether a given path is a ProjectTemplate project
-.is.ProjectTemplate <- function (path=getwd()) {
-        check_files <- file.path(path, .mandatory.files)
-        if(sum(file.exists(check_files))==length(check_files)) return(TRUE)
-        return(FALSE)
-}
 
 # Compare the variables (excluding functions) in the global env with a passed
 # in string of names and return the difference
@@ -369,5 +344,3 @@ load.project <- function(override.config = NULL)
         # return those not in list
         setdiff(current.var.list, given.var.list)
 }
-
-

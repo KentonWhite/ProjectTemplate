@@ -95,6 +95,7 @@ Collate:
     'reload.project.R'
     'run.project.R'
     'show.project.R'
+    'stopifnotproject.R'
     'stub.tests.R'
     'test.project.R'
 RoxygenNote: 5.0.1
