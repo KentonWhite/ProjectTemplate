@@ -23,6 +23,9 @@
         return(FALSE)
 }
 
+
+
+
 # Function to stop processing if the path is not a Project Template
 # return the project name if it is a Project Template directory
 .stopifnotproject <- function(additional_message="", path=getwd()) {

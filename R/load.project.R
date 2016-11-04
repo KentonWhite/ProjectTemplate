@@ -332,3 +332,15 @@ load.project <- function(override.config = NULL)
 .package.version <- function() {
   as.character(read.dcf(system.file("DESCRIPTION", package = "ProjectTemplate"), fields = "Version"))
 }
+
+
+# Compare the variables (excluding functions) in the global env with a passed
+# in string of names and return the difference
+.var.diff.from <- function(given.var.list="", env=.TargetEnv) {
+        # Get variables in target environment of determine if they are a function
+        current.var.list <- sapply(ls(envir = env), function(x) is.function(get(x)))
+        current.var.list <- names(current.var.list[current.var.list==FALSE])
+        
+        # return those not in list
+        setdiff(current.var.list, given.var.list)
+}
