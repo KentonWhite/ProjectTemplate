@@ -132,19 +132,3 @@ migrate.project <- function()
   
 }
 
-
-# save config and update package version
-.save.config <- function (config) {
-        config$version <- .package.version()
-        write.dcf(config, .config.path)
-}
-
-# read in a config file and return a config object
-.read.config <- function (file=.config.path) {
-        config <- translate.dcf(file)
-        config <- .normalize.config(config,
-                          setdiff(names(default.config), c("version", "libraries", "logging_level")),
-                          .boolean.cfg)
-        config
-}
-
