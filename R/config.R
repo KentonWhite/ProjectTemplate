@@ -110,6 +110,9 @@
 
 
 
+# Normalization helper functions:
+#   .normalize.config is a generic function to apply any normalization function to specific config items
+
 
 # Apply a normalization function to specified config item to convert from raw character string to an R object value 
 .normalize.config <- function(config, names, norm.fun) {
