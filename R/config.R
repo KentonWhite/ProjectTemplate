@@ -10,6 +10,10 @@
 
 .new.config <- translate.dcf(system.file('defaults/full/config/global.dcf', package = 'ProjectTemplate'))
 
+default.config <- .default.config
+
+new.config <- .new.config 
+
 
 .load.config <- function(override.config = NULL) {
         config <- if (file.exists(.config.path)) {
