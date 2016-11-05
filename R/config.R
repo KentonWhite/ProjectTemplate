@@ -129,4 +129,20 @@
         ret
 }
 
+# function to display the content of a config file neatly
+.format.config <- function (config, format = "text") {
+        ifelse(format=="text", {
+                        # length of the longest config item name plus 3 spaces for padding
+                        max_size <- max(nchar(names(config))) + 3
+                        fmt <- sprintf("%%-%ds", max_size)
+                        # return a text string
+                        paste0(sprintf(fmt, names(config)), config, collapse = "\n")
+                        }, 
+                        {
+                        # return an Rd encoded string
+                        var <- paste0("\\code{",names(config), "} \\tab \\code{", config, "} \\cr ", collapse = "")
+                        paste0("\\tabular{ll}{", var, "}")
+                        }
+        )
+}
 

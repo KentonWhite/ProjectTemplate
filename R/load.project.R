@@ -1,7 +1,8 @@
 #' Automatically load data and packages for a project.
 #'
 #' This function automatically load all of the data and packages used by
-#' the project from which it is called.
+#' the project from which it is called.  The behaviour can be controlled by
+#' adjusting the \code{\link{project.config}} configuration.
 #'
 #' @param override.config Named list, allows overriding individual configuration
 #'   items.
@@ -11,7 +12,7 @@
 #' @export
 #'
 #' @seealso \code{\link{create.project}}, \code{\link{get.project}},
-#'   \code{\link{cache.project}}, \code{\link{show.project}}
+#'   \code{\link{cache.project}}, \code{\link{show.project}}, \code{\link{project.config}}
 #'
 #' @examples
 #' library('ProjectTemplate')
