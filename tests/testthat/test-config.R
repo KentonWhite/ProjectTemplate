@@ -9,12 +9,12 @@ test_that('Unknown fields give a warning, except if start with hash', {
   oldwd <- setwd(test_project)
   on.exit(setwd(oldwd), add = TRUE)
 
-  config <- new.config
+  config <- .new.config
   config$dummy <- 'dummy'
   write.dcf(config, 'config/global.dcf')
   expect_that(load.project(), gives_warning("Your configuration contains the following unused entries"))
 
-  config <- new.config
+  config <- .new.config
   write.dcf(config, 'config/global.dcf')
   # write.dcf won't allow writing fields that start with a hash
   config.dcf <- readLines('config/global.dcf')
