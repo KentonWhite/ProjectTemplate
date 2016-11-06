@@ -24,3 +24,34 @@ test_that('Unknown fields give a warning, except if start with hash', {
   expect_warning(load.project(), NA)
 
 })
+
+test_that('project.config() displays standard and additional config correctly', {
+        
+        test_project <- tempfile('test_project')
+        suppressMessages(create.project(test_project, minimal = TRUE))
+        on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
+        
+        oldwd <- setwd(test_project)
+        on.exit(setwd(oldwd), add = TRUE)
+        
+        # Read the config and flip a value
+        config <- .read.config()
+        flipped_value <- !config$as_factors
+        config$as_factors <- flipped_value
+        .save.config(config)
+        
+        # check that the flipped value is displayed
+        expect_message(project.config(), paste0("as_factors[ ]+", as.character(flipped_value)))
+        
+        # create a new custom configuration
+        add.config(dummy=999)
+        
+        # check that the Additional custom config is displayed
+        expect_message(project.config(), "Additional custom config present")
+        
+        
+        # check that the dummy value is displayed
+        expect_message(project.config(), "dummy[ ]+999")
+        
+        
+})
