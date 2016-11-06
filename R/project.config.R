@@ -48,22 +48,34 @@
 #' 
 #' @return  The current project configuration is displayed. 
 #' 
+#' 
 #' @details  If the \code{config/globals.dcf} is missing some items (for example because it was created under an
 #' old version of \code{ProjectTemplate}, then the following configuration is used for any missing items
 #' during \code{load.project()}:
-#'   \Sexpr[results=rd, stage=build]{ProjectTemplate:::.format.config(ProjectTemplate:::.default.config, format="Rd")}
+#'   \Sexpr[results=rd, stage=build]{ProjectTemplate:::.format.config(ProjectTemplate:::.default.config[-1], format="Rd")}
 #'
 #'  When a new project is created using \code{create.project()}, the following values are pre-populated:
 #'   \Sexpr[results=rd, stage=build]{ProjectTemplate:::.format.config(ProjectTemplate:::.new.config, format="Rd")}
 #'
 #' @export
 #' 
-#' @include translate.dcf.R
 #' 
 #'     
 #' @seealso \code{\link{load.project}}
 project.config <- function () {
         project_name <- .stopifnotproject("Please change to correct directory and re-run project.config()")
         message(paste0("Configuration for project: ", project_name))
-        message(.format.config(.read.config()))
+        
+        # get the config first from config/globals.dcf
+        config_file <- .read.config()
+        message(.format.config(config_file))
+        
+        # Check if there is custom config added by add.config calls
+        if (exists("config")) {
+                additional_config <- setdiff(names(config), names(config_file))
+                if (length(additional_config) > 0) {
+                        message("\nAdditional custom config present for this project:")
+                        message(.format.config(config[!(names(config) %in% names(config_file))]))
+                }
+        }
 }

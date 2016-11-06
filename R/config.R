@@ -8,9 +8,13 @@
 #      .save.config    -  save a config object back into a DCF format config file
 #
 # Supporting functions are:
+#      .normalize.boolean  - convert boolean values in the config file into TRUE/FALSE objects
 #      .normalize.config   - convert strings read from DCF format into R object values
 #      .boolean.cfg        - convert "TRUE"/"on" and "FALSE"/"off" to R values
 #
+
+# Make sure translate.dcf is loaded before this file is built
+#' @include translate.dcf.R
 
 
 # 
@@ -45,7 +49,7 @@
 ## File that contains the default initial project configuration after create.project()
 .new.config.file <- system.file('defaults/full/config/global.dcf', package = 'ProjectTemplate')
 
-# items in the configuration file which are not TRUE/FALSE or on/off values
+# items in the configuration file which are not TRUE/FALSE (or on/off) values
 .nonflag.config <- c("version", "libraries", "logging_level")
 
 # read the default and new configurations
@@ -96,15 +100,15 @@
 # read in a config file and return an unvalidated config object
 .read.config <- function (file=.project.config) {
         config <- translate.dcf(file)
-        config <- .normalize.boolean(config)
+        config <- .normalize.boolean(config, default=config)
         config
 }
 
 
 # normalize all config boolean items (ie set as on/off or TRUE/FALSE character strings) into R objects TRUE or FALSE
-.normalize.boolean <- function (config) {
+.normalize.boolean <- function (config, default=.default.config) {
         .normalize.config(config,
-                  setdiff(names(.default.config), .nonflag.config),
+                  setdiff(names(default), .nonflag.config),
                   .boolean.cfg)
 }
 
@@ -130,6 +134,7 @@
 }
 
 # function to display the content of a config file neatly
+# supports text for display on a console and Rd for parsing inside a man page
 .format.config <- function (config, format = "text") {
         ifelse(format=="text", {
                         # length of the longest config item name plus 3 spaces for padding
