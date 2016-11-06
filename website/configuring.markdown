@@ -1,11 +1,12 @@
 ---
 layout: page
 ---
-There are two types of configuration in:
+There are two types of configuration:
 
 * `ProjectTemplate configuration` are the settings which alter how `load.project()` behaves when executed.  For example, whether to have logging enabled.  
 * `Project specific configuration` are the settings which make sense only to a particular project, but you would like to change them easily in `src` or `munge` scripts.  For example, you may define `plot_footnote="My Proj"` to control a consistent look and feel for plots. 
-Both types are stored in the `config` object accessible from the global environment.
+
+Both types are stored in the `config` object accessible from the global environment.  The function `project.config()` will display the current configuration, including project specific configuration.
 
 The current `ProjectTemplate` configuration settings exist in the `config/global.dcf` file:
 
