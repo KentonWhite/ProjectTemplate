@@ -57,7 +57,7 @@ automatically cached (so it won't need to be reloaded next time load.project()
 is called).}
 }
 \value{
-doesnt return anything
+The current project configuration is listed to the console
 }
 \description{
 Every \code{ProjectTemplate} project has a configuration file found at
@@ -66,13 +66,15 @@ to control runtime behaviour.  The valid options are shown below, and must
 be encoded using the \code{DCF} format.
 }
 \details{
-If the target directory does not exist, it is created.  Otherwise,
-  it can only contain files and directories allowed by the merge strategy. 
-  
-  The values in the default config are
+Calling the \code{project.config()} function will display the current project
+configuration.
+
+ If the \code{config/globals.dcf} is missing some items (for example because it was created under an
+old version of \code{ProjectTemplate}, then the following configuration is used for any missing items
+during \code{load.project()}:
   \Sexpr[results=rd, stage=build]{ProjectTemplate:::.format.config(ProjectTemplate:::.default.config, format="Rd")}
 
-  The values in the new config are
+ When a new project is created using \code{create.project()}, the following values are pre-populated:
   \Sexpr[results=rd, stage=build]{ProjectTemplate:::.format.config(ProjectTemplate:::.new.config, format="Rd")}
 }
 \seealso{

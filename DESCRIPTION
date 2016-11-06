@@ -84,6 +84,7 @@ Collate:
     'cache.project.R'
     'clean.variable.name.R'
     'clear.cache.R'
+    'translate.dcf.R'
     'config-man.R'
     'config.R'
     'create.project.R'
@@ -97,5 +98,4 @@ Collate:
     'stopifnotproject.R'
     'stub.tests.R'
     'test.project.R'
-    'translate.dcf.R'
-RoxygenNote: NA
+RoxygenNote: 5.0.1

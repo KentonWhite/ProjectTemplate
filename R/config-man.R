@@ -57,6 +57,8 @@
 #'   \Sexpr[results=rd, stage=build]{ProjectTemplate:::.format.config(ProjectTemplate:::.new.config, format="Rd")}
 #'
 #' @export
+#' 
+#' @include translate.dcf.R
 #'     
 #' @seealso \code{\link{load.project}}
 project.config <- function () {
