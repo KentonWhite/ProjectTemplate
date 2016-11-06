@@ -46,7 +46,7 @@
 #'  automatically cached (so it won't need to be reloaded next time load.project() 
 #'  is called).  
 #' 
-#' @return  The current project configuration is listed to the console 
+#' @return  The current project configuration is displayed. 
 #' 
 #' @details  If the \code{config/globals.dcf} is missing some items (for example because it was created under an
 #' old version of \code{ProjectTemplate}, then the following configuration is used for any missing items
@@ -59,10 +59,11 @@
 #' @export
 #' 
 #' @include translate.dcf.R
+#' 
 #'     
 #' @seealso \code{\link{load.project}}
 project.config <- function () {
-        .stopifnotproject("Please change to correct directory and re-run project.config()")
-        
+        project_name <- .stopifnotproject("Please change to correct directory and re-run project.config()")
+        message(paste0("Configuration for project: ", project_name))
         message(.format.config(.read.config()))
 }
