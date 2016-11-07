@@ -1,7 +1,8 @@
 #' Automatically load data and packages for a project.
 #'
 #' This function automatically load all of the data and packages used by
-#' the project from which it is called.
+#' the project from which it is called.  The behaviour can be controlled by
+#' adjusting the \code{\link{project.config}} configuration.
 #'
 #' @param override.config Named list, allows overriding individual configuration
 #'   items.
@@ -11,7 +12,7 @@
 #' @export
 #'
 #' @seealso \code{\link{create.project}}, \code{\link{get.project}},
-#'   \code{\link{cache.project}}, \code{\link{show.project}}
+#'   \code{\link{cache.project}}, \code{\link{show.project}}, \code{\link{project.config}}
 #'
 #' @examples
 #' library('ProjectTemplate')
@@ -154,19 +155,6 @@ load.project <- function(override.config = NULL)
   suppressWarnings(rm(list = c("config", "logger", "project.info"), envir = .TargetEnv))
 }
 
-.normalize.config <- function(config, names, norm.fun) {
-  config[names] <- lapply(config[names], norm.fun)
-  config
-}
-
-.boolean.cfg <- function(x) {
-  ret <- if (x == 'on') TRUE
-  else if (x == 'off') FALSE
-  else as.logical(x)
-  if (is.na(ret)) stop('Cannot convert ', x, ' to logical value.')
-  ret
-}
-
 .load.cache <- function() {
   .provide.directory('cache')
   cache.files <- dir('cache')
@@ -272,43 +260,6 @@ load.project <- function(override.config = NULL)
     warning("Creating missing directory ", name)
     dir.create(name)
   }
-}
-
-.config.path <- file.path('config', 'global.dcf')
-
-.load.config <- function(override.config = NULL) {
-  config <- if (file.exists(.config.path)) {
-    translate.dcf(.config.path)
-  } else {
-    warning('You are missing a configuration file: ', .config.path, ' . Defaults will be used.')
-    default.config
-  }
-
-  missing.entries <- setdiff(names(default.config), names(config))
-  if (length(missing.entries) > 0) {
-    warning('Your configuration file is missing the following entries: ',
-            paste(missing.entries, collapse = ', '), '. Defaults will be used.')
-    config[missing.entries] <- default.config[missing.entries]
-  }
-
-  if (length(override.config) > 0) {
-    config[names(override.config)] <- override.config
-  }
-
-  extra.entries <- setdiff(names(config), names(default.config))
-  extra.entries <- grep("^[^#]", extra.entries, value = TRUE)
-  if (length(extra.entries) > 0) {
-    warning('Your configuration contains the following unused entries: ',
-            paste(extra.entries, collapse = ', '), '. These will be ignored.')
-    config[extra.entries] <- NULL
-  }
-
-  config <- .normalize.config(config,
-                              setdiff(names(default.config), c("version", "libraries", "logging_level")),
-                              .boolean.cfg)
-  
-
-  config
 }
 
 #' @importFrom utils compareVersion
