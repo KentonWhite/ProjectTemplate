@@ -158,6 +158,13 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
 }
 
 
+# Cache directory and extension used
+
+.cache.dir <- 'cache'
+.cache.file.ext <- '.RData'
+
+# Function to save to cache
+
 .write.cache <- function(cache.hash, ...){
         # cache.hash is a data frame with two columns:  variable and hash.
         # Row name VAR is the name of the variable to save.
@@ -181,6 +188,40 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
              file = cache_filename$hash
              )
 }
+
+# Function to load all items from the cache
+# Returns a list of files actually loaded from the cache
+
+.load.cache <- function() {
+        
+        # Get all cached files (hash file not needed for load)
+        cache.files <- list.files(.cache.dir, pattern = .cache.file.ext,
+                                  full.names = TRUE)
+        global_env_vars <- ls(envir = .TargetEnv)
+        
+        cached.files <- c()
+        
+        for (cache.file in cache.files) {
+                
+                variable.name <- gsub(.cache.file.ext,'',basename(cache.file))
+                
+                # If this variable already exists in the global environment, don't load
+                # it from cache.
+                if (variable.name %in% global_env_vars)
+                        next()
+                
+                message(paste(" Loading cached data set: ", variable.name, sep = ''))
+                
+                load(cache.file, envir = .TargetEnv)
+                
+                cached.files <- c(cached.files, variable.name)
+        }
+        
+        cached.files
+}
+
+
+# Helper functions to create cache entries
 
 .create.cache.hash <- function(variable, depends, CODE) {
         # This function prepares a cache.hash suitable for
@@ -252,10 +293,11 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
         assign(variable, result, envir = .TargetEnv)
 }
 
+
 .cache.filename <- function(variable) {
         list(
-                obj=file.path('cache', paste0(variable, '.RData')),
-                hash=file.path('cache', paste0(variable, '.hash'))
+                obj=file.path(.cache.dir, paste0(variable, .cache.file.ext)),
+                hash=file.path(.cache.dir, paste0(variable, '.hash'))
         )
 }
 
