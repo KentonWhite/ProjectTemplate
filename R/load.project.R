@@ -155,47 +155,6 @@ load.project <- function(override.config = NULL)
   suppressWarnings(rm(list = c("config", "logger", "project.info"), envir = .TargetEnv))
 }
 
-.load.cache <- function() {
-  .provide.directory('cache')
-  cache.files <- dir('cache')
-  cached.files <- c()
-
-  for (cache.file in cache.files)
-  {
-    filename <- file.path('cache', cache.file)
-
-    for (extension in ls(extensions.dispatch.table))
-    {
-      if (grepl(extension, cache.file, ignore.case = TRUE, perl = TRUE))
-      {
-        variable.name <- clean.variable.name(sub(extension,
-                                                 '',
-                                                 cache.file,
-                                                 ignore.case = TRUE,
-                                                 perl = TRUE))
-
-        # If this variable already exists in the global environment, don't load it from cache.
-        if (variable.name %in% ls(envir = .TargetEnv))
-        {
-          next()
-        }
-
-        message(paste(" Loading cached data set: ", variable.name, sep = ''))
-
-        do.call(extensions.dispatch.table[[extension]],
-                list(cache.file,
-                     filename,
-                     variable.name))
-
-        cached.files <- c(cached.files, variable.name)
-
-        break()
-      }
-    }
-  }
-
-  cached.files
-}
 
 .load.data <- function(recursive) {
   .provide.directory('data')
