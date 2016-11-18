@@ -281,3 +281,27 @@ test_that('re-caching a variable created from CODE only happens if code changes,
         
 })
 
+test_that('caching a variable with an underscore is not unnecessarily loaded next load.project()', {
+        
+        test_project <- tempfile('test_project')
+        suppressMessages(create.project(test_project, minimal = FALSE))
+        on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
+        
+        oldwd <- setwd(test_project)
+        on.exit(setwd(oldwd), add = TRUE)
+        
+        var_to_cache <- "xx_xx"
+        test_data <- data.frame(Names=c("a", "b", "c"), Ages=c(20,30,40))
+        assign(var_to_cache, test_data, envir = .TargetEnv)
+        
+        # Create a new cached version
+        expect_message(cache(var_to_cache, CODE = NULL, depends = NULL), 
+                       "Creating cache entry from global environment")
+        
+        # Load up from cache and check no message contains an x
+        expect_message(load.project(), "[^[^x]+$")
+        
+        
+        tidy_up()
+        
+})
