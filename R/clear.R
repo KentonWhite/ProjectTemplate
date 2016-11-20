@@ -48,11 +48,19 @@ clear <- function (..., keep=c(), force=FALSE) {
 }
 
 .remove.sticky.vars <- function (names, keep) {
+
+        # If we're in a project template directory, load a copy of config to
+        # make sure it's the latest into the global env  
+        if (.is.ProjectTemplate()) 
+                assign("config", .load.config(), envir = .TargetEnv)
         
+        # If config$sticky_variables exists, add it to keep and also add
+        # config itself so that is preserved after the clear
         if (exists("config") && is.list(config) && 
             ("sticky_variables" %in% names(config)) &&
             config$sticky_variables != "NONE") {
-                    keep <- c(keep, strsplit(config$sticky_variables, '\\s*,\\s*')[[1]])
+                    keep <- c("config", keep, 
+                              strsplit(config$sticky_variables, '\\s*,\\s*')[[1]])
         }
         if (length(keep) > 0)
                 message(paste0("Variables not cleared: ", paste(keep, collapse = " ")))
