@@ -38,6 +38,9 @@ clear <- function (..., keep=c(), force=FALSE) {
         # Remove any that should be kept
         if(!force) names <- .remove.sticky.vars(names, keep)
         
+        # Remove any names not in the Global Env
+        names <- names[sapply(names, exists)]
+        
         if (length(names) >0) {
                 message(paste0("Objects to clear from memory: ",
                                paste(names, collapse = " ")))
@@ -62,6 +65,10 @@ clear <- function (..., keep=c(), force=FALSE) {
                     keep <- c("config", keep, 
                               strsplit(config$sticky_variables, '\\s*,\\s*')[[1]])
         }
+        
+        # Remove any names not in the Global Env
+        keep <- keep[sapply(keep, exists)]
+        
         if (length(keep) > 0)
                 message(paste0("Variables not cleared: ", paste(keep, collapse = " ")))
                 
