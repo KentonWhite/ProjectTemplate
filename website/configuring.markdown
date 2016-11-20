@@ -22,7 +22,7 @@ The current `ProjectTemplate` configuration settings exist in the `config/global
 * `data_tables`: This can be set to 'on' or 'off'. If `data_tables` is on, the system will convert every data set loaded from the `data` directory into a `data.table`. By default, `data_tables` is off.
 * `attach_internal_libraries`: `This can be set to 'on' or 'off'. If `attach_internal_libraries` is on, then every time a new package is loaded into memory during `load.project()` a warning will be displayed informing that has happened. By default, `attach_internal_libraries` is off.
 * `cache_loaded_data`: This can be set to 'on' or 'off'. If `cache_loaded_data` is on, then data loaded from the `data` directory during `load.project()` will be automatically cached (so it won't need to be reloaded next time `load.project()` is called).  By default, `cache_loaded_data` is on for newly created projects.  Existing projects created without this configuration setting will default to off.  Similarly, when `migrate.project()` is called in those cases, the default will be off. 
-
+* `sticky_variables`: This is a comma separated list of any project-specific  variables that should remain in the global environment after a `clear()` command.  This can be used to clear the global environment, but keep any large datasets in place so they are not unnecessarily re-generated during `load.project()`.  Note that any this will be over-ridden if the `force=TRUE` parameter is passed to `clear()`. By default, `sticky_variables` is NONE
 
 The project specific configuration is specified in the `lib/globals.R` file using the `add.config` function.  This will contain whatever is relevant for your project, and will look something like this:
 

@@ -11,3 +11,4 @@ as_factors: TRUE
 data_tables: FALSE
 attach_internal_libraries: TRUE
 cache_loaded_data:  FALSE
+sticky_variables: NONE
