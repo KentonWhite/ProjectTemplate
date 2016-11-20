@@ -146,3 +146,26 @@ test_that('running in a project template directory loads the latest config.dcf',
         
         tidy_up()
 })
+
+test_that('running clear() with variables that dont exist fail cleanly', {
+        
+        test_project <- tempfile('test_project')
+        suppressMessages(create.project(test_project, minimal = FALSE))
+        on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
+        
+        oldwd <- setwd(test_project)
+        on.exit(setwd(oldwd), add = TRUE)
+        
+        # nothing in memory
+        expect_message(clear("xxx"), "No objects to clear")
+        
+        # Read the config and set config$sticky_variables
+        config <- .read.config()
+        config$sticky_variables <- "xxx"
+        .save.config(config)
+        
+        # should still be nothing, even though it's defined in config$sticky_variables
+        expect_message(clear("xxx"), "No objects to clear")
+        
+        tidy_up()
+})
