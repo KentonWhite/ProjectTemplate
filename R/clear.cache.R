@@ -23,7 +23,7 @@ clear.cache <- function (...){
         message(paste0("Clearing cache for project: ", project_name))
         
         variables <- list(...)
-        cache_dir <- "./cache"
+        cache_dir <- .cache.dir
         
         files<-c()
         #if no argument, then select everything in the cache 
