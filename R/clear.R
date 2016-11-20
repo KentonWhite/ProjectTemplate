@@ -9,10 +9,10 @@
 #'  those in \code{keep} will be deleted.
 #' @param keep A character vector of variables that should remain in the global
 #'  environment
-#' @param force If \code{TRUE}, then variables will be deleted if those 
+#' @param force If \code{TRUE}, then variables will be deleted even if 
 #'  specifed in \code{keep} or \code{config$sticky_variables} 
 #' 
-#' @return Success or failure is reported
+#' @return The variables kept and removed are reported
 #'
 #' @export
 #' @examples
@@ -38,14 +38,24 @@ clear <- function (..., keep=c(), force=FALSE) {
         # Remove any that should be kept
         if(!force) names <- .remove.sticky.vars(names, keep)
         
-        rm(names, envir = .TargetEnv
+        if (length(names) >0) {
+                message(paste0("Objects to clear from memory: ",
+                               paste(names, collapse = " ")))
+                rm(list=names, envir = .TargetEnv)
+        } else {
+                message("No objects to clear")
+        }
 }
 
 .remove.sticky.vars <- function (names, keep) {
         
         if (exists("config") && is.list(config) && 
-            ("sticky_variables" %in% names(config))) {
+            ("sticky_variables" %in% names(config)) &&
+            config$sticky_variables != "NONE") {
                     keep <- c(keep, strsplit(config$sticky_variables, '\\s*,\\s*')[[1]])
-            }
-         setdiff(names, keep)
+        }
+        if (length(keep) > 0)
+                message(paste0("Variables not cleared: ", paste(keep, collapse = " ")))
+                
+        setdiff(names, keep)
 }

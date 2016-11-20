@@ -83,6 +83,7 @@ Collate:
     'cache.name.R'
     'cache.project.R'
     'clean.variable.name.R'
+    'clear.R'
     'clear.cache.R'
     'translate.dcf.R'
     'config.R'
