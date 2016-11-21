@@ -34,14 +34,18 @@ clear <- function (..., keep=c(), force=FALSE) {
         # If no ... specified, get everything from global environment
         if (length(names) == 0L) 
                 names <- ls(envir = .TargetEnv)
-        else 
+        else {
                 # Remove any names not in the Global Env
-                names <- names[sapply(names, exists)]
-        
+                not_in_genv <- !sapply(names, exists)
+                if (length(not_in_genv)>0) {
+                        message(paste0("Following objects not in memory: ",
+                                       paste(names[not_in_genv], collapse = " ")))
+                        names <- names[!not_in_genv]
+                }
+        }
+
         # Remove any that should be kept
         if(!force) names <- .remove.sticky.vars(names, keep)
-        
-        
         
         if (length(names) >0) {
                 message(paste0("Objects to clear from memory: ",

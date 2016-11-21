@@ -169,3 +169,19 @@ test_that('running clear() with variables that dont exist fail cleanly', {
         
         tidy_up()
 })
+
+test_that('running clear() with an object not in memory fails cleanly', {
+        
+        test_project <- tempfile('test_project')
+        suppressMessages(create.project(test_project, minimal = FALSE))
+        on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
+        
+        oldwd <- setwd(test_project)
+        on.exit(setwd(oldwd), add = TRUE)
+        
+        # Try to delete an item that doesn't exist
+        
+        expect_message(clear("yyyy"), "objects not in memory: yyyy")
+
+        tidy_up()
+})
