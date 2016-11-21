@@ -45,9 +45,11 @@ clear.cache <- function (...){
                 }
         }
         
+        # Clear the variables from memory
+        clear(variables, force=TRUE)
+        
         # List of files to delete
         files_to_delete <-file.path(rep(.cache.dir, length(files)), files)
-        
         
         # Delete them
         success <- suppressWarnings(do.call(file.remove,list(files_to_delete)))
