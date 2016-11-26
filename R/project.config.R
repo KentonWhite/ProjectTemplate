@@ -18,6 +18,8 @@
 #'  \code{data_loading} \tab This can be set to 'on' or 'off'. If data_loading is on,
 #'  the system will load data from both the cache and data directories with 
 #'  cache taking precedence in the case of name conflict. \cr
+#'  \code{data_loading_header} \tab This can be set to 'on' or 'off'. If data_loading_header is on,
+#'  the system will load text data files, such as CSV, TSV, or XLSX, treating the first row as header. \cr
 #'  \code{cache_loading} \tab This can be set to 'on' or 'off'. If cache_loading is on,
 #'  the system will load data from the cache directory before any attempt to load 
 #'  from the data directory. \cr
