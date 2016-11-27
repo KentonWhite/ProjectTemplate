@@ -5,7 +5,7 @@
 #' for configuration settings and ad hoc file format specifications.
 #' 
 #' The content of the DCF file are stored as character strings.  If the content
-#' is placed between the back tick character \code{`}, then the content is 
+#' is placed between the back tick character , then the content is 
 #' evaluated as R code and the result returned in a string
 #'
 #' @param filename A character vector specifying the DCF file to be
@@ -30,7 +30,7 @@ translate.dcf <- function(filename)
           value <- settings[[s]]
           r_code <- gsub("^`(.*)`$", "\\1", value)
           if (nchar(r_code) != nchar(value)) {
-                  value <- eval(parse(text=r_code))
+                  settings[[s]] <- eval(parse(text=r_code))
           }
   }
   settings

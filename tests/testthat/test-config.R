@@ -55,3 +55,25 @@ test_that('project.config() displays standard and additional config correctly', 
         
         
 })
+
+test_that('R code in between back ticks is evaluated in config files', {
+        
+        test_project <- tempfile('test_project')
+        suppressMessages(create.project(test_project, minimal = TRUE))
+        on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
+        
+        oldwd <- setwd(test_project)
+        on.exit(setwd(oldwd), add = TRUE)
+        
+        # Set an environment variable to an old version number
+        Sys.setenv(version="0.1")
+        on.exit(Sys.unsetenv("version"))
+        
+        config <- .load.config()
+        #change the version number field to be some R code to retrieve the environment variable
+        config$version <- '`Sys.getenv("version")`'
+        write.dcf(config, .project.config)
+        
+        expect_warning(load.project(), "compatible with version 0.1")
+        
+})
