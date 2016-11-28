@@ -59,6 +59,12 @@ during load.project() a warning will be displayed informing that has happened. \
  on, then data loaded from the data directory during load.project() will be 
  automatically cached (so it won't need to be reloaded next time load.project() 
  is called). \cr
+\code{sticky_variables} \tab This is a comma separated list of any project-specific
+  variables that should remain in the global environment after a \code{clear()} command. 
+   This can be used to clear the global environment, but keep any large datasets in 
+   place so they are not unnecessarily re-generated during \code{load.project()}.  
+   Note that any this will be over-ridden if the \code{force=TRUE} parameter is passed
+    to \code{clear()}`.  \cr
  }
  
    If the \code{config/globals.dcf} is missing some items (for example because it was created under an

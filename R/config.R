@@ -50,7 +50,7 @@
 .new.config.file <- system.file('defaults/full/config/global.dcf', package = 'ProjectTemplate')
 
 # items in the configuration file which are not TRUE/FALSE (or on/off) values
-.nonflag.config <- c("version", "libraries", "logging_level")
+.nonflag.config <- c("version", "libraries", "logging_level", "sticky_variables")
 
 # read the default and new configurations
 .default.config <- translate.dcf(.default.config.file)
