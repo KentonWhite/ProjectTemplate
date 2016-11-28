@@ -43,7 +43,7 @@ clear <- function (..., keep=c(), force=FALSE) {
                         names <- names[!not_in_genv]
                 }
         }
-
+        
         # Remove any that should be kept
         if(!force) names <- .remove.sticky.vars(names, keep)
         
