@@ -320,7 +320,7 @@ test_that('cache and memory is cleared correctly', {
         assign(var_to_cache, test_data, envir = .TargetEnv)
         
         # Create a new cached version
-        expect_message(cache(var_to_cache), 
+        expect_message(cache("xxxx"), 
                        "Creating cache entry from global environment")
         
         # clear from memory
