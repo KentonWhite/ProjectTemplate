@@ -289,7 +289,7 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
 
 .evaluate.code <- function (variable, CODE) {
         # run code and assignthe results to variable in the global env
-        result <- eval(parse(text=CODE), envir = .TargetEnv)
+        result <- eval(parse(text=CODE), envir = new.env())
         assign(variable, result, envir = .TargetEnv)
 }
 

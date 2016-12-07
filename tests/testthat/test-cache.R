@@ -305,3 +305,39 @@ test_that('caching a variable with an underscore is not unnecessarily loaded nex
         tidy_up()
         
 })
+
+test_that('caching a variable using CODE doesnt leave variables in globalenv', {
+        
+        test_project <- tempfile('test_project')
+        suppressMessages(create.project(test_project, minimal = FALSE))
+        on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
+        
+        oldwd <- setwd(test_project)
+        on.exit(setwd(oldwd), add = TRUE)
+        
+        var_to_cache <- "xxxx"
+        
+        # make sure it doesn't exist
+        if (exists(var_to_cache, envir = .TargetEnv )) {
+                rm(list=var_to_cache, envir = .TargetEnv)
+        }
+        
+        # set an environment variable in global env
+        assign("yyy", 10, envir = .TargetEnv)
+        
+        # create a cached variable 
+        cache(var_to_cache, CODE = {
+                aaa <- 10
+                bbb <- 10
+                aaa*bbb*yyy
+        })
+        
+        # check variable calculates correctly
+        expect_equal(get(var_to_cache), 10*10*10)
+        
+        # Make sure local variables don't exist in global env
+        expect_true(!exists("aaa"))
+        expect_true(!exists("bbb"))
+                       
+        tidy_up()
+})
