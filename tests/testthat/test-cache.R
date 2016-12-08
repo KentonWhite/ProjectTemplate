@@ -351,6 +351,9 @@ test_that('cache and memory is cleared correctly', {
         # variable does not exist in memory, should have been forced cleared
         expect_true(!exists("xxxx"))
         
+        # shouldn't be anything in the cache
+        expect_message(cache(), "No variables in cache")
+        
         tidy_up()
         
 })

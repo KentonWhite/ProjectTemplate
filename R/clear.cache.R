@@ -35,7 +35,7 @@ clear.cache <- function (...){
         if (length(variables)==0) {
                 # Get the variable names
                 variables <- gsub(".RData","",list.files(.cache.dir, pattern="RData"))
-                # get the list of files to deletes
+                # get the list of files to delete
                 files <- list.files(.cache.dir, pattern="RData|hash")
         }
         else {
@@ -46,7 +46,7 @@ clear.cache <- function (...){
         }
         
         # Clear the variables from memory
-        clear(get("variables", envir = .TargetEnv), force=TRUE)
+        do.call(clear, list(variables, force=TRUE))
         
         # List of files to delete
         files_to_delete <-file.path(rep(.cache.dir, length(files)), files)
