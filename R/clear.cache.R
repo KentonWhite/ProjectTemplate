@@ -48,7 +48,7 @@ clear.cache <- function (...){
         # Clear the variables from memory (needs to be one at a time)
         for (v in variables) {
                 args <- list(v, force=TRUE)
-                do.call(clear, args=args )
+                suppressMessages(do.call(clear, args=args ))
         }
         
         # List of files to delete
