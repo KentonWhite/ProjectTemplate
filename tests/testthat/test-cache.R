@@ -359,6 +359,59 @@ test_that('cache and memory is cleared correctly', {
 })
 
 
+test_that('multiple items are cleared correctly from the cache', {
+        
+        
+        test_project <- tempfile('test_project')
+        suppressMessages(create.project(test_project, minimal = FALSE))
+        on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
+        
+        oldwd <- setwd(test_project)
+        on.exit(setwd(oldwd), add = TRUE)
+        
+        assign("xxx", 10, envir = .TargetEnv)
+        assign("yyy", 20, envir = .TargetEnv)
+        assign("zzz", 30, envir = .TargetEnv)
+        
+        # Create cached version of each of these
+        expect_message(cache("xxx"), 
+                       "Creating cache entry from global environment")
+        
+        expect_message(cache("yyy"), 
+                       "Creating cache entry from global environment")
+        
+        expect_message(cache("zzz"), 
+                       "Creating cache entry from global environment")
+        
+        
+        # clear two variables from cache
+        expect_message(clear.cache("yyy", "zzz"), "Removed successfully ")
+        
+        # Check variables not in global env
+        expect_true(!exists("yyy"))
+        expect_true(!exists("zzz"))
+        
+        # clear everything and reload project
+        clear(force = TRUE)
+        # variable is loaded into memory when load.project is run
+        expect_message(load.project(), "Loading cached data set: xxx")
+        
+        expect_equal(xxx, 10)
+        
+        # variable exists in memory
+        expect_true(exists("xxx"))
+        
+        # Check variables still not in global env
+        expect_true(!exists("yyy"))
+        expect_true(!exists("zzz"))
+        
+        
+        tidy_up()
+        
+})
+
+
+
 test_that('caching a variable using CODE doesnt leave variables in globalenv', {
         
         test_project <- tempfile('test_project')

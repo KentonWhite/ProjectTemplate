@@ -45,8 +45,11 @@ clear.cache <- function (...){
                 }
         }
         
-        # Clear the variables from memory
-        do.call(clear, list(variables, force=TRUE))
+        # Clear the variables from memory (needs to be one at a time)
+        for (v in variables) {
+                args <- list(v, force=TRUE)
+                do.call(clear, args=args )
+        }
         
         # List of files to delete
         files_to_delete <-file.path(rep(.cache.dir, length(files)), files)
