@@ -9,7 +9,7 @@ clear(..., keep = c(), force = FALSE)
 \arguments{
 \item{...}{A sequence of character strings  of the objects to
 be removed from the global environment.  If none given, then all items except
-those in \code{keep} will be deleted.}
+those in \code{keep} will be deleted.  This includes items beginning with \code{.}}
 
 \item{keep}{A character vector of variables that should remain in the global
 environment}

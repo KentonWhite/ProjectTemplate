@@ -185,3 +185,41 @@ test_that('running clear() with an object not in memory fails cleanly', {
 
         tidy_up()
 })
+
+test_that('running clear() removes variables beginning with a dot (except the config$sticky_variables)', {
+        
+        test_project <- tempfile('test_project')
+        suppressMessages(create.project(test_project, minimal = FALSE))
+        on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
+        
+        oldwd <- setwd(test_project)
+        on.exit(setwd(oldwd), add = TRUE)
+        
+        # Set some global variables beginning with a dot
+        assign(".xxx", 10, envir = .TargetEnv)
+        assign(".yyy", 20, envir = .TargetEnv)
+        
+        # Read the config and set config$sticky_variables
+        cfg <- .read.config()
+        cfg$sticky_variables <- ".xxx"
+        .save.config(cfg)
+        
+        suppressMessages(load.project())
+        
+        
+        # should keep .xxx
+        expect_message(clear(), "not cleared: config .xxx")
+        expect_true(exists(".xxx"))
+        expect_equal(get(".xxx", envir = .TargetEnv), 10)
+        
+        # should be no .yyy
+        expect_true(!exists(".yyy"))
+        
+        expect_message(clear(force=TRUE), "clear from memory: .xxx")
+        
+        # should be no .xxx
+        expect_true(!exists(".xxx"))
+        
+        
+        tidy_up()
+})
