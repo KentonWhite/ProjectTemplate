@@ -1,0 +1,9 @@
+template_type: root
+content_location: local::/Program Files/R/R-3.3.1/library/ProjectTemplate/example_data/example_templates/template1
+template_name: template1
+default: FALSE
+
+template_type: root
+content_location: local::/Program Files/R/R-3.3.1/library/ProjectTemplate/example_data/example_templates/template2
+template_name: Template_2
+default: FALSE

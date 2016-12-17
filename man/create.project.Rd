@@ -4,12 +4,17 @@
 \alias{create.project}
 \title{Create a new project.}
 \usage{
-create.project(project.name = "new-project", minimal = FALSE,
+create.project(project.name = "new-project",
+  template.name = .get.template(default = TRUE), minimal = FALSE,
   dump = FALSE, merge.strategy = c("require.empty", "allow.non.conflict"))
 }
 \arguments{
 \item{project.name}{A character vector containing the name for this new
 project. Must be a valid directory name for your file system.}
+
+\item{template.name}{A string name or number of the custom
+template that should be applied after the base project has been created.  
+Templates are installed using the \code{\link{templates("add", ...)}} command.}
 
 \item{minimal}{A boolean value indicating whether to create a minimal
 project or a full project. A minimal project contains only the
@@ -46,7 +51,10 @@ If the target directory does not exist, it is created.  Otherwise,
 \examples{
 library('ProjectTemplate')
 
-\dontrun{create.project('MyProject')}
+\dontrun{
+    create.project('MyProject')
+    create.project('MyProject', 'my.knitr.template')
+    }
 }
 \seealso{
 \code{\link{load.project}}, \code{\link{get.project}},

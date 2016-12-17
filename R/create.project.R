@@ -10,6 +10,9 @@
 #'
 #' @param project.name A character vector containing the name for this new
 #'   project. Must be a valid directory name for your file system.
+#' @param template.name A string name or number of the custom
+#'   template that should be applied after the base project has been created.  
+#'   Templates are installed using the \code{\link{templates("add", ...)}} command.
 #' @param minimal A boolean value indicating whether to create a minimal
 #'   project or a full project. A minimal project contains only the
 #'   directories strictly necessary to use ProjectTemplate and does not
@@ -37,18 +40,21 @@
 #' @examples
 #' library('ProjectTemplate')
 #'
-#' \dontrun{create.project('MyProject')}
-create.project <- function(project.name = 'new-project', minimal = FALSE,
+#' \dontrun{
+#'     create.project('MyProject')
+#'     create.project('MyProject', 'my.knitr.template')
+#'     }
+create.project <- function(project.name = 'new-project', template.name = .get.template(default=TRUE), 
+                           minimal = FALSE,
                            dump = FALSE, merge.strategy = c("require.empty", "allow.non.conflict"))
 {
-
+        
   .stopifproject(c("Cannot create a new project inside an existing one",
                            "Please change to another directory and re-run create.project()"))
   
   .stopifproject(c("Cannot create a new project inside an existing one",
                    "Please change to another directory and re-run create.project()"),
                    path=dirname(getwd()))
-  
   
   if (minimal) {
     exclude <- c("diagnostics", "doc", "graphs", "lib", "logs", "profiling",
@@ -78,6 +84,17 @@ create.project <- function(project.name = 'new-project', minimal = FALSE,
       cat(deparse(get(item, envir = e, inherits = FALSE)),
           file = file.path(project.name, paste(item, '.R', sep = '')))
     }
+  }
+  
+  if (!is.null(template.name)) {
+          tryCatch(
+                .apply.template(template.name, project.name),
+                
+                error=function (e) {
+                        message(paste0("Unable to add template: ", template.name))
+                        message("Run templates('config') to check the configuration")
+                }
+           )
   }
 
   invisible(NULL)
