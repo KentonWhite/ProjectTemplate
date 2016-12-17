@@ -499,8 +499,8 @@
         
         # location is in format github_user/repo_name@branch
         
-        gh_remote <- devtools:::github_remote(location)
-        file_location <- devtools:::remote_download.github_remote(gh_remote)
+        gh_remote <- devtools::github_remote(location)
+        file_location <- remote_download.github_remote(gh_remote)
         
         # get a temporary directory to unzip the downloaded file
         file_directory <- tempfile("github")
@@ -519,4 +519,59 @@
         file.path(file_directory, dir)
 }
 
+#
+# This code is cut and pasted from devtools because they are not formally exported
+# from that package.  This causes travis checks to fail
+# A request was made, but turned down.  Until a better solution can
+# be found, this code will have to be maintained manually
+#
 
+remote_download.github_remote <- function(x, quiet = FALSE) {
+        dest <- tempfile(fileext = paste0(".zip"))
+        
+        if (missing_protocol <- !grepl("^[^:]+?://", x$host)) {
+                x$host <- paste0("https://", x$host)
+        }
+        
+        src_root <- paste0(x$host, "/repos/", x$username, "/", x$repo)
+        src <- paste0(src_root, "/zipball/", x$ref)
+        
+        if (!quiet) {
+                message("Downloading GitHub repo ", x$username, "/", x$repo, "@", x$ref,
+                        "\nfrom URL ", src)
+        }
+        
+        if (!is.null(x$auth_token)) {
+                auth <- httr::authenticate(
+                        user = x$auth_token,
+                        password = "x-oauth-basic",
+                        type = "basic"
+                )
+        } else {
+                auth <- NULL
+        }
+        
+        if (github_has_remotes(x, auth))
+                warning("GitHub repo contains submodules, may not function as expected!",
+                        call. = FALSE)
+        
+        download_github(dest, src, auth)
+}
+
+github_has_remotes <- function(x, auth = NULL) {
+        src_root <- paste0(x$host, "/repos/", x$username, "/", x$repo)
+        src_submodules <- paste0(src_root, "/contents/.gitmodules?ref=", x$ref)
+        response <- httr::HEAD(src_submodules, , auth)
+        identical(httr::status_code(response), 200L)
+}
+
+download_github <- function(path, url, ...) {
+        request <- httr::GET(url, ...)
+        
+        if (httr::status_code(request) >= 400) {
+                stop(github_error(request))
+        }
+        
+        writeBin(httr::content(request, "raw"), path)
+        path
+}
