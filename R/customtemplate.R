@@ -93,6 +93,9 @@
 .template.merge.types <- c("overwrite", "append", "duplicate")
 .no.templates <- "no_templates_defined"
 
+# Helper function to remove the first item in a list
+.remove.first <- function (x) rev(head(rev(x), -1))
+
 
 # Internal functions called by user facing functions templates() and create.project()
 
