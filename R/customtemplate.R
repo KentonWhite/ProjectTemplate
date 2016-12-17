@@ -569,7 +569,7 @@ download_github <- function(path, url, ...) {
         request <- httr::GET(url, ...)
         
         if (httr::status_code(request) >= 400) {
-                stop(github_error(request))
+                stop("github_error(request)")
         }
         
         writeBin(httr::content(request, "raw"), path)
