@@ -58,26 +58,26 @@
 
 # load and validate the config and return a config object
 
-.load.config <- function(override.config = NULL) {
+.load.config <- function(override.config = NULL, compare.config=.default.config) {
         config <- if (file.exists(.project.config)) {
                  translate.dcf(.project.config)
         } else {
                 warning('You are missing a configuration file: ', .project.config, ' . Defaults will be used.')
-                .default.config
+                compare.config
         }
         
-        missing.entries <- setdiff(names(.default.config), names(config))
+        missing.entries <- setdiff(names(compare.config), names(config))
         if (length(missing.entries) > 0) {
                 warning('Your configuration file is missing the following entries: ',
                         paste(missing.entries, collapse = ', '), '. Defaults will be used.')
-                config[missing.entries] <- .default.config[missing.entries]
+                config[missing.entries] <- compare.config[missing.entries]
         }
         
         if (length(override.config) > 0) {
                 config[names(override.config)] <- override.config
         }
         
-        extra.entries <- setdiff(names(config), names(.default.config))
+        extra.entries <- setdiff(names(config), names(compare.config))
         extra.entries <- grep("^[^#]", extra.entries, value = TRUE)
         if (length(extra.entries) > 0) {
                 warning('Your configuration contains the following unused entries: ',
