@@ -6,7 +6,7 @@
 #'
 #' @param ... A sequence of character strings  of the objects to
 #'  be removed from the global environment.  If none given, then all items except
-#'  those in \code{keep} will be deleted.
+#'  those in \code{keep} will be deleted.  This includes items beginning with \code{.}
 #' @param keep A character vector of variables that should remain in the global
 #'  environment
 #' @param force If \code{TRUE}, then variables will be deleted even if 
@@ -33,7 +33,7 @@ clear <- function (..., keep=c(), force=FALSE) {
         
         # If no ... specified, get everything from global environment
         if (length(names) == 0L) 
-                names <- ls(envir = .TargetEnv)
+                names <- ls(envir = .TargetEnv, all.names = TRUE)
         else {
                 # Remove any names not in the Global Env
                 not_in_genv <- !sapply(names, exists)
