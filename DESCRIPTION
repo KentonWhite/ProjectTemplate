@@ -31,6 +31,8 @@ Suggests:
     plyr,
     digest,
     formatR,
+    devtools,
+    httr,
     stringr,
     ggplot2,
     lubridate,
@@ -88,6 +90,7 @@ Collate:
     'translate.dcf.R'
     'config.R'
     'create.project.R'
+    'customtemplate.R'
     'get.project.R'
     'help.R'
     'load.project.R'
@@ -98,5 +101,6 @@ Collate:
     'show.project.R'
     'stopifnotproject.R'
     'stub.tests.R'
+    'templates.R'
     'test.project.R'
 RoxygenNote: 5.0.1
