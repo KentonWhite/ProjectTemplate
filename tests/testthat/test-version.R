@@ -1,24 +1,26 @@
 context('Version field')
 
 test_that('Test matching version field', {
-
-  suppressMessages(create.project('test_project', minimal = TRUE))
-  setwd('test_project')
-  on.exit(setwd('..'), add = TRUE)
-  on.exit(unlink('test_project', recursive = TRUE), add = TRUE)
-
+  test_project <- tempfile('test_project')
+  suppressMessages(create.project(test_project, minimal = TRUE))
+  on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
+  
+  oldwd <- setwd(test_project)
+  on.exit(setwd(oldwd), add = TRUE)
+  
   expect_warning(suppressMessages(load.project()), NA)
 
 })
 
 test_that('Test too old version of ProjectTemplate', {
-
-  suppressMessages(create.project('test_project', minimal = TRUE))
-  setwd('test_project')
-  on.exit(setwd('..'), add = TRUE)
-  on.exit(unlink('test_project', recursive = TRUE), add = TRUE)
-
-  config <- new.config
+  test_project <- tempfile('test_project')
+  suppressMessages(create.project(test_project, minimal = TRUE))
+  on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
+  
+  oldwd <- setwd(test_project)
+  on.exit(setwd(oldwd), add = TRUE)
+  
+  config <- .new.config
   config$version <- paste0('1', config$version)
   write.dcf(config, 'config/global.dcf')
 
@@ -28,12 +30,14 @@ test_that('Test too old version of ProjectTemplate', {
 
 test_that('Test new version of ProjectTemplate', {
 
-  suppressMessages(create.project('test_project', minimal = TRUE))
-  setwd('test_project')
-  on.exit(setwd('..'), add = TRUE)
-  on.exit(unlink('test_project', recursive = TRUE), add = TRUE)
+  test_project <- tempfile('test_project')
+  suppressMessages(create.project(test_project, minimal = TRUE))
+  on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
-  config <- new.config
+  oldwd <- setwd(test_project)
+  on.exit(setwd(oldwd), add = TRUE)
+
+  config <- .new.config
   config$version <- '0.4'
   write.dcf(config, 'config/global.dcf')
 
@@ -43,13 +47,16 @@ test_that('Test new version of ProjectTemplate', {
 })
 
 test_that('Test migration', {
-
-  suppressMessages(create.project('test_project', minimal = TRUE))
-  setwd('test_project')
-  on.exit(setwd('..'), add = TRUE)
-  on.exit(unlink('test_project', recursive = TRUE), add = TRUE)
-
-  config <- new.config
+        
+  test_project <- tempfile('test_project')
+  suppressMessages(create.project(test_project, minimal = TRUE))
+  on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
+        
+  oldwd <- setwd(test_project)
+  on.exit(setwd(oldwd), add = TRUE)
+        
+        
+  config <- .new.config
   expect_true("version" %in% names(config))
   config$version <- '0.4'
   write.dcf(config, 'config/global.dcf')

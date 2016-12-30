@@ -20,7 +20,14 @@
 #' cache.project()}
 cache.project <- function()
 {
-  for (dataset in get.project()[['data']])
+  
+  project_name <- .stopifnotproject("Change to a valid ProjectTemplate directory and run cache.project() again.")
+        
+  # get all data related to the project
+  project_data <- unique(c(get.project()[['data']], .cached.variables()))
+  
+  # and cache each one (already cached items will be re-cached if they have changed)
+  for (dataset in project_data)
   {
     message(paste('Caching', dataset))
     cache(dataset)

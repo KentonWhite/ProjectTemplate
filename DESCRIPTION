@@ -29,6 +29,8 @@ Suggests:
     foreign,
     reshape,
     plyr,
+    digest,
+    formatR,
     stringr,
     ggplot2,
     lubridate,
@@ -81,17 +83,20 @@ Collate:
     'cache.name.R'
     'cache.project.R'
     'clean.variable.name.R'
-    'create.project.R'
+    'clear.R'
+    'clear.cache.R'
     'translate.dcf.R'
-    'default.config.R'
+    'config.R'
+    'create.project.R'
     'get.project.R'
     'help.R'
     'load.project.R'
     'migrate.project.R'
-    'new.config.R'
+    'project.config.R'
     'reload.project.R'
     'run.project.R'
     'show.project.R'
+    'stopifnotproject.R'
     'stub.tests.R'
     'test.project.R'
 RoxygenNote: 5.0.1

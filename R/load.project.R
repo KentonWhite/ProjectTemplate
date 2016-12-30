@@ -1,7 +1,8 @@
 #' Automatically load data and packages for a project.
 #'
 #' This function automatically load all of the data and packages used by
-#' the project from which it is called.
+#' the project from which it is called.  The behaviour can be controlled by
+#' adjusting the \code{\link{project.config}} configuration.
 #'
 #' @param override.config Named list, allows overriding individual configuration
 #'   items.
@@ -11,7 +12,7 @@
 #' @export
 #'
 #' @seealso \code{\link{create.project}}, \code{\link{get.project}},
-#'   \code{\link{cache.project}}, \code{\link{show.project}}
+#'   \code{\link{cache.project}}, \code{\link{show.project}}, \code{\link{project.config}}
 #'
 #' @examples
 #' library('ProjectTemplate')
@@ -19,8 +20,11 @@
 #' \dontrun{load.project()}
 load.project <- function(override.config = NULL)
 {
+  project_name <- .stopifnotproject ("Please change to correct directory and re-run load.project()")
+
   my.project.info <- list()
 
+  message(paste0('Project name: ', project_name))
   message('Loading project configuration')
 
   config <- .load.config(override.config)
@@ -95,6 +99,10 @@ load.project <- function(override.config = NULL)
   }
 
   # Then we consider loading things from data/.
+
+  # First save the variables already in the global env
+  before.data.load <- .var.diff.from()
+
   if (config$data_loading)
   {
     message('Autoloading data')
@@ -111,6 +119,23 @@ load.project <- function(override.config = NULL)
 
     .convert.to.data.table(my.project.info$data)
   }
+
+  # If we have just loaded data from the data directory, cache it straight away
+  # if the cache_loaded_data config is TRUE.
+  new.vars <- .var.diff.from(before.data.load)
+  if (config$cache_loaded_data && (length(new.vars)>0))
+  {
+          sapply(new.vars, cache)
+  }
+
+  # update project.info$data with any additional datasets generated during autoload
+  if (length(new.vars) > 0)
+        my.project.info$data <- unique(c(my.project.info$data, new.vars))
+
+  # remove any items in project.info$data which are not in the global environment
+  remove <- setdiff(my.project.info$data, .var.diff.from())
+  my.project.info$data <- my.project.info$data[! (my.project.info$data %in% remove)]
+
 
   if (config$munging)
   {
@@ -131,60 +156,6 @@ load.project <- function(override.config = NULL)
   suppressWarnings(rm(list = c("config", "logger", "project.info"), envir = .TargetEnv))
 }
 
-.normalize.config <- function(config, names, norm.fun) {
-  config[names] <- lapply(config[names], norm.fun)
-  config
-}
-
-.boolean.cfg <- function(x) {
-  ret <- if (x == 'on') TRUE
-  else if (x == 'off') FALSE
-  else as.logical(x)
-  if (is.na(ret)) stop('Cannot convert ', x, ' to logical value.')
-  ret
-}
-
-.load.cache <- function() {
-  .provide.directory('cache')
-  cache.files <- dir('cache')
-  cached.files <- c()
-
-  for (cache.file in cache.files)
-  {
-    filename <- file.path('cache', cache.file)
-
-    for (extension in ls(extensions.dispatch.table))
-    {
-      if (grepl(extension, cache.file, ignore.case = TRUE, perl = TRUE))
-      {
-        variable.name <- clean.variable.name(sub(extension,
-                                                 '',
-                                                 cache.file,
-                                                 ignore.case = TRUE,
-                                                 perl = TRUE))
-
-        # If this variable already exists in the global environment, don't load it from cache.
-        if (variable.name %in% ls(envir = .TargetEnv))
-        {
-          next()
-        }
-
-        message(paste(" Loading cached data set: ", variable.name, sep = ''))
-
-        do.call(extensions.dispatch.table[[extension]],
-                list(cache.file,
-                     filename,
-                     variable.name))
-
-        cached.files <- c(cached.files, variable.name)
-
-        break()
-      }
-    }
-  }
-
-  cached.files
-}
 
 .prepare.data.ignore.regex <- function(ignore_files) {
   ignore_files <- strsplit(ignore_files, '\\s*,\\s*')[[1]]
@@ -238,7 +209,7 @@ load.project <- function(override.config = NULL)
                                                  ignore.case = TRUE,
                                                  perl = TRUE))
 
-        # If this variable already exists in cache, don't load it from data.
+        # If this variable already exists in global env, don't load it from data.
         if (variable.name %in% ls(envir = .TargetEnv))
         {
           next()
@@ -284,42 +255,6 @@ load.project <- function(override.config = NULL)
   }
 }
 
-.load.config <- function(override.config = NULL) {
-  config.path <- file.path('config', 'global.dcf')
-  config <- if (file.exists(config.path)) {
-    translate.dcf(config.path)
-  } else {
-    warning('You are missing a configuration file: ', config.path, ' . Defaults will be used.')
-    default.config
-  }
-
-  missing.entries <- setdiff(names(default.config), names(config))
-  if (length(missing.entries) > 0) {
-    warning('Your configuration file is missing the following entries: ',
-            paste(missing.entries, collapse = ', '), '. Defaults will be used.')
-    config[missing.entries] <- default.config[missing.entries]
-  }
-
-  if (length(override.config) > 0) {
-    config[names(override.config)] <- override.config
-  }
-
-  extra.entries <- setdiff(names(config), names(default.config))
-  extra.entries <- grep("^[^#]", extra.entries, value = TRUE)
-  if (length(extra.entries) > 0) {
-    warning('Your configuration contains the following unused entries: ',
-            paste(extra.entries, collapse = ', '), '. These will be ignored.')
-    config[extra.entries] <- NULL
-  }
-
-  config <- .normalize.config(config,
-                              setdiff(names(default.config), c("version", "libraries", "logging_level", "data_ignore")),
-                              .boolean.cfg)
-
-
-  config
-}
-
 #' @importFrom utils compareVersion
 .check.version <- function(config, warn.migrate = TRUE) {
   package.version <- .package.version()
@@ -340,4 +275,16 @@ load.project <- function(override.config = NULL)
 
 .package.version <- function() {
   as.character(read.dcf(system.file("DESCRIPTION", package = "ProjectTemplate"), fields = "Version"))
+}
+
+
+# Compare the variables (excluding functions) in the global env with a passed
+# in string of names and return the difference
+.var.diff.from <- function(given.var.list="", env=.TargetEnv) {
+        # Get variables in target environment of determine if they are a function
+        current.var.list <- sapply(ls(envir = env), function(x) is.function(get(x)))
+        current.var.list <- names(current.var.list[current.var.list==FALSE])
+
+        # return those not in list
+        setdiff(current.var.list, given.var.list)
 }

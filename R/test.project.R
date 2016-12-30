@@ -18,6 +18,8 @@
 #' test.project()}
 test.project <- function()
 {
+  project_name <- .stopifnotproject("Change to a valid ProjectTemplate directory and run test.project() again.")
+        
   load.project()
   require.package('testthat', attach = TRUE)
 

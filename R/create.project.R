@@ -41,8 +41,15 @@
 create.project <- function(project.name = 'new-project', minimal = FALSE,
                            dump = FALSE, merge.strategy = c("require.empty", "allow.non.conflict"))
 {
-  temp.dir <- tempfile("ProjectTemplate")
 
+  .stopifproject(c("Cannot create a new project inside an existing one",
+                           "Please change to another directory and re-run create.project()"))
+  
+  .stopifproject(c("Cannot create a new project inside an existing one",
+                   "Please change to another directory and re-run create.project()"),
+                   path=dirname(getwd()))
+  
+  
   if (minimal) {
     exclude <- c("diagnostics", "doc", "graphs", "lib", "logs", "profiling",
                  "reports", "tests", "TODO")

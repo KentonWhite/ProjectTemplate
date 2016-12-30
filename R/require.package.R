@@ -59,7 +59,7 @@ require.package <- function(package.name, attach = TRUE)
 #' @rdname require.package
 .require.package <- function(package.name)
 {
-  my.config <- if (.has.project()) get.project()$config else new.config
+  my.config <- if (.has.project()) get.project()$config else .new.config
   attach_internal <- my.config[['attach_internal_libraries']]
   if (attach_internal) {
     warning('Loading library', package.name, 'into workspace as a side effect of loading data.\n',
