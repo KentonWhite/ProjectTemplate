@@ -3,13 +3,14 @@ layout: page
 ---
 There are two types of configuration in:
 
-* `ProjectTemplate configuration` are the settings which alter how `load.project()` behaves when executed.  For example, whether to have logging enabled.  
-* `Project specific configuration` are the settings which make sense only to a particular project, but you would like to change them easily in `src` or `munge` scripts.  For example, you may define `plot_footnote="My Proj"` to control a consistent look and feel for plots. 
+* `ProjectTemplate configuration` are the settings which alter how `load.project()` behaves when executed.  For example, whether to have logging enabled.
+* `Project specific configuration` are the settings which make sense only to a particular project, but you would like to change them easily in `src` or `munge` scripts.  For example, you may define `plot_footnote="My Proj"` to control a consistent look and feel for plots.
 Both types are stored in the `config` object accessible from the global environment.
 
 The current `ProjectTemplate` configuration settings exist in the `config/global.dcf` file:
 
 * `data_loading`: This can be set to 'on' or 'off'. If `data_loading` is on, the system will load data from both the `cache` and `data` directories with `cache` taking precedence in the case of name conflict. By default, `data_loading` is on.
+* `data_ignore`: A comma separated list of files to be ignored when importing from the `data/` directory. Regular expressions can be used but should be delimited (on both sides) by `/`. The default is to ignore `Thumbs.db`. Note that filenames and filepaths should *never* begin with a `/`, entire directories under `data/` can be ignored by adding a trailing `/`. See [Mastering ProjectTemplate](./mastering.html) for more details.
 * `munging`: This can be set to 'on' or 'off'. If `munging` is on, the system will execute the files in the `munge` directory sequentially using the order implied by the `sort()` function. If `munging` is off, none of the files in the `munge` directory will be executed. By default, `munging` is on.
 * `logging`: This can be set to 'on' or 'off'. If `logging` is on, a logger object using the `log4r` package is automatically created when you run `load.project()`. This logger will write to the `logs` directory. By default, `logging` is off.
 * `load_libraries`: This can be set to 'on' or 'off'. If `load_libraries` is on, the system will load all of the R packages listed in the `libraries` field described below. By default, `load_libraries` is off.

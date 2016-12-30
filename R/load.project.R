@@ -64,12 +64,12 @@ load.project <- function(override.config = NULL)
     my.project.info$helpers <- c()
 
     helpers <- dir('lib', pattern = '[.][rR]$')
-    
+
     # force globals.R to be read first, if it exists
     if ("globals.R" %in% helpers) {
             helpers<-c("globals.R", helpers[!(helpers %in% "globals.R")])
     }
-    
+
     deprecated.files <- intersect(
       helpers, c('boot.R', 'load_data.R', 'load_libraries.R',
                  'preprocess_data.R', 'run_tests.R'))
@@ -99,7 +99,8 @@ load.project <- function(override.config = NULL)
   {
     message('Autoloading data')
 
-    my.project.info$data <- .load.data(config$recursive_loading)
+    my.project.info$data <- .load.data(config$recursive_loading,
+                                       config$data_ignore)
   }
 
   if (config$data_tables)
@@ -185,9 +186,42 @@ load.project <- function(override.config = NULL)
   cached.files
 }
 
-.load.data <- function(recursive) {
+.prepare.data.ignore.regex <- function(ignore_files) {
+  ignore_files <- strsplit(ignore_files, '\\s*,\\s*')[[1]]
+  regexes <- ignore_files[grepl('^/.*/$', ignore_files)]
+  literals <- setdiff(ignore_files, regexes)
+
+  # Create regex for special characters in regex to be escaped
+  #  (welcome to backslash hell)
+  # Note that * is a regex special character but often used in literals as
+  #  wildcard
+  regex.special <- c('.', '\\', '|', '(', ')', '[', '{', '^', '$', '+', '?')
+  regex.special <- paste0('([',
+                          paste0('\\', regex.special, collapse = '|'),
+                          '])')
+  # Escape special characters in literal strings
+  literals <- gsub(regex.special, '\\\\\\1', literals)
+  # Escape wildcard * in literal strings
+  literals <- gsub('\\*', '\\.\\*', literals)
+  # Convert trailing slash to wildcard
+  literals <- gsub('/$', '/\\.\\*', literals)
+  literals <- paste0('^', literals, '$')
+
+  # Remove starting and trailing slashes from regexes
+  regexes <- gsub('(^/)|(/$)', '', regexes)
+
+  # Combine and return prepared regexes
+  paste0(c(literals, regexes), collapse = '|')
+}
+
+.load.data <- function(recursive, ignore_files = NULL) {
   .provide.directory('data')
   data.files <- dir('data', recursive = recursive)
+  ignore.index <- grepl(.prepare.data.ignore.regex(ignore_files),
+                        data.files,
+                        perl = TRUE)
+  # Keep only files NOT matching any of the ignore patterns
+  data.files <- data.files[!ignore.index]
   data.files.loaded <- c()
 
   for (data.file in data.files)
@@ -279,9 +313,9 @@ load.project <- function(override.config = NULL)
   }
 
   config <- .normalize.config(config,
-                              setdiff(names(default.config), c("version", "libraries", "logging_level")),
+                              setdiff(names(default.config), c("version", "libraries", "logging_level", "data_ignore")),
                               .boolean.cfg)
-  
+
 
   config
 }
