@@ -156,19 +156,19 @@ come in three different flavours:
     So to ignore the file `test.csv` in the folder `data/more-data/` you add
     `more-data/test.csv` to the list.<br/>
     A wildcard `*` is allowed in literal filenames to match multiple characters.
-    So to ignore all `.csv` files directly under the `data/` directory you add
-    `*.csv`, and to ignore them only in the folder `data/test-data/` you change
-    the pattern to `test-data/*.csv`.
+    So to ignore all `.csv` files under the `data/` directory and
+    subdirectories you add `*.csv`, and to ignore them only in the folder
+    `data/test-data/` you change the pattern to `test-data/*.csv`.
  * Literal directory: Specify the directoryname relative to the `data/`
     directory, and add a trailing `/`. To ignore the directory `data/raw/`
     entirely add the the pattern `raw/`. The `*` wildcard is allowed in
     directory patterns as well.
  * Regular expression: For advanced patterns it is possible to use regular
     expressions. Regular expressions have to inserted between two slashes.
-    Expressions are evaluated with option `perl = TRUE`. It is not necessary to
-    escape backslashes in `global.dcf`, unless a literal `\` is meant. The
-    filenames are evaluated individually so it is not possible to use forward
-    or backward references to other files in the same directory.<br/>
+    Expressions are evaluated with option `perl = TRUE`. You should not escape
+    backslashes in `global.dcf`, unless a literal `\` is meant. The filenames
+    are evaluated individually so it is not possible to use forward or backward
+    references to other files in the same directory.<br/>
     This can for example be used to exclude a filename from a the `data/`
     directory and all subdirectories. To ignore `help.txt` in all folders use
     the pattern `/^(.*/)?help\\.txt$/`. Explaining all possibilities of regular
