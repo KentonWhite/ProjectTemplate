@@ -191,6 +191,8 @@ load.project <- function(override.config = NULL)
   ignore.index <- grepl(.prepare.data.ignore.regex(ignore_files),
                         data.files,
                         perl = TRUE)
+  # print(data.frame(files = data.files,
+  #                  ignored = ignore.index))
   # Keep only files NOT matching any of the ignore patterns
   data.files <- data.files[!ignore.index]
   data.files.loaded <- c()
