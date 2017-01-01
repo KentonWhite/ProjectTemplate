@@ -165,8 +165,7 @@ test_that('ignored data files are not loaded', {
   # Reload the project, now without ignoring files
   clear()
   # The Thumbs.db is not a valid SQLite database so should raise an error
-  expect_error(suppressMessages(load.project(override.config = list(data_ignore = ''))),
-               'not a database')
+  expect_error(suppressMessages(load.project(override.config = list(data_ignore = ''))))
 
   # Reload the project, ignore *.csv
   clear()
