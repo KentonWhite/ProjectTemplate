@@ -1,12 +1,35 @@
 #' Listing the data for the current project
 #'
 #' This function produces a data.frame of all data files in the project, with
-#'   the following meta data:
+#'   meta data on if and how the file will be loaded by \code{load.project}.
 #'
 #' @param override.config Named list, allows overriding individual configuration
 #'   items.
 #'
-#' @return df data.frame containing available data with relevant meta data
+#' @return A data.frame listing the available data, with relevant meta data
+#'
+#' @details The returned data.frame contains the following variables, with one
+#'   observation per file in \code{data/}:
+#'
+#' \tabular{ll}{
+#'    \code{filename} \tab Character variable containing the filename relative
+#'      to \code{data/} directory. \cr
+#'    \code{varname} \tab Character variable containing the name of the
+#'      variable into which the file will be imported. * \cr
+#'    \code{is_ignored} \tab Logical variable that indicates whether the file.
+#'      is ignored through the \code{data_ignore} option in the configuration \cr
+#'    \code{is_directory} \tab Logical variable that indicates whether the file
+#'      is a directory. \cr
+#'    \code{is_cached} \tab Logical variable that indicates whether the file is
+#'      already available in the \code{cache/} directory. \cr
+#'    \code{reader} \tab Character variable containing the name of the reader
+#'      function that will be used to load the data. Contains a \code{character(0)}
+#'      if no suitable reader was found.
+#' }
+#'
+#' * Note that some readers return more than one variable, usually with the
+#'   variablename as prefix. This is true for for example the \code{xls.reader}
+#'   and \code{xlsx.reader}.
 #'
 #' @export
 #'

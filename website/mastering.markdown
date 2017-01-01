@@ -180,3 +180,12 @@ of the `data_ignore` patterns. Therefore, if you add a pattern after the
 variable was already loaded once and you don't want to load it from the cache
 you have to call `clear.cache(variable.name)`. This will likely change in the
 future so that cached variables will be ignored as well.
+
+#### Listing data
+When encoutering unexpected results from `load.project` in the load data phase
+it can be useful to have some insight in what files are found by `load.project`
+and which reader is used to import the data. For this purpose the `list.data`
+function returns a list of all files, with metadata on how the variable will be
+called, whether it is in the cache, whether it matches a `data_ignore` pattern,
+and what reader will be used. `list.data` doesn't actually read the files so it
+is much quicker than a call to `load.project`.
