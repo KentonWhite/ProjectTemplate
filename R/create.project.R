@@ -133,9 +133,6 @@ create.project <- function(project.name = 'new-project', minimal = FALSE,
   )
 }
 
-.get.template.tar.path <- function(template.name)
-  system.file(file.path('defaults', paste0(template.name, ".tar")), package = 'ProjectTemplate')
-
 .list.files.and.dirs <- function(path) {
   # no.. not available in R 2.15.3
   files <- list.files(path = path, all.files = TRUE, include.dirs = TRUE)
