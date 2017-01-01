@@ -215,3 +215,5 @@ test_that('ignored data files are not loaded', {
   expect_equal(test, test_data)
   expect_false(exists("test.test", envir = .TargetEnv))
 })
+
+
