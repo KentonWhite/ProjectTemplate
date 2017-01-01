@@ -174,3 +174,9 @@ come in three different flavours:
     the pattern `/^(.*/)?help\\.txt$/`. Explaining all possibilities of regular
     expressions is too much for this page, see 'Perl-like Regular Expressions'
     under `?base::regex` for more information.
+
+**Note** At the moment variables already in the cache will be loaded regardless
+of the `data_ignore` patterns. Therefore, if you add a pattern after the
+variable was already loaded once and you don't want to load it from the cache
+you have to call `clear.cache(variable.name)`. This will likely change in the
+future so that cached variables will be ignored as well.

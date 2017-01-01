@@ -137,10 +137,10 @@ test_that('ignored data files are not loaded', {
   # clear the global environment
   clear()
 
-  # # Read the config data and set cache_loaded_data to FALSE
-  # config <- read.dcf("config/global.dcf")
-  # expect_error(config$cache_loaded_data <- FALSE, NA)
-  # write.dcf(config, "config/global.dcf" )
+  # Read the config data and set cache_loaded_data to FALSE
+  config <- read.dcf("config/global.dcf")
+  expect_error(config$cache_loaded_data <- FALSE, NA)
+  write.dcf(config, "config/global.dcf" )
 
   # Create some test data so the file can be loaded if not ignored
   test_data <- data.frame(Names = c("a", "b", "c"), Ages = c(20, 30, 40))
