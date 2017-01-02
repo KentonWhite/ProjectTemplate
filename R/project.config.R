@@ -20,7 +20,7 @@
 #'  cache taking precedence in the case of name conflict. \cr
 #'  \code{data_ignore} \tab A comma separated list of files to be ignored when importing
 #'  from the \code{data/} directory. Regular expressions can be used but should be delimited
-#'   (on both sides) by \code{/}. Note that filenames and filepaths should *never* begin with
+#'   (on both sides) by \code{/}. Note that filenames and filepaths should never begin with
 #'   a \code{/}, entire directories under \code{data/} can be ignored by adding a trailing \code{/}. \cr
 #'  \code{cache_loading} \tab This can be set to 'on' or 'off'. If cache_loading is on,
 #'  the system will load data from the cache directory before any attempt to load
