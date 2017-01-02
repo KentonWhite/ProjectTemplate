@@ -65,3 +65,8 @@ clear.cache <- function (...){
         }
 }
 
+# Determine if a variable is cached or not
+.is.cached <- function (variable) {
+        file.exists(file.path(.cache.dir, paste0(variable, ".RData")))
+}
+

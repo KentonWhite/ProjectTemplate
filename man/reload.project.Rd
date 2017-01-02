@@ -2,21 +2,26 @@
 % Please edit documentation in R/reload.project.R
 \name{reload.project}
 \alias{reload.project}
-\title{Reload a project from scratch.}
+\title{Reload or reset a project}
 \usage{
-reload.project(override.config = NULL)
+reload.project(..., reset = FALSE)
 }
 \arguments{
-\item{override.config}{Named list, allows overriding individual configuration
-items.}
+\item{...}{Optional parameters passed to \code{\link{load.project}}}
+
+\item{reset}{A boolean value, which if set \code{TRUE} clears the cache and everything
+in the global environment, including any \code{sticky_variables}}
 }
 \value{
 No value is returned; this function is called for its side effects.
 }
 \description{
-This function will clear the global environment and reload a project
-from scratch. This is useful when you've updated your data sets or
-changed your preprocessing scripts.
+This function will clear the global environment and reload a project.  This is
+useful when you've updated your data sets or changed your preprocessing scripts.
+Any \code{sticky_variables} configuration parameter in \code{\link{project.config}}
+will remain both in memory and (if present) in the cache by default. If the \code{reset} 
+parameter is \code{TRUE}, then all variables are cleared from both the global
+environment and the cache.
 }
 \examples{
 library('ProjectTemplate')
