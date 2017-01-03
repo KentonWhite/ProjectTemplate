@@ -30,7 +30,7 @@ reload.project <- function(..., reset = FALSE)
           
           cleared_vars <- clear()
           for (var in cleared_vars) {
-                  if (.is.cached(var))
+                  if (.read.cache.info(var)$in.cache)
                           do.call(clear.cache, list(var))
           }
   }

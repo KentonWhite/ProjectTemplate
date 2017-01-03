@@ -40,7 +40,7 @@ test_that('override.config is passed through correctly to load.project', {
         
         # x should not exist in Global Env or the cache
         expect_true(!exists("x"))
-        expect_true(!.is.cached("x"))
+        expect_true(!.read.cache.info("x")$in.cache)
         
 })
 
@@ -87,7 +87,7 @@ test_that('reload.project ignores sticky_variables', {
         # Load the project and check that x exists and is in the cache
         suppressMessages(load.project())
         expect_true(exists("x"))
-        expect_true(.is.cached("x"))
+        expect_true(.read.cache.info("x")$in.cache)
         
         # reload the project and config, x, y should not be cleared
         expect_message(reload.project(), "not cleared: config x y")
@@ -142,14 +142,14 @@ test_that('reload.project with reset clears everything', {
         # cache should have items in it after a load.project
         suppressMessages(reload.project())
         expect_true(exists("x"))
-        expect_true(.is.cached("x"))
+        expect_true(.read.cache.info("x")$in.cache)
         
         # reload the project with reset and switch off data loading
         suppressMessages(reload.project(override.config=list(data_loading=FALSE),
                                         reset = TRUE))
         
         # Should find the cache empty, even though x is in sticky_variables
-        expect_true(!.is.cached("x"))
+        expect_true(!.read.cache.info("x")$in.cache)
         
         
 })
