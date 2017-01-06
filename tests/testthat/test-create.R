@@ -22,7 +22,7 @@ expect_full <- function() {
   expect_dir('data')
   expect_dir('diagnostics')
   expect_file(file.path('diagnostics', '1.R'))
-  expect_dir('doc')
+  expect_dir('docs')
   expect_dir('graphs')
   expect_dir('lib')
   expect_file(file.path('lib', 'helpers.R'))
@@ -51,7 +51,7 @@ expect_minimal <- function() {
   expect_file(file.path('src', 'eda.R'))
 
   expect_no_file('diagnostics')
-  expect_no_file('doc')
+  expect_no_file('docs')
   expect_no_file('graphs')
   expect_no_file('lib')
   expect_no_file('logs')
@@ -227,13 +227,13 @@ test_that('Dont create projects inside other projects', {
         test_project <- tempfile('test_project')
         suppressMessages(create.project(test_project, minimal = FALSE))
         on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
-        
+
         oldwd <- setwd(test_project)
         on.exit(setwd(oldwd), add = TRUE)
- 
-        # shouldn't be able to create a new project inside this one       
+
+        # shouldn't be able to create a new project inside this one
         expect_error(create.project("new_project"))
-        
+
         # Also shouldn't be able to create one inside a sub directory of an existing project
         setwd(file.path(test_project, 'lib'))
         expect_error(create.project("new_project"))
