@@ -64,3 +64,4 @@ clear.cache <- function (...){
                 message("Removed successfully from cache\n")
         }
 }
+
