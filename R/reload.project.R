@@ -27,12 +27,7 @@ reload.project <- function(..., reset = FALSE)
   project_name <- .stopifnotproject("Change to a valid ProjectTemplate directory and run reload.project() again.")
 
   if (!reset) {
-          
-          cleared_vars <- clear()
-          for (var in cleared_vars) {
-                  if (.read.cache.info(var)$in.cache)
-                          do.call(clear.cache, list(var))
-          }
+          clear()
   }
   else {
           clear(force = TRUE)

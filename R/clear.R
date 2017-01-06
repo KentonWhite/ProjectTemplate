@@ -12,8 +12,7 @@
 #' @param force If \code{TRUE}, then variables will be deleted even if 
 #'  specifed in \code{keep} or \code{config$sticky_variables} 
 #' 
-#' @return The variables removed are returned.  In addition a message is printed 
-#'  of those kept and removed.
+#' @return The variables kept and removed are reported
 #'
 #' @export
 #' @examples
@@ -55,9 +54,6 @@ clear <- function (..., keep=c(), force=FALSE) {
         } else {
                 message("No objects to clear")
         }
-        
-        # Return names of variables removed 
-        invisible(names)
 }
 
 .remove.sticky.vars <- function (names, keep) {

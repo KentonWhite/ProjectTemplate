@@ -18,8 +18,7 @@ environment}
 specifed in \code{keep} or \code{config$sticky_variables}}
 }
 \value{
-The variables removed are returned.  In addition a message is printed 
- of those kept and removed.
+The variables kept and removed are reported
 }
 \description{
 This function removes specific (or all by default) named objects from the global
