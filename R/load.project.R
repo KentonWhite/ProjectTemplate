@@ -148,8 +148,6 @@ load.project <- function(override.config = NULL)
   }
 
   assign('project.info', my.project.info, envir = .TargetEnv)
-  #assign('project.info', my.project.info, envir = parent.frame())
-  #assign('project.info', my.project.info, envir = environment(create.project))
 }
 
 .unload.project <- function() {

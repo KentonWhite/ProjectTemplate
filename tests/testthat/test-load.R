@@ -85,9 +85,9 @@ test_that('auto loaded data is not cached when cached_loaded_data is FALSE', {
         write.csv(test_data, file="data/test.csv", row.names = FALSE)
 
         # Read the config data and set cache_loaded_data to FALSE
-        config <- read.dcf("config/global.dcf")
+        config <- .read.config()
         expect_error(config$cache_loaded_data <- FALSE, NA)
-        write.dcf(config, "config/global.dcf" )
+        .save.config(config)
 
         suppressMessages(load.project())
 
