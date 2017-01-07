@@ -32,7 +32,7 @@ stored as \code{.RData} files.
 Usually you will want to cache datasets during munging.  This can be the raw
 data just loaded, or it can be the result of further processing during munge.  Either
 way, it can take a while to cache large variables, so cache will only cache when it
-needs to.  
+needs to.
 The \code{clear.cache("variable")} command
 can be run to flush individual items from the cache.
 
