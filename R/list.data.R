@@ -46,23 +46,54 @@ list.data <- function(override.config = NULL) {
 }
 
 .list.data <- function(config) {
+  # Get list of variables in data/
   data.files <- list.files(path = 'data', recursive = config$recursive_loading)
-  readers.and.varnames <- .parse.extensions(data.files)
+  files.parsed <- .parse.extensions(data.files)
+  varnames <- files.parsed$varnames
+  readers <- files.parsed$readers
 
   is_ignored <- grepl(.prepare.data.ignore.regex(config$data_ignore),
                       data.files)
   is_directory <- file.info(file.path('data', data.files))$isdir
-  is_cached <- .is.cached(readers.and.varnames$varnames)
+
+  is_cached <- .is.cached(varnames)
+  cache_only <- rep(FALSE, length(varnames))
 
   # Build the final data.frame
   df <- data.frame(filename = data.files,
-                   varname = readers.and.varnames$varnames,
+                   varname = varnames,
                    is_ignored = is_ignored,
                    is_directory = is_directory,
                    is_cached = is_cached,
-                   reader = readers.and.varnames$readers,
+                   cache_only = cache_only,
+                   reader = readers,
                    stringsAsFactors = FALSE)
-  df
+
+  # Get list of variables in cache/
+  cached.vars <- .cached.variables()
+  cached.vars <- setdiff(cached.vars, varnames)
+
+  data.files <- rep('', length(cached.vars))
+  is_ignored <- rep(FALSE, length(cached.vars))
+  is_directory <- rep(FALSE, length(cached.vars))
+  cache_only <- rep(TRUE, length(cached.vars))
+  readers <- rep('', length(cached.vars))
+
+  # .cached.variables returns all variables without checking validity, need to
+  # call .is.cached to perform this check
+  is_cached <- .is.cached(cached.vars)
+
+  df2 <- data.frame(filename = data.files,
+                    varname = cached.vars,
+                    is_ignored = is_ignored,
+                    is_directory = is_directory,
+                    is_cached = is_cached,
+                    cache_only = cache_only,
+                    reader = readers,
+                    row.names = NULL,
+                    stringsAsFactors = FALSE)
+
+  rbind(df, df2)
 }
 
 .parse.extensions <- function(data.files) {
@@ -81,10 +112,30 @@ list.data <- function(override.config = NULL) {
   list(readers = readers, varnames = varnames)
 }
 
-.is.cached <- function(varnames) {
-  is.cached <- logical(length(varnames))
-  for (v in seq_along(varnames)) {
-    is.cached[v] <- .read.cache.info(varnames[v])$in.cache
-  }
-  is.cached
+.prepare.data.ignore.regex <- function(ignore_files) {
+  ignore_files <- strsplit(ignore_files, '\\s*,\\s*')[[1]]
+  regexes <- ignore_files[grepl('^/.*/$', ignore_files)]
+  literals <- setdiff(ignore_files, regexes)
+
+  # Create regex for special characters in regex to be escaped
+  #  (welcome to backslash hell)
+  # Note that * is a regex special character but often used in literals as
+  #  wildcard
+  regex.special <- c('.', '\\', '|', '(', ')', '[', '{', '^', '$', '+', '?')
+  regex.special <- paste0('([',
+                          paste0('\\', regex.special, collapse = '|'),
+                          '])')
+  # Escape special characters in literal strings
+  literals <- gsub(regex.special, '\\\\\\1', literals)
+  # Escape wildcard * in literal strings
+  literals <- gsub('\\*', '\\.\\*', literals)
+  # Convert trailing slash to wildcard
+  literals <- gsub('/$', '/\\.\\*', literals)
+  literals <- paste0('^', literals, '$')
+
+  # Remove starting and trailing slashes from regexes
+  regexes <- gsub('(^/)|(/$)', '', regexes)
+
+  # Combine and return prepared regexes
+  paste0(c(literals, regexes), collapse = '|')
 }

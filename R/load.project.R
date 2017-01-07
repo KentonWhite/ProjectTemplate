@@ -36,16 +36,8 @@ load.project <- function(override.config = NULL)
 
   options(stringsAsFactors = config$as_factors)
 
-  if (config$load_libraries)
-  {
-    message('Autoloading packages')
-    my.project.info$packages <- c()
-    for (package.to.load in strsplit(config$libraries, '\\s*,\\s*')[[1]])
-    {
-      message(paste(' Loading package:', package.to.load))
-      require.package(package.to.load)
-      my.project.info$packages <- c(my.project.info$packages, package.to.load)
-    }
+  if (config$load_libraries) {
+    my.project.info <- .load.libraries(config, my.project.info)
   }
 
   if (config$logging)
@@ -151,38 +143,26 @@ load.project <- function(override.config = NULL)
 }
 
 .unload.project <- function() {
-  suppressWarnings(rm(list = c("config", "logger", "project.info"), envir = .TargetEnv))
+  suppressWarnings(rm(list = c("config", "logger", "project.info"),
+                      envir = .TargetEnv))
 }
 
+# Auxiliary functions for loading/unloading projects -------------------------
 
-.prepare.data.ignore.regex <- function(ignore_files) {
-  ignore_files <- strsplit(ignore_files, '\\s*,\\s*')[[1]]
-  regexes <- ignore_files[grepl('^/.*/$', ignore_files)]
-  literals <- setdiff(ignore_files, regexes)
-
-  # Create regex for special characters in regex to be escaped
-  #  (welcome to backslash hell)
-  # Note that * is a regex special character but often used in literals as
-  #  wildcard
-  regex.special <- c('.', '\\', '|', '(', ')', '[', '{', '^', '$', '+', '?')
-  regex.special <- paste0('([',
-                          paste0('\\', regex.special, collapse = '|'),
-                          '])')
-  # Escape special characters in literal strings
-  literals <- gsub(regex.special, '\\\\\\1', literals)
-  # Escape wildcard * in literal strings
-  literals <- gsub('\\*', '\\.\\*', literals)
-  # Convert trailing slash to wildcard
-  literals <- gsub('/$', '/\\.\\*', literals)
-  literals <- paste0('^', literals, '$')
-
-  # Remove starting and trailing slashes from regexes
-  regexes <- gsub('(^/)|(/$)', '', regexes)
-
-  # Combine and return prepared regexes
-  paste0(c(literals, regexes), collapse = '|')
+## Load libraries listed in configuration into memory ------------------------
+.load.libraries <- function(config, my.project.info) {
+    message('Autoloading packages')
+    my.project.info$packages <- c()
+    for (package.to.load in strsplit(config$libraries, '\\s*,\\s*')[[1]])
+    {
+      message(paste(' Loading package:', package.to.load))
+      require.package(package.to.load)
+      my.project.info$packages <- c(my.project.info$packages, package.to.load)
+    }
+  return(my.project.info)
 }
 
+## Load data into memory from cache/ and data/ -------------------------------
 .load.data <- function(recursive, ignore_files = NULL) {
   .provide.directory('data')
   data.files <- dir('data', recursive = recursive)
@@ -231,6 +211,7 @@ load.project <- function(override.config = NULL)
   data.files.loaded
 }
 
+## Convert datasets to data.table
 .convert.to.data.table <- function(data.sets) {
   .require.package("data.table")
 
