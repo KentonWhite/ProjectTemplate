@@ -32,6 +32,9 @@ The returned data.frame contains the following variables, with one
      is a directory. \cr
    \code{is_cached} \tab Logical variable that indicates whether the file is
      already available in the \code{cache/} directory. \cr
+   \code{cached_only} \tab Logical variable that indicates whether the
+     variable is only available in the \code{cache/} directory. This occurs
+     when calling the cache function with a code fragment in a munge script. \cr
    \code{reader} \tab Character variable containing the name of the reader
      function that will be used to load the data. Contains a \code{character(0)}
      if no suitable reader was found.
