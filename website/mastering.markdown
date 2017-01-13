@@ -139,3 +139,44 @@ set to "INFO"
 
 #### Data Tables
 The `data.table` package allows you to create a variant of the typical R data frame that provides indices. Indices make locating and selecting subsets of your data much faster than the typical vector scan that R uses when working with data frames. To automatically convert all of the data frames loaded from the `data` directory into `data.table`s, change the configuration option in `config/global.dcf` to `data_tables: on`. After that, you can check for tables by calling the `tables()` function.
+
+#### Ignoring files
+Sometimes files in the `data/` directory should be ignored while loading the
+data. A notorious example in Windows&trade; is the creation of `Thumbs.db` a
+file containing thumbnail previews of the files in the folder. By default `.db`
+files are imported as SQLite databases, which fails for `Thumbs.db`.
+
+To overcome this the option `data_ignore` in `config/global.dcf` allows to
+specify files or folders to ignore. The patterns are separated by commas, and
+come in three different flavours:
+
+ * Literal filename: Simply specify a filename, like `Thumbs.db` in the default
+    settings, and it will be excluded. If you have `recursive_loading` enabled
+    make sure you add the path to the file, relative to the `data/` directory.
+    So to ignore the file `test.csv` in the folder `data/more-data/` you add
+    `more-data/test.csv` to the list.<br/>
+    A wildcard `*` is allowed in literal filenames to match multiple characters.
+    So to ignore all `.csv` files under the `data/` directory and
+    subdirectories you add `*.csv`, and to ignore them only in the folder
+    `data/test-data/` you change the pattern to `test-data/*.csv`.
+ * Literal directory: Specify the directoryname relative to the `data/`
+    directory, and add a trailing `/`. To ignore the directory `data/raw/`
+    entirely add the the pattern `raw/`. The `*` wildcard is allowed in
+    directory patterns as well.
+ * Regular expression: For advanced patterns it is possible to use regular
+    expressions. Regular expressions have to inserted between two slashes.
+    Expressions are evaluated with option `perl = TRUE`. You should not escape
+    backslashes in `global.dcf`, unless a literal `\` is meant. The filenames
+    are evaluated individually so it is not possible to use forward or backward
+    references to other files in the same directory.<br/>
+    This can for example be used to exclude a filename from a the `data/`
+    directory and all subdirectories. To ignore `help.txt` in all folders use
+    the pattern `/^(.*/)?help\\.txt$/`. Explaining all possibilities of regular
+    expressions is too much for this page, see 'Perl-like Regular Expressions'
+    under `?base::regex` for more information.
+
+**Note** At the moment variables already in the cache will be loaded regardless
+of the `data_ignore` patterns. Therefore, if you add a pattern after the
+variable was already loaded once and you don't want to load it from the cache
+you have to call `clear.cache(variable.name)`. This will likely change in the
+future so that cached variables will be ignored as well.

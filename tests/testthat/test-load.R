@@ -51,6 +51,8 @@ test_that('auto loaded data is cached by default', {
         oldwd <- setwd(test_project)
         on.exit(setwd(oldwd), add = TRUE)
 
+        # clear the global environment
+        rm(list=ls(envir = .TargetEnv), envir = .TargetEnv)
 
         test_data <- data.frame(Names=c("a", "b", "c"), Ages=c(20,30,40))
 
@@ -74,6 +76,8 @@ test_that('auto loaded data is not cached when cached_loaded_data is FALSE', {
         oldwd <- setwd(test_project)
         on.exit(setwd(oldwd), add = TRUE)
 
+        # clear the global environment
+        rm(list=ls(envir = .TargetEnv), envir = .TargetEnv)
 
         test_data <- data.frame(Names=c("a", "b", "c"), Ages=c(20,30,40))
 
@@ -132,6 +136,84 @@ test_that('auto loaded data from an R script is cached correctly', {
                      "cannot open the connection")
         expect_error(load("cache/test_data21.RData", envir = environment()),
                      "cannot open the connection")
+})
+
+
+test_that('ignored data files are not loaded', {
+  test_project <- tempfile('test_project')
+  suppressMessages(create.project(test_project, minimal = FALSE))
+  on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
+
+  oldwd <- setwd(test_project)
+  on.exit(setwd(oldwd), add = TRUE)
+
+  # clear the global environment
+  rm(list = ls(envir = .TargetEnv), envir = .TargetEnv)
+
+  # Read the config data and set cache_loaded_data to FALSE
+  config <- read.dcf("config/global.dcf")
+  expect_error(config$cache_loaded_data <- FALSE, NA)
+  write.dcf(config, "config/global.dcf" )
+
+  # create some test data so the file can be loaded if not ignored
+  test_data <- data.frame(Names = c("a", "b", "c"), Ages = c(20,30,40))
+
+  # write test data to files
+  write.csv(test_data, file = 'data/test.csv', row.names = FALSE)
+  dir.create('data/test')
+  write.csv(test_data, file = 'data/test/test.csv', row.names = FALSE)
+
+  # load the project and data with default settings,
+  #  check that data/test.csv is loaded
+  suppressMessages(load.project())
+  expect_equal(test, test_data)
+
+  # reload the project, now with recursive_loading
+  rm(list = ls(envir = .TargetEnv), envir = .TargetEnv)
+  suppressMessages(load.project(override.config = list(recursive_loading = TRUE)))
+  expect_equal(test, test_data)
+  expect_equal(test.test, test_data)
+
+  writeLines('\n', 'data/Thumbs.db') # Should trigger error
+  # reload the project, now with an illegal Thumbs.db
+  rm(list = ls(envir = .TargetEnv), envir = .TargetEnv)
+  # The Thumbs.db is not a valid SQLite database so should raise an error
+  expect_error(suppressMessages(load.project(override.config = list(data_ignore = ''))))
+
+  # reload the project, ignore *.csv
+  rm(list = ls(envir = .TargetEnv), envir = .TargetEnv)
+  suppressMessages(load.project(override.config = list(data_ignore = 'Thumbs.db, *.csv')))
+  expect_false(exists("test", envir = .TargetEnv))
+  expect_false(exists("test.test", envir = .TargetEnv))
+
+  # reload the project, ignore *.csv with recursive loading
+  rm(list = ls(envir = .TargetEnv), envir = .TargetEnv)
+  suppressMessages(load.project(override.config = list(data_ignore = 'Thumbs.db, *.csv',
+                                                       recursive_loading = TRUE)))
+  expect_false(exists("test", envir = .TargetEnv))
+  expect_false(exists("test.test", envir = .TargetEnv))
+
+  # reload the project, ignore test/*.csv with recursive loading
+  rm(list = ls(envir = .TargetEnv), envir = .TargetEnv)
+  suppressMessages(load.project(override.config = list(data_ignore = 'Thumbs.db, test/*.csv',
+                                                       recursive_loading = TRUE)))
+  expect_equal(test, test_data)
+  expect_false(exists("test.test", envir = .TargetEnv))
+
+  # reload the project, ignore test/ with recursive loading
+  rm(list = ls(envir = .TargetEnv), envir = .TargetEnv)
+  suppressMessages(load.project(override.config = list(data_ignore = 'Thumbs.db, test/',
+                                                       recursive_loading = TRUE)))
+  expect_equal(test, test_data)
+  expect_false(exists("test.test", envir = .TargetEnv))
+
+
+  # reload the project, ignore test/*.csv as a regular expression with recursive loading
+  rm(list = ls(envir = .TargetEnv), envir = .TargetEnv)
+  suppressMessages(load.project(override.config = list(data_ignore = 'Thumbs.db, /test/.*\\.csv/',
+                                                       recursive_loading = TRUE)))
+  expect_equal(test, test_data)
+  expect_false(exists("test.test", envir = .TargetEnv))
 })
 
 

@@ -21,7 +21,7 @@
 load.project <- function(override.config = NULL)
 {
   project_name <- .stopifnotproject ("Please change to correct directory and re-run load.project()")
-        
+
   my.project.info <- list()
 
   message(paste0('Project name: ', project_name))
@@ -68,12 +68,12 @@ load.project <- function(override.config = NULL)
     my.project.info$helpers <- c()
 
     helpers <- dir('lib', pattern = '[.][rR]$')
-    
+
     # force globals.R to be read first, if it exists
     if ("globals.R" %in% helpers) {
             helpers<-c("globals.R", helpers[!(helpers %in% "globals.R")])
     }
-    
+
     deprecated.files <- intersect(
       helpers, c('boot.R', 'load_data.R', 'load_libraries.R',
                  'preprocess_data.R', 'run_tests.R'))
@@ -99,15 +99,16 @@ load.project <- function(override.config = NULL)
   }
 
   # Then we consider loading things from data/.
-  
+
   # First save the variables already in the global env
   before.data.load <- .var.diff.from()
-  
+
   if (config$data_loading)
   {
     message('Autoloading data')
 
-    my.project.info$data <- .load.data(config$recursive_loading)
+    my.project.info$data <- .load.data(config$recursive_loading,
+                                       config$data_ignore)
   }
 
   if (config$data_tables)
@@ -118,24 +119,24 @@ load.project <- function(override.config = NULL)
 
     .convert.to.data.table(my.project.info$data)
   }
-  
+
   # If we have just loaded data from the data directory, cache it straight away
-  # if the cache_loaded_data config is TRUE. 
+  # if the cache_loaded_data config is TRUE.
   new.vars <- .var.diff.from(before.data.load)
   if (config$cache_loaded_data && (length(new.vars)>0))
   {
           sapply(new.vars, cache)
   }
-  
+
   # update project.info$data with any additional datasets generated during autoload
   if (length(new.vars) > 0)
         my.project.info$data <- unique(c(my.project.info$data, new.vars))
-  
+
   # remove any items in project.info$data which are not in the global environment
   remove <- setdiff(my.project.info$data, .var.diff.from())
-  my.project.info$data <- my.project.info$data[! (my.project.info$data %in% remove)] 
-  
- 
+  my.project.info$data <- my.project.info$data[! (my.project.info$data %in% remove)]
+
+
   if (config$munging)
   {
     message('Munging data')
@@ -154,9 +155,43 @@ load.project <- function(override.config = NULL)
 }
 
 
-.load.data <- function(recursive) {
+.prepare.data.ignore.regex <- function(ignore_files) {
+  ignore_files <- strsplit(ignore_files, '\\s*,\\s*')[[1]]
+  regexes <- ignore_files[grepl('^/.*/$', ignore_files)]
+  literals <- setdiff(ignore_files, regexes)
+
+  # Create regex for special characters in regex to be escaped
+  #  (welcome to backslash hell)
+  # Note that * is a regex special character but often used in literals as
+  #  wildcard
+  regex.special <- c('.', '\\', '|', '(', ')', '[', '{', '^', '$', '+', '?')
+  regex.special <- paste0('([',
+                          paste0('\\', regex.special, collapse = '|'),
+                          '])')
+  # Escape special characters in literal strings
+  literals <- gsub(regex.special, '\\\\\\1', literals)
+  # Escape wildcard * in literal strings
+  literals <- gsub('\\*', '\\.\\*', literals)
+  # Convert trailing slash to wildcard
+  literals <- gsub('/$', '/\\.\\*', literals)
+  literals <- paste0('^', literals, '$')
+
+  # Remove starting and trailing slashes from regexes
+  regexes <- gsub('(^/)|(/$)', '', regexes)
+
+  # Combine and return prepared regexes
+  paste0(c(literals, regexes), collapse = '|')
+}
+
+.load.data <- function(recursive, ignore_files = NULL) {
   .provide.directory('data')
   data.files <- dir('data', recursive = recursive)
+  ignore.index <- grepl(.prepare.data.ignore.regex(ignore_files),
+                        data.files,
+                        perl = TRUE)
+
+  # Keep only files NOT matching any of the ignore patterns
+  data.files <- data.files[!ignore.index]
   data.files.loaded <- c()
 
   for (data.file in data.files)
@@ -248,7 +283,7 @@ load.project <- function(override.config = NULL)
         # Get variables in target environment of determine if they are a function
         current.var.list <- sapply(ls(envir = env), function(x) is.function(get(x)))
         current.var.list <- names(current.var.list[current.var.list==FALSE])
-        
+
         # return those not in list
         setdiff(current.var.list, given.var.list)
 }
