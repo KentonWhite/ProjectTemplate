@@ -182,7 +182,7 @@ test_that('available data is listed correctly with data_ignore', {
     filename = c(test_file1, 'README.md', 'test', 'Thumbs.db'),
     varname = c(gsub('.csv', '', test_file1), "", "", ""),
     reader = c("csv.reader", "", "", ""),
-    is_ignored = c(FALSE, FALSE, FALSE, TRUE),
+    is_ignored = c(FALSE, FALSE, FALSE, FALSE),
     is_directory = c(FALSE, FALSE, TRUE, FALSE),
     is_cached = c(FALSE, FALSE, FALSE, FALSE),
     cache_only = c(FALSE, FALSE, FALSE, FALSE),
