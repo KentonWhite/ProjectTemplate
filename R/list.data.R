@@ -49,21 +49,27 @@ list.data <- function(override.config = NULL) {
 }
 
 .list.data <- function(config) {
-  # Get list of variables in data/
+  # Get list of variables in data/, always recursive to exclude cached
+  # variables from nested files
+  all.files <- list.files(path = 'data', recursive = TRUE, include.dirs = TRUE)
+  # Get list of variables according to configured recursive_loading, used as
+  # filtering variable later
   data.files <- list.files(path = 'data', recursive = config$recursive_loading)
-  files.parsed <- .parse.extensions(data.files)
+
+  # Get variable name and reader from filenames
+  files.parsed <- .parse.extensions(all.files)
   varnames <- files.parsed$varnames
   readers <- files.parsed$readers
 
   is_ignored <- grepl(.prepare.data.ignore.regex(config$data_ignore),
-                      data.files)
-  is_directory <- file.info(file.path('data', data.files))$isdir
+                      all.files)
+  is_directory <- file.info(file.path('data', all.files))$isdir
 
   is_cached <- .is.cached(varnames)
   cache_only <- rep(FALSE, length(varnames))
 
   # Build the final data.frame
-  df <- data.frame(filename = data.files,
+  df <- data.frame(filename = all.files,
                    varname = varnames,
                    is_ignored = is_ignored,
                    is_directory = is_directory,
@@ -74,9 +80,10 @@ list.data <- function(override.config = NULL) {
 
   # Get list of variables in cache/
   cached.vars <- .cached.variables()
+  # Exclude variables already found in data/
   cached.vars <- setdiff(cached.vars, varnames)
 
-  data.files <- rep('', length(cached.vars))
+  filenames <- rep('', length(cached.vars))
   is_ignored <- rep(FALSE, length(cached.vars))
   is_directory <- rep(FALSE, length(cached.vars))
   cache_only <- rep(TRUE, length(cached.vars))
@@ -86,7 +93,7 @@ list.data <- function(override.config = NULL) {
   # call .is.cached to perform this check
   is_cached <- .is.cached(cached.vars)
 
-  df2 <- data.frame(filename = data.files,
+  df2 <- data.frame(filename = filenames,
                     varname = cached.vars,
                     is_ignored = is_ignored,
                     is_directory = is_directory,
@@ -96,6 +103,9 @@ list.data <- function(override.config = NULL) {
                     row.names = NULL,
                     stringsAsFactors = FALSE)
 
+  # Keep only lines with files that match the configured recursive_loading
+  # setting
+  df <- df[df$filename %in% data.files,]
   rbind(df, df2)
 }
 
