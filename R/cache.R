@@ -302,10 +302,10 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
 }
 
 .cache.status <- function () {
-        cached_variables <- .cached.variables()
-        if (length(cached_variables)==0) {
+        
+        if (is.cache.empty()) 
                 return(message("No variables in cache"))
-        }
+        
         status <- ""
         for (var in cached_variables) {
                 var_info <- .read.cache.info(var)
@@ -335,3 +335,9 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
         unique(sub("^(.*)\\..*$", "\\1", cache_files))
 }
 
+.is.cache.empty <- function () {
+        cached_variables <- .cached.variables()
+        if (length(cached_variables)==0) return(TRUE)
+        return(FALSE)
+        
+}
