@@ -159,7 +159,6 @@ test_that('ignored data files are not loaded', {
   test_data <- data.frame(Names = c("a", "b", "c"), Ages = c(20,30,40))
 
   # write test data to files
-  writeLines('\n', 'data/Thumbs.db') # Should be ignored by default
   write.csv(test_data, file = 'data/test.csv', row.names = FALSE)
   dir.create('data/test')
   write.csv(test_data, file = 'data/test/test.csv', row.names = FALSE)
@@ -175,7 +174,8 @@ test_that('ignored data files are not loaded', {
   expect_equal(test, test_data)
   expect_equal(test.test, test_data)
 
-  # reload the project, now without ignoring files
+  writeLines('\n', 'data/Thumbs.db') # Should trigger error
+  # reload the project, now with an illegal Thumbs.db
   rm(list = ls(envir = .TargetEnv), envir = .TargetEnv)
   # The Thumbs.db is not a valid SQLite database so should raise an error
   expect_error(suppressMessages(load.project(override.config = list(data_ignore = ''))))
