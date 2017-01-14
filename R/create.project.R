@@ -44,14 +44,14 @@ create.project <- function(project.name = 'new-project', minimal = FALSE,
 
   .stopifproject(c("Cannot create a new project inside an existing one",
                            "Please change to another directory and re-run create.project()"))
-  
+
   .stopifproject(c("Cannot create a new project inside an existing one",
                    "Please change to another directory and re-run create.project()"),
-                   path=dirname(getwd()))
-  
-  
+                 path = dirname(getwd()))
+
+
   if (minimal) {
-    exclude <- c("diagnostics", "doc", "graphs", "lib", "logs", "profiling",
+    exclude <- c("diagnostics", "docs", "graphs", "lib", "logs", "profiling",
                  "reports", "tests", "TODO")
   } else {
     exclude <- c()
@@ -92,17 +92,17 @@ create.project <- function(project.name = 'new-project', minimal = FALSE,
 
   switch(
     merge.strategy,
-    require.empty={
+    require.empty = {
       if (!.dir.empty(project.path))
         stop(paste("Directory", project.path,
                    "not empty.  Use merge.strategy = 'allow.non.conflict' to override."))
     },
-    allow.non.conflict={
+    allow.non.conflict = {
       target.file.exists <- file.exists(file.path(project.path, template.files))
       if (any(target.file.exists))
         stop(paste("Creating a project in ", project.path,
                    " would overwrite the following existing files/directories:\n",
-                   paste(template.files[target.file.exists], collapse=', ')))
+                   paste(template.files[target.file.exists], collapse = ', ')))
     },
     stop("Invalid value for merge.strategy:", merge.strategy))
 
@@ -132,9 +132,6 @@ create.project <- function(project.name = 'new-project', minimal = FALSE,
     }
   )
 }
-
-.get.template.tar.path <- function(template.name)
-  system.file(file.path('defaults', paste0(template.name, ".tar")), package = 'ProjectTemplate')
 
 .list.files.and.dirs <- function(path) {
   # no.. not available in R 2.15.3

@@ -4,7 +4,7 @@
 #
 # Key functions are:
 #      .read.config    -  read a raw config file in DCF format and create a config object (no validation performed)
-#      .load.config    -  read and validate a config file 
+#      .load.config    -  read and validate a config file
 #      .save.config    -  save a config object back into a DCF format config file
 #
 # Supporting functions are:
@@ -17,7 +17,7 @@
 #' @include translate.dcf.R
 
 
-# 
+#
 # Note to developers who wish to add new config items into ProjectTemplate
 #
 # 1.  Add the new item to the default config file (location shown below) with the default value that you
@@ -26,7 +26,7 @@
 #     to be used when existing projects are called using load.project() but they don't have your new item yet
 #     because migrate.project() hasn't been run.  For example, if something is on by default in new projects,
 #     you may choose to have it switched off for existing projects to not break them before they are migrated
-# 3.  Add some logic to migrate.project() if necessary to tell the user about the new configuration item that 
+# 3.  Add some logic to migrate.project() if necessary to tell the user about the new configuration item that
 #     is now available, perhaps asking them to double check the defaults after migration
 # 4.  Add some tests to make sure your new config works correctly pre and post migration
 # 5.  Update the website documentation website/configuring.markdown with the new functionality
@@ -50,7 +50,7 @@
 .new.config.file <- system.file('defaults/full/config/global.dcf', package = 'ProjectTemplate')
 
 # items in the configuration file which are not TRUE/FALSE (or on/off) values
-.nonflag.config <- c("version", "libraries", "logging_level", "sticky_variables")
+.nonflag.config <- c("version", "libraries", "logging_level", "sticky_variables", "data_ignore")
 
 # read the default and new configurations
 .default.config <- translate.dcf(.default.config.file)
@@ -65,18 +65,18 @@
                 warning('You are missing a configuration file: ', .project.config, ' . Defaults will be used.')
                 .default.config
         }
-        
+
         missing.entries <- setdiff(names(.default.config), names(config))
         if (length(missing.entries) > 0) {
                 warning('Your configuration file is missing the following entries: ',
                         paste(missing.entries, collapse = ', '), '. Defaults will be used.')
                 config[missing.entries] <- .default.config[missing.entries]
         }
-        
+
         if (length(override.config) > 0) {
                 config[names(override.config)] <- override.config
         }
-        
+
         extra.entries <- setdiff(names(config), names(.default.config))
         extra.entries <- grep("^[^#]", extra.entries, value = TRUE)
         if (length(extra.entries) > 0) {
@@ -84,9 +84,9 @@
                         paste(extra.entries, collapse = ', '), '. These will be ignored.')
                 config[extra.entries] <- NULL
         }
-        
+
         config <- .normalize.boolean(config)
-        
+
         config
 }
 
@@ -118,7 +118,7 @@
 #   .normalize.config is a generic function to apply any normalization function to specific config items
 
 
-# Apply a normalization function to specified config item to convert from raw character string to an R object value 
+# Apply a normalization function to specified config item to convert from raw character string to an R object value
 .normalize.config <- function(config, names, norm.fun) {
         config[names] <- lapply(config[names], norm.fun)
         config
@@ -142,7 +142,7 @@
                         fmt <- sprintf("%%-%ds", max_size)
                         # return a text string
                         paste0(sprintf(fmt, names(config)), config, collapse = "\n")
-                        }, 
+                        },
                         {
                         # return an Rd encoded string
                         var <- paste0("\\code{",names(config), "} \\tab \\code{", config, "} \\cr ", collapse = "")

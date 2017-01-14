@@ -1,5 +1,6 @@
 version: 0.5
 data_loading: TRUE
+data_ignore:
 cache_loading: TRUE
 recursive_loading: FALSE
 munging: TRUE

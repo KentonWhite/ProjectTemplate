@@ -3,14 +3,15 @@ layout: page
 ---
 There are two types of configuration:
 
-* `ProjectTemplate configuration` are the settings which alter how `load.project()` behaves when executed.  For example, whether to have logging enabled.  
-* `Project specific configuration` are the settings which make sense only to a particular project, but you would like to change them easily in `src` or `munge` scripts.  For example, you may define `plot_footnote="My Proj"` to control a consistent look and feel for plots. 
+* `ProjectTemplate configuration` are the settings which alter how `load.project()` behaves when executed.  For example, whether to have logging enabled.
+* `Project specific configuration` are the settings which make sense only to a particular project, but you would like to change them easily in `src` or `munge` scripts.  For example, you may define `plot_footnote="My Proj"` to control a consistent look and feel for plots.
 
 Both types are stored in the `config` object accessible from the global environment.  The function `project.config()` will display the current configuration, including project specific configuration.
 
 The current `ProjectTemplate` configuration settings exist in the `config/global.dcf` file:
 
 * `data_loading`: This can be set to 'on' or 'off'. If `data_loading` is on, the system will load data from both the `cache` and `data` directories with `cache` taking precedence in the case of name conflict. By default, `data_loading` is on.
+* `data_ignore`: A comma separated list of files to be ignored when importing from the `data/` directory. Regular expressions can be used but should be delimited (on both sides) by `/`. The default is to ignore no files. Note that filenames and filepaths should *never* begin with a `/`, entire directories under `data/` can be ignored by adding a trailing `/`. See [Mastering ProjectTemplate](./mastering.html) for more details.
 * `cache_loading`: This can be set to 'on' or 'off'. If `cache_loading` is on, the system will load data from the `cache` directory before any attempt to load from the `data` directory. By default, `cache_loading` is on.
 * `recursive_loading`: This can be set to 'on' or 'off'. If `recursive_loading` is on, the system will load data from the `data` directory and all its sub difrectories recursively. By default, `recursive_loading` is off.
 * `munging`: This can be set to 'on' or 'off'. If `munging` is on, the system will execute the files in the `munge` directory sequentially using the order implied by the `sort()` function. If `munging` is off, none of the files in the `munge` directory will be executed. By default, `munging` is on.
@@ -21,7 +22,7 @@ The current `ProjectTemplate` configuration settings exist in the `config/global
 * `as_factors`: This can be set to 'on' or 'off'. If `as_factors` is on, the system will convert every character vector into a factor when creating data frames; most importantly, this automatic conversion occurs when reading in data automatically. If 'off', character vectors will remain character vectors. By default, `as_factors` is on.
 * `data_tables`: This can be set to 'on' or 'off'. If `data_tables` is on, the system will convert every data set loaded from the `data` directory into a `data.table`. By default, `data_tables` is off.
 * `attach_internal_libraries`: `This can be set to 'on' or 'off'. If `attach_internal_libraries` is on, then every time a new package is loaded into memory during `load.project()` a warning will be displayed informing that has happened. By default, `attach_internal_libraries` is off.
-* `cache_loaded_data`: This can be set to 'on' or 'off'. If `cache_loaded_data` is on, then data loaded from the `data` directory during `load.project()` will be automatically cached (so it won't need to be reloaded next time `load.project()` is called).  By default, `cache_loaded_data` is on for newly created projects.  Existing projects created without this configuration setting will default to off.  Similarly, when `migrate.project()` is called in those cases, the default will be off. 
+* `cache_loaded_data`: This can be set to 'on' or 'off'. If `cache_loaded_data` is on, then data loaded from the `data` directory during `load.project()` will be automatically cached (so it won't need to be reloaded next time `load.project()` is called).  By default, `cache_loaded_data` is on for newly created projects.  Existing projects created without this configuration setting will default to off.  Similarly, when `migrate.project()` is called in those cases, the default will be off.
 * `sticky_variables`: This is a comma separated list of any project-specific  variables that should remain in the global environment after a `clear()` command.  This can be used to clear the global environment, but keep any large datasets in place so they are not unnecessarily re-generated during `load.project()`.  Note that any this will be over-ridden if the `force=TRUE` parameter is passed to `clear()`. By default, `sticky_variables` is NONE
 
 The project specific configuration is specified in the `lib/globals.R` file using the `add.config` function.  This will contain whatever is relevant for your project, and will look something like this:
