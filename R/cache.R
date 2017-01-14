@@ -189,37 +189,6 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
              )
 }
 
-# Function to load all items from the cache
-# Returns a list of files actually loaded from the cache
-
-.load.cache <- function() {
-
-        # Get all cached files (hash file not needed for load)
-        cache.files <- list.files(.cache.dir, pattern = .cache.file.ext,
-                                  full.names = TRUE)
-        global_env_vars <- ls(envir = .TargetEnv)
-
-        cached.files <- c()
-
-        for (cache.file in cache.files) {
-
-                variable.name <- gsub(.cache.file.ext,'',basename(cache.file))
-
-                # If this variable already exists in the global environment, don't load
-                # it from cache.
-                if (variable.name %in% global_env_vars)
-                        next()
-
-                message(paste(" Loading cached data set: ", variable.name, sep = ''))
-
-                load(cache.file, envir = .TargetEnv)
-
-                cached.files <- c(cached.files, variable.name)
-        }
-
-        cached.files
-}
-
 
 # Helper functions to create cache entries
 
