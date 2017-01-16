@@ -303,7 +303,7 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
 
 .cache.status <- function () {
         
-        if (is.cache.empty()) 
+        if (.is.cache.empty()) 
                 return(message("No variables in cache"))
         
         status <- ""
