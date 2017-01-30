@@ -27,6 +27,8 @@ reload.project <- function(..., reset = FALSE)
   project_name <- .stopifnotproject("Change to a valid ProjectTemplate directory and run reload.project() again.")
 
   if (!reset) {
+          if (!.is.cache.empty())
+                  message("Items in cache will not be cleared\nUse reload.project(reset=TRUE) to clear cache also")
           clear()
   }
   else {
