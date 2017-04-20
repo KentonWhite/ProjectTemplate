@@ -72,10 +72,10 @@ test_that('projects without the cached_loaded_data config have their migrated co
 
 
         # run load.project again and check that the the test variable has not been cached
-        # because the default should be FALSE if the missing_loaded_data is missing before migrate.project
+        # because the default should be FALSE if the cache_loaded_data is missing before migrate.project
         # is called
-        suppressMessages(load.project())
-        expect_error(load("cache/test.RData", envir = environment()), "cannot open the connection")
+        expect_warning(suppressMessages(load.project()), "missing the following entries: cache_loaded_data")
+        expect_error(suppressWarnings(load("cache/test.RData", envir = environment())), "cannot open the connection")
 
         # Migrate the project
         expect_message(migrate.project(), "new config item called cache_loaded_data")
@@ -88,7 +88,7 @@ test_that('projects without the cached_loaded_data config have their migrated co
         expect_warning(suppressMessages(load.project()), NA)
 
         # check that the the test variable has not been cached
-        expect_error(load("cache/test.RData", envir = environment()), "cannot open the connection")
+        expect_error(suppressWarnings(load("cache/test.RData", envir = environment())), "cannot open the connection")
 
 
 })

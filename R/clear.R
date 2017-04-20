@@ -60,8 +60,10 @@ clear <- function (..., keep=c(), force=FALSE) {
 
         # If we're in a project template directory, load a copy of config to
         # make sure it's the latest into the global env  
-        if (.is.ProjectTemplate()) 
-                assign("config", .load.config(), envir = .TargetEnv)
+        if (.is.ProjectTemplate()) {
+                config <- .load.config()
+                assign("config", config, envir = .TargetEnv)
+        }
         
         # If config$sticky_variables exists, add it to keep and also add
         # config itself so that is preserved after the clear

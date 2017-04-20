@@ -92,7 +92,7 @@ test_that('auto loaded data is not cached when cached_loaded_data is FALSE', {
         suppressMessages(load.project())
 
         # check that the the test variable has not been cached
-        expect_error(load("cache/test.RData", envir = environment()), "cannot open the connection")
+        expect_error(suppressWarnings(load("cache/test.RData", envir = environment())), "cannot open the connection")
 
 
 })
@@ -132,9 +132,9 @@ test_that('auto loaded data from an R script is cached correctly', {
         expect_error(load("cache/test_data22.RData", envir = environment()), NA)
 
         # check that the other test variables have not been cached
-        expect_error(load("cache/test_data11.RData", envir = environment()),
+        expect_error(suppressWarnings(load("cache/test_data11.RData", envir = environment())),
                      "cannot open the connection")
-        expect_error(load("cache/test_data21.RData", envir = environment()),
+        expect_error(suppressWarnings(load("cache/test_data21.RData", envir = environment())),
                      "cannot open the connection")
 })
 
@@ -151,7 +151,7 @@ test_that('ignored data files are not loaded', {
   rm(list = ls(envir = .TargetEnv), envir = .TargetEnv)
 
   # Read the config data and set cache_loaded_data to FALSE
-  config <- read.dcf("config/global.dcf")
+  config <- translate.dcf("config/global.dcf")
   expect_error(config$cache_loaded_data <- FALSE, NA)
   write.dcf(config, "config/global.dcf" )
 
@@ -178,7 +178,7 @@ test_that('ignored data files are not loaded', {
   # reload the project, now with an illegal Thumbs.db
   rm(list = ls(envir = .TargetEnv), envir = .TargetEnv)
   # The Thumbs.db is not a valid SQLite database so should raise an error
-  expect_error(suppressMessages(load.project(override.config = list(data_ignore = ''))))
+  expect_error(load.project(override.config = list(data_ignore = '')), "file is encrypted or is not a database")
 
   # reload the project, ignore *.csv
   rm(list = ls(envir = .TargetEnv), envir = .TargetEnv)
