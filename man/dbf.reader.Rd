@@ -25,4 +25,3 @@ library('ProjectTemplate')
 
 \dontrun{dbf.reader('example.dbf', 'data/example.dbf', 'example')}
 }
-

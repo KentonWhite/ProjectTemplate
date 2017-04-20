@@ -25,4 +25,3 @@ library('ProjectTemplate')
 
 \dontrun{csv2.reader('example.csv2', 'data/example.csv2', 'example')}
 }
-

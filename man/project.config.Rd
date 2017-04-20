@@ -82,4 +82,3 @@ during \code{load.project()}:
 \seealso{
 \code{\link{load.project}}
 }
-
