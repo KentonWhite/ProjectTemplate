@@ -284,6 +284,14 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
                 load(cache_name$hash, envir = environment())
         }
         
+        # If the hash file is missing but the cache file is not, delete
+        # the cache object which will force a re-cache with a properly generated
+        # hash file.
+        if (!file.exists(cache_name$hash) & in.cache) {
+                unlink(cache_name$obj, force=TRUE)
+                in.cache <- FALSE
+        }
+        
         list(in.cache=in.cache, hash=cache.hash)
 }
 
