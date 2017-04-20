@@ -447,3 +447,39 @@ test_that('caching a variable using CODE doesnt leave variables in globalenv', {
                        
         tidy_up()
 })
+
+test_that('caching a variable already in cache with no hash file re-caches correctly', {
+        
+        test_project <- tempfile('test_project')
+        suppressMessages(create.project(test_project, minimal = FALSE))
+        on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
+        
+        oldwd <- setwd(test_project)
+        on.exit(setwd(oldwd), add = TRUE)
+        
+        var_to_cache <- "xxxx"
+        test_data <- data.frame(Names=c("a", "b", "c"), Ages=c(20,30,40))
+        assign(var_to_cache, test_data, envir = .TargetEnv)
+        
+        # Create a new cached version
+        expect_message(cache(var_to_cache, CODE = NULL, depends = NULL), 
+                       "Creating cache entry from global environment")
+        
+        # delete the hash file
+        unlink(file.path("cache", paste0(var_to_cache, ".hash")))
+        
+        # Create another cached version:  should be created from new again
+        expect_message(cache(var_to_cache, CODE = NULL, depends = NULL), 
+                       "Creating cache entry from global environment")
+        
+        # Check that the hash file exists
+        expect_true(file.exists(file.path("cache", paste0(var_to_cache, ".hash"))))
+        
+        # Load up from cache and check it's the same as what was originally created
+        suppressMessages(load.project())
+        expect_equal(get(var_to_cache, envir = .TargetEnv) , test_data)
+        
+        tidy_up()
+        
+})
+
