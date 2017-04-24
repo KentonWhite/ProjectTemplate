@@ -24,4 +24,3 @@ library('ProjectTemplate')
 
 \dontrun{octave.reader('example.m', 'data/example.m', 'example')}
 }
-
