@@ -221,6 +221,15 @@ load.project <- function(override.config = NULL)
                      filename,
                      variable.name))
 
+        ## Most times, variable.name will correspond to one loaded object
+        ## but in the case of xls(x) readers, they always return
+        ## variable.name.Sheet1 ... variable.name.SheetN
+        if (grepl('xls', extension)) {
+          variable.name <- grep(paste(variable.name, 'Sheet', sep ='.'),
+                                ls(.TargetEnv),
+                                value = TRUE)
+        }
+
         data.files.loaded <- c(data.files.loaded, variable.name)
 
         break()
