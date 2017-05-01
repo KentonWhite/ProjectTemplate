@@ -27,4 +27,3 @@ library('ProjectTemplate')
 
 \dontrun{db.reader('example.db', 'data/example.db', 'example')}
 }
-

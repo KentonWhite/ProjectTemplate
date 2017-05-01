@@ -125,4 +125,3 @@ library('ProjectTemplate')
 \dontrun{sql.reader('example.sql', 'data/example.sql', 'example')}
 
 }
-

@@ -22,26 +22,37 @@ clear.cache <- function (...){
         
         message(paste0("Clearing cache for project: ", project_name))
         
-        variables <- list(...)
-        cache_dir <- "./cache"
+        # ensure names or character strings are passed in ...
+        dots <- match.call(expand.dots = FALSE)$...
+        if (length(dots) && !all(vapply(dots, function(x) is.symbol(x) || 
+                                        is.character(x), NA, USE.NAMES = FALSE))) 
+                stop("... must contain names or character strings")
+        variables <- vapply(dots, as.character, "")
         
         files<-c()
+        
         #if no argument, then select everything in the cache 
         if (length(variables)==0) {
-                files <- list.files(cache_dir)
+                # Get the variable names
+                variables <- gsub(".RData","",list.files(.cache.dir, pattern="RData"))
+                # get the list of files to delete
+                files <- list.files(.cache.dir, pattern="RData|hash")
         }
         else {
                 for (var in variables){
                         files<-c(files, paste0(var, ".RData"))
                         files<-c(files, paste0(var, ".hash"))
                 }
-                # Add the .RData cache extension to the objects to delete
-                #files <- paste0(variables, rep("\\.RData", length(variables)))
-                #files <- c(files, paste0(variables, rep("\\.hash", length(variables))))
+        }
+        
+        # Clear the variables from memory (needs to be one at a time)
+        for (v in variables) {
+                args <- list(v, force=TRUE)
+                suppressMessages(do.call(clear, args=args ))
         }
         
         # List of files to delete
-        files_to_delete <-file.path(rep(cache_dir, length(files)), files)
+        files_to_delete <-file.path(rep(.cache.dir, length(files)), files)
         
         # Delete them
         success <- suppressWarnings(do.call(file.remove,list(files_to_delete)))

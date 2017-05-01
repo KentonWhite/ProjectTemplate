@@ -25,4 +25,3 @@ library('ProjectTemplate')
 
 \dontrun{wsv.reader('example.wsv', 'data/example.wsv', 'example')}
 }
-

@@ -26,4 +26,3 @@ library('ProjectTemplate')
 
 \dontrun{rdata.reader('example.RData', 'data/example.RData', 'example')}
 }
-

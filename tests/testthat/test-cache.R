@@ -305,3 +305,181 @@ test_that('caching a variable with an underscore is not unnecessarily loaded nex
         tidy_up()
         
 })
+
+test_that('cache and memory is cleared correctly', {
+
+        
+        test_project <- tempfile('test_project')
+        suppressMessages(create.project(test_project, minimal = FALSE))
+        on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
+        
+        oldwd <- setwd(test_project)
+        on.exit(setwd(oldwd), add = TRUE)
+        
+        var_to_cache <- "xxxx"
+
+        test_data <- data.frame(Names=c("a", "b", "c"), Ages=c(20,30,40))
+        assign(var_to_cache, test_data, envir = .TargetEnv)
+        
+        # Create a new cached version
+        expect_message(cache("xxxx"), 
+                       "Creating cache entry from global environment")
+        
+        # clear from memory
+        clear("xxxx", force = TRUE)
+        
+        # Read the config and set config$sticky_variables
+        cfg <- .read.config()
+        cfg$sticky_variables <- var_to_cache
+        .save.config(cfg)
+        
+        # variable is loaded into memory when load.project is run
+        expect_message(load.project(), "Loading cached data set: xxxx")
+        
+        # variable exists in cache
+        expect_message(cache(), "Variable: xxxx")
+        
+        # variable should still be in memory
+        expect_message(clear(), "not cleared: config xxxx")
+        
+        # variable exists in memory
+        expect_true(exists("xxxx"))
+        
+        # delete variable from cache
+        expect_message(clear.cache(), "Removed successfully")
+        
+        # variable does not exist in memory, should have been forced cleared
+        expect_true(!exists("xxxx"))
+        
+        # shouldn't be anything in the cache
+        expect_message(cache(), "No variables in cache")
+        
+        tidy_up()
+        
+})
+
+
+test_that('multiple items are cleared correctly from the cache', {
+        
+        
+        test_project <- tempfile('test_project')
+        suppressMessages(create.project(test_project, minimal = FALSE))
+        on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
+        
+        oldwd <- setwd(test_project)
+        on.exit(setwd(oldwd), add = TRUE)
+        
+        assign("xxx", 10, envir = .TargetEnv)
+        assign("yyy", 20, envir = .TargetEnv)
+        assign("zzz", 30, envir = .TargetEnv)
+        
+        # Create cached version of each of these
+        expect_message(cache("xxx"), 
+                       "Creating cache entry from global environment")
+        
+        expect_message(cache("yyy"), 
+                       "Creating cache entry from global environment")
+        
+        expect_message(cache("zzz"), 
+                       "Creating cache entry from global environment")
+        
+        
+        # clear two variables from cache
+        expect_message(clear.cache("yyy", "zzz"), "Removed successfully ")
+        
+        # Check variables not in global env
+        expect_true(!exists("yyy"))
+        expect_true(!exists("zzz"))
+        
+        # clear everything and reload project
+        clear(force = TRUE)
+        # variable is loaded into memory when load.project is run
+        expect_message(load.project(), "Loading cached data set: xxx")
+        
+        expect_equal(xxx, 10)
+        
+        # variable exists in memory
+        expect_true(exists("xxx"))
+        
+        # Check variables still not in global env
+        expect_true(!exists("yyy"))
+        expect_true(!exists("zzz"))
+        
+        
+        tidy_up()
+        
+})
+
+
+
+test_that('caching a variable using CODE doesnt leave variables in globalenv', {
+        
+        test_project <- tempfile('test_project')
+        suppressMessages(create.project(test_project, minimal = FALSE))
+        on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
+        
+        oldwd <- setwd(test_project)
+        on.exit(setwd(oldwd), add = TRUE)
+        
+        var_to_cache <- "xxxx"
+        
+        # make sure it doesn't exist
+        if (exists(var_to_cache, envir = .TargetEnv )) {
+                rm(list=var_to_cache, envir = .TargetEnv)
+        }
+        
+        # set an environment variable in global env
+        assign("yyy", 10, envir = .TargetEnv)
+        
+        # create a cached variable 
+        cache(var_to_cache, CODE = {
+                aaa <- 10
+                bbb <- 10
+                aaa*bbb*yyy
+        })
+        
+        # check variable calculates correctly
+        expect_equal(get(var_to_cache), 10*10*10)
+        
+        # Make sure local variables don't exist in global env
+        expect_true(!exists("aaa"))
+        expect_true(!exists("bbb"))
+                       
+        tidy_up()
+})
+
+test_that('caching a variable already in cache with no hash file re-caches correctly', {
+        
+        test_project <- tempfile('test_project')
+        suppressMessages(create.project(test_project, minimal = FALSE))
+        on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
+        
+        oldwd <- setwd(test_project)
+        on.exit(setwd(oldwd), add = TRUE)
+        
+        var_to_cache <- "xxxx"
+        test_data <- data.frame(Names=c("a", "b", "c"), Ages=c(20,30,40))
+        assign(var_to_cache, test_data, envir = .TargetEnv)
+        
+        # Create a new cached version
+        expect_message(cache(var_to_cache, CODE = NULL, depends = NULL), 
+                       "Creating cache entry from global environment")
+        
+        # delete the hash file
+        unlink(file.path("cache", paste0(var_to_cache, ".hash")))
+        
+        # Create another cached version:  should be created from new again
+        expect_message(cache(var_to_cache, CODE = NULL, depends = NULL), 
+                       "Creating cache entry from global environment")
+        
+        # Check that the hash file exists
+        expect_true(file.exists(file.path("cache", paste0(var_to_cache, ".hash"))))
+        
+        # Load up from cache and check it's the same as what was originally created
+        suppressMessages(load.project())
+        expect_equal(get(var_to_cache, envir = .TargetEnv) , test_data)
+        
+        tidy_up()
+        
+})
+
