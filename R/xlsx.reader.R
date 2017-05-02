@@ -27,7 +27,7 @@ xlsx.reader <- function(data.file, filename, workbook.name)
     tryCatch(assign(variable.name,
                     xlsx::read.xlsx(filename,
                               sheetName = sheet.name,
-                              header = TRUE),
+                              header = config$data_loading_header),
                     envir = .TargetEnv),
              error = function(e)
              {

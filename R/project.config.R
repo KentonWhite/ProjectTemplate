@@ -18,6 +18,8 @@
 #'  \code{data_loading} \tab This can be set to 'on' or 'off'. If data_loading is on,
 #'  the system will load data from both the cache and data directories with
 #'  cache taking precedence in the case of name conflict. \cr
+#'  \code{data_loading_header} \tab This can be set to 'on' or 'off'. If data_loading_header is on,
+#'  the system will load text data files, such as CSV, TSV, or XLSX, treating the first row as header. \cr
 #'  \code{data_ignore} \tab A comma separated list of files to be ignored when importing
 #'  from the \code{data/} directory. Regular expressions can be used but should be delimited
 #'   (on both sides) by \code{/}. Note that filenames and filepaths should never begin with
