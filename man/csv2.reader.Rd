@@ -2,7 +2,7 @@
 % Please edit documentation in R/csv2.reader.R
 \name{csv2.reader}
 \alias{csv2.reader}
-\title{Read a semicolon separated values (.csv2) file.}
+\title{Read a semicolon separated values (.csv2) file using R's read.csv2().}
 \usage{
 csv2.reader(data.file, filename, variable.name)
 }
@@ -17,9 +17,15 @@ csv2.reader(data.file, filename, variable.name)
 No value is returned; this function is called for its side effects.
 }
 \description{
-This function will load a data set stored in the CSV2 file format into
-the specified global variable binding. The default behaviour will soon
-change to actually use R's read.csv2() function, assuming dec=".", sep=";".
+This function will load a data set stored in the CSV file format, where
+the decimal separator is ',' and the field separator is ';', e.g. due to 
+localized exports of dutch, german or swedish data, into the specified
+global variable binding.
+}
+\details{
+Note: Before June 2017, the reader for .csv2 files assumed the field
+separator to be ';' and the decimal separator to be '.'. Nowadays, R's
+read.csv2() function is used.
 }
 \examples{
 library('ProjectTemplate')

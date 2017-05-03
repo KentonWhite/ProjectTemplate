@@ -192,10 +192,10 @@ test_that('migrating a project with a data/*.csv2 file results in a message to u
         # save test data as a csv in the data directory
         write.csv2(test_data, file="data/test.csv2", row.names = FALSE)
 
-        suppressMessages(load.project())
+        expect_warning(load.project(), 'csv2')
 
         # should be a message to say check code and data for .csv2 files
-        expect_message(migrate.project(), "csv2")
+        expect_message(migrate.project(), 'csv2')
 
         suppressMessages(load.project())
 
