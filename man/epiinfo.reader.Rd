@@ -25,4 +25,3 @@ library('ProjectTemplate')
 
 \dontrun{epiinfo.reader('example.rec', 'data/example.rec', 'example')}
 }
-

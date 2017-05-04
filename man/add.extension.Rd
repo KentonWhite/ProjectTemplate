@@ -27,7 +27,7 @@ This function will associate an extension with a custom reader function.
 This interface should not be considered as stable and is likely to be
 replaced by a different mechanism in a forthcoming version of this package.
 }
+
 \examples{
 \dontrun{.add.extension('foo', foo.reader)}
 }
-

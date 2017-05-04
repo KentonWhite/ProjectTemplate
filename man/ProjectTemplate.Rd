@@ -3,8 +3,8 @@
 \docType{package}
 \name{ProjectTemplate}
 \alias{ProjectTemplate}
-\alias{ProjectTemplate-package}
 \alias{package-ProjectTemplate}
+\alias{ProjectTemplate-package}
 \title{Automates the creation of new statistical analysis projects.}
 \description{
 ProjectTemplate provides functions to automatically build a directory
@@ -24,4 +24,3 @@ load.project()}
 This code is inspired by the skeleton structure used by
   Ruby on Rails.
 }
-

@@ -252,8 +252,14 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
                 # hash data frame will be loaded into cache.hash
                 load(cache_name$hash, envir = environment())
         }
-
-        list(in.cache=in.cache, hash=cache.hash)
+        
+        # If the hash file is missing but the cache file is not, delete
+        # the cache object which will force a re-cache with a properly generated
+        # hash file.
+        if (!file.exists(cache_name$hash) & in.cache) {
+                unlink(cache_name$obj, force=TRUE)
+                in.cache <- FALSE
+        }
 }
 
 .evaluate.code <- function (variable, CODE) {
@@ -271,12 +277,11 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
 }
 
 .cache.status <- function () {
-        cached_variables <- .cached.variables()
-        if (length(cached_variables)==0) {
+        if (.is.cache.empty()) {
                 return(message("No variables in cache"))
         }
         status <- ""
-        for (var in cached_variables) {
+        for (var in .cached.variables()) {
                 var_info <- .read.cache.info(var)
                 status <- paste0(status, "Variable: ", var, "\n")
                 if(is.data.frame(var_info$hash)) {
@@ -306,4 +311,12 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
 
 .is.cached <- function(varnames) {
   vapply(varnames, function(x){.read.cache.info(x)$in.cache}, logical(1))
+}
+
+.is.cache.empty <- function () {
+        cached_variables <- .cached.variables()
+        if (length(cached_variables)==0) {
+                return(TRUE)
+        }
+        return(FALSE)
 }

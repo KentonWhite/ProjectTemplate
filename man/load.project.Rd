@@ -27,4 +27,3 @@ library('ProjectTemplate')
 \code{\link{create.project}}, \code{\link{get.project}},
   \code{\link{cache.project}}, \code{\link{show.project}}, \code{\link{project.config}}
 }
-
