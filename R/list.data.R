@@ -54,7 +54,7 @@ list.data <- function(override.config = NULL) {
   all.files <- list.files(path = 'data', recursive = TRUE, include.dirs = TRUE)
   # Get list of variables according to configured recursive_loading, used as
   # filtering variable later
-  data.files <- list.files(path = 'data', recursive = config$recursive_loading)
+  data.files <- list.files(path = 'data', recursive = config$recursive_loading, include.dirs = TRUE)
 
   # Get variable name and reader from filenames
   files.parsed <- .parse.extensions(all.files)
@@ -77,7 +77,11 @@ list.data <- function(override.config = NULL) {
                    cache_only = cache_only,
                    reader = readers,
                    stringsAsFactors = FALSE)
-
+  # Keep only lines with files that match the configured recursive_loading
+  # setting
+  df <- df[df$filename %in% data.files,]
+  df <- df[order(df$reader == "file.reader", decreasing = TRUE),]
+  df <- df[!duplicated(df$varname, incomparables = ""),]
   # Get list of variables in cache/
   cached.vars <- .cached.variables()
   # Exclude variables already found in data/
@@ -103,9 +107,6 @@ list.data <- function(override.config = NULL) {
                     row.names = NULL,
                     stringsAsFactors = FALSE)
 
-  # Keep only lines with files that match the configured recursive_loading
-  # setting
-  df <- df[df$filename %in% data.files,]
   rbind(df, df2)
 }
 
