@@ -54,7 +54,8 @@ list.data <- function(override.config = NULL) {
   all.files <- list.files(path = 'data', recursive = TRUE, include.dirs = TRUE)
   # Get list of variables according to configured recursive_loading, used as
   # filtering variable later
-  data.files <- list.files(path = 'data', recursive = config$recursive_loading, include.dirs = TRUE)
+  data.files <- list.files(path = 'data', recursive = config$recursive_loading,
+                           include.dirs = !config$recursive_loading)
 
   # Get variable name and reader from filenames
   files.parsed <- .parse.extensions(all.files)
