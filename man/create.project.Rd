@@ -52,4 +52,3 @@ library('ProjectTemplate')
 \code{\link{load.project}}, \code{\link{get.project}},
   \code{\link{cache.project}}, \code{\link{show.project}}
 }
-

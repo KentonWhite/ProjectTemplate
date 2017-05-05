@@ -28,6 +28,6 @@ wsv.reader <- function(data.file, filename, variable.name)
 
   assign(variable.name,
          read.table(filename,
-                  header = TRUE),
+                  header = config$data_loading_header),
          envir = .TargetEnv)
 }

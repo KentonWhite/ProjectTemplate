@@ -28,7 +28,7 @@ csv.reader <- function(data.file, filename, variable.name)
 
   assign(variable.name,
          read.csv(filename,
-                  header = TRUE,
+                  header = config$data_loading_header,
                   sep = ','),
          envir = .TargetEnv)
 }

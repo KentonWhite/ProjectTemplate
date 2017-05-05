@@ -24,4 +24,3 @@ library('ProjectTemplate')
 
 \dontrun{systat.reader('example.sys', 'data/example.sys', 'example')}
 }
-
