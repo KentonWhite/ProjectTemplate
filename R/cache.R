@@ -252,7 +252,7 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
                 # hash data frame will be loaded into cache.hash
                 load(cache_name$hash, envir = environment())
         }
-        
+
         # If the hash file is missing but the cache file is not, delete
         # the cache object which will force a re-cache with a properly generated
         # hash file.
@@ -260,6 +260,8 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
                 unlink(cache_name$obj, force=TRUE)
                 in.cache <- FALSE
         }
+
+        list(in.cache=in.cache, hash=cache.hash)
 }
 
 .evaluate.code <- function (variable, CODE) {
