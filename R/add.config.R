@@ -25,6 +25,7 @@
 #' if (config$keep_bigdata) ...
 #' }
 add.config <- function(...){
+        # test comment
         project_config <- list(...)
         config <- get('config', envir = .TargetEnv)
         assign('config', c(config, project_config), envir = .TargetEnv)
