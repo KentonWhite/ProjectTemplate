@@ -90,6 +90,7 @@ Collate:
     'create.project.R'
     'get.project.R'
     'help.R'
+    'list.data.R'
     'load.project.R'
     'migrate.project.R'
     'project.config.R'
