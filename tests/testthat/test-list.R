@@ -1,7 +1,7 @@
 context('List data')
 
 temp_csv_file <- function(dir = '') {
-  gsub('^/', '', tempfile(pattern = "file", tmpdir = dir, fileext = ".csv"))
+  gsub('^/', '', gsub('\\\\', '/', tempfile(pattern = "file", tmpdir = dir, fileext = ".csv")))
 }
 
 test_that('available data is listed correctly with default configuration', {
