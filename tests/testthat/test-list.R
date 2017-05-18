@@ -1,7 +1,14 @@
 context('List data')
 
 temp_csv_file <- function(dir = '') {
-  gsub('^/', '', gsub('\\\\', '/', tempfile(pattern = "file", tmpdir = dir, fileext = ".csv")))
+  # Generates a random filename for a temporary file, possibly in a subdirectory
+  gsub('^/', # Matches a leading /
+       '',   # Replaces with nothing
+       gsub('\\\\', # Matches a \ (needs escaping once for string literal, once for regex)
+            '/',    # Replaces with / (needed on Windows systems)
+            tempfile(pattern = "file", tmpdir = dir, fileext = ".csv")
+       )
+  )
 }
 
 test_that('available data is listed correctly with default configuration', {
