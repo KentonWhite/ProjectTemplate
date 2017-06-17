@@ -22,6 +22,7 @@ db.reader <- function(data.file, filename, variable.name)
   sqlite.driver <- DBI::dbDriver("SQLite")
   connection <- DBI::dbConnect(sqlite.driver,
                           dbname = filename)
+  on.exit(try(DBI::dbDisconnect(connection), silent = TRUE), add = TRUE)
 
   tables <- DBI::dbListTables(connection)
   for (table in tables)
@@ -35,11 +36,5 @@ db.reader <- function(data.file, filename, variable.name)
     assign(clean.variable.name(table),
            data.parcel,
            envir = .TargetEnv)
-  }
-
-  disconnect.success <- DBI::dbDisconnect(connection)
-  if (! disconnect.success)
-  {
-    warning(paste('Unable to disconnect from database:', filename))
   }
 }
