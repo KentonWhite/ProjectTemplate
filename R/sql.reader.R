@@ -349,7 +349,7 @@ sql.reader <- function(data.file, filename, variable.name)
       query <- whisker::whisker.render(query, data = .GlobalEnv)
     }
     data.parcel <- try(DBI::dbGetQuery(connection, query))
-    err <- DBI::dbGetException(connection)
+    suppressWarnings(err <- DBI::dbGetException(connection))
 
     if (class(data.parcel) == 'data.frame' && (length(err) == 0 || err$errorNum == 0))
     {
