@@ -21,4 +21,3 @@ library('ProjectTemplate')
 
 \dontrun{cache.name('example.1')}
 }
-

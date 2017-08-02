@@ -26,4 +26,3 @@ library('ProjectTemplate')
 
 \dontrun{xlsx.reader('example.xlsx', 'data/example.xlsx', 'example')}
 }
-

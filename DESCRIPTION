@@ -90,6 +90,7 @@ Collate:
     'create.project.R'
     'get.project.R'
     'help.R'
+    'list.data.R'
     'load.project.R'
     'migrate.project.R'
     'project.config.R'
@@ -99,4 +100,4 @@ Collate:
     'stopifnotproject.R'
     'stub.tests.R'
     'test.project.R'
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1

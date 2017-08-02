@@ -28,4 +28,3 @@ library('ProjectTemplate')
 
 \dontrun{translate.dcf(file.path('config', 'global.dcf'))}
 }
-

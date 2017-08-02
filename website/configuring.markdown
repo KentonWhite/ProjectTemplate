@@ -11,6 +11,7 @@ Both types are stored in the `config` object accessible from the global environm
 The current `ProjectTemplate` configuration settings exist in the `config/global.dcf` file:
 
 * `data_loading`: This can be set to 'on' or 'off'. If `data_loading` is on, the system will load data from both the `cache` and `data` directories with `cache` taking precedence in the case of name conflict. By default, `data_loading` is on.
+* `data_loading_header`: This can be set to 'on' or 'off'. If `data_loading_header` is on, the system will load text data files, such as CSV, TSV, or XLSX, treating the first row as header.
 * `data_ignore`: A comma separated list of files to be ignored when importing from the `data/` directory. Regular expressions can be used but should be delimited (on both sides) by `/`. The default is to ignore no files. Note that filenames and filepaths should *never* begin with a `/`, entire directories under `data/` can be ignored by adding a trailing `/`. See [Mastering ProjectTemplate](./mastering.html) for more details.
 * `cache_loading`: This can be set to 'on' or 'off'. If `cache_loading` is on, the system will load data from the `cache` directory before any attempt to load from the `data` directory. By default, `cache_loading` is on.
 * `recursive_loading`: This can be set to 'on' or 'off'. If `recursive_loading` is on, the system will load data from the `data` directory and all its sub difrectories recursively. By default, `recursive_loading` is off.

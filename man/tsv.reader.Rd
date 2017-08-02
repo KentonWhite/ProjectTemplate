@@ -25,4 +25,3 @@ library('ProjectTemplate')
 
 \dontrun{tsv.reader('example.tsv', 'data/example.tsv', 'example')}
 }
-

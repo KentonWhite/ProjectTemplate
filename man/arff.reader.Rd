@@ -23,4 +23,3 @@ the specified global variable binding.
 \examples{
 \dontrun{arff.reader('example.arff', 'data/example.arff', 'example')}
 }
-

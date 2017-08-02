@@ -175,8 +175,18 @@ come in three different flavours:
     expressions is too much for this page, see 'Perl-like Regular Expressions'
     under `?base::regex` for more information.
 
-**Note** At the moment variables already in the cache will be loaded regardless
-of the `data_ignore` patterns. Therefore, if you add a pattern after the
-variable was already loaded once and you don't want to load it from the cache
-you have to call `clear.cache(variable.name)`. This will likely change in the
-future so that cached variables will be ignored as well.
+#### Listing data
+When encoutering unexpected results from `load.project` in the load data phase
+it can be useful to have some insight in what files are found by `load.project`
+and which reader is used to import the data. For this purpose the `list.data`
+function returns a list of all files, with metadata on how the variable will be
+called, whether it is in the cache, whether it matches a `data_ignore` pattern,
+and what reader will be used. `list.data` doesn't actually read the files so it
+is much quicker than a call to `load.project`.
+
+Note that variables in the cache are matched to filenames in `data/`
+recursively, after which only files are displayed by `list.data` that match the
+`recursive_loading` setting in `config/global.dcf`. This ensures that ignored
+variables from a nested folder in `data/` don't get loaded from cache. As a
+consequence, some variables visible by `list.files('cache')` might not show up
+in the output of `list.data` if `recursive_loading` is set to `FALSE`.

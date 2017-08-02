@@ -30,4 +30,3 @@ add.config(
 if (config$keep_bigdata) ...
 }
 }
-

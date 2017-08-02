@@ -72,10 +72,10 @@ test_that('projects without the cached_loaded_data config have their migrated co
 
 
         # run load.project again and check that the the test variable has not been cached
-        # because the default should be FALSE if the missing_loaded_data is missing before migrate.project
+        # because the default should be FALSE if the cache_loaded_data is missing before migrate.project
         # is called
-        suppressMessages(load.project())
-        expect_error(load("cache/test.RData", envir = environment()), "cannot open the connection")
+        expect_warning(suppressMessages(load.project()), "missing the following entries: cache_loaded_data")
+        expect_error(suppressWarnings(load("cache/test.RData", envir = environment())), "cannot open the connection")
 
         # Migrate the project
         expect_message(migrate.project(), "new config item called cache_loaded_data")
@@ -88,7 +88,7 @@ test_that('projects without the cached_loaded_data config have their migrated co
         expect_warning(suppressMessages(load.project()), NA)
 
         # check that the the test variable has not been cached
-        expect_error(load("cache/test.RData", envir = environment()), "cannot open the connection")
+        expect_error(suppressWarnings(load("cache/test.RData", envir = environment())), "cannot open the connection")
 
 
 })
@@ -178,3 +178,29 @@ test_that('migrating a project with a dummy config item results in a message to 
         tidy_up()
 })
 
+test_that('migrating a project with a data/*.csv2 file results in a message to user', {
+
+        test_project <- tempfile('test_project')
+        suppressMessages(create.project(test_project, minimal = FALSE))
+        on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
+
+        oldwd <- setwd(test_project)
+        on.exit(setwd(oldwd), add = TRUE)
+
+        test_data <- data.frame(Names=c("a", "b", "c"), Ages=c(20,30,40))
+
+        # save test data as a csv in the data directory
+        write.csv2(test_data, file="data/test.csv2", row.names = FALSE)
+
+        suppressMessages(load.project())
+
+        # should be a message to say check code and data for .csv2 files
+        expect_message(migrate.project(), "csv2")
+
+        suppressMessages(load.project())
+
+        # remove .csv2 file
+	unlink("data/test.csv2")
+
+        tidy_up()
+})

@@ -50,7 +50,8 @@ migrate.project <- function()
 
   # Detect other migration issues
   doc_not_renamed <- dir.exists("doc") && !dir.exists("docs")
-  other_conflicts <- any(doc_not_renamed)
+  csv2_files_present <- any(file.exists(Sys.glob("data/*.csv2")))
+  other_conflicts <- any(doc_not_renamed, csv2_files_present)
 
   # Exit if everything up to date
   if (!any(version_conflict, config_conflicts, other_conflicts)) {
@@ -126,6 +127,18 @@ migrate.project <- function()
               '.',
               recursive = TRUE,
               overwrite = FALSE)
+  }
+
+  if (csv2_files_present) {
+    message(paste("",
+      "In the near future, the csv2.reader() behaviour will change to actually using",
+      "R's read.csv2() method, which assumes the decimal separator to be ',' and the",
+      "field separator to be ';'. Before, the decimal operator was expected to be '.'.",
+      "(See https://github.com/johnmyleswhite/ProjectTemplate/issues/170).",
+      "",
+      "Please review your code and datafiles.",
+      sep = "\n"
+    ))
   }
 
   # Finally, save the validated configuration with the updated version number
