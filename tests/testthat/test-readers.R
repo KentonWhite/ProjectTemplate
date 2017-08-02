@@ -731,10 +731,8 @@ test_that('Example 37: SPSS Support with .sav Extension', {
                         'example_37.sav')
   variable.name <- clean.variable.name('example_37')
 
-  expect_warning(
-    spss.reader(data.file, filename, variable.name),
-    "Unrecognized record type 7, subtype 18 encountered in system file")
-
+  spss.reader(data.file, filename, variable.name)
+  
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
@@ -753,10 +751,8 @@ test_that('Example 38: SPSS Support with .sav Extension / Alternative Generation
                         'example_38.sav')
   variable.name <- clean.variable.name('example_38')
 
-  expect_warning(
-    spss.reader(data.file, filename, variable.name),
-    "Unrecognized record type 7, subtype 18 encountered in system file")
-
+  spss.reader(data.file, filename, variable.name)
+  
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
