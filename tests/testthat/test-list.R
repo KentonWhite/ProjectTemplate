@@ -1,7 +1,7 @@
 context('List data')
 
 temp_csv_file <- function(dir = '') {
-  gsub('^/', '', tempfile(pattern = "file", tmpdir = dir, fileext = ".csv"))
+  gsub('^[/\\\\]', '', tempfile(pattern = "file", tmpdir = dir, fileext = ".csv"))
 }
 
 test_that('available data is listed correctly with default configuration', {
@@ -119,10 +119,10 @@ test_that('available data is listed correctly with recursive_loading = TRUE', {
 
   # Setup test data.frame
   test.df <- data.frame(
-    filename = c(test_file1, 'README.md', test_file2),
+    filename = c(test_file1, 'README.md', gsub("\\\\", "/", test_file2)),
     varname = c(gsub('.csv', '', test_file1),
                 "",
-                gsub('/', '.', gsub('.csv', '', test_file2))),
+                gsub('[/\\\\]', '.', gsub('.csv', '', test_file2))),
     reader = c("csv.reader", "", "csv.reader"),
     is_ignored = c(FALSE, FALSE, FALSE),
     is_directory = c(FALSE, FALSE, FALSE),
@@ -204,10 +204,10 @@ test_that('available data is listed correctly with data_ignore', {
   #   - test/fileYYYYY.csv (test_file2, not ignored)
   #   - Thumbs.db (not ignored)
   test.df <- data.frame(
-    filename = c(test_file1, 'README.md', test_file2, 'Thumbs.db'),
+    filename = c(test_file1, 'README.md', gsub("\\\\", "/", test_file2), 'Thumbs.db'),
     varname = c(gsub('.csv', '', test_file1),
                 "",
-                gsub('/', '.', gsub('.csv', '', test_file2)),
+                gsub('[/\\\\]', '.', gsub('.csv', '', test_file2)),
                 ""),
     reader = c("csv.reader", "", "csv.reader", ""),
     is_ignored = c(FALSE, FALSE, FALSE, FALSE),
@@ -260,10 +260,10 @@ test_that('available data is listed correctly with data_ignore', {
   #   - test/fileYYYYY.csv (test_file2, not ignored)
   #   - Thumbs.db (not ignored)
   test.df <- data.frame(
-    filename = c(test_file1, 'README.md', test_file2, 'Thumbs.db'),
+    filename = c(test_file1, 'README.md', gsub("\\\\", "/", test_file2), 'Thumbs.db'),
     varname = c(gsub('.csv', '', test_file1),
                 "",
-                gsub('/', '.', gsub('.csv', '', test_file2)),
+                gsub('[/\\\\]', '.', gsub('.csv', '', test_file2)),
                 ""),
     reader = c("csv.reader", "", "csv.reader", ""),
     is_ignored = c(TRUE, FALSE, TRUE, FALSE),
@@ -290,10 +290,10 @@ test_that('available data is listed correctly with data_ignore', {
   #   - test/fileYYYYY.csv (test_file2, not ignored)
   #   - Thumbs.db (not ignored)
   test.df <- data.frame(
-    filename = c(test_file1, 'README.md', test_file2, 'Thumbs.db'),
+    filename = c(test_file1, 'README.md', gsub("\\\\", "/", test_file2), 'Thumbs.db'),
     varname = c(gsub('.csv', '', test_file1),
                 "",
-                gsub('/', '.', gsub('.csv', '', test_file2)),
+                gsub('[/\\\\]', '.', gsub('.csv', '', test_file2)),
                 ""),
     reader = c("csv.reader", "", "csv.reader", ""),
     is_ignored = c(TRUE, FALSE, FALSE, FALSE),
@@ -321,10 +321,10 @@ test_that('available data is listed correctly with data_ignore', {
   #   - test/fileYYYYY.csv (test_file2, not ignored)
   #   - Thumbs.db (ignored)
   test.df <- data.frame(
-    filename = c(test_file1, 'README.md', test_file2, 'Thumbs.db'),
+    filename = c(test_file1, 'README.md', gsub("\\\\", "/", test_file2), 'Thumbs.db'),
     varname = c(gsub('.csv', '', test_file1),
                 "",
-                gsub('/', '.', gsub('.csv', '', test_file2)),
+                gsub('[/\\\\]', '.', gsub('.csv', '', test_file2)),
                 ""),
     reader = c("csv.reader", "", "csv.reader", ""),
     is_ignored = c(TRUE, FALSE, FALSE, TRUE),
@@ -353,10 +353,10 @@ test_that('available data is listed correctly with data_ignore', {
   #   - test/fileYYYYY.csv (test_file2, not ignored)
   #   - Thumbs.db (ignored)
   test.df <- data.frame(
-    filename = c(test_file1, 'README.md', test_file2, 'Thumbs.db'),
+    filename = c(test_file1, 'README.md', gsub("\\\\", "/", test_file2), 'Thumbs.db'),
     varname = c(gsub('.csv', '', test_file1),
                 "",
-                gsub('/', '.', gsub('.csv', '', test_file2)),
+                gsub('[/\\\\]', '.', gsub('.csv', '', test_file2)),
                 ""),
     reader = c("csv.reader", "", "csv.reader", ""),
     is_ignored = c(TRUE, FALSE, FALSE, TRUE),

@@ -19,6 +19,7 @@ library('ProjectTemplate')
 
 setwd('project_name')
 load.project()}
+
 }
 \references{
 This code is inspired by the skeleton structure used by

@@ -53,4 +53,3 @@ library('ProjectTemplate')
 \code{\link{load.project}}, \code{\link{show.project}},
    \code{\link{project.config}}
 }
-
