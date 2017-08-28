@@ -41,9 +41,9 @@ test_that('available data is listed correctly with default configuration', {
   expect_true("varname" %in% names(data.files))
   expect_true(class(data.files$varname) == "character")
 
-  # Check data.frame has a character variable "reader"
+  # Check data.frame has a list variable "reader"
   expect_true("reader" %in% names(data.files))
-  expect_true(class(data.files$reader) == "character")
+  expect_true(class(data.files$reader) == "list")
 
   # Check data.frame has a logical variable "is_ignored"
   expect_true("is_ignored" %in% names(data.files))
@@ -69,18 +69,20 @@ test_that('available data is listed correctly with default configuration', {
   test.df <- data.frame(
     filename = c(test_file1, 'README.md', 'test'),
     varname = c(gsub('.csv', '', test_file1), "", ""),
-    reader = c('csv.reader', "", ""),
     is_ignored = c(FALSE, FALSE, FALSE),
     is_directory = c(FALSE, FALSE, TRUE),
     is_cached = c(FALSE, FALSE, FALSE),
     cache_only = c(FALSE, FALSE, FALSE),
     stringsAsFactors = FALSE
   )
+
+  test.df$reader <- list('csv.reader', '', '')
+
   # Sort data.frame according to collation of the testing process (for example
   # LC_COLLATE=C and LC_COLLATE=en_US.UTF-8 return different order)
   sort.df <- order(test.df$cache_only, test.df$filename, test.df$varname)
   test.df <- test.df[sort.df,]
-
+  
   expect_equal(data.files$filename, test.df$filename)
   expect_equal(data.files$varname, test.df$varname)
   expect_equal(data.files$reader, test.df$reader)
@@ -123,13 +125,14 @@ test_that('available data is listed correctly with recursive_loading = TRUE', {
     varname = c(gsub('.csv', '', test_file1),
                 "",
                 gsub('[/\\\\]', '.', gsub('.csv', '', test_file2))),
-    reader = c("csv.reader", "", "csv.reader"),
     is_ignored = c(FALSE, FALSE, FALSE),
     is_directory = c(FALSE, FALSE, FALSE),
     is_cached = c(FALSE, FALSE, FALSE),
     cache_only = c(FALSE, FALSE, FALSE),
     stringsAsFactors = FALSE
   )
+  test.df$reader <- list("csv.reader", "", "csv.reader")
+
   # Sort data.frame according to collation of the testing process (for example
   # LC_COLLATE=C and LC_COLLATE=en_US.UTF-8 return different order)
   sort.df <- order(test.df$cache_only, test.df$filename, test.df$varname)

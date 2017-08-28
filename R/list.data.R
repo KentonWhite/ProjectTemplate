@@ -76,13 +76,13 @@ list.data <- function(override.config = NULL) {
                    is_directory = is_directory,
                    is_cached = is_cached,
                    cache_only = cache_only,
-                   reader = readers,
                    stringsAsFactors = FALSE)
+  df$reader <- readers
   # Keep only lines with files that match the configured recursive_loading
   # setting
   df <- df[df$filename %in% data.files,]
   df <- df[order(df$reader == "file.reader", decreasing = TRUE),]
-  df <- df[!duplicated(df$varname, incomparables = ""),]
+  ## df <- df[!duplicated(df$varname, incomparables = ""),]
   # Get list of variables in cache/
   cached.vars <- .cached.variables()
   # Exclude variables already found in data/
@@ -114,11 +114,11 @@ list.data <- function(override.config = NULL) {
 .parse.extensions <- function(data.files) {
   readers <- character(length(data.files))
   varnames <- character(length(data.files))
-
+  
   for (extension in ls(extensions.dispatch.table)) {
     extension.match <- grepl(extension, data.files,
                              ignore.case = TRUE, perl = TRUE)
-    readers[extension.match] <- extensions.dispatch.table[[extension]]
+    readers[extension.match] <- list(extensions.dispatch.table[[extension]])
     varnames[extension.match] <- sub(extension, '', data.files[extension.match],
                                      ignore.case = TRUE, perl = TRUE)
     varnames[extension.match] <- clean.variable.name(varnames[extension.match])

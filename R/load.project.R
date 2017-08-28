@@ -156,7 +156,7 @@ load.project <- function(override.config = NULL)
       cache.files.loaded <- c(cache.files.loaded, variable)
     } else if (config$data_loading) {
       # Check if a reader was found for the file
-      has_reader <- data.file$reader != ''
+      has_reader <- ((class(data.file$reader[[1]]) == "function") || !(data.file$reader[[1]] == ''))
       if (!has_reader) {
         next()
       }
@@ -169,7 +169,7 @@ load.project <- function(override.config = NULL)
       # Register current variables
       vars.old <- .var.diff.from()
       # Actually load the data
-      do.call(data.file$reader, reader.args)
+      do.call(data.file$reader[[1]], reader.args)
       # Get new variables introduced by the reader
       vars.new <- .var.diff.from(vars.old)
 
