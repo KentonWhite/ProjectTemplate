@@ -8,6 +8,8 @@
 #'   missing, in the current directory.
 #' @param source Name of an existing template to copy, defaults to the built in
 #'   'minimal' template.
+#'
+#' @export
 create.template <- function(target, source = 'minimal') {
   if (dirname(target) == '.') {
     target <- file.path(getOption('ProjectTemplate.templatedir', '.'),
