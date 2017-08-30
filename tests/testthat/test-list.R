@@ -7,7 +7,7 @@ temp_csv_file <- function(dir = '') {
 test_that('available data is listed correctly with default configuration', {
   # Create temporary project
   test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project, minimal = FALSE))
+  suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
   # Set temporary project as working directory
@@ -82,7 +82,7 @@ test_that('available data is listed correctly with default configuration', {
   # LC_COLLATE=C and LC_COLLATE=en_US.UTF-8 return different order)
   sort.df <- order(test.df$cache_only, test.df$filename, test.df$varname)
   test.df <- test.df[sort.df,]
-  
+
   expect_equal(data.files$filename, test.df$filename)
   expect_equal(data.files$varname, test.df$varname)
   expect_equal(data.files$reader, test.df$reader)
@@ -95,7 +95,7 @@ test_that('available data is listed correctly with default configuration', {
 test_that('available data is listed correctly with recursive_loading = TRUE', {
   # Create temporary project
   test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project, minimal = FALSE))
+  suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
   # Set temporary project as working directory
@@ -155,7 +155,7 @@ test_that('available data is listed correctly with recursive_loading = TRUE', {
 test_that('available data is listed correctly with data_ignore', {
   # Create temporary project
   test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project, minimal = FALSE))
+  suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
   # Set temporary project as working directory
@@ -384,7 +384,7 @@ test_that('available data is listed correctly with data_ignore', {
 test_that('cached data is listed correctly as already cached', {
   # Create temporary project
   test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project, minimal = FALSE))
+  suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
   # Set temporary project as working directory
@@ -460,7 +460,7 @@ test_that('cached data is listed correctly as already cached', {
 test_that('cached data created during munging listed as cached only', {
   # Create temporary project
   test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project, minimal = FALSE))
+  suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
   # Set temporary project as working directory

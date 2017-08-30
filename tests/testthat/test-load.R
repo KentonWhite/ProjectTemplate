@@ -2,7 +2,7 @@ context('Load project')
 
 test_that('All elements have length 1', {
   test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project, minimal = FALSE))
+  suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
   oldwd <- setwd(test_project)
@@ -45,7 +45,7 @@ test_that('user commands fail when not in ProjectTemplate directory', {
 
 test_that('auto loaded data is cached by default', {
         test_project <- tempfile('test_project')
-        suppressMessages(create.project(test_project, minimal = FALSE))
+        suppressMessages(create.project(test_project))
         on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
         oldwd <- setwd(test_project)
@@ -70,7 +70,7 @@ test_that('auto loaded data is cached by default', {
 
 test_that('auto loaded data is not cached when cached_loaded_data is FALSE', {
         test_project <- tempfile('test_project')
-        suppressMessages(create.project(test_project, minimal = FALSE))
+        suppressMessages(create.project(test_project))
         on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
         oldwd <- setwd(test_project)
@@ -101,7 +101,7 @@ test_that('auto loaded data is not cached when cached_loaded_data is FALSE', {
 
 test_that('auto loaded data from an R script is cached correctly', {
         test_project <- tempfile('test_project')
-        suppressMessages(create.project(test_project, minimal = FALSE))
+        suppressMessages(create.project(test_project))
         on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
         oldwd <- setwd(test_project)
@@ -141,7 +141,7 @@ test_that('auto loaded data from an R script is cached correctly', {
 
 test_that('ignored data files are not loaded', {
   test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project, minimal = FALSE))
+  suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
   oldwd <- setwd(test_project)

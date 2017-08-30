@@ -51,7 +51,7 @@ Suggests:
     testthat (>= 0.8)
 URL: http://projecttemplate.net
 BugReports: https://github.com/johnmyleswhite/ProjectTemplate/issues
-Collate:
+Collate: 
     'add.config.R'
     'xport.reader.R'
     'xlsx.reader.R'
@@ -88,11 +88,13 @@ Collate:
     'translate.dcf.R'
     'config.R'
     'create.project.R'
+    'create.template.R'
     'get.project.R'
     'help.R'
     'list.data.R'
     'load.project.R'
     'migrate.project.R'
+    'migrate.template.R'
     'project.config.R'
     'reload.project.R'
     'run.project.R'
