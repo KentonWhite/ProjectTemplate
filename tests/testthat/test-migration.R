@@ -35,7 +35,7 @@ lapply(
 test_that('migrating a project which doesnt need config update results in an Up to date message', {
 
         test_project <- tempfile('test_project')
-        suppressMessages(create.project(test_project, minimal = FALSE))
+        suppressMessages(create.project(test_project))
         on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
         oldwd <- setwd(test_project)
@@ -51,7 +51,7 @@ test_that('migrating a project which doesnt need config update results in an Up 
 test_that('projects without the cached_loaded_data config have their migrated config set to FALSE ', {
 
         test_project <- tempfile('test_project')
-        suppressMessages(create.project(test_project, minimal = FALSE))
+        suppressMessages(create.project(test_project))
         on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
         oldwd <- setwd(test_project)
@@ -97,7 +97,7 @@ test_that('projects without the cached_loaded_data config have their migrated co
 test_that('migrating a project with a missing config file results in a message to user', {
 
         test_project <- tempfile('test_project')
-        suppressMessages(create.project(test_project, minimal = FALSE))
+        suppressMessages(create.project(test_project))
         on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
         oldwd <- setwd(test_project)
@@ -127,7 +127,7 @@ test_that('migrating a project with a missing config file results in a message t
 test_that('migrating a project with a missing config item results in a message to user', {
 
         test_project <- tempfile('test_project')
-        suppressMessages(create.project(test_project, minimal = FALSE))
+        suppressMessages(create.project(test_project))
         on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
         oldwd <- setwd(test_project)
@@ -155,7 +155,7 @@ test_that('migrating a project with a missing config item results in a message t
 test_that('migrating a project with a dummy config item results in a message to user', {
 
         test_project <- tempfile('test_project')
-        suppressMessages(create.project(test_project, minimal = FALSE))
+        suppressMessages(create.project(test_project))
         on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
         oldwd <- setwd(test_project)
@@ -181,7 +181,7 @@ test_that('migrating a project with a dummy config item results in a message to 
 test_that('migrating a project with a data/*.csv2 file results in a message to user', {
 
         test_project <- tempfile('test_project')
-        suppressMessages(create.project(test_project, minimal = FALSE))
+        suppressMessages(create.project(test_project))
         on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
         oldwd <- setwd(test_project)
@@ -192,7 +192,7 @@ test_that('migrating a project with a data/*.csv2 file results in a message to u
         # save test data as a csv in the data directory
         write.csv2(test_data, file="data/test.csv2", row.names = FALSE)
 
-        suppressMessages(load.project())
+        expect_warning(suppressMessages(load.project()), "csv2")
 
         # should be a message to say check code and data for .csv2 files
         expect_message(migrate.project(), "csv2")

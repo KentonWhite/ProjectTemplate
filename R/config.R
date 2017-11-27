@@ -47,7 +47,7 @@
 .default.config.file <- system.file('defaults/config/default.dcf', package = 'ProjectTemplate')
 
 ## File that contains the default initial project configuration after create.project()
-.new.config.file <- system.file('defaults/full/config/global.dcf', package = 'ProjectTemplate')
+.new.config.file <- system.file('defaults/templates/full/config/global.dcf', package = 'ProjectTemplate')
 
 # items in the configuration file which are not TRUE/FALSE (or on/off) values
 .nonflag.config <- c("version", "libraries", "logging_level", "sticky_variables", "data_ignore")
