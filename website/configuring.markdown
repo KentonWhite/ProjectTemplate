@@ -31,10 +31,10 @@ The current `ProjectTemplate` configuration settings exist in the `config/global
 ### Project specific configuration
 The project specific configuration is specified in the `lib/globals.R` file using the `add.config` function.  This will contain whatever is relevant for your project, and will look something like this:
 
-        add.config(
-                keep_data=FALSE,                # should temporary data be kept?
-                header="Private & Confidential" # header in reports
-        )
+    > add.config(
+        keep_data = FALSE,                # should temporary data be kept?
+        header = "Private & Confidential" # header in reports
+      )
 
 Note that commas need to be present after each config item except the last.  Comments can also be inserted to document what each config variable does.
 To use project specific configuaration in any `lib`, `munge` or `src` script, simply use the form `config$keep_data`.
