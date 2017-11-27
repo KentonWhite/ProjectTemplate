@@ -5,6 +5,11 @@ ProjectTemplate is based on the idea that you should structure all of your data 
 that you can exploit conventions instead of writing boilerplate code. Because so much of ProjectTemplate's functionality
 is based on conventions, it's worth explaining ProjectTemplate's idealized project in some detail.
 
+That being said, at some point you might find yourself recreating a number of directories and files for every project.
+For example you might work with spatial data and want a directory called `geodata`, or you have custom packages you want
+to add to the `global.dcf`. As long as you stick to the minimal project layout explained below any directory can serve
+as your project template. The process of creating and maintaining custom templates is described on the page
+[Custom templates](./custom_templates.html).
 
 ### Full Project Layout
 
@@ -96,4 +101,5 @@ in the following structure:
         * eda.R
     * README.md
 
-This is designed for newcomers who don't need the more advanced subdirectories that ProjectTemplate normally creates.
+This is designed for newcomers who don't need the more advanced subdirectories that ProjectTemplate normally creates. It
+is also the default structure for a [new template](./custom_templates.html).
