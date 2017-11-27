@@ -1,7 +1,8 @@
 ---
 layout: page
 ---
-If you have changes you'd like to make to ProjectTemplate, we'd love to see them. We'd prefer that you fork ProjectTemplate through [GitHub](https://github.com/johnmyleswhite/ProjectTemplate) and submit a pull request. If that's not possible, please submit a patch to the [ProjectTemplate Google Group](http://groups.google.com/group/projecttemplate) so that we can manually incorporate your changes.
+## Contributing
+If you have changes you'd like to make to ProjectTemplate, we'd love to see them. We'd prefer that you fork ProjectTemplate through [GitHub](https://github.com/johnmyleswhite/ProjectTemplate) and submit a pull request. If that's not possible, please submit a patch to the [ProjectTemplate Google Group](https://groups.google.com/group/projecttemplate) so that we can manually incorporate your changes.
 
 #### Issues & Suggestions
 

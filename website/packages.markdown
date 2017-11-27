@@ -1,6 +1,7 @@
 ---
 layout: page
 ---
+## Packages
 ProjectTemplate is not designed to help you write R packages. If you're
 looking to do that, you should start by looking at the `package.skeleton()`
 function provided by the `utils` package. After that, you might consider

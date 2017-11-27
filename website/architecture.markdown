@@ -1,6 +1,7 @@
 ---
 layout: page
 ---
+## Architecture
 ProjectTemplate is based on the idea that you should structure all of your data analysis projects in the same way so
 that you can exploit conventions instead of writing boilerplate code. Because so much of ProjectTemplate's functionality
 is based on conventions, it's worth explaining ProjectTemplate's idealized project in some detail.

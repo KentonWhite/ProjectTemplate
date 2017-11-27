@@ -1,10 +1,12 @@
 ---
 layout: page
 ---
+## Getting started
 Let's set up a new data analysis project using ProjectTemplate.
 
 Before we start, you should make sure that you've [installed](./installing.html) ProjectTemplate. You'll also need to download the sample data set we'll use, which is stored in a file called [letters.csv.bz2](./letters.csv.bz2).
 
+#### Create project
 Once you've got both of those things done, you can open up R and type
 
         library('ProjectTemplate')
@@ -27,6 +29,7 @@ As you can see, `create.project()` has set up a whole series of subdirectories f
 
         mv ~/Downloads/letters.csv.bz2 data
 
+#### Load the project
 With the `letters.csv.bz2` data set in place, we can start to use ProjectTemplate's automated data loading features. Open up R again and type the following, where `PATH_TO_LETTERS_DIRECTORY` is the path of the folder in which you've expanded the `letters.csv` data set:
 
     
@@ -48,6 +51,7 @@ The `letters` data set takes a few seconds to load into R because it contains 23
 
 ![head() Output](./head.png)
 
+#### Load libraries
 As you can see, we've got a data frame that contains 233,614 words along with the first and second letter of each word in a separate column. For our current analysis, we're interested in the total number of occurrences of each letter in the first and second letter positions and not in the words themselves. For that reason, we can generate aggregate letter counts using the `ddply()` function from the [`plyr`](http://plyr.had.co.nz/) package. Wanting to work with aggregate counts instead of the raw data set we stored in the `data` directory naturally leads us to working with ProjectTemplate's automatic package loading and data munging tools.
 
 To use `plyr`, we need to load the package. ProjectTemplate makes it easy to automate this step. First, we have to edit the `config/global.dcf` file to make sure that the `load_libraries` setting is turned on:
@@ -70,6 +74,7 @@ Now that we've edited this munging script, our aggregation preprocessing step wi
 
 ![Munging Messages](./munging.png)
 
+#### Caching data
 Since our new call to `ddply()` involves a fairly long computation that produces very simple output, it makes sense to cache the output of our aggregation step rather than rerun it every time. To do that, we use the `cache()` function:
 
         cache('first.letter.counts')
@@ -93,6 +98,7 @@ After doing that, we load our project again and see that things run a lot faster
 
 ![Munging Off Messages](./munging_off.png)
 
+#### Saving analyses
 Now that we've got interesting data in our hands, let's produce some simple density plots to see the shape of the first and second letter counts. To do that, we'll code up an analysis that we'll store inside of `src/generate_plots.R`. In general, you'll use the `src` directory to store any analyses that you run. The convention is that every analysis starts with the familiar two lines:
 
         library('ProjectTemplate')

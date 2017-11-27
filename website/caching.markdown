@@ -1,6 +1,7 @@
 ---
 layout: page
 ---
+## Caching
 It is good practice to run `load.project()` or `reload.project` often when developing a data analysis.  This ensures that the global environment is always up to date with the latest data and preprocessing rules.  However, it can sometimes take a while to run, especially if the loaded datasets are large, or the preprocessing is computationally intense.
 
 It is often the case though that loaded datasets and output from preprocessing do not change very much once they are developed (perhaps only if new raw data is received, or there is an update to a particular rule).  The `cache()` function can be used in preprocessing scripts to dynamically cache objects only when necessary.  This provides you with a faster experience whenever `load.project()` is called.

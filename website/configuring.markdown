@@ -1,6 +1,7 @@
 ---
 layout: page
 ---
+## Configuration
 There are two types of configuration:
 
 * **ProjectTemplate configuration** are the settings which alter how `load.project()` behaves when executed.  For example, whether to have logging enabled.
@@ -8,6 +9,7 @@ There are two types of configuration:
 
 Both types are stored in the `config` object accessible from the global environment.  The function `project.config()` will display the current configuration, including project specific configuration.
 
+### ProjectTemplate configuration
 The current `ProjectTemplate` configuration settings exist in the `config/global.dcf` file:
 
 * `data_loading`: This can be set to 'on' or 'off'. If `data_loading` is on, the system will load data from both the `cache` and `data` directories with `cache` taking precedence in the case of name conflict. By default, `data_loading` is on.
@@ -26,6 +28,7 @@ The current `ProjectTemplate` configuration settings exist in the `config/global
 * `cache_loaded_data`: This can be set to 'on' or 'off'. If `cache_loaded_data` is on, then data loaded from the `data` directory during `load.project()` will be automatically cached (so it won't need to be reloaded next time `load.project()` is called).  By default, `cache_loaded_data` is on for newly created projects.  Existing projects created without this configuration setting will default to off.  Similarly, when `migrate.project()` is called in those cases, the default will be off.
 * `sticky_variables`: This is a comma separated list of any project-specific  variables that should remain in the global environment after a `clear()` command.  This can be used to clear the global environment, but keep any large datasets in place so they are not unnecessarily re-generated during `load.project()`.  Note that any this will be over-ridden if the `force=TRUE` parameter is passed to `clear()`. By default, `sticky_variables` is NONE
 
+### Project specific configuration
 The project specific configuration is specified in the `lib/globals.R` file using the `add.config` function.  This will contain whatever is relevant for your project, and will look something like this:
 
         add.config(
