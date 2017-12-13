@@ -1,11 +1,11 @@
 source: .
 destination: ./_site
-plugins:     ./_plugins
+plugins_dir:     ./_plugins
 layouts:     ./_layouts
 include:     ['.htaccess']
 exclude:     []
 keep_files:  ['.git','.svn']
-gems:        []
+plugins:     []
 timezone:    nil
 encoding:    UTF-8
 
@@ -13,8 +13,6 @@ future:      true
 show_drafts: nil
 limit_posts: 0
 pygments:    true
-
-relative_permalinks: true
 
 permalink:     date
 paginate_path: 'page:num'
