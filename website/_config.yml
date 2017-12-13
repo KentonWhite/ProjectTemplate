@@ -12,12 +12,12 @@ encoding:    UTF-8
 future:      true
 show_drafts: nil
 limit_posts: 0
-highlighter: rouge
 
 permalink:     date
 paginate_path: 'page:num'
 
 markdown:      kramdown
+highlighter: rouge
 markdown_ext:  markdown,mkd,mkdn,md
 textile_ext:   textile
 
