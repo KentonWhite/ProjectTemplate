@@ -58,3 +58,5 @@ kramdown:
 
 redcloth:
   hard_breaks: true
+
+highlighter:   rouge
