@@ -1,7 +1,7 @@
 source: .
 destination: ./_site
 plugins_dir:     ./_plugins
-layouts:     ./_layouts
+layouts_dir:     ./_layouts
 include:     ['.htaccess']
 exclude:     []
 keep_files:  ['.git','.svn']
@@ -12,7 +12,7 @@ encoding:    UTF-8
 future:      true
 show_drafts: nil
 limit_posts: 0
-pygments:    true
+highlighter: rouge
 
 permalink:     date
 paginate_path: 'page:num'
@@ -46,7 +46,7 @@ kramdown:
   entity_output: as_char
   toc_levels: 1..6
   smart_quotes: lsquo,rsquo,ldquo,rdquo
-  use_coderay: false
+  enable_coderay: false
 
   syntax_highlighter_opts:
     wrap: div
