@@ -41,6 +41,8 @@ redcarpet:
   extensions: []
 
 kramdown:
+  input: GFM
+  syntax_highlighter: rouge
   auto_ids: true
   footnote_nr: 1
   entity_output: as_char
@@ -55,6 +57,11 @@ kramdown:
     tab_width: 4
     bold_every: 10
     css: style
+    span:
+      line_numbers: false
+    block:
+      line_numbers: false
+      start_line: 1
 
 redcloth:
   hard_breaks: true
