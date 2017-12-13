@@ -1,6 +1,7 @@
 ---
 layout: page
 ---
+## File formats
 ProjectTemplate can automatically load a variety of text based file formats, including comma separated value (CSV) files, tab separated value (TSV) files and generic whitespace separated value (WSV) files. In addition, automatic data loading is supported for several binary file formats, including the RData, SPSS, Stata and SAS formats.
 
 Beyond those file formats, several ad hoc file types support the loading of data sets that are accessible over HTTP or contained in SQL databases, such as MySQL and sqlite.
@@ -69,77 +70,77 @@ You can access CSV files over HTTP using the `.url` file extension. Inside
 of the `.url` file, you must place DCF that describes your data sources.
 An example file is shown below:
 
-        url: http://www.johnmyleswhite.com/ProjectTemplate/sample_data.csv
+    url: http://www.johnmyleswhite.com/ProjectTemplate/sample_data.csv
 
 ##### SQL Files
 ProjectTemplate supports access to many of the most common databases. All databases use the `.sql` file extension. Inside of the `.sql` file, you must place DCF that describes the connection protocol for your database. Example files for the support databases are shown below.
 
 ###### MySQL:
-        type: mysql
-        user: sample_user
-        password: sample_password
-        host: localhost
-        dbname: sample_database
-        table: sample_table
+    type: mysql
+    user: sample_user
+    password: sample_password
+    host: localhost
+    dbname: sample_database
+    table: sample_table
 
 ###### SQLite:
-        type: sqlite
-        dbname: /path/to/sample_database
-        table: sample_table
+    type: sqlite
+    dbname: /path/to/sample_database
+    table: sample_table
 
-        type: sqlite
-        dbname: /path/to/sample_database
-        query: SELECT * FROM users WHERE user_active == 1
-				
+    type: sqlite
+    dbname: /path/to/sample_database
+    query: SELECT * FROM users WHERE user_active == 1
+
 ###### PostgreSQL:
-        type: postgres
-        user: sample_user
-        password: sample_password
-        host: localhost
-        dbname: sample_database
-        table: sample_table
+    type: postgres
+    user: sample_user
+    password: sample_password
+    host: localhost
+    dbname: sample_database
+    table: sample_table
 
 ###### ODBC:
-        type: odbc
-        dsn: sample_dsn
-        user: sample_user
-        password: sample_password
-        dbname: sample_database
-        query: SELECT * FROM sample_table
+    type: odbc
+    dsn: sample_dsn
+    user: sample_user
+    password: sample_password
+    dbname: sample_database
+    query: SELECT * FROM sample_table
 
 ###### Oracle:
-        type: oracle
-        user: sample_user
-        password: sample_password
-        dbname: sample_database
-        table: sample_table
+    type: oracle
+    user: sample_user
+    password: sample_password
+    dbname: sample_database
+    table: sample_table
 
 ###### JDBC:
-        type: jdbc
-        class: org.jdbc.OracleDriver
-        classpath: /path/to/ojdbc5.jar (or set in CLASSPATH)
-        user: scott
-        password: tiger
-        url: jdbc:oracle:thin:@@myhost:1521:orcl
-        query: SELECT * FROM emp
+    type: jdbc
+    class: org.jdbc.OracleDriver
+    classpath: /path/to/ojdbc5.jar (or set in CLASSPATH)
+    user: scott
+    password: tiger
+    url: jdbc:oracle:thin:@@myhost:1521:orcl
+    query: SELECT * FROM emp
 
 ###### Heroku PostgreSQL:
 This is a special case of the JDBC driver. It requires the current [PostgreSQL JDBC jar file](http://jdbc.postgresql.org/download.html).
 
-        type: heroku
-        classpath: /path/to/jdbc4.jar (or set in CLASSPATH)
-        user: scott
-        password: tiger
-        host: heroku.postgres.url
-        port: 1234
-        dbname: herokudb 
-        query: select * from emp
+    type: heroku
+    classpath: /path/to/jdbc4.jar (or set in CLASSPATH)
+    user: scott
+    password: tiger
+    host: heroku.postgres.url
+    port: 1234
+    dbname: herokudb
+    query: select * from emp
 
 ##### .file Files
 You can load data that is not stored in the current project using a `.file` file. You must specify the path and the extension that the file would have, if it were being loaded by the standard ProjectTemplate auto-loader. An example is shown below that would load an SQLite3 database stored in a separate location:
 
-        path: /path/to/sample_database
-        extension: db
+    path: /path/to/sample_database
+    extension: db
 
 #### Future Support For Data Sources
 
