@@ -54,7 +54,7 @@ test_that('auto loaded data is cached by default', {
         # clear the global environment
         rm(list=ls(envir = .TargetEnv), envir = .TargetEnv)
 
-        test_data <- data.frame(Names=c("a", "b", "c"), Ages=c(20,30,40))
+        test_data <- tibble::as_tibble(data.frame(Names=c("a", "b", "c"), Ages=c(20,30,40)))
 
         # save test data as a csv in the data directory
         write.csv(test_data, file="data/test.csv", row.names = FALSE)
@@ -158,7 +158,7 @@ test_that('ignored data files are not loaded', {
   .save.config(config)
 
   # create some test data so the file can be loaded if not ignored
-  test_data <- data.frame(Names = c("a", "b", "c"), Ages = c(20,30,40))
+  test_data <- tibble::as_tibble(data.frame(Names = c("a", "b", "c"), Ages = c(20,30,40)))
 
   # write test data to files
   write.csv(test_data, file = 'data/test.csv', row.names = FALSE)

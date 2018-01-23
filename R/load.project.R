@@ -175,6 +175,8 @@ load.project <- function(override.config = NULL)
 
       if (config$data_tables) {
         .convert.to.data.table(vars.new)
+      } else {
+        .convert.to.tibble(vars.new)
       }
 
       if (config$cache_loaded_data && length(vars.new) > 0) {
@@ -200,6 +202,20 @@ load.project <- function(override.config = NULL)
     if (all(class(loaded.data) == 'data.frame')) {
       message(' Translating data.frame to data.table: ', data.set)
       assign(data.set, data.table::data.table(loaded.data), envir = .TargetEnv)
+    }
+  }
+}
+
+## Convert datasets to tibble
+.convert.to.tibble <- function(data.sets) {
+  require.package("tibble", FALSE)
+
+  for (data.set in data.sets) {
+    # Get current version of the dataset
+    loaded.data <- get(data.set, envir = .TargetEnv, inherits = FALSE)
+    if (all(class(loaded.data) == 'data.frame')) {
+      message(' Translating data.frame to tibble: ', data.set)
+      assign(data.set, tibble::as_tibble(loaded.data), envir = .TargetEnv)
     }
   }
 }
