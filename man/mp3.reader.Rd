@@ -26,4 +26,3 @@ library('ProjectTemplate')
 
 \dontrun{mp3.reader('example.mp3', 'data/example.mp3', 'example')}
 }
-

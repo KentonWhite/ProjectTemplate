@@ -25,4 +25,3 @@ library('ProjectTemplate')
 
 \dontrun{mtp.reader('example.mtp', 'data/example.mtp', 'example')}
 }
-

@@ -4,7 +4,7 @@
 \name{preinstalled.readers}
 \alias{preinstalled.readers}
 \title{Maps file types to the reader functions used to autoload them.}
-\format{An object of class \code{list} of length 52.}
+\format{An object of class \code{list} of length 53.}
 \usage{
 preinstalled.readers
 }
@@ -15,4 +15,3 @@ reader functions that implement autoloading for those formats. Any
 new file type must be appended to this dispatch table.
 }
 \keyword{datasets}
-

@@ -21,4 +21,3 @@ library('ProjectTemplate')
 \seealso{
 \code{\link{create.project}}
 }
-

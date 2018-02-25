@@ -24,4 +24,3 @@ library('ProjectTemplate')
 
 \dontrun{xport.reader('example.xport', 'data/example.xport', 'example')}
 }
-

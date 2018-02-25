@@ -1,5 +1,37 @@
-# ProjectTemplate 0.7 (2016-07-29)
+# ProjectTemplate 0.8 (2017-08-02)
 
+Features
+--------
+
+* Faster caching (#152, #155, #160, #166)
+* New clear() function to manage global environment (#167, #172, #173, #183)
+* New project.config() function and configuration help page (#164)
+* Renamed doc to docs and added references to GitHub Pages configuration (#180)
+* Added config option to treat the first row of a data file as header (current default) or not. (#168)
+* Change csv2.reader() behavior to act as expected when running  read.csv2() (#195)
+* Add list.data and incorporate in load.project (#187)
+
+Documentation
+------------
+
+Internal
+--------
+* Moved logger initialisation to before loading helper functions, See issue #150
+* Cleaner exit when running load.project() in the wrong directory (#157)
+* Allow to call RSQLite's initExtension() (#161)
+* Refactor migrate.project() and fix version tests (#162)
+* Clean exit for more functions when current directory is not valid Project template (#163)
+* Enable dcf files to contain R code that can be evaluated upon read (#169)
+* Changed execution environment of CODE chunks (#171)
+* Remove unused function .get.template.tar.path in create.project and old commented out code in load.project (#181)
+* Uniform reading/writing global.dcf (#184)
+* Ignore files in data directory (#178)
+* Remove warnings from Travis and devtools::test() checks (#188)
+* De-deprecated devtools installation command (#193)
+* Bug Fix:  Missing hash file causes failure in subsequent cache() operation (#194)
+
+0.7 (2016-07-29)
+ 
 Features
 --------
 

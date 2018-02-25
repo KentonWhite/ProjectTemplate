@@ -34,4 +34,3 @@ get.project()}
 \code{\link{create.project}}, \code{\link{load.project}},
   \code{\link{cache.project}}, \code{\link{show.project}}
 }
-

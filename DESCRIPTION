@@ -1,8 +1,8 @@
 Package: ProjectTemplate
 Type: Package
 Title: Automates the Creation of New Statistical Analysis Projects
-Version: 0.7
-Date: 2016-09-04
+Version: 0.8
+Date: 2017-08-02
 Authors@R: c( person("Aleksandar", "Blagotic", role = "ctb"),
     person("Diego", "Valle-Jones", role = "ctb"),
     person("Jeffrey", "Breen", role = "ctb"),
@@ -49,10 +49,11 @@ Suggests:
     RPostgreSQL,
     GetoptLong,
     whisker,
+    tibble,
     testthat (>= 0.8)
 URL: http://projecttemplate.net
 BugReports: https://github.com/johnmyleswhite/ProjectTemplate/issues
-Collate:
+Collate: 
     'add.config.R'
     'xport.reader.R'
     'xlsx.reader.R'
@@ -84,18 +85,23 @@ Collate:
     'cache.name.R'
     'cache.project.R'
     'clean.variable.name.R'
+    'clear.R'
     'clear.cache.R'
-    'create.project.R'
     'translate.dcf.R'
-    'default.config.R'
+    'config.R'
+    'create.project.R'
+    'create.template.R'
     'get.project.R'
     'help.R'
+    'list.data.R'
     'load.project.R'
     'migrate.project.R'
-    'new.config.R'
+    'migrate.template.R'
+    'project.config.R'
     'reload.project.R'
     'run.project.R'
     'show.project.R'
+    'stopifnotproject.R'
     'stub.tests.R'
     'test.project.R'
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1

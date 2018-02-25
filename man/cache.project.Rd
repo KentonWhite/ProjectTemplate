@@ -26,4 +26,3 @@ cache.project()}
 \code{\link{create.project}}, \code{\link{load.project}},
   \code{\link{get.project}}, \code{\link{show.project}}
 }
-

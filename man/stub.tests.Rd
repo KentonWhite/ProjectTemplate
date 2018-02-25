@@ -21,4 +21,3 @@ library('ProjectTemplate')
 
 \dontrun{stub.tests()}
 }
-

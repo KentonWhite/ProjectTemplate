@@ -26,4 +26,3 @@ library('ProjectTemplate')
 
 \dontrun{spss.reader('example.sav', 'data/example.sav', 'example')}
 }
-

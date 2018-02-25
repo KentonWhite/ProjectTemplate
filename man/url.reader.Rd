@@ -36,4 +36,3 @@ library('ProjectTemplate')
 
 \dontrun{url.reader('example.url', 'data/example.url', 'example')}
 }
-
