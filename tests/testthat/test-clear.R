@@ -19,8 +19,8 @@ test_that('running clear() with default parameters removes everything except con
 
   # default objects are config helper.function project.info
   # Because sticky_cvariables is not set, the config variable should be wiped also
-
-  expect_message(clear(), "clear from memory: config helper.function project.info")
+  # Using a regular expression as sometimes the list of cleared variables differs (notably .Random.seed)
+  expect_message(clear(), "clear from memory:.*?config.*?helper\\.function.*project.info.*")
 
   # check they don't exist
   expect_true(!exists(c("project.info", "helper.function"), envir = .TargetEnv))
