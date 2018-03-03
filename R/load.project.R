@@ -4,10 +4,16 @@
 #' the project from which it is called.  The behaviour can be controlled by
 #' adjusting the \code{\link{project.config}} configuration.
 #'
-#' @param override.config Named list, allows overriding individual configuration
-#'   items.
+#' @param ... Named arguments to override configuration from \code{config/global.dcf}
+#'   and \code{lib/global.R}
 #'
 #' @return No value is returned; this function is called for its side effects.
+#'
+#' @details \code{...} can take an argument override.config or a single named
+#'   list for backward compatibility. This cannot be mixed with the new style
+#'   override. When a named argument override.config is present it takes
+#'   precedence over the other options. If any of the provided arguments is
+#'   unnamed an error is raised.
 #'
 #' @export
 #'
@@ -18,7 +24,7 @@
 #' library('ProjectTemplate')
 #'
 #' \dontrun{load.project()}
-load.project <- function(override.config = NULL)
+load.project <- function(...)
 {
   project_name <- .stopifnotproject("Please change to correct directory and re-run load.project()")
 
@@ -27,7 +33,9 @@ load.project <- function(override.config = NULL)
   message('Project name: ', project_name)
   message('Loading project configuration')
 
+  override.config <- .parse.override.config(list(...))
   config <- .load.config(override.config)
+  config$.override.config <- override.config
   .check.version(config)
 
   assign('config', config, envir = .TargetEnv)
