@@ -4,11 +4,11 @@
 \alias{list.data}
 \title{Listing the data for the current project}
 \usage{
-list.data(override.config = NULL)
+list.data(...)
 }
 \arguments{
-\item{override.config}{Named list, allows overriding individual configuration
-items.}
+\item{...}{Named arguments to override configuration from \code{config/global.dcf}
+and \code{lib/global.R}.}
 }
 \value{
 A data.frame listing the available data, with relevant meta data
