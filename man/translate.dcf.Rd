@@ -20,7 +20,7 @@ for configuration settings and ad hoc file format specifications.
 }
 \details{
 The content of the DCF file are stored as character strings.  If the content
-is placed between the back tick character , then the content is 
+is placed between the back tick character , then the content is
 evaluated as R code and the result returned in a string
 }
 \examples{
