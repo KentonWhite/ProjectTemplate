@@ -172,7 +172,7 @@ test_that('ignored data files are not loaded', {
 
   # reload the project, now with recursive_loading
   rm(list = ls(envir = .TargetEnv), envir = .TargetEnv)
-  suppressMessages(load.project(override.config = list(recursive_loading = TRUE)))
+  suppressMessages(load.project(recursive_loading = TRUE))
   expect_equal(test, test_data)
   expect_equal(test.test, test_data)
 
@@ -180,42 +180,40 @@ test_that('ignored data files are not loaded', {
   # reload the project, now with an illegal Thumbs.db
   rm(list = ls(envir = .TargetEnv), envir = .TargetEnv)
   # The Thumbs.db is not a valid SQLite database so should raise an error
-  expect_error(load.project(override.config = list(data_ignore = '')), "file is encrypted or is not a database")
+  expect_error(load.project(data_ignore = ''), "file is encrypted or is not a database")
 
   # reload the project, ignore *.csv
   rm(list = ls(envir = .TargetEnv), envir = .TargetEnv)
-  suppressMessages(load.project(override.config = list(data_ignore = 'Thumbs.db, *.csv')))
+  suppressMessages(load.project(data_ignore = 'Thumbs.db, *.csv'))
   expect_false(exists("test", envir = .TargetEnv))
   expect_false(exists("test.test", envir = .TargetEnv))
 
   # reload the project, ignore *.csv with recursive loading
   rm(list = ls(envir = .TargetEnv), envir = .TargetEnv)
-  suppressMessages(load.project(override.config = list(data_ignore = 'Thumbs.db, *.csv',
-                                                       recursive_loading = TRUE)))
+  suppressMessages(load.project(data_ignore = 'Thumbs.db, *.csv',
+                                recursive_loading = TRUE))
   expect_false(exists("test", envir = .TargetEnv))
   expect_false(exists("test.test", envir = .TargetEnv))
 
   # reload the project, ignore test/*.csv with recursive loading
   rm(list = ls(envir = .TargetEnv), envir = .TargetEnv)
-  suppressMessages(load.project(override.config = list(data_ignore = 'Thumbs.db, test/*.csv',
-                                                       recursive_loading = TRUE)))
+  suppressMessages(load.project(data_ignore = 'Thumbs.db, test/*.csv',
+                                recursive_loading = TRUE))
   expect_equal(test, test_data)
   expect_false(exists("test.test", envir = .TargetEnv))
 
   # reload the project, ignore test/ with recursive loading
   rm(list = ls(envir = .TargetEnv), envir = .TargetEnv)
-  suppressMessages(load.project(override.config = list(data_ignore = 'Thumbs.db, test/',
-                                                       recursive_loading = TRUE)))
+  suppressMessages(load.project(data_ignore = 'Thumbs.db, test/',
+                                recursive_loading = TRUE))
   expect_equal(test, test_data)
   expect_false(exists("test.test", envir = .TargetEnv))
 
 
   # reload the project, ignore test/*.csv as a regular expression with recursive loading
   rm(list = ls(envir = .TargetEnv), envir = .TargetEnv)
-  suppressMessages(load.project(override.config = list(data_ignore = 'Thumbs.db, /test/.*\\.csv/',
-                                                       recursive_loading = TRUE)))
+  suppressMessages(load.project(data_ignore = 'Thumbs.db, /test/.*\\.csv/',
+                                recursive_loading = TRUE))
   expect_equal(test, test_data)
   expect_false(exists("test.test", envir = .TargetEnv))
 })
-
-
