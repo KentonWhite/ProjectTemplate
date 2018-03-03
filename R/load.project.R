@@ -5,7 +5,7 @@
 #' adjusting the \code{\link{project.config}} configuration.
 #'
 #' @param ... Named arguments to override configuration from \code{config/global.dcf}
-#'   and \code{lib/global.R}
+#'   and \code{lib/global.R}.
 #'
 #' @return No value is returned; this function is called for its side effects.
 #'
