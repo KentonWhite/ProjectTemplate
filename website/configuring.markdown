@@ -55,6 +55,12 @@ Note that commas need to be present after each config item except the last.  Com
 To use project specific configuaration in any `lib`, `munge` or `src` script, simply use the form `config$keep_data`.
 `ProjectTemplate` will automatically load project specific content in `lib/globals.R` before any other file in `lib`, so the filename should not be changed.
 The `add.config()` function can also be used anywhere in the project.  So if a particular analysis in `src` wanted to override the value in `globals.R`, you can simply add the relevant `add.config()` command to the top of that script.
+
 Another option to override the setting is to pass it to `load.project()` as with normal options:
 
     > load.project(keep_data = TRUE)
+
+This only works for calls to `add.config` with the parameter `apply.override` set
+to `TRUE`, for the moment this parameter defaults to `FALSE`. The `globals.R` file
+in the standard `full` template therefore includes two calls to `add.config` with
+an explanation which section could be overridden.

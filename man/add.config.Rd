@@ -4,7 +4,7 @@
 \alias{add.config}
 \title{Add project specific config to the global config}
 \usage{
-add.config(..., apply.override = TRUE)
+add.config(..., apply.override = FALSE)
 }
 \arguments{
 \item{...}{A series of key-value pairs containing the configuration.  The key is the

@@ -118,7 +118,8 @@ test_that('Override configuration to custom options is applied correctly', {
   on.exit(setwd(oldwd), add = TRUE)
   on.exit(clear(), add = TRUE)
 
-  writeLines('add.config(new_option = TRUE)', file.path('lib', 'globals.R'))
+  writeLines('add.config(new_option = TRUE, apply.override = TRUE)',
+             file.path('lib', 'globals.R'))
 
   expect_warning(load.project(), NA)
   expect_equal(config$new_option, TRUE)
@@ -138,7 +139,7 @@ test_that('Override configuration to built in and custom options is applied corr
   on.exit(setwd(oldwd), add = TRUE)
   on.exit(clear(), add = TRUE)
 
-  writeLines('add.config(new_option = TRUE)', file.path('lib', 'globals.R'))
+  writeLines('add.config(new_option = TRUE, apply.override = TRUE)', file.path('lib', 'globals.R'))
 
   expect_warning(load.project(), NA)
   expect_equal(config$new_option, TRUE)

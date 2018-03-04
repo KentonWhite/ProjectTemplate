@@ -27,7 +27,7 @@
 #'
 #' if (config$keep_bigdata) ...
 #' }
-add.config <- function(..., apply.override = TRUE){
+add.config <- function(..., apply.override = FALSE){
   project_config <- list(...)
   if (length(project_config) > 0 &&
         (is.null(names(project_config)) || any(names(project_config) == ""))) {
