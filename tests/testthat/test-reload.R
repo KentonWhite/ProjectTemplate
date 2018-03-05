@@ -1,6 +1,6 @@
 context('Reload project')
 
-test_that('override.config is passed through correctly to load.project', {
+test_that('Options are passed through correctly to load.project', {
         test_project <- tempfile('test_project')
         suppressMessages(create.project(test_project))
         on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
@@ -36,7 +36,7 @@ test_that('override.config is passed through correctly to load.project', {
         writeLines(CODE, "data/z.R")
 
         # reload the project but switch off data loading
-        suppressMessages(reload.project(override.config=list(data_loading=FALSE)))
+        suppressMessages(reload.project(data_loading = FALSE))
 
         # x should not exist in Global Env or the cache
         expect_true(!exists("x"))
@@ -145,7 +145,7 @@ test_that('reload.project with reset clears everything', {
         expect_true(.read.cache.info("x")$in.cache)
 
         # reload the project with reset and switch off data loading
-        suppressMessages(reload.project(override.config=list(data_loading=FALSE),
+        suppressMessages(reload.project(data_loading = FALSE,
                                         reset = TRUE))
 
         # Should find the cache empty, even though x is in sticky_variables

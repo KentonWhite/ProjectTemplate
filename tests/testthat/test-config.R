@@ -25,7 +25,7 @@ test_that('Unknown fields give a warning, except if start with hash', {
 
 })
 
-test_that('project.config() displays standard and additional config correctly', {
+test_that('project.config() displays config correctly', {
 
         test_project <- tempfile('test_project')
         suppressMessages(create.project(test_project))
@@ -42,17 +42,6 @@ test_that('project.config() displays standard and additional config correctly', 
 
         # check that the flipped value is displayed
         expect_message(project.config(), paste0("as_factors[ ]+", as.character(flipped_value)))
-
-        # create a new custom configuration
-        add.config(dummy=999)
-
-        # check that the Additional custom config is displayed
-        expect_message(project.config(), "Additional custom config present")
-
-
-        # check that the dummy value is displayed
-        expect_message(project.config(), "dummy[ ]+999")
-
 
 })
 

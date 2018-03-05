@@ -3,8 +3,8 @@
 #' This function produces a data.frame of all data files in the project, with
 #'   meta data on if and how the file will be loaded by \code{load.project}.
 #'
-#' @param override.config Named list, allows overriding individual configuration
-#'   items.
+#' @param ... Named arguments to override configuration from \code{config/global.dcf}
+#'   and \code{lib/global.R}.
 #'
 #' @return A data.frame listing the available data, with relevant meta data
 #'
@@ -43,7 +43,8 @@
 #' library('ProjectTemplate')
 #'
 #' \dontrun{list.data()}
-list.data <- function(override.config = NULL) {
+list.data <- function(...) {
+  override.config <- .parse.override.config(list(...))
   config <- .load.config(override.config)
   .list.data(config)
 }
@@ -114,7 +115,7 @@ list.data <- function(override.config = NULL) {
 .parse.extensions <- function(data.files) {
   readers <- character(length(data.files))
   varnames <- character(length(data.files))
-  
+
   for (extension in ls(extensions.dispatch.table)) {
     extension.match <- grepl(extension, data.files,
                              ignore.case = TRUE, perl = TRUE)

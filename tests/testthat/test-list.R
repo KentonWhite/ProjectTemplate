@@ -224,9 +224,8 @@ test_that('available data is listed correctly with data_ignore', {
   sort.df <- order(test.df$cache_only, test.df$filename, test.df$varname)
   test.df <- test.df[sort.df,]
 
-  override.config <- list(data_ignore = '',
-                          recursive_loading = TRUE)
-  expect_error(data.files <- list.data(override.config = override.config), NA)
+  expect_error(data.files <- list.data(data_ignore = '',
+                                       recursive_loading = TRUE), NA)
   expect_true(nrow(data.files) == 4)
   expect_equal(data.files$filename, test.df$filename)
   expect_equal(data.files$is_ignored, test.df$is_ignored)
@@ -251,8 +250,7 @@ test_that('available data is listed correctly with data_ignore', {
   sort.df <- order(test.df$cache_only, test.df$filename, test.df$varname)
   test.df <- test.df[sort.df,]
 
-  override.config <- list(data_ignore = '*.csv')
-  expect_error(data.files <- list.data(override.config = override.config), NA)
+  expect_error(data.files <- list.data(data_ignore = '*.csv'), NA)
   expect_true(nrow(data.files) == 4)
   expect_equal(data.files$filename, test.df$filename)
   expect_equal(data.files$is_ignored, test.df$is_ignored)
@@ -280,8 +278,8 @@ test_that('available data is listed correctly with data_ignore', {
   sort.df <- order(test.df$cache_only, test.df$filename, test.df$varname)
   test.df <- test.df[sort.df,]
 
-  override.config <- list(data_ignore = '*.csv', recursive_loading = TRUE)
-  expect_error(data.files <- list.data(override.config = override.config), NA)
+  expect_error(data.files <- list.data(data_ignore = '*.csv',
+                                       recursive_loading = TRUE), NA)
   expect_true(nrow(data.files) == 4)
   expect_equal(data.files$filename, test.df$filename)
   expect_equal(data.files$is_ignored, test.df$is_ignored)
@@ -310,9 +308,8 @@ test_that('available data is listed correctly with data_ignore', {
   sort.df <- order(test.df$cache_only, test.df$filename, test.df$varname)
   test.df <- test.df[sort.df,]
 
-  override.config <- list(data_ignore = '/^\\w*\\.csv/',
-                          recursive_loading = TRUE)
-  expect_error(data.files <- list.data(override.config = override.config), NA)
+  expect_error(data.files <- list.data(data_ignore = '/^\\w*\\.csv/',
+                                       recursive_loading = TRUE), NA)
   expect_true(nrow(data.files) == 4)
   expect_equal(data.files$filename, test.df$filename)
   expect_equal(data.files$is_ignored, test.df$is_ignored)
@@ -341,9 +338,8 @@ test_that('available data is listed correctly with data_ignore', {
   sort.df <- order(test.df$cache_only, test.df$filename, test.df$varname)
   test.df <- test.df[sort.df,]
 
-  override.config <- list(data_ignore = 'Thumbs.db, /^\\w*\\.csv/',
-                          recursive_loading = TRUE)
-  expect_error(data.files <- list.data(override.config = override.config), NA)
+  expect_error(data.files <- list.data(data_ignore = 'Thumbs.db, /^\\w*\\.csv/',
+                                       recursive_loading = TRUE), NA)
   expect_true(nrow(data.files) == 4)
   expect_equal(data.files$filename, test.df$filename)
   expect_equal(data.files$is_ignored, test.df$is_ignored)
@@ -373,9 +369,8 @@ test_that('available data is listed correctly with data_ignore', {
   sort.df <- order(test.df$cache_only, test.df$filename, test.df$varname)
   test.df <- test.df[sort.df,]
 
-  override.config <- list(data_ignore = 'Thumbs.db,,/^\\w*\\.csv/',
-                          recursive_loading = TRUE)
-  expect_error(data.files <- list.data(override.config = override.config), NA)
+  expect_error(data.files <- list.data(data_ignore = 'Thumbs.db,,/^\\w*\\.csv/',
+                                       recursive_loading = TRUE), NA)
   expect_true(nrow(data.files) == 4)
   expect_equal(data.files$filename, test.df$filename)
   expect_equal(data.files$is_ignored, test.df$is_ignored)
