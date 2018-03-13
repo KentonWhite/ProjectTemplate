@@ -98,6 +98,7 @@ Collate:
     'migrate.project.R'
     'migrate.template.R'
     'project.config.R'
+    'rds.reader.R'
     'reload.project.R'
     'run.project.R'
     'show.project.R'

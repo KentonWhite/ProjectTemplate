@@ -1123,3 +1123,28 @@ test_that('Example 42: SAS Support with .xpt Extension', {
 test_that('Example 43: ElasticSearch Support with .es Extension', {
 
 })
+
+test_that('Example 44: Single Object Serialization Support with .rds Extension', {
+  test_project <- tempfile('test_project')
+  suppressMessages(create.project(test_project))
+  on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
+
+  oldwd <- setwd(test_project)
+  on.exit(setwd(oldwd), add = TRUE)
+  suppressMessages(load.project())
+
+  data.file <- 'example_44.rds'
+  filename <- file.path(system.file('example_data',
+                                    package = 'ProjectTemplate'),
+                        'example_44.rds')
+  variable.name <- clean.variable.name('example_44')
+
+  rds.reader(data.file, filename, variable.name)
+
+  expect_that(exists(variable.name), is_true())
+  expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
+  expect_that(nrow(get(variable.name)), equals(5))
+  expect_that(ncol(get(variable.name)), equals(2))
+  expect_that(get(variable.name)[5, 2], equals(11))
+  rm(list = variable.name, envir = .TargetEnv)
+})
