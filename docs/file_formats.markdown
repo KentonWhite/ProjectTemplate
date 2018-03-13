@@ -40,6 +40,7 @@ Please note that several of file formats have not been tested yet, including Wek
 * `.txt.gz`: CSV files that use an arbitrary whitespace separator and are compressed using gzip.
 * `.RData`: .RData binary files produced by `save()`.
 * `.rda`: .RData binary files produced by `save()`.
+* `.rds`: .RDS binary files produced by `saveRDS()`.
 * `.R`: R source code files.
 * `.r`: R source code files.
 * `.url`: A DCF file that contains an HTTP URL and a type specification for a remote dataset.
