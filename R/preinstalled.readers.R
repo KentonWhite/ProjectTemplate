@@ -29,7 +29,7 @@
 #' @include xlsx.reader.R
 #' @include xport.reader.R
 
-preinstalled.readers <- 
+preinstalled.readers <-
 list("*.csv" = "csv.reader",
      "*.csv.bz2" = "csv.reader",
      "*.csv.zip" = "csv.reader",
@@ -57,6 +57,7 @@ list("*.csv" = "csv.reader",
      "*.RData" = "rdata.reader",
      "*.Rdata" = "rdata.reader",
      "*.rda" = "rdata.reader",
+     "*.rds" = "rds.reader",
      "*.R" = "r.reader",
      "*.r" = "r.reader",
      "*.url" = "url.reader",
