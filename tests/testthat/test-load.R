@@ -180,7 +180,7 @@ test_that('ignored data files are not loaded', {
   # reload the project, now with an illegal Thumbs.db
   rm(list = ls(envir = .TargetEnv), envir = .TargetEnv)
   # The Thumbs.db is not a valid SQLite database so should raise an error
-  expect_error(load.project(data_ignore = ''), "file is encrypted or is not a database")
+  expect_error(load.project(data_ignore = ''), "file is not a database")
 
   # reload the project, ignore *.csv
   rm(list = ls(envir = .TargetEnv), envir = .TargetEnv)
