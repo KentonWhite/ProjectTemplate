@@ -1,4 +1,30 @@
-# ProjectTemplate 0.8 (2017-08-02)
+# ProjectTemplate 0.8.2 (2018-04-20)
+
+0.8.2 (2018-04-20)
+
+Features
+--------
+
+* Uses the Tidyverse packages (#207)
+* Added custom templates (#206)
+* Added support for rds files (#224, #227)
+
+
+Documentation
+-------------
+
+* Documentation moved to `docs` folder.  Will automatically update on website
+
+Internal
+--------
+
+* Added tibble support (#218)
+* Moved from `xls` package to `readxl` package (#159, #219)
+* Allow overridng of globals (#222)
+* Fixed failing test for `RSQLlite` package (#228)
+
+
+0.8.1 (2017-08-28)
 
 Features
 --------
