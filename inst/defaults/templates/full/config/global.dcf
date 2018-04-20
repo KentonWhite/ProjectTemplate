@@ -1,4 +1,4 @@
-version: 0.8
+version: 0.8.2
 data_loading: TRUE
 data_loading_header: TRUE
 data_ignore:
