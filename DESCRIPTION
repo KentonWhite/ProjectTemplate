@@ -81,6 +81,7 @@ Collate:
     'arff.reader.R'
     'preinstalled.readers.R'
     'add.extension.R'
+    'addins.R'
     'cache.R'
     'cache.name.R'
     'cache.project.R'
