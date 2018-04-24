@@ -22,6 +22,10 @@
 #'   If \code{"force.empty"}, the target directory must be empty;
 #'   if \code{"allow.non.conflict"}, the method succeeds if no files or
 #'   directories with the same name exist in the target directory.
+#' @param rstudio.project A boolean value indicating whether the project should
+#'   also be an 'RStudio Project'. Defaults to \code{FALSE}. If \code{TRUE},
+#'   then a `projectname.Rproj` with usable defaults is added to the ProjectTemplate
+#'   directory.
 #'
 #' @return No value is returned; this function is called for its side effects.
 #'
@@ -38,7 +42,8 @@
 #'
 #' \dontrun{create.project('MyProject')}
 create.project <- function(project.name = 'new-project', template = 'full',
-                           dump = FALSE, merge.strategy = c("require.empty", "allow.non.conflict"))
+                           dump = FALSE, merge.strategy = c("require.empty", "allow.non.conflict"),
+                           rstudio.project = FALSE)
 {
 
   .stopifproject(c("Cannot create a new project inside an existing one",
@@ -50,9 +55,9 @@ create.project <- function(project.name = 'new-project', template = 'full',
 
   merge.strategy <- match.arg(merge.strategy)
   if (.is.dir(project.name)) {
-    .create.project.existing(project.name, merge.strategy, template)
+    .create.project.existing(project.name, merge.strategy, template, rstudio.project)
   } else
-    .create.project.new(project.name, template)
+    .create.project.new(project.name, template, rstudio.project)
 
   if (dump)
   {
@@ -74,7 +79,7 @@ create.project <- function(project.name = 'new-project', template = 'full',
   invisible(NULL)
 }
 
-.create.project.existing <- function(project.name, merge.strategy, template) {
+.create.project.existing <- function(project.name, merge.strategy, template, rstudio.project) {
   template.path <- .get.template(template)
   template.files <- .list.files.and.dirs(path = template.path)
 
@@ -104,9 +109,15 @@ create.project <- function(project.name = 'new-project', template = 'full',
   README.md <- file.path(project.path, "README.md")
   README <- readLines(README.md)
   writeLines(c(sprintf("# %s\n", basename(normalizePath(project.name))), README), README.md)
+
+  # Add RProj file to the project directory if the user has requested an RStudio project
+  if(rstudio.project){
+    rstudiopath <- file.path(project.path, paste0(project.name,'.Rproj'))
+    writeLines(.rstudioprojectfile(), rstudiopath)
+  }
 }
 
-.create.project.new <- function(project.name, template) {
+.create.project.new <- function(project.name, template, rstudio.project) {
   if (file.exists(project.name)) {
     stop(paste("Cannot run create.project() from a directory containing", project.name))
   }
@@ -115,7 +126,8 @@ create.project <- function(project.name = 'new-project', template = 'full',
   tryCatch(
     .create.project.existing(project.name = project.name,
                              merge.strategy = "require.empty",
-                             template = template),
+                             template = template,
+                             rstudio.project = rstudio.project),
     error = function(e) {
       unlink(project.name, recursive = TRUE)
       stop(e)
@@ -136,4 +148,8 @@ create.project <- function(project.name = 'new-project', template = 'full',
 
 .dir.empty <- function(path) {
   length(.list.files.and.dirs(path = path)) == 0
+}
+
+.rstudioprojectfile <- function(){
+  return("Version: 1.0\n\nRestoreWorkspace: DefaultSaveWorkspace: Default\nAlwaysSaveHistory: Default\n\nEnableCodeIndexing: Yes\nUseSpacesForTab: Yes\nNumSpacesForTab: 4\nEncoding: UTF-8\n\nRnwWeave: Sweave\nLaTeX: pdfLaTeX\n\nStripTrailingWhitespace: Yes")
 }

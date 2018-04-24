@@ -5,7 +5,8 @@
 \title{Create a new project.}
 \usage{
 create.project(project.name = "new-project", template = "full",
-  dump = FALSE, merge.strategy = c("require.empty", "allow.non.conflict"))
+  dump = FALSE, merge.strategy = c("require.empty", "allow.non.conflict"),
+  rstudio.project = FALSE)
 }
 \arguments{
 \item{project.name}{A character vector containing the name for this new
@@ -25,6 +26,11 @@ is not empty?
 If \code{"force.empty"}, the target directory must be empty;
 if \code{"allow.non.conflict"}, the method succeeds if no files or
 directories with the same name exist in the target directory.}
+
+\item{rstudio.project}{A boolean value indicating whether the project should
+also be an 'RStudio Project'. Defaults to \code{FALSE}. If \code{TRUE},
+then a `projectname.Rproj` with usable defaults is added to the ProjectTemplate
+directory.}
 }
 \value{
 No value is returned; this function is called for its side effects.
