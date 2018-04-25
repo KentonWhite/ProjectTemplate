@@ -3,7 +3,7 @@ context('Testing Autogeneration')
 test_that('stub.tests', {
 
   test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project, minimal = FALSE))
+  suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
   oldwd <- setwd(test_project)

@@ -1,8 +1,8 @@
 Package: ProjectTemplate
 Type: Package
 Title: Automates the Creation of New Statistical Analysis Projects
-Version: 0.7
-Date: 2016-09-04
+Version: 0.8.2
+Date: 2018-04-20
 Authors@R: c( person("Aleksandar", "Blagotic", role = "ctb"),
     person("Diego", "Valle-Jones", role = "ctb"),
     person("Jeffrey", "Breen", role = "ctb"),
@@ -41,6 +41,7 @@ Suggests:
     gdata,
     RODBC,
     RJDBC,
+    readxl,
     xlsx,
     tuneR,
     pixmap,
@@ -48,10 +49,11 @@ Suggests:
     RPostgreSQL,
     GetoptLong,
     whisker,
+    tibble,
     testthat (>= 0.8)
 URL: http://projecttemplate.net
 BugReports: https://github.com/johnmyleswhite/ProjectTemplate/issues
-Collate:
+Collate: 
     'add.config.R'
     'xport.reader.R'
     'xlsx.reader.R'
@@ -79,6 +81,7 @@ Collate:
     'arff.reader.R'
     'preinstalled.readers.R'
     'add.extension.R'
+    'addins.R'
     'cache.R'
     'cache.name.R'
     'cache.project.R'
@@ -88,11 +91,15 @@ Collate:
     'translate.dcf.R'
     'config.R'
     'create.project.R'
+    'create.template.R'
     'get.project.R'
     'help.R'
+    'list.data.R'
     'load.project.R'
     'migrate.project.R'
+    'migrate.template.R'
     'project.config.R'
+    'rds.reader.R'
     'reload.project.R'
     'run.project.R'
     'show.project.R'

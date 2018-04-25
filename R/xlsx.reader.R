@@ -1,7 +1,7 @@
 #' Read an Excel 2007 file with a .xlsx file extension.
 #'
 #' This function will load the specified Excel file into memory using the
-#' xlsx package. Each sheet of the Excel workbook will be read into a
+#' readxl package. Each sheet of the Excel workbook will be read into a
 #' separate variable in the global environment.
 #'
 #' @param data.file The name of the data file to be read.
@@ -16,18 +16,16 @@
 #' \dontrun{xlsx.reader('example.xlsx', 'data/example.xlsx', 'example')}
 xlsx.reader <- function(data.file, filename, workbook.name)
 {
-  .require.package('xlsx')
+  .require.package('readxl')
 
-  wb <- xlsx::loadWorkbook(filename)
-  sheets <- xlsx::getSheets(wb)
+  sheets <- readxl::excel_sheets(filename)
 
-  for (sheet.name in names(sheets))
+  for (sheet.name in sheets)
   {
     variable.name <- paste(workbook.name, clean.variable.name(sheet.name), sep = ".")
     tryCatch(assign(variable.name,
-                    xlsx::read.xlsx(filename,
-                              sheetName = sheet.name,
-                              header = config$data_loading_header),
+                    data.frame(readxl::read_excel(filename,
+                                       sheet = sheet.name)),
                     envir = .TargetEnv),
              error = function(e)
              {

@@ -8,7 +8,7 @@ test_that('Test 1: Add an extension', {
   expect_that(extensions.dispatch.table[['\\.foo1$']], equals('foo1.reader'))
 
   test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project, minimal = FALSE))
+  suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
   oldwd <- setwd(test_project)

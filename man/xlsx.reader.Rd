@@ -18,7 +18,7 @@ No value is returned; this function is called for its side effects.
 }
 \description{
 This function will load the specified Excel file into memory using the
-xlsx package. Each sheet of the Excel workbook will be read into a
+readxl package. Each sheet of the Excel workbook will be read into a
 separate variable in the global environment.
 }
 \examples{
