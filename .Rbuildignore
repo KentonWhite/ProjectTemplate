@@ -8,6 +8,7 @@
 ^TODO\.markdown$
 ^website$
 ^Makefile$
-^NEWS\.md$
-^NEWS\.md\.tmpl$
 ^cran-comments\.md$
+^ISSUE_TEMPLATE\.md$
+^_site$
+^docs$

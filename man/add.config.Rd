@@ -4,11 +4,15 @@
 \alias{add.config}
 \title{Add project specific config to the global config}
 \usage{
-add.config(...)
+add.config(..., apply.override = FALSE)
 }
 \arguments{
 \item{...}{A series of key-value pairs containing the configuration.  The key is the
-name that gets added to the config object.}
+name that gets added to the config object. These can be overridden at load
+time through the \code{...} argument to \code{\link{load.project}}.}
+
+\item{apply.override}{A boolean indicating wheter overrides should be applied. This
+can be used to add a setting disregarding arguments to \code{load.project}}
 }
 \description{
 Enables project specific configuation to be added to the global config object.  The
@@ -24,7 +28,7 @@ library('ProjectTemplate')
 \dontrun{
 add.config(
     keep_bigdata=TRUE,     # Whether to keep the big data file in memory
-    parse=7                # number of fields to parse 
+    parse=7                # number of fields to parse
 )
 
 if (config$keep_bigdata) ...

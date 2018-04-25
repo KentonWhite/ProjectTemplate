@@ -4,11 +4,11 @@
 \alias{load.project}
 \title{Automatically load data and packages for a project.}
 \usage{
-load.project(override.config = NULL)
+load.project(...)
 }
 \arguments{
-\item{override.config}{Named list, allows overriding individual configuration
-items.}
+\item{...}{Named arguments to override configuration from \code{config/global.dcf}
+and \code{lib/global.R}.}
 }
 \value{
 No value is returned; this function is called for its side effects.
@@ -17,6 +17,13 @@ No value is returned; this function is called for its side effects.
 This function automatically load all of the data and packages used by
 the project from which it is called.  The behaviour can be controlled by
 adjusting the \code{\link{project.config}} configuration.
+}
+\details{
+\code{...} can take an argument override.config or a single named
+  list for backward compatibility. This cannot be mixed with the new style
+  override. When a named argument override.config is present it takes
+  precedence over the other options. If any of the provided arguments is
+  unnamed an error is raised.
 }
 \examples{
 library('ProjectTemplate')

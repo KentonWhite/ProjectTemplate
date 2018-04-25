@@ -1,0 +1,9 @@
+Name: Load Project
+Description: Load data and packages in the project.
+Binding: loadproject_addin
+Interactive: false
+
+Name: Reload Project
+Description: Clear the global environment and reload the project.
+Binding: reloadproject_addin
+Interactive: false

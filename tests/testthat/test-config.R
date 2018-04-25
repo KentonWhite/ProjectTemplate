@@ -3,7 +3,7 @@ context('Configuration')
 test_that('Unknown fields give a warning, except if start with hash', {
 
   test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project, minimal = TRUE))
+  suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
   oldwd <- setwd(test_project)
@@ -25,55 +25,44 @@ test_that('Unknown fields give a warning, except if start with hash', {
 
 })
 
-test_that('project.config() displays standard and additional config correctly', {
-        
+test_that('project.config() displays config correctly', {
+
         test_project <- tempfile('test_project')
-        suppressMessages(create.project(test_project, minimal = TRUE))
+        suppressMessages(create.project(test_project))
         on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
-        
+
         oldwd <- setwd(test_project)
         on.exit(setwd(oldwd), add = TRUE)
-        
+
         # Read the config and flip a value
         config <- .read.config()
         flipped_value <- !config$as_factors
         config$as_factors <- flipped_value
         .save.config(config)
-        
+
         # check that the flipped value is displayed
         expect_message(project.config(), paste0("as_factors[ ]+", as.character(flipped_value)))
-        
-        # create a new custom configuration
-        add.config(dummy=999)
-        
-        # check that the Additional custom config is displayed
-        expect_message(project.config(), "Additional custom config present")
-        
-        
-        # check that the dummy value is displayed
-        expect_message(project.config(), "dummy[ ]+999")
-        
-        
+
 })
 
 test_that('R code in between back ticks is evaluated in config files', {
-        
+
         test_project <- tempfile('test_project')
-        suppressMessages(create.project(test_project, minimal = TRUE))
+        suppressMessages(create.project(test_project))
         on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
-        
+
         oldwd <- setwd(test_project)
         on.exit(setwd(oldwd), add = TRUE)
-        
+
         # Set an environment variable to an old version number
         Sys.setenv(version="0.1")
         on.exit(Sys.unsetenv("version"))
-        
+
         config <- .load.config()
         #change the version number field to be some R code to retrieve the environment variable
         config$version <- '`Sys.getenv("version")`'
         write.dcf(config, .project.config)
-        
+
         expect_warning(load.project(), "compatible with version 0.1")
-        
+
 })

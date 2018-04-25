@@ -4,7 +4,7 @@
 \name{preinstalled.readers}
 \alias{preinstalled.readers}
 \title{Maps file types to the reader functions used to autoload them.}
-\format{An object of class \code{list} of length 53.}
+\format{An object of class \code{list} of length 54.}
 \usage{
 preinstalled.readers
 }

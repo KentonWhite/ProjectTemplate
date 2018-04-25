@@ -64,7 +64,7 @@ expect_minimal <- function() {
 test_that('Full project', {
 
   test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project, minimal = FALSE))
+  suppressMessages(create.project(test_project, template = 'full'))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
   oldwd <- setwd(test_project)
@@ -80,7 +80,7 @@ test_that('Full project', {
 test_that('Miminal project', {
 
   test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project, minimal = TRUE))
+  suppressMessages(create.project(test_project, template = 'minimal'))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
   oldwd <- setwd(test_project)
@@ -100,7 +100,7 @@ test_that('Test full project into existing directory', {
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
   expect_that(file.exists(file.path(test_project)), is_true())
 
-  suppressMessages(create.project(test_project, minimal = FALSE))
+  suppressMessages(create.project(test_project, template = 'full'))
 
   oldwd <- setwd(test_project)
   on.exit(setwd(oldwd), add = TRUE)
@@ -120,7 +120,7 @@ test_that('Test minimal project into existing directory with an unrelated entry'
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
   expect_that(file.exists(file.path(test_project)), is_true())
 
-  suppressMessages(create.project(test_project, minimal = TRUE, merge.strategy = "allow.non.conflict"))
+  suppressMessages(create.project(test_project, template = 'minimal', merge.strategy = "allow.non.conflict"))
 
   oldwd <- setwd(test_project)
   on.exit(setwd(oldwd), add = TRUE)
@@ -146,7 +146,7 @@ test_that('Test failure creating project into existing directory with an unrelat
 
   expect_error(
     suppressMessages(
-      create.project(test_project, minimal = TRUE), "not empty"))
+      create.project(test_project, template = 'minimal'), "not empty"))
 
 })
 
@@ -163,7 +163,7 @@ test_that('Test failure creating project in directory with existing empty direct
 
   expect_error(
     suppressMessages(
-      create.project(test_project, minimal = TRUE,
+      create.project(test_project, template = 'minimal',
                      merge.strategy = "allow.non.conflict"), "overwrite"))
 
 })
@@ -181,7 +181,7 @@ test_that('Test failure creating project in directory with existing file matchin
 
   expect_error(
     suppressMessages(
-      create.project(test_project, minimal = TRUE,
+      create.project(test_project, template = 'minimal',
                      merge.strategy = "allow.non.conflict"), "overwrite"))
 
 })
@@ -199,7 +199,7 @@ test_that('Test failure creating project in directory with existing empty direct
 
   expect_error(
     suppressMessages(
-      create.project(test_project, minimal = TRUE,
+      create.project(test_project, template = 'minimal',
                      merge.strategy = "allow.non.conflict"), "overwrite"))
 
 
@@ -218,14 +218,14 @@ test_that('Test failure creating project in directory with existing file matchin
 
   expect_error(
     suppressMessages(
-      create.project(test_project, minimal = TRUE,
+      create.project(test_project, template = 'minimal',
                      merge.strategy = "allow.non.conflict"), "overwrite"))
 
 })
 
 test_that('Dont create projects inside other projects', {
         test_project <- tempfile('test_project')
-        suppressMessages(create.project(test_project, minimal = FALSE))
+        suppressMessages(create.project(test_project, template = 'full'))
         on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
         oldwd <- setwd(test_project)

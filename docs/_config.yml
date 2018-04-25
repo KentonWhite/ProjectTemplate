@@ -1,0 +1,67 @@
+source: .
+destination: ./_site
+plugins_dir:     ./_plugins
+layouts_dir:     ./_layouts
+include:     ['.htaccess']
+exclude:     []
+keep_files:  ['.git','.svn']
+plugins:     []
+timezone:    nil
+encoding:    UTF-8
+
+future:      true
+show_drafts: nil
+limit_posts: 0
+
+permalink:     date
+paginate_path: 'page:num'
+
+markdown:      kramdown
+highlighter: rouge
+markdown_ext:  markdown,mkd,mkdn,md
+textile_ext:   textile
+
+excerpt_separator: "\n\n"
+
+safe:        true
+url:         http://projecttemplate.net
+lsi:         false
+
+maruku:
+  use_tex:    false
+  use_divs:   false
+  png_engine: blahtex
+  png_dir:    images/latex
+  png_url:    /images/latex
+
+rdiscount:
+  extensions: []
+
+redcarpet:
+  extensions: []
+
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  auto_ids: true
+  footnote_nr: 1
+  entity_output: as_char
+  toc_levels: 1..6
+  smart_quotes: lsquo,rsquo,ldquo,rdquo
+  enable_coderay: false
+
+  syntax_highlighter_opts:
+    wrap: div
+    line_numbers: inline
+    line_numbers_start: 1
+    tab_width: 4
+    bold_every: 10
+    css: style
+    span:
+      line_numbers: false
+    block:
+      line_numbers: false
+      start_line: 1
+
+redcloth:
+  hard_breaks: true

@@ -1,0 +1,16 @@
+version: 0.8.2
+data_loading: TRUE
+data_loading_header: TRUE
+data_ignore:
+cache_loading: TRUE
+recursive_loading: FALSE
+munging: TRUE
+logging: FALSE
+logging_level: INFO
+load_libraries: FALSE
+libraries: reshape2, plyr, tidyverse, stringr, lubridate
+as_factors: TRUE
+data_tables: FALSE
+attach_internal_libraries: FALSE
+cache_loaded_data:  TRUE
+sticky_variables: NONE

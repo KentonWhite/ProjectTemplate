@@ -4,10 +4,16 @@
 #' the project from which it is called.  The behaviour can be controlled by
 #' adjusting the \code{\link{project.config}} configuration.
 #'
-#' @param override.config Named list, allows overriding individual configuration
-#'   items.
+#' @param ... Named arguments to override configuration from \code{config/global.dcf}
+#'   and \code{lib/global.R}.
 #'
 #' @return No value is returned; this function is called for its side effects.
+#'
+#' @details \code{...} can take an argument override.config or a single named
+#'   list for backward compatibility. This cannot be mixed with the new style
+#'   override. When a named argument override.config is present it takes
+#'   precedence over the other options. If any of the provided arguments is
+#'   unnamed an error is raised.
 #'
 #' @export
 #'
@@ -18,7 +24,7 @@
 #' library('ProjectTemplate')
 #'
 #' \dontrun{load.project()}
-load.project <- function(override.config = NULL)
+load.project <- function(...)
 {
   project_name <- .stopifnotproject("Please change to correct directory and re-run load.project()")
 
@@ -27,7 +33,9 @@ load.project <- function(override.config = NULL)
   message('Project name: ', project_name)
   message('Loading project configuration')
 
+  override.config <- .parse.override.config(list(...))
   config <- .load.config(override.config)
+  config$.override.config <- override.config
   .check.version(config)
 
   assign('config', config, envir = .TargetEnv)
@@ -156,7 +164,7 @@ load.project <- function(override.config = NULL)
       cache.files.loaded <- c(cache.files.loaded, variable)
     } else if (config$data_loading) {
       # Check if a reader was found for the file
-      has_reader <- data.file$reader != ''
+      has_reader <- ((class(data.file$reader[[1]]) == "function") || !(data.file$reader[[1]] == ''))
       if (!has_reader) {
         next()
       }
@@ -169,12 +177,14 @@ load.project <- function(override.config = NULL)
       # Register current variables
       vars.old <- .var.diff.from()
       # Actually load the data
-      do.call(data.file$reader, reader.args)
+      do.call(data.file$reader[[1]], reader.args)
       # Get new variables introduced by the reader
       vars.new <- .var.diff.from(vars.old)
 
       if (config$data_tables) {
         .convert.to.data.table(vars.new)
+      } else {
+        .convert.to.tibble(vars.new)
       }
 
       if (config$cache_loaded_data && length(vars.new) > 0) {
@@ -200,6 +210,20 @@ load.project <- function(override.config = NULL)
     if (all(class(loaded.data) == 'data.frame')) {
       message(' Translating data.frame to data.table: ', data.set)
       assign(data.set, data.table::data.table(loaded.data), envir = .TargetEnv)
+    }
+  }
+}
+
+## Convert datasets to tibble
+.convert.to.tibble <- function(data.sets) {
+  require.package("tibble", FALSE)
+
+  for (data.set in data.sets) {
+    # Get current version of the dataset
+    loaded.data <- get(data.set, envir = .TargetEnv, inherits = FALSE)
+    if (all(class(loaded.data) == 'data.frame')) {
+      message(' Translating data.frame to tibble: ', data.set)
+      assign(data.set, tibble::as_tibble(loaded.data), envir = .TargetEnv)
     }
   }
 }

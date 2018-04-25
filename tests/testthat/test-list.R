@@ -1,20 +1,13 @@
 context('List data')
 
 temp_csv_file <- function(dir = '') {
-  # Generates a random filename for a temporary file, possibly in a subdirectory
-  gsub('^/', # Matches a leading /
-       '',   # Replaces with nothing
-       gsub('\\\\', # Matches a \ (needs escaping once for string literal, once for regex)
-            '/',    # Replaces with / (needed on Windows systems)
-            tempfile(pattern = "file", tmpdir = dir, fileext = ".csv")
-       )
-  )
+  gsub('^[/\\\\]', '', tempfile(pattern = "file", tmpdir = dir, fileext = ".csv"))
 }
 
 test_that('available data is listed correctly with default configuration', {
   # Create temporary project
   test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project, minimal = FALSE))
+  suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
   # Set temporary project as working directory
@@ -48,9 +41,9 @@ test_that('available data is listed correctly with default configuration', {
   expect_true("varname" %in% names(data.files))
   expect_true(class(data.files$varname) == "character")
 
-  # Check data.frame has a character variable "reader"
+  # Check data.frame has a list variable "reader"
   expect_true("reader" %in% names(data.files))
-  expect_true(class(data.files$reader) == "character")
+  expect_true(class(data.files$reader) == "list")
 
   # Check data.frame has a logical variable "is_ignored"
   expect_true("is_ignored" %in% names(data.files))
@@ -76,13 +69,15 @@ test_that('available data is listed correctly with default configuration', {
   test.df <- data.frame(
     filename = c(test_file1, 'README.md', 'test'),
     varname = c(gsub('.csv', '', test_file1), "", ""),
-    reader = c('csv.reader', "", ""),
     is_ignored = c(FALSE, FALSE, FALSE),
     is_directory = c(FALSE, FALSE, TRUE),
     is_cached = c(FALSE, FALSE, FALSE),
     cache_only = c(FALSE, FALSE, FALSE),
     stringsAsFactors = FALSE
   )
+
+  test.df$reader <- list('csv.reader', '', '')
+
   # Sort data.frame according to collation of the testing process (for example
   # LC_COLLATE=C and LC_COLLATE=en_US.UTF-8 return different order)
   sort.df <- order(test.df$cache_only, test.df$filename, test.df$varname)
@@ -100,7 +95,7 @@ test_that('available data is listed correctly with default configuration', {
 test_that('available data is listed correctly with recursive_loading = TRUE', {
   # Create temporary project
   test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project, minimal = FALSE))
+  suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
   # Set temporary project as working directory
@@ -126,17 +121,18 @@ test_that('available data is listed correctly with recursive_loading = TRUE', {
 
   # Setup test data.frame
   test.df <- data.frame(
-    filename = c(test_file1, 'README.md', test_file2),
+    filename = c(test_file1, 'README.md', gsub("\\\\", "/", test_file2)),
     varname = c(gsub('.csv', '', test_file1),
                 "",
-                gsub('/', '.', gsub('.csv', '', test_file2))),
-    reader = c("csv.reader", "", "csv.reader"),
+                gsub('[/\\\\]', '.', gsub('.csv', '', test_file2))),
     is_ignored = c(FALSE, FALSE, FALSE),
     is_directory = c(FALSE, FALSE, FALSE),
     is_cached = c(FALSE, FALSE, FALSE),
     cache_only = c(FALSE, FALSE, FALSE),
     stringsAsFactors = FALSE
   )
+  test.df$reader <- list("csv.reader", "", "csv.reader")
+
   # Sort data.frame according to collation of the testing process (for example
   # LC_COLLATE=C and LC_COLLATE=en_US.UTF-8 return different order)
   sort.df <- order(test.df$cache_only, test.df$filename, test.df$varname)
@@ -159,7 +155,7 @@ test_that('available data is listed correctly with recursive_loading = TRUE', {
 test_that('available data is listed correctly with data_ignore', {
   # Create temporary project
   test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project, minimal = FALSE))
+  suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
   # Set temporary project as working directory
@@ -211,10 +207,10 @@ test_that('available data is listed correctly with data_ignore', {
   #   - test/fileYYYYY.csv (test_file2, not ignored)
   #   - Thumbs.db (not ignored)
   test.df <- data.frame(
-    filename = c(test_file1, 'README.md', test_file2, 'Thumbs.db'),
+    filename = c(test_file1, 'README.md', gsub("\\\\", "/", test_file2), 'Thumbs.db'),
     varname = c(gsub('.csv', '', test_file1),
                 "",
-                gsub('/', '.', gsub('.csv', '', test_file2)),
+                gsub('[/\\\\]', '.', gsub('.csv', '', test_file2)),
                 ""),
     reader = c("csv.reader", "", "csv.reader", ""),
     is_ignored = c(FALSE, FALSE, FALSE, FALSE),
@@ -228,9 +224,8 @@ test_that('available data is listed correctly with data_ignore', {
   sort.df <- order(test.df$cache_only, test.df$filename, test.df$varname)
   test.df <- test.df[sort.df,]
 
-  override.config <- list(data_ignore = '',
-                          recursive_loading = TRUE)
-  expect_error(data.files <- list.data(override.config = override.config), NA)
+  expect_error(data.files <- list.data(data_ignore = '',
+                                       recursive_loading = TRUE), NA)
   expect_true(nrow(data.files) == 4)
   expect_equal(data.files$filename, test.df$filename)
   expect_equal(data.files$is_ignored, test.df$is_ignored)
@@ -255,8 +250,7 @@ test_that('available data is listed correctly with data_ignore', {
   sort.df <- order(test.df$cache_only, test.df$filename, test.df$varname)
   test.df <- test.df[sort.df,]
 
-  override.config <- list(data_ignore = '*.csv')
-  expect_error(data.files <- list.data(override.config = override.config), NA)
+  expect_error(data.files <- list.data(data_ignore = '*.csv'), NA)
   expect_true(nrow(data.files) == 4)
   expect_equal(data.files$filename, test.df$filename)
   expect_equal(data.files$is_ignored, test.df$is_ignored)
@@ -267,10 +261,10 @@ test_that('available data is listed correctly with data_ignore', {
   #   - test/fileYYYYY.csv (test_file2, not ignored)
   #   - Thumbs.db (not ignored)
   test.df <- data.frame(
-    filename = c(test_file1, 'README.md', test_file2, 'Thumbs.db'),
+    filename = c(test_file1, 'README.md', gsub("\\\\", "/", test_file2), 'Thumbs.db'),
     varname = c(gsub('.csv', '', test_file1),
                 "",
-                gsub('/', '.', gsub('.csv', '', test_file2)),
+                gsub('[/\\\\]', '.', gsub('.csv', '', test_file2)),
                 ""),
     reader = c("csv.reader", "", "csv.reader", ""),
     is_ignored = c(TRUE, FALSE, TRUE, FALSE),
@@ -284,8 +278,8 @@ test_that('available data is listed correctly with data_ignore', {
   sort.df <- order(test.df$cache_only, test.df$filename, test.df$varname)
   test.df <- test.df[sort.df,]
 
-  override.config <- list(data_ignore = '*.csv', recursive_loading = TRUE)
-  expect_error(data.files <- list.data(override.config = override.config), NA)
+  expect_error(data.files <- list.data(data_ignore = '*.csv',
+                                       recursive_loading = TRUE), NA)
   expect_true(nrow(data.files) == 4)
   expect_equal(data.files$filename, test.df$filename)
   expect_equal(data.files$is_ignored, test.df$is_ignored)
@@ -297,10 +291,10 @@ test_that('available data is listed correctly with data_ignore', {
   #   - test/fileYYYYY.csv (test_file2, not ignored)
   #   - Thumbs.db (not ignored)
   test.df <- data.frame(
-    filename = c(test_file1, 'README.md', test_file2, 'Thumbs.db'),
+    filename = c(test_file1, 'README.md', gsub("\\\\", "/", test_file2), 'Thumbs.db'),
     varname = c(gsub('.csv', '', test_file1),
                 "",
-                gsub('/', '.', gsub('.csv', '', test_file2)),
+                gsub('[/\\\\]', '.', gsub('.csv', '', test_file2)),
                 ""),
     reader = c("csv.reader", "", "csv.reader", ""),
     is_ignored = c(TRUE, FALSE, FALSE, FALSE),
@@ -314,9 +308,8 @@ test_that('available data is listed correctly with data_ignore', {
   sort.df <- order(test.df$cache_only, test.df$filename, test.df$varname)
   test.df <- test.df[sort.df,]
 
-  override.config <- list(data_ignore = '/^\\w*\\.csv/',
-                          recursive_loading = TRUE)
-  expect_error(data.files <- list.data(override.config = override.config), NA)
+  expect_error(data.files <- list.data(data_ignore = '/^\\w*\\.csv/',
+                                       recursive_loading = TRUE), NA)
   expect_true(nrow(data.files) == 4)
   expect_equal(data.files$filename, test.df$filename)
   expect_equal(data.files$is_ignored, test.df$is_ignored)
@@ -328,10 +321,10 @@ test_that('available data is listed correctly with data_ignore', {
   #   - test/fileYYYYY.csv (test_file2, not ignored)
   #   - Thumbs.db (ignored)
   test.df <- data.frame(
-    filename = c(test_file1, 'README.md', test_file2, 'Thumbs.db'),
+    filename = c(test_file1, 'README.md', gsub("\\\\", "/", test_file2), 'Thumbs.db'),
     varname = c(gsub('.csv', '', test_file1),
                 "",
-                gsub('/', '.', gsub('.csv', '', test_file2)),
+                gsub('[/\\\\]', '.', gsub('.csv', '', test_file2)),
                 ""),
     reader = c("csv.reader", "", "csv.reader", ""),
     is_ignored = c(TRUE, FALSE, FALSE, TRUE),
@@ -345,9 +338,8 @@ test_that('available data is listed correctly with data_ignore', {
   sort.df <- order(test.df$cache_only, test.df$filename, test.df$varname)
   test.df <- test.df[sort.df,]
 
-  override.config <- list(data_ignore = 'Thumbs.db, /^\\w*\\.csv/',
-                          recursive_loading = TRUE)
-  expect_error(data.files <- list.data(override.config = override.config), NA)
+  expect_error(data.files <- list.data(data_ignore = 'Thumbs.db, /^\\w*\\.csv/',
+                                       recursive_loading = TRUE), NA)
   expect_true(nrow(data.files) == 4)
   expect_equal(data.files$filename, test.df$filename)
   expect_equal(data.files$is_ignored, test.df$is_ignored)
@@ -360,10 +352,10 @@ test_that('available data is listed correctly with data_ignore', {
   #   - test/fileYYYYY.csv (test_file2, not ignored)
   #   - Thumbs.db (ignored)
   test.df <- data.frame(
-    filename = c(test_file1, 'README.md', test_file2, 'Thumbs.db'),
+    filename = c(test_file1, 'README.md', gsub("\\\\", "/", test_file2), 'Thumbs.db'),
     varname = c(gsub('.csv', '', test_file1),
                 "",
-                gsub('/', '.', gsub('.csv', '', test_file2)),
+                gsub('[/\\\\]', '.', gsub('.csv', '', test_file2)),
                 ""),
     reader = c("csv.reader", "", "csv.reader", ""),
     is_ignored = c(TRUE, FALSE, FALSE, TRUE),
@@ -377,9 +369,8 @@ test_that('available data is listed correctly with data_ignore', {
   sort.df <- order(test.df$cache_only, test.df$filename, test.df$varname)
   test.df <- test.df[sort.df,]
 
-  override.config <- list(data_ignore = 'Thumbs.db,,/^\\w*\\.csv/',
-                          recursive_loading = TRUE)
-  expect_error(data.files <- list.data(override.config = override.config), NA)
+  expect_error(data.files <- list.data(data_ignore = 'Thumbs.db,,/^\\w*\\.csv/',
+                                       recursive_loading = TRUE), NA)
   expect_true(nrow(data.files) == 4)
   expect_equal(data.files$filename, test.df$filename)
   expect_equal(data.files$is_ignored, test.df$is_ignored)
@@ -388,7 +379,7 @@ test_that('available data is listed correctly with data_ignore', {
 test_that('cached data is listed correctly as already cached', {
   # Create temporary project
   test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project, minimal = FALSE))
+  suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
   # Set temporary project as working directory
@@ -464,7 +455,7 @@ test_that('cached data is listed correctly as already cached', {
 test_that('cached data created during munging listed as cached only', {
   # Create temporary project
   test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project, minimal = FALSE))
+  suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
   # Set temporary project as working directory

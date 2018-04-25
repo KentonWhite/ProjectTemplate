@@ -10,3 +10,4 @@ db
 .Rproj.user
 /.Rhistory
 _site
+/tests/.Rhistory

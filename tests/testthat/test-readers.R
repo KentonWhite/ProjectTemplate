@@ -2,7 +2,7 @@ context('Readers')
 
 test_that('Test 1: CSV Data file', {
   test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project, minimal = FALSE))
+  suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
   oldwd <- setwd(test_project)
@@ -28,7 +28,7 @@ test_that('Test 1: CSV Data file', {
 
 test_that('Test 2: .csv.bz2', {
   test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project, minimal = FALSE))
+  suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
   oldwd <- setwd(test_project)
@@ -55,7 +55,7 @@ test_that('Test 2: .csv.bz2', {
 
 test_that('Test 3: csv.zip data', {
   test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project, minimal = FALSE))
+  suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
   oldwd <- setwd(test_project)
@@ -82,7 +82,7 @@ test_that('Test 3: csv.zip data', {
 
 test_that('Example 04: CSV Data File with GZip Compression', {
   test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project, minimal = FALSE))
+  suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
   oldwd <- setwd(test_project)
@@ -109,7 +109,7 @@ test_that('Example 04: CSV Data File with GZip Compression', {
 
 test_that('Example 05: TSV Data File', {
   test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project, minimal = FALSE))
+  suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
   oldwd <- setwd(test_project)
@@ -136,7 +136,7 @@ test_that('Example 05: TSV Data File', {
 
 test_that('Example 06: TSV Data File with BZip2 Compression', {
   test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project, minimal = FALSE))
+  suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
   oldwd <- setwd(test_project)
@@ -163,7 +163,7 @@ test_that('Example 06: TSV Data File with BZip2 Compression', {
 
 test_that('Example 07: TSV Data File with Zip Compression', {
   test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project, minimal = FALSE))
+  suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
   oldwd <- setwd(test_project)
@@ -190,7 +190,7 @@ test_that('Example 07: TSV Data File with Zip Compression', {
 
 test_that('Example 08: TSV Data File with GZip Compression', {
   test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project, minimal = FALSE))
+  suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
   oldwd <- setwd(test_project)
@@ -216,7 +216,7 @@ test_that('Example 08: TSV Data File with GZip Compression', {
 
 test_that('Example 09: WSV Data File', {
   test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project, minimal = FALSE))
+  suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
   oldwd <- setwd(test_project)
@@ -244,7 +244,7 @@ test_that('Example 09: WSV Data File', {
 
 test_that('Example 10: WSV Data File with BZip2 Compression', {
   test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project, minimal = FALSE))
+  suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
   oldwd <- setwd(test_project)
@@ -271,7 +271,7 @@ test_that('Example 10: WSV Data File with BZip2 Compression', {
 
 test_that('Example 11: WSV Data File with Zip Compression', {
   test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project, minimal = FALSE))
+  suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
   oldwd <- setwd(test_project)
@@ -297,7 +297,7 @@ test_that('Example 11: WSV Data File with Zip Compression', {
 
 test_that('Example 12: WSV Data File with GZip Compression', {
   test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project, minimal = FALSE))
+  suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
   oldwd <- setwd(test_project)
@@ -324,7 +324,7 @@ test_that('Example 12: WSV Data File with GZip Compression', {
 
 test_that('Example 13: RData Data File with .RData Extension', {
   test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project, minimal = FALSE))
+  suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
   oldwd <- setwd(test_project)
@@ -351,7 +351,7 @@ test_that('Example 13: RData Data File with .RData Extension', {
 
 test_that('Example 14: RData Data File with .rda Extension', {
   test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project, minimal = FALSE))
+  suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
   oldwd <- setwd(test_project)
@@ -383,7 +383,7 @@ test_that('Example 15: URL File with .url Extension', {
 
 test_that('Example 16: TSV File with .tab Extension', {
   test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project, minimal = FALSE))
+  suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
   oldwd <- setwd(test_project)
@@ -409,7 +409,7 @@ test_that('Example 16: TSV File with .tab Extension', {
 
 test_that('Example 17: TSV File with .tab Extension and BZip2 Compression', {
   test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project, minimal = FALSE))
+  suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
   oldwd <- setwd(test_project)
@@ -435,7 +435,7 @@ test_that('Example 17: TSV File with .tab Extension and BZip2 Compression', {
 
 test_that('Example 18: TSV File with .tab Extension and Zip Compression', {
   test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project, minimal = FALSE))
+  suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
   oldwd <- setwd(test_project)
@@ -461,7 +461,7 @@ test_that('Example 18: TSV File with .tab Extension and Zip Compression', {
 
 test_that('Example 19: TSV File with .tab Extension and GZip Compression', {
   test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project, minimal = FALSE))
+  suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
   oldwd <- setwd(test_project)
@@ -488,7 +488,7 @@ test_that('Example 19: TSV File with .tab Extension and GZip Compression', {
 
 test_that('Example 20: WSV File with .txt Extension', {
   test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project, minimal = FALSE))
+  suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
   oldwd <- setwd(test_project)
@@ -515,7 +515,7 @@ test_that('Example 20: WSV File with .txt Extension', {
 
 test_that('Example 21: WSV File with .txt Extension and BZip2 Compression', {
   test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project, minimal = FALSE))
+  suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
   oldwd <- setwd(test_project)
@@ -542,7 +542,7 @@ test_that('Example 21: WSV File with .txt Extension and BZip2 Compression', {
 
 test_that('Example 22: WSV File with .txt Extension and Zip Compression', {
   test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project, minimal = FALSE))
+  suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
   oldwd <- setwd(test_project)
@@ -569,7 +569,7 @@ test_that('Example 22: WSV File with .txt Extension and Zip Compression', {
 
 test_that('Example 23: WSV File with .txt Extension and GZip Compression', {
   test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project, minimal = FALSE))
+  suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
   oldwd <- setwd(test_project)
@@ -596,7 +596,7 @@ test_that('Example 23: WSV File with .txt Extension and GZip Compression', {
 
 test_that('Example 24: R File with .R Extension', {
   test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project, minimal = FALSE))
+  suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
   oldwd <- setwd(test_project)
@@ -623,7 +623,7 @@ test_that('Example 24: R File with .R Extension', {
 
 test_that('Example 25: R File with .r Extension', {
   test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project, minimal = FALSE))
+  suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
   oldwd <- setwd(test_project)
@@ -650,7 +650,7 @@ test_that('Example 25: R File with .r Extension', {
 
 test_that('Example 26: Excel 2007 File with .xls Extension', {
   test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project, minimal = FALSE))
+  suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
   oldwd <- setwd(test_project)
@@ -701,7 +701,7 @@ test_that('Example 27: Excel 2011 File with .xlsx Extension', {
 
 test_that('Example 28: SQLite3 Support with .sql Extension with table = "..."', {
   test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project, minimal = FALSE))
+  suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
   oldwd <- setwd(test_project)
@@ -734,7 +734,7 @@ test_that('Example 28: SQLite3 Support with .sql Extension with table = "..."', 
 
 test_that('Example 29: SQLite3 Support with .sql Extension with query = "SELECT * FROM ..."', {
   test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project, minimal = FALSE))
+  suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
   oldwd <- setwd(test_project)
@@ -767,7 +767,7 @@ test_that('Example 29: SQLite3 Support with .sql Extension with query = "SELECT 
 
 test_that('Example 30: SQLite3 Support with .sql Extension and table = "*"', {
   test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project, minimal = FALSE))
+  suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
   oldwd <- setwd(test_project)
@@ -809,7 +809,7 @@ test_that('Example 30: SQLite3 Support with .sql Extension and table = "*"', {
 
 test_that('Example 31: SQLite3 Support with .db Extension', {
   test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project, minimal = FALSE))
+  suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
   oldwd <- setwd(test_project)
@@ -843,7 +843,7 @@ test_that('Example 31: SQLite3 Support with .db Extension', {
 
 test_that('Example 32: Weka Support with .arff Extension', {
   test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project, minimal = FALSE))
+  suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
   oldwd <- setwd(test_project)
@@ -870,7 +870,7 @@ test_that('Example 32: Weka Support with .arff Extension', {
 
 test_that('Example 33: Arbitary File Support with .file File Pointing to .db File', {
   test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project, minimal = FALSE))
+  suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
   oldwd <- setwd(test_project)
@@ -907,7 +907,7 @@ test_that('Example 34: MP3 Support with .mp3 Extension', {
 
 test_that('Example 35: PPM Support with .ppm Extension', {
   test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project, minimal = FALSE))
+  suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
   oldwd <- setwd(test_project)
@@ -933,7 +933,7 @@ test_that('Example 35: PPM Support with .ppm Extension', {
 
 test_that('Example 36: dBase Support with .dbf Extension', {
   test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project, minimal = FALSE))
+  suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
   oldwd <- setwd(test_project)
@@ -960,7 +960,7 @@ test_that('Example 36: dBase Support with .dbf Extension', {
 
 test_that('Example 37: SPSS Support with .sav Extension', {
   test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project, minimal = FALSE))
+  suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
   oldwd <- setwd(test_project)
@@ -973,9 +973,7 @@ test_that('Example 37: SPSS Support with .sav Extension', {
                         'example_37.sav')
   variable.name <- clean.variable.name('example_37')
 
-  expect_warning(
-    spss.reader(data.file, filename, variable.name),
-    "Unrecognized record type 7, subtype 18 encountered in system file")
+  spss.reader(data.file, filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
@@ -989,7 +987,7 @@ test_that('Example 37: SPSS Support with .sav Extension', {
 
 test_that('Example 38: SPSS Support with .sav Extension / Alternative Generation', {
   test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project, minimal = FALSE))
+  suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
   oldwd <- setwd(test_project)
@@ -1002,9 +1000,7 @@ test_that('Example 38: SPSS Support with .sav Extension / Alternative Generation
                         'example_38.sav')
   variable.name <- clean.variable.name('example_38')
 
-  expect_warning(
-    spss.reader(data.file, filename, variable.name),
-    "Unrecognized record type 7, subtype 18 encountered in system file")
+  spss.reader(data.file, filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
@@ -1018,7 +1014,7 @@ test_that('Example 38: SPSS Support with .sav Extension / Alternative Generation
 
 test_that('Example 39: Stata Support with .dta Extension', {
   test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project, minimal = FALSE))
+  suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
   oldwd <- setwd(test_project)
@@ -1045,7 +1041,7 @@ test_that('Example 39: Stata Support with .dta Extension', {
 
 test_that('Example 40: Stata Support with .dta Extension / Alternative Generation', {
   test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project, minimal = FALSE))
+  suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
   oldwd <- setwd(test_project)
@@ -1072,7 +1068,7 @@ test_that('Example 40: Stata Support with .dta Extension / Alternative Generatio
 
 test_that('Example 41: SAS Support with .xport Extension', {
   test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project, minimal = FALSE))
+  suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
   oldwd <- setwd(test_project)
@@ -1099,7 +1095,7 @@ test_that('Example 41: SAS Support with .xport Extension', {
 
 test_that('Example 42: SAS Support with .xpt Extension', {
   test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project, minimal = FALSE))
+  suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
   oldwd <- setwd(test_project)
@@ -1126,4 +1122,29 @@ test_that('Example 42: SAS Support with .xpt Extension', {
 
 test_that('Example 43: ElasticSearch Support with .es Extension', {
 
+})
+
+test_that('Example 44: Single Object Serialization Support with .rds Extension', {
+  test_project <- tempfile('test_project')
+  suppressMessages(create.project(test_project))
+  on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
+
+  oldwd <- setwd(test_project)
+  on.exit(setwd(oldwd), add = TRUE)
+  suppressMessages(load.project())
+
+  data.file <- 'example_44.rds'
+  filename <- file.path(system.file('example_data',
+                                    package = 'ProjectTemplate'),
+                        'example_44.rds')
+  variable.name <- clean.variable.name('example_44')
+
+  rds.reader(data.file, filename, variable.name)
+
+  expect_that(exists(variable.name), is_true())
+  expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
+  expect_that(nrow(get(variable.name)), equals(5))
+  expect_that(ncol(get(variable.name)), equals(2))
+  expect_that(get(variable.name)[5, 2], equals(11))
+  rm(list = variable.name, envir = .TargetEnv)
 })

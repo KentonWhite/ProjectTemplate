@@ -1,0 +1,16 @@
+version: character
+data_loading: boolean
+data_loading_header: boolean
+data_ignore: character
+cache_loading: boolean
+recursive_loading: boolean
+munging: boolean
+logging: boolean
+logging_level: character
+load_libraries: boolean
+libraries: character
+as_factors: boolean
+data_tables: boolean
+attach_internal_libraries: boolean
+cache_loaded_data:  boolean
+sticky_variables: character

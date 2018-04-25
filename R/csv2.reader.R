@@ -1,8 +1,13 @@
-#' Read a semicolon separated values (.csv2) file.
+#' Read a semicolon separated values (.csv2) file using R's read.csv2().
 #'
-#' This function will load a data set stored in the CSV2 file format into
-#' the specified global variable binding. The default behaviour will soon
-#' change to actually use R's read.csv2() function, assuming dec=".", sep=";".
+#' This function will load a data set stored in the CSV file format, where
+#' the decimal separator is ',' and the field separator is ';', e.g. due to 
+#' localized exports of dutch, german or swedish data, into the specified
+#' global variable binding.
+#'
+#' Note: Before June 2017, the reader for .csv2 files assumed the field
+#' separator to be ';' and the decimal separator to be '.'. Nowadays, R's
+#' read.csv2() function is used.
 #'
 #' @param data.file The name of the data file to be read.
 #' @param filename The path to the data set to be loaded.
@@ -18,7 +23,7 @@
 #' @importFrom utils unzip
 csv2.reader <- function(data.file, filename, variable.name)
 {
-  warning("csv2.reader's currently does not use R's read.csv2(), but will do so in the near future. (Background: Currently csv2.reader() assumes ';' as a field separator, but still assumes '.' as a decimal separator where a ',' would be expected.)");
+  warning("In May 2018, the default behaviour of the reader for .csv2 files changed to use R's read.csv2(), where the field separator is assumed to be ';' and the decimal separator to be ','.")
 
   if (grepl('\\.zip$', filename))
   {
@@ -30,8 +35,7 @@ csv2.reader <- function(data.file, filename, variable.name)
   }
 
   assign(variable.name,
-         read.csv(filename,
-                  header = config$data_loading_header,
-                  sep = ';'),
+         read.csv2(filename,
+                  header = config$data_loading_header),
          envir = .TargetEnv)
 }
