@@ -131,9 +131,9 @@ migrate.project <- function()
 
   if (csv2_files_present) {
     message(paste("",
-      "In the near future, the csv2.reader() behaviour will change to actually using",
-      "R's read.csv2() method, which assumes the decimal separator to be ',' and the",
-      "field separator to be ';'. Before, the decimal operator was expected to be '.'.",
+      "In May 2018, the behaviour of the .csv2 file reader changed to use R's read.csv2()",
+      "function, which assumes the field separator to be ';' and the decimal separator to",
+      "be ','. Before, the decimal operator in .csv2 files was expected to be '.'.",
       "(See https://github.com/johnmyleswhite/ProjectTemplate/issues/170).",
       "",
       "Please review your code and datafiles.",
