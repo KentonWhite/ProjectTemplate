@@ -23,7 +23,7 @@
 #' @importFrom utils unzip
 csv2.reader <- function(data.file, filename, variable.name)
 {
-  warning("In June 2017, the default behaviour of the reader for .csv2 files changed to use R's read.csv2(), where the field separator is assumed to be ';' and the decimal separator to be ','.")
+  warning("In May 2018, the default behaviour of the reader for .csv2 files changed to use R's read.csv2(), where the field separator is assumed to be ';' and the decimal separator to be ','.")
 
   if (grepl('\\.zip$', filename))
   {
