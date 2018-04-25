@@ -3,18 +3,17 @@
 #' This function will create all of the scaffolding for a new project.
 #' It will set up all of the relevant directories and their initial
 #' contents. For those who only want the minimal functionality, the
-#' \code{minimal} argument can be set to \code{TRUE} to create a subset of
+#' \code{template} argument can be set to \code{minimal} to create a subset of
 #' ProjectTemplate's default directories. For those who want to dump
 #' all of ProjectTemplate's functionality into a directory for extensive
 #' customization, the \code{dump} argument can be set to \code{TRUE}.
 #'
 #' @param project.name A character vector containing the name for this new
 #'   project. Must be a valid directory name for your file system.
-#' @param minimal A boolean value indicating whether to create a minimal
-#'   project or a full project. A minimal project contains only the
-#'   directories strictly necessary to use ProjectTemplate and does not
-#'   provide template code for profiling, unit testing or documenting your
-#'   project.
+#' @param template A character vector containing the name of the template to
+#'   use for this project. By default a \code{full} and \code{minimal} template
+#'   are provided, but custom templates can be created using
+#'   \code{create.template}.
 #' @param dump A boolean value indicating whether the entire functionality
 #'   of ProjectTemplate should be written out to flat files in the current
 #'   project.
@@ -23,6 +22,10 @@
 #'   If \code{"force.empty"}, the target directory must be empty;
 #'   if \code{"allow.non.conflict"}, the method succeeds if no files or
 #'   directories with the same name exist in the target directory.
+#' @param rstudio.project A boolean value indicating whether the project should
+#'   also be an 'RStudio Project'. Defaults to \code{FALSE}. If \code{TRUE},
+#'   then a `projectname.Rproj` with usable defaults is added to the ProjectTemplate
+#'   directory.
 #'
 #' @return No value is returned; this function is called for its side effects.
 #'
@@ -38,8 +41,9 @@
 #' library('ProjectTemplate')
 #'
 #' \dontrun{create.project('MyProject')}
-create.project <- function(project.name = 'new-project', minimal = FALSE,
-                           dump = FALSE, merge.strategy = c("require.empty", "allow.non.conflict"))
+create.project <- function(project.name = 'new-project', template = 'full',
+                           dump = FALSE, merge.strategy = c("require.empty", "allow.non.conflict"),
+                           rstudio.project = FALSE)
 {
 
   .stopifproject(c("Cannot create a new project inside an existing one",
@@ -49,19 +53,11 @@ create.project <- function(project.name = 'new-project', minimal = FALSE,
                    "Please change to another directory and re-run create.project()"),
                  path = dirname(getwd()))
 
-
-  if (minimal) {
-    exclude <- c("diagnostics", "docs", "graphs", "lib", "logs", "profiling",
-                 "reports", "tests", "TODO")
-  } else {
-    exclude <- c()
-  }
-
   merge.strategy <- match.arg(merge.strategy)
   if (.is.dir(project.name)) {
-    .create.project.existing(project.name, merge.strategy, exclude)
+    .create.project.existing(project.name, merge.strategy, template, rstudio.project)
   } else
-    .create.project.new(project.name, exclude)
+    .create.project.new(project.name, template, rstudio.project)
 
   if (dump)
   {
@@ -83,10 +79,9 @@ create.project <- function(project.name = 'new-project', minimal = FALSE,
   invisible(NULL)
 }
 
-.create.project.existing <- function(project.name, merge.strategy, exclude) {
-  template.path <- system.file('defaults/full', package = 'ProjectTemplate')
-  template.files.all <- .list.files.and.dirs(path = template.path)
-  template.files <- setdiff(template.files.all, exclude)
+.create.project.existing <- function(project.name, merge.strategy, template, rstudio.project) {
+  template.path <- .get.template(template)
+  template.files <- .list.files.and.dirs(path = template.path)
 
   project.path <- file.path(project.name)
 
@@ -114,9 +109,15 @@ create.project <- function(project.name = 'new-project', minimal = FALSE,
   README.md <- file.path(project.path, "README.md")
   README <- readLines(README.md)
   writeLines(c(sprintf("# %s\n", basename(normalizePath(project.name))), README), README.md)
+
+  # Add RProj file to the project directory if the user has requested an RStudio project
+  if(rstudio.project){
+    rstudiopath <- file.path(project.path, paste0(project.name,'.Rproj'))
+    writeLines(.rstudioprojectfile(), rstudiopath)
+  }
 }
 
-.create.project.new <- function(project.name, exclude) {
+.create.project.new <- function(project.name, template, rstudio.project) {
   if (file.exists(project.name)) {
     stop(paste("Cannot run create.project() from a directory containing", project.name))
   }
@@ -125,7 +126,8 @@ create.project <- function(project.name = 'new-project', minimal = FALSE,
   tryCatch(
     .create.project.existing(project.name = project.name,
                              merge.strategy = "require.empty",
-                             exclude = exclude),
+                             template = template,
+                             rstudio.project = rstudio.project),
     error = function(e) {
       unlink(project.name, recursive = TRUE)
       stop(e)
@@ -146,4 +148,8 @@ create.project <- function(project.name = 'new-project', minimal = FALSE,
 
 .dir.empty <- function(path) {
   length(.list.files.and.dirs(path = path)) == 0
+}
+
+.rstudioprojectfile <- function(){
+  return("Version: 1.0\n\nRestoreWorkspace: DefaultSaveWorkspace: Default\nAlwaysSaveHistory: Default\n\nEnableCodeIndexing: Yes\nUseSpacesForTab: Yes\nNumSpacesForTab: 4\nEncoding: UTF-8\n\nRnwWeave: Sweave\nLaTeX: pdfLaTeX\n\nStripTrailingWhitespace: Yes")
 }

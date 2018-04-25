@@ -3,8 +3,8 @@
 #' This function produces a data.frame of all data files in the project, with
 #'   meta data on if and how the file will be loaded by \code{load.project}.
 #'
-#' @param override.config Named list, allows overriding individual configuration
-#'   items.
+#' @param ... Named arguments to override configuration from \code{config/global.dcf}
+#'   and \code{lib/global.R}.
 #'
 #' @return A data.frame listing the available data, with relevant meta data
 #'
@@ -43,7 +43,8 @@
 #' library('ProjectTemplate')
 #'
 #' \dontrun{list.data()}
-list.data <- function(override.config = NULL) {
+list.data <- function(...) {
+  override.config <- .parse.override.config(list(...))
   config <- .load.config(override.config)
   .list.data(config)
 }
@@ -76,13 +77,13 @@ list.data <- function(override.config = NULL) {
                    is_directory = is_directory,
                    is_cached = is_cached,
                    cache_only = cache_only,
-                   reader = readers,
                    stringsAsFactors = FALSE)
+  df$reader <- readers
   # Keep only lines with files that match the configured recursive_loading
   # setting
   df <- df[df$filename %in% data.files,]
   df <- df[order(df$reader == "file.reader", decreasing = TRUE),]
-  df <- df[!duplicated(df$varname, incomparables = ""),]
+  ## df <- df[!duplicated(df$varname, incomparables = ""),]
   # Get list of variables in cache/
   cached.vars <- .cached.variables()
   # Exclude variables already found in data/
@@ -118,7 +119,7 @@ list.data <- function(override.config = NULL) {
   for (extension in ls(extensions.dispatch.table)) {
     extension.match <- grepl(extension, data.files,
                              ignore.case = TRUE, perl = TRUE)
-    readers[extension.match] <- extensions.dispatch.table[[extension]]
+    readers[extension.match] <- list(extensions.dispatch.table[[extension]])
     varnames[extension.match] <- sub(extension, '', data.files[extension.match],
                                      ignore.case = TRUE, perl = TRUE)
     varnames[extension.match] <- clean.variable.name(varnames[extension.match])
