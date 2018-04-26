@@ -174,6 +174,8 @@ sql.reader <- function(data.file, filename, variable.name)
                             dbname = database.info[['dbname']],
                             port = as.integer(database.info[['port']]),
                             unix.socket = database.info[['socket']])
+    on.exit(try(DBI::dbDisconnect(connection), silent = TRUE), add = TRUE)
+
     DBI::dbGetQuery(connection, "SET NAMES 'utf8'") # Switch to utf-8 strings
   }
 
@@ -185,6 +187,7 @@ sql.reader <- function(data.file, filename, variable.name)
 
     connection <- DBI::dbConnect(sqlite.driver,
                             dbname = database.info[['dbname']])
+    on.exit(try(DBI::dbDisconnect(connection), silent = TRUE), add = TRUE)
 
     if (!is.null(database.info[['plugin']]) && database.info[['plugin']] == 'extension')
     {
@@ -210,6 +213,7 @@ sql.reader <- function(data.file, filename, variable.name)
                             host = database.info[['host']],
                             dbname = database.info[['dbname']],
                             port = as.integer(database.info[['port']]))
+    on.exit(try(DBI::dbDisconnect(connection), silent = TRUE), add = TRUE)
   }
 
   if (database.info[['type']] == 'oracle')
@@ -228,6 +232,7 @@ sql.reader <- function(data.file, filename, variable.name)
                             user = database.info[['user']],
                             password = database.info[['password']],
                             dbname = database.info[['dbname']])
+    on.exit(try(DBI::dbDisconnect(connection), silent = TRUE), add = TRUE)
   }
 
   if (database.info[['type']] == 'jdbc')
@@ -247,6 +252,7 @@ sql.reader <- function(data.file, filename, variable.name)
                             database.info[['url']],
                             user = database.info[['user']],
                             password = database.info[['password']])
+    on.exit(try(DBI::dbDisconnect(connection), silent = TRUE), add = TRUE)
   }
 
   if (database.info[['type']] == 'heroku')
@@ -269,6 +275,7 @@ sql.reader <- function(data.file, filename, variable.name)
                             database.info[['url']],
                             user = database.info[['user']],
                             password = database.info[['password']])
+    on.exit(try(DBI::dbDisconnect(connection), silent = TRUE), add = TRUE)
   }
 
   # Added support for queries.
@@ -342,7 +349,7 @@ sql.reader <- function(data.file, filename, variable.name)
       query <- whisker::whisker.render(query, data = .GlobalEnv)
     }
     data.parcel <- try(DBI::dbGetQuery(connection, query))
-    err <- DBI::dbGetException(connection)
+    suppressWarnings(err <- DBI::dbGetException(connection))
 
     if (class(data.parcel) == 'data.frame' && (length(err) == 0 || err$errorNum == 0))
     {
@@ -374,14 +381,5 @@ sql.reader <- function(data.file, filename, variable.name)
            NULL,
            envir = .TargetEnv)
     return()
-  }
-
-  # Disconnect from database resources. Warn if failure.
-  disconnect.success <- DBI::dbDisconnect(connection)
-
-  if (! disconnect.success)
-  {
-    warning(paste('Unable to disconnect from database:',
-                  database.info[['dbname']]))
   }
 }
