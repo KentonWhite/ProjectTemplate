@@ -7,6 +7,8 @@
 #'
 #' @return A translated variable name.
 #'
+#' @keywords internal
+#'
 #' @examples
 #' library('ProjectTemplate')
 #'
