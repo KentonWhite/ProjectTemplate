@@ -27,6 +27,7 @@ Depends:
     R (>= 2.7)
 Suggests:
     foreign,
+    feather,
     reshape,
     plyr,
     digest,
