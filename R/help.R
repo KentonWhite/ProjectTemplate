@@ -5,11 +5,14 @@
 #' automates data loading, preprocessing, library importing and unit
 #' testing.
 #'
+#' A list of file types is supported by default. See the
+#' \code{\link{preinstalled.readers}} for more information which those are.
+#'
 #' @references This code is inspired by the skeleton structure used by
 #'   Ruby on Rails.
 #' @docType package
 #' @name ProjectTemplate
-#' @aliases ProjectTemplate package-ProjectTemplate
+#'
 #' @examples
 #' library('ProjectTemplate')
 #'

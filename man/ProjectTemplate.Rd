@@ -3,7 +3,6 @@
 \docType{package}
 \name{ProjectTemplate}
 \alias{ProjectTemplate}
-\alias{package-ProjectTemplate}
 \alias{ProjectTemplate-package}
 \title{Automates the creation of new statistical analysis projects.}
 \description{
@@ -11,6 +10,10 @@ ProjectTemplate provides functions to automatically build a directory
 structure for a new R project. Using this structure, ProjectTemplate
 automates data loading, preprocessing, library importing and unit
 testing.
+}
+\details{
+A list of file types is supported by default. See the
+\code{\link{preinstalled.readers}} for more information which those are.
 }
 \examples{
 library('ProjectTemplate')
