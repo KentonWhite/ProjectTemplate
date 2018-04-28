@@ -56,7 +56,6 @@ require.package <- function(package.name, attach = TRUE)
   return(success)
 }
 
-#' @rdname require.package
 .require.package <- function(package.name)
 {
   my.config <- if (.has.project()) get.project()$config else .new.config
