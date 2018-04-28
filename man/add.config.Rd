@@ -11,7 +11,7 @@ add.config(..., apply.override = FALSE)
 name that gets added to the config object. These can be overridden at load
 time through the \code{...} argument to \code{\link{load.project}}.}
 
-\item{apply.override}{A boolean indicating wheter overrides should be applied. This
+\item{apply.override}{A boolean indicating whether overrides should be applied. This
 can be used to add a setting disregarding arguments to \code{load.project}}
 }
 \description{
