@@ -1148,3 +1148,28 @@ test_that('Example 44: Single Object Serialization Support with .rds Extension',
   expect_that(get(variable.name)[5, 2], equals(11))
   rm(list = variable.name, envir = .TargetEnv)
 })
+
+test_that('Example 45: Feather support with .feather extension', {
+  test_project <- tempfile('test_project')
+  suppressMessages(create.project(test_project))
+  on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
+
+  oldwd <- setwd(test_project)
+  on.exit(setwd(oldwd), add = TRUE)
+  suppressMessages(load.project())
+
+  data.file <- 'example_45.feather'
+  filename <- file.path(system.file('example_data',
+                                    package = 'ProjectTemplate'),
+                        'example_45.feather')
+  variable.name <- clean.variable.name('example_45')
+
+  feather.reader(data.file, filename, variable.name)
+
+  expect_true(exists(variable.name))
+  expect_equal(names(get(variable.name)), c('N', 'Prime'))
+  expect_equal(nrow(get(variable.name)), 5)
+  expect_equal(ncol(get(variable.name)), 2)
+  expect_equal(get(variable.name)[[5, 2]], 11)
+  rm(list = variable.name, envir = .TargetEnv)
+})

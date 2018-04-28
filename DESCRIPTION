@@ -92,6 +92,7 @@ Collate:
     'config.R'
     'create.project.R'
     'create.template.R'
+    'feather.reader.R'
     'get.project.R'
     'help.R'
     'list.data.R'
