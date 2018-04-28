@@ -18,7 +18,7 @@
 #' @return No value is returned; this function is called for its side effects.
 #'
 #' @export
-#'
+#' @seealso \link{preinstalled.readers}
 #' @examples
 #' \dontrun{.add.extension('foo', foo.reader)}
 #' @include preinstalled.readers.R

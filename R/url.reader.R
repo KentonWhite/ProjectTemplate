@@ -1,10 +1,10 @@
-#' Read a remote file described in a .url file.
+#' @describeIn preinstalled.readers Read a remote file described in a \code{.url} file.
 #'
 #' This function will load data from a remote source accessible through
 #' HTTP or FTP based on configuration information found in the specified
-#' .url file. The .url file must specify the URL of the remote data source
+#' .url file. The \code{.url} file must specify the URL of the remote data source
 #' and the type of data that is available remotely. Only one data source
-#' per .url file is supported currently.
+#' per \code{.url} file is supported currently.
 #'
 #' Examples of the DCF format and settings used in a .url file are shown
 #' below:
@@ -12,17 +12,6 @@
 #' Example 1
 #' url: http://www.johnmyleswhite.com/ProjectTemplate/sample_data.csv
 #' separator: ,
-#'
-#' @param data.file The name of the data file to be read.
-#' @param filename The path to the data set to be loaded.
-#' @param variable.name The name to be assigned to in the global environment.
-#'
-#' @return No value is returned; this function is called for its side effects.
-#'
-#' @examples
-#' library('ProjectTemplate')
-#'
-#' \dontrun{url.reader('example.url', 'data/example.url', 'example')}
 #' @importFrom utils download.file
 url.reader <- function(data.file, filename, variable.name)
 {
