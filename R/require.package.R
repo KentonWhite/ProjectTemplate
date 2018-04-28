@@ -18,6 +18,7 @@
 #'   \code{\link{library}}) or not (as with \code{\link{loadNamespace}})?
 #'   Defaults to \code{TRUE}. (Internal code will use \code{FALSE} by default
 #'   unless a compatibility switch is set, see below.)
+#'
 #' @return No value is returned; this function is called for its side effects.
 #'
 #' @export
@@ -47,6 +48,19 @@ require.package <- function(package.name, attach = TRUE)
   invisible(NULL)
 }
 
+
+#' Attach a package or add a namespace
+#'
+#' Internal method to attach a package or only add the namespace.
+#'
+#' @param package.name name of the package to load, as a character vector
+#' @param attach boolean indicating whether to attach the package in the global namespace
+#'
+#' @keywords internal
+#'
+#' @return Boolean indicating whether the package was succesfully loaded
+#'
+#' @rdname internal.attach.or.add.namespace
 .attach.or.add.namespace <- function(package.name, attach) {
   if (attach) {
     success <- require(package.name, character.only = TRUE)
@@ -56,8 +70,20 @@ require.package <- function(package.name, attach = TRUE)
   return(success)
 }
 
-.require.package <- function(package.name)
-{
+#' Require internal package
+#'
+#' Internal method to require a package that is necessary for the internal
+#' functioning of ProjectTemplate. Never attaches the package unless
+#' configured to do so in global.dcf (which throws a warning).
+#'
+#' @param package.name name of the package to load, as a character vector
+#'
+#' @return No value is returned; this function is called for its side effects.
+#'
+#' @keywords internal
+#'
+#' @rdname internal.require.package
+.require.package <- function(package.name) {
   my.config <- if (.has.project()) get.project()$config else .new.config
   attach_internal <- my.config[['attach_internal_libraries']]
   if (attach_internal) {
