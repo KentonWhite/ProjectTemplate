@@ -1,10 +1,10 @@
 #' Listing the data for the current project
 #'
 #' This function produces a data.frame of all data files in the project, with
-#'   meta data on if and how the file will be loaded by \code{load.project}.
+#' meta data on if and how the file will be loaded by \code{load.project}.
 #'
-#' @param ... Named arguments to override configuration from \code{config/global.dcf}
-#'   and \code{lib/global.R}.
+#' @param ... Named arguments to override configuration from
+#'   \code{config/global.dcf} and \code{lib/global.R}.
 #'
 #' @return A data.frame listing the available data, with relevant meta data
 #'
@@ -13,21 +13,22 @@
 #'
 #' \tabular{ll}{
 #'    \code{filename} \tab Character variable containing the filename relative
-#'      to \code{data/} directory. \cr
-#'    \code{varname} \tab Character variable containing the name of the
-#'      variable into which the file will be imported. * \cr
+#'    to \code{data/} directory. \cr
+#'    \code{varname} \tab Character variable containing the name of the variable
+#'    into which the file will be imported. * \cr
 #'    \code{is_ignored} \tab Logical variable that indicates whether the file.
-#'      is ignored through the \code{data_ignore} option in the configuration \cr
+#'    is ignored through the \code{data_ignore} option in the configuration \cr
 #'    \code{is_directory} \tab Logical variable that indicates whether the file
-#'      is a directory. \cr
+#'    is a directory. \cr
 #'    \code{is_cached} \tab Logical variable that indicates whether the file is
-#'      already available in the \code{cache/} directory. \cr
+#'    already available in the \code{cache/} directory. \cr
 #'    \code{cached_only} \tab Logical variable that indicates whether the
-#'      variable is only available in the \code{cache/} directory. This occurs
-#'      when calling the cache function with a code fragment in a munge script. \cr
+#'    variable is only available in the \code{cache/} directory. This occurs
+#'    when calling the cache function with a code fragment in a munge script.
+#'    \cr
 #'    \code{reader} \tab Character variable containing the name of the reader
-#'      function that will be used to load the data. Contains a \code{character(0)}
-#'      if no suitable reader was found.
+#'    function that will be used to load the data. Contains a
+#'    \code{character(0)} if no suitable reader was found.
 #' }
 #'
 #' * Note that some readers return more than one variable, usually with the
@@ -49,6 +50,19 @@ list.data <- function(...) {
   .list.data(config)
 }
 
+
+#' Build the list of data available for loading into memory
+#'
+#' This function produces a data.frame of all data files in the project, with
+#' meta data on if and how the file will be loaded by \code{load.project}.
+#'
+#' @param config List containing the configuration to use.
+#'
+#' @inherit list.data description details return
+#'
+#' @keywords internal
+#'
+#' @rdname internal.list.data
 .list.data <- function(config) {
   # Get list of variables in data/, always recursive to exclude cached
   # variables from nested files
@@ -112,6 +126,16 @@ list.data <- function(...) {
   rbind(df, df2)
 }
 
+
+#' Match readers to the extensions of the data files
+#'
+#' @param data.files a vector of paths to data files
+#'
+#' @return A list of \code{readers} and \code{varnames}
+#'
+#' @keywords internal
+#'
+#' @rdname internal.parse.extensions
 .parse.extensions <- function(data.files) {
   readers <- character(length(data.files))
   varnames <- character(length(data.files))
@@ -128,6 +152,22 @@ list.data <- function(...) {
   list(readers = readers, varnames = varnames)
 }
 
+
+#' Prepare a regular expression for matching files to be ignored
+#'
+#' Constructs a single regular expression for matching file names in data that
+#' should not be imported. It can detect literal names, globs with wildcards and
+#' regular expressions.
+#'
+#' @param ignore_files A comma separated character vector that lists all
+#'   patterns to be matched for ignoring
+#'
+#' @return A chained regular expression that matches all patterns in the
+#'   \code{ignore_files} variable.
+#'
+#' @keywords internal
+#'
+#' @rdname internal.prepare.data.ignore.regex
 .prepare.data.ignore.regex <- function(ignore_files) {
   ignore_files <- strsplit(ignore_files, '\\s*,\\s*')[[1]]
   regexes <- ignore_files[grepl('^/.*/$', ignore_files)]
