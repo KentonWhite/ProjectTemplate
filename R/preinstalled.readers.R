@@ -83,7 +83,8 @@ list("*.csv" = "csv.reader",
      "*.dat" = "wsv.reader",
      "*.dat.bz2" = "wsv.reader",
      "*.dat.zip" = "wsv.reader",
-     "*.dat.gz" = "wsv.reader"
+     "*.dat.gz" = "wsv.reader",
+     "*.feather" = "feather.reader"
 )
 
 extensions.dispatch.table <- new.env()

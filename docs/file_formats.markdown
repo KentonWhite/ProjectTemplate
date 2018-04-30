@@ -63,6 +63,7 @@ Please note that several of file formats have not been tested yet, including Wek
 * `.file`: A DCF file describing the location of another file that should be loaded.
 * `.mp3`: MP3 audio files. (Uses the tuneR package.)
 * `.ppm`: PPM image files. (Uses the pixmap package.)
+* `.feather`: Feather files for data frames in the Apache Arrow format (uses feather package)
 
 #### Ad Hoc File Types
 

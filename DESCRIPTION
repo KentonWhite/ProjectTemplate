@@ -27,6 +27,7 @@ Depends:
     R (>= 2.7)
 Suggests:
     foreign,
+    feather,
     reshape,
     plyr,
     digest,
@@ -92,6 +93,7 @@ Collate:
     'config.R'
     'create.project.R'
     'create.template.R'
+    'feather.reader.R'
     'get.project.R'
     'help.R'
     'list.data.R'
