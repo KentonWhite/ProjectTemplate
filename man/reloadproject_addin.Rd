@@ -9,3 +9,4 @@ reloadproject_addin()
 \description{
 Call this function as an addin to load the library and run `reload.project()`
 }
+\keyword{internal}

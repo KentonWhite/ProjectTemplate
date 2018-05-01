@@ -9,3 +9,4 @@ loadproject_addin()
 \description{
 Call this function as an addin to load the library and run `load.project()`
 }
+\keyword{internal}

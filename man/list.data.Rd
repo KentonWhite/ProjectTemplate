@@ -7,15 +7,15 @@
 list.data(...)
 }
 \arguments{
-\item{...}{Named arguments to override configuration from \code{config/global.dcf}
-and \code{lib/global.R}.}
+\item{...}{Named arguments to override configuration from
+\code{config/global.dcf} and \code{lib/global.R}.}
 }
 \value{
 A data.frame listing the available data, with relevant meta data
 }
 \description{
 This function produces a data.frame of all data files in the project, with
-  meta data on if and how the file will be loaded by \code{load.project}.
+meta data on if and how the file will be loaded by \code{load.project}.
 }
 \details{
 The returned data.frame contains the following variables, with one
@@ -23,21 +23,22 @@ The returned data.frame contains the following variables, with one
 
 \tabular{ll}{
    \code{filename} \tab Character variable containing the filename relative
-     to \code{data/} directory. \cr
-   \code{varname} \tab Character variable containing the name of the
-     variable into which the file will be imported. * \cr
+   to \code{data/} directory. \cr
+   \code{varname} \tab Character variable containing the name of the variable
+   into which the file will be imported. * \cr
    \code{is_ignored} \tab Logical variable that indicates whether the file.
-     is ignored through the \code{data_ignore} option in the configuration \cr
+   is ignored through the \code{data_ignore} option in the configuration \cr
    \code{is_directory} \tab Logical variable that indicates whether the file
-     is a directory. \cr
+   is a directory. \cr
    \code{is_cached} \tab Logical variable that indicates whether the file is
-     already available in the \code{cache/} directory. \cr
+   already available in the \code{cache/} directory. \cr
    \code{cached_only} \tab Logical variable that indicates whether the
-     variable is only available in the \code{cache/} directory. This occurs
-     when calling the cache function with a code fragment in a munge script. \cr
+   variable is only available in the \code{cache/} directory. This occurs
+   when calling the cache function with a code fragment in a munge script.
+   \cr
    \code{reader} \tab Character variable containing the name of the reader
-     function that will be used to load the data. Contains a \code{character(0)}
-     if no suitable reader was found.
+   function that will be used to load the data. Contains a
+   \code{character(0)} if no suitable reader was found.
 }
 
 * Note that some readers return more than one variable, usually with the

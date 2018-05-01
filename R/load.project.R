@@ -64,12 +64,37 @@ load.project <- function(...)
   assign('project.info', my.project.info, envir = .TargetEnv)
 }
 
+
+#' Unload the project variables keeping the data
+#'
+#' Removes the \code{config}, \code{logger} and \code{project.info} variables
+#' from memory, leaving all data variables in place.
+#'
+#' @return No value is returned; this function is called for its side effects.
+#'
+#' @keywords internal deprecate
+#'
+#' @rdname internal.unload.project
 .unload.project <- function() {
   suppressWarnings(rm(list = c("config", "logger", "project.info"),
                       envir = .TargetEnv))
 }
 
 ## Load libraries listed in configuration into memory ------------------------
+
+#' Load the libraries listed in the configuration into memory
+#'
+#' Load the libraries listed in the libraries entry in global.dcf and add the
+#' library names to the \code{project.info}.
+#'
+#' @param config Named list containing the project configuration
+#' @param my.project.info Named list containing the project information
+#'
+#' @return Returns \code{my.project.info} amended with the new information.
+#'
+#' @keywords internal
+#'
+#' @rdname internal.load.libraries
 .load.libraries <- function(config, my.project.info) {
   message('Autoloading packages')
   my.project.info$packages <- c()
@@ -83,7 +108,19 @@ load.project <- function(...)
   return(my.project.info)
 }
 
+
 ## Initialize logging through log4r package ----------------------------------
+
+#' Initialize the logger for the project
+#'
+#' Creates a \code{log4r::logger} and provides a default log file
+#' \code{log/project.log}.
+#'
+#' @inherit .load.libraries params return
+#'
+#' @keywords internal
+#'
+#' @rdname internal.init.logger
 .init.logger <- function(config, my.project.info) {
   message('Initializing logger')
   require.package('log4r')
@@ -97,7 +134,19 @@ load.project <- function(...)
   return(my.project.info)
 }
 
+
 ## Load helper functions -----------------------------------------------------
+
+#' Load the helper functions
+#'
+#' Sources all helper scripts in \code{lib}. If \code{lib/globals.R} exists this
+#' is loaded first, all other scripts are sourced in alphabetical order.
+#'
+#' @inherit .load.libraries params return
+#'
+#' @keywords internal
+#'
+#' @rdname internal.load.helpers
 .load.helpers <- function(config, my.project.info) {
   if (file.exists('lib')) {
     message('Autoloading helper functions')
@@ -128,7 +177,20 @@ load.project <- function(...)
   return(my.project.info)
 }
 
+
 ## Load data into memory from cache/ and data/ -------------------------------
+
+#' Load the data from the cache and data directories
+#'
+#' Gets the list of available variables in \code{cache/} and \code{data/} and
+#' loads the data in memory. Data from the cache is loaded first, then in
+#' alphabetical order.
+#'
+#' @inherit .load.libraries params return
+#'
+#' @keywords internal
+#'
+#' @rdname internal.load.data
 .load.data <- function(config, my.project.info) {
   message('Autoloading data')
 
@@ -200,7 +262,20 @@ load.project <- function(...)
   return(my.project.info)
 }
 
-## Convert datasets to data.table
+
+#' Convert one or more data sets to data.tables
+#'
+#' Converts all \code{base::data.frame}s referred to in the input to
+#' \code{data.table}s. The resulting data set is stored in the
+#' \code{.TargetEnv}.
+#'
+#' @param data.sets A character vector of variable names.
+#'
+#' @return No value is returned; this function is called for its side effects.
+#'
+#' @keywords internal
+#'
+#' @rdname internal.convert.to.data.table
 .convert.to.data.table <- function(data.sets) {
   .require.package("data.table")
 
@@ -214,7 +289,20 @@ load.project <- function(...)
   }
 }
 
-## Convert datasets to tibble
+
+#' Convert one or more data sets to tibbles
+#'
+#' Converts all \code{base::data.frame}s referred to in the input to
+#' \code{tibble}s. The resulting data set is stored in the
+#' \code{.TargetEnv}.
+#'
+#' @param data.sets A character vector of variable names.
+#'
+#' @return No value is returned; this function is called for its side effects.
+#'
+#' @keywords internal
+#'
+#' @rdname internal.convert.to.tibble
 .convert.to.tibble <- function(data.sets) {
   require.package("tibble", FALSE)
 
@@ -228,7 +316,19 @@ load.project <- function(...)
   }
 }
 
+
 ## Run all scripts in the munge/ directory -----------------------------------
+
+#' Source all munge scripts
+#'
+#' Sources all munge scripts in the \code{munge} directory in alphabetical
+#' order.
+#'
+#' @inherit .load.libraries params return
+#'
+#' @keywords internal
+#'
+#' @rdname internal.munge.data
 .munge.data <- function(config, my.project.info) {
   message('Munging data')
   for (preprocessing.script in sort(dir('munge', pattern = '[.][rR]$')))
@@ -239,9 +339,21 @@ load.project <- function(...)
   return(my.project.info)
 }
 
+
 # Auxiliary functions for loading/unloading projects -------------------------
 
-## Function to create directory if it doesn't exist yet
+#' Make sure a required directory exists before usage
+#'
+#' Checks if the requested directory exists, and if not creates the directory.
+#' In the latter case a warning is raised.
+#'
+#' @param name Character vector containing the name of the required directory.
+#'
+#' @return No value is returned; this function is called for its side effects.
+#'
+#' @keywords internal
+#'
+#' @rdname internal.provide.directory
 .provide.directory <- function(name) {
   is.dir <- file.info(name)$isdir
   if (is.na(is.dir) || !is.dir) {
@@ -250,7 +362,19 @@ load.project <- function(...)
   }
 }
 
-## Function to check the project version against the package version
+
+#' Compare the project version with the current ProjectTemplate version
+#'
+#' @param config Project configuration
+#' @param warn.migrate Logical indicating whether a warning should be raised if
+#'   the project version is older than the installed version of ProjectTemplate.
+#'
+#' @inherit utils::compareVersion return
+#'
+#' @keywords internal
+#'
+#' @rdname internal.check.version
+#'
 #' @importFrom utils compareVersion
 .check.version <- function(config, warn.migrate = TRUE) {
   package.version <- .package.version()
@@ -269,12 +393,33 @@ load.project <- function(...)
   version.diff
 }
 
+
+#' Get the current ProjectTemplate version
+#'
+#' Reads the installed version of ProjectTemplate from the \code{DESCRIPTION}
+#' file.
+#'
+#' @return Version as a character vector.
+#'
+#' @keywords internal
+#'
+#' @rdname internal.package.version
 .package.version <- function() {
   as.character(read.dcf(system.file("DESCRIPTION", package = "ProjectTemplate"), fields = "Version"))
 }
 
-# Compare the variables (excluding functions) in the global env with a passed
-# in string of names and return the difference
+
+#' Compare sets of variable names
+#'
+#' Compare the variables (excluding functions) in the global env with a passed
+#' in string of names and return the set difference.
+#'
+#' @param given.var.list Character vector of variable names
+#' @param env Environment in which to compare the sets of variables
+#'
+#' @keywords internal
+#'
+#' @rdname internal.var.diff.from
 .var.diff.from <- function(given.var.list="", env=.TargetEnv) {
   # Get variables in target environment of determine if they are a function
   current.var.list <- sapply(ls(envir = env), function(x) is.function(get(x)))
