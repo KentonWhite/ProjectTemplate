@@ -2,12 +2,9 @@
 % Please edit documentation in R/require.package.R
 \name{require.package}
 \alias{require.package}
-\alias{.require.package}
 \title{Require a package for use in the project}
 \usage{
 require.package(package.name, attach = TRUE)
-
-.require.package(package.name)
 }
 \arguments{
 \item{package.name}{A character vector containing the package name.

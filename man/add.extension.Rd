@@ -31,3 +31,6 @@ replaced by a different mechanism in a forthcoming version of this package.
 \examples{
 \dontrun{.add.extension('foo', foo.reader)}
 }
+\seealso{
+\link{preinstalled.readers}
+}

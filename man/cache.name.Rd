@@ -21,3 +21,4 @@ library('ProjectTemplate')
 
 \dontrun{cache.name('example.1')}
 }
+\keyword{internal}

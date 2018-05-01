@@ -1,34 +1,21 @@
-#' Maps file types to the reader functions used to autoload them.
+#' Automatically read data into memory
 #'
-#' This list stores a mapping from regular expressions that match file
-#' extensions for the file types supported by ProjectTemplate to the
-#' reader functions that implement autoloading for those formats. Any
-#' new file type must be appended to this dispatch table.
+#' The preinstalled readers are automatically loaded in the list \code{preinstalled.readers}.
+#' The reader functions will load a data set stored in the \code{data} directory into
+#' the specified global variable binding. These functions are not meant to be called directly.
 #'
-#' @include arff.reader.R
-#' @include csv.reader.R
-#' @include csv2.reader.R
-#' @include db.reader.R
-#' @include dbf.reader.R
-#' @include epiinfo.reader.R
-#' @include file.reader.R
-#' @include mp3.reader.R
-#' @include mtp.reader.R
-#' @include octave.reader.R
-#' @include ppm.reader.R
-#' @include r.reader.R
-#' @include rdata.reader.R
-#' @include spss.reader.R
-#' @include sql.reader.R
-#' @include stata.reader.R
-#' @include systat.reader.R
-#' @include tsv.reader.R
-#' @include url.reader.R
-#' @include wsv.reader.R
-#' @include xls.reader.R
-#' @include xlsx.reader.R
-#' @include xport.reader.R
-
+#' Some file formats can contain more than one dataset. In this case all datasets are loaded
+#' into separate variables in the format \code{<variable.name>.<subset.name>}, where the
+#' \code{subset.name} is determined by the reader automatically.
+#'
+#' @param data.file The name of the data file to be read.
+#' @param filename The path to the data set to be loaded.
+#' @param variable.name The name to be assigned to in the global environment.
+#'
+#' @seealso \link{.add.extension}
+#' @keywords internal datasets
+#'
+#' @return No value is returned; the reader functions are called for its side effects.
 preinstalled.readers <-
 list("*.csv" = "csv.reader",
      "*.csv.bz2" = "csv.reader",

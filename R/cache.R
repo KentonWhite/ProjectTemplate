@@ -163,15 +163,23 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
 .cache.dir <- 'cache'
 .cache.file.ext <- '.RData'
 
-# Function to save to cache
-
+#' Write a variable and its metadata to cache
+#'
+#' @param cache.hash a \code{data.frame} with metadata about the variable, see details for more information.
+#' @param ... extra parameters passed to \code{\link{save}}.
+#'
+#' @details cache.hash is a data frame with two columns: \code{variable} and \code{hash}.\cr
+#'   Row name \code{VAR} is the name of the variable to save.\cr
+#'   Row name \code{CODE} is the hash value of the code to compute variable.\cr
+#'   Row name \code{DEPENDS.*} are the dependent variables that \code{CODE} depends on.c\cr
+#'   The helper function \code{\link{.create.cache.hash}} creates a suitable dataframe
+#'
+#' @return No value is returned, this function is called for its side effects.
+#'
+#' @keywords internal
+#'
+#' @rdname internal.write.cache
 .write.cache <- function(cache.hash, ...){
-        # cache.hash is a data frame with two columns:  variable and hash.
-        # Row name VAR is the name of the variable to save.
-        # Row name CODE is the hash value of the code to compute variable.
-        # Row name DEPENDS.* are the dependent variables that CODE depends on.
-        # The helper function .create.cache.hash creates a suitable dataframe
-
         variable <- as.character(cache.hash["VAR",]$variable)
         cache_filename <- .cache.filename(variable)
 
@@ -190,8 +198,23 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
 }
 
 
-# Helper functions to create cache entries
-
+#' Create a data.frame with the cache metadata
+#'
+#' @param variable Name of the variable to be cached
+#' @param depends Vector of variable names of depencies for the variable to be cached, optional.
+#' @param CODE Code block to generate \code{variable}, registered as a dependency, optional.
+#'
+#' @return \code{data.frame} containing the variable name and its dependencies, with the
+#'   corresponding hashes appended.
+#'
+#' @details The hashes for the various objects are calculated using the \code{\link{.cache.hash}}
+#'   function.
+#'
+#' @seealso \code{\link{.cache.hash}}
+#'
+#' @keywords internal
+#'
+#' @rdname internal.create.cache.hash
 .create.cache.hash <- function(variable, depends, CODE) {
         # This function prepares a cache.hash suitable for
         # saving to the cache
@@ -218,6 +241,18 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
 }
 
 
+#' Calculate the hash of the data stored in a variable
+#'
+#' @param variables character vector of variable names
+#' @param env environment from which to load the variable
+#'
+#' @details The hashes are calculated using the \code{digest::digest} function.
+#'
+#' @return data.frame with the variable names and the corresponding hashes
+#'
+#' @keywords internal
+#'
+#' @rdname internal.cache.hash
 .cache.hash <- function (variables, env=.TargetEnv) {
         # input is a vector of variable names
         # check if they exist in the supplied environment
@@ -239,6 +274,23 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
 }
 
 
+#' Read metadata for a variable in the cache
+#'
+#' @param variable Variable name for which to look up the metadata
+#'
+#' @details The returned object is a list with two fields:
+#'
+#' \itemize{
+#'   \item \code{in.cache}: Logical indicating whether the requested
+#'     variable was found in the cache
+#'   \item \code{hash}: A data.frame as was created by \code{\link{.create.cache.hash}}
+#' }
+#'
+#' @return \code{list} with metadata, see Details for more info.
+#'
+#' @keywords internal
+#'
+#' @rdname internal.read.cache.info
 .read.cache.info <- function (variable) {
 
         cache_name <- .cache.filename(variable)
@@ -264,13 +316,40 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
         list(in.cache=in.cache, hash=cache.hash)
 }
 
+
+#' Run code and assign the results to variable
+#'
+#' @param variable variable name in which to store the result of \code{CODE}
+#' @param CODE code block that returns a result which can be stored in a variable
+#'
+#' @details No error handling is done on the executed code, nor is the
+#'
+#' @keywords internal
+#'
+#' @rdname internal.evaluate.code
 .evaluate.code <- function (variable, CODE) {
-        # run code and assignthe results to variable in the global env
         result <- eval(parse(text=CODE), envir = new.env())
         assign(variable, result, envir = .TargetEnv)
 }
 
 
+#' Construct the file names for the cache and hash
+#'
+#' @param variable Variable name for which to construct file names
+#'
+#' @details The returned object is a list with two fields:
+#' \itemize{
+#'   \item \code{obj}: The path to the file in which the
+#'     variable contents will be saved;
+#'   \item \code{hash}: The path to the file in which the cache
+#'     metadata will be stored.
+#' }
+#'
+#' @return A list with file names
+#'
+#' @keywords internal
+#'
+#' @rdname internal.cache.filename
 .cache.filename <- function(variable) {
         list(
                 obj=file.path(.cache.dir, paste0(variable, .cache.file.ext)),
@@ -278,6 +357,14 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
         )
 }
 
+
+#' Print the current cache status
+#'
+#' @return No value is returned; this function is called for its side effects.
+#'
+#' @keywords internal
+#'
+#' @rdname internal.cache.status
 .cache.status <- function () {
         if (.is.cache.empty()) {
                 return(message("No variables in cache"))
@@ -304,6 +391,18 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
         message(status)
 }
 
+
+#' List all cached variables
+#'
+#' List all variables for which files are available in the cache. The info is
+#' purely based on the files in the \code{cache} directory. There is no
+#' guarantee the variable can actually be loaded from the cache.
+#'
+#' @return Character vector of cached variables
+#'
+#' @keywords internal
+#'
+#' @rdname internal.cached.variables
 .cached.variables <- function() {
         # get all relevant cache files
         cache_files <- list.files("cache", pattern = "\\.(RData|hash)$")
@@ -311,10 +410,28 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
         unique(sub("^(.*)\\..*$", "\\1", cache_files))
 }
 
+
+#' Check whether variables are cached
+#'
+#' @param varnames Character vector of variable names
+#'
+#' @return Logical vector indicating whether the variable is in the cache.
+#'
+#' @keywords internal
+#'
+#' @rdname internal.is.cached
 .is.cached <- function(varnames) {
   vapply(varnames, function(x){.read.cache.info(x)$in.cache}, logical(1))
 }
 
+
+#' Check whether the cache is empty
+#'
+#' @return Logical indicating whether the cache is empty
+#'
+#' @keywords internal
+#'
+#' @rdname internal.is.cache.empty
 .is.cache.empty <- function () {
         cached_variables <- .cached.variables()
         if (length(cached_variables)==0) {

@@ -79,6 +79,25 @@ create.project <- function(project.name = 'new-project', template = 'full',
   invisible(NULL)
 }
 
+
+#' Create a project structure
+#'
+#' \code{.create.project.existing} creates a project directory structure inside
+#' an existing directory with the default files from a given template.
+#'
+#' @param project.name Character vector with the name of the project directory
+#' @param merge.strategy Character vector determining whether the directory
+#'   should be empty or is allowed to contain non-conflicting files
+#' @param template Name of the template from which the project should be created
+#' @param rstudio.project Logical indicating whether an \code{.Rproj} file
+#'   should be created
+#'
+#' @return No value is returned; this function is called for its side effects.
+#'
+#' @seealso \code{\link{create.project}}, \code{\link{create.template}}
+#' @keywords internal
+#'
+#' @rdname internal.create.project
 .create.project.existing <- function(project.name, merge.strategy, template, rstudio.project) {
   template.path <- .get.template(template)
   template.files <- .list.files.and.dirs(path = template.path)
@@ -117,6 +136,18 @@ create.project <- function(project.name = 'new-project', template = 'full',
   }
 }
 
+
+#' Create project in a new directory
+#'
+#' \code{.create.project.new} first creates a new directory and then passes
+#' further control to \code{.create.project.existing}. In case the project
+#' creation fails, the newly created directory is cleaned up.
+#'
+#' @inherit .create.project.existing params return
+#'
+#' @keywords internal
+#'
+#' @rdname internal.create.project
 .create.project.new <- function(project.name, template, rstudio.project) {
   if (file.exists(project.name)) {
     stop(paste("Cannot run create.project() from a directory containing", project.name))
@@ -135,6 +166,20 @@ create.project <- function(project.name = 'new-project', template = 'full',
   )
 }
 
+
+#' List all files and directories, excluding .. and .
+#'
+#' Creates a directory listing of a given path, including hidden files and
+#' subdirectories, but excluding the .. and . aliases.
+#'
+#' @param path Character vector indicating the path to the parent folder of
+#'   which the contents should be listed.
+#'
+#' @return Directory listing of \code{path}
+#'
+#' @keywords internal file deprecate
+#'
+#' @rdname internal.list.files.and.dirs
 .list.files.and.dirs <- function(path) {
   # no.. not available in R 2.15.3
   files <- list.files(path = path, all.files = TRUE, include.dirs = TRUE)
@@ -142,14 +187,46 @@ create.project <- function(project.name = 'new-project', template = 'full',
   files
 }
 
+
+#' Check if path is an existing directory
+#'
+#' Checks if a given path exists, and if so if it is a directory.
+#'
+#' @param path Character vector containing the path to the directory to check.
+#'
+#' @return Logical indicating a valid directory was passed.
+#'
+#' @keywords internal file
+#'
+#' @rdname internal.is.dir
 .is.dir <- function(path) {
   file.exists(path) && file.info(path)$isdir
 }
 
+
+#' Check if a directory is empty
+#'
+#' Checks if the directory listing by \code{\link{.list.files.and.dirs}} is empty.
+#'
+#' @param path Character vector containing the path to the directory to check.
+#'
+#' @return Logical indicating whether the passed directory was empty.
+#'
+#' @keywords internal file
+#'
+#' @rdname internal.dir.empty
 .dir.empty <- function(path) {
   length(.list.files.and.dirs(path = path)) == 0
 }
 
+
+#' Return an RStudio project file as character vector
+#'
+#' @return Character vector with the contents of an empty RStudio project file
+#'
+#' @keywords internal
+#'
+#' @rdname internal.rstudioprojectfile
 .rstudioprojectfile <- function(){
   return("Version: 1.0\n\nRestoreWorkspace: DefaultSaveWorkspace: Default\nAlwaysSaveHistory: Default\n\nEnableCodeIndexing: Yes\nUseSpacesForTab: Yes\nNumSpacesForTab: 4\nEncoding: UTF-8\n\nRnwWeave: Sweave\nLaTeX: pdfLaTeX\n\nStripTrailingWhitespace: Yes")
 }
