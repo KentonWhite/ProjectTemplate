@@ -20,7 +20,7 @@ Description: Provides functions to
     project. Using this structure, 'ProjectTemplate'
     automates data loading, preprocessing, library
     importing and unit testing.
-License: Artistic-2.0
+License: GPL-3 | file LICENSE
 LazyLoad: yes
 Roxygen: list(wrap = FALSE)
 Depends:
