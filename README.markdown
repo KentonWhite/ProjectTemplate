@@ -26,5 +26,3 @@ To create a project called `my-project`, open R and type:
 
 ## Finding Out More
 * Website: Visit the [ProjectTemplate website](http://projecttemplate.net) for more details.
-* Mailing List: ProjectTemplate has a Google Group, which can be found at [http://groups.google.com/group/projecttemplate](http://groups.google.com/group/projecttemplate)
-* Twitter: Updates to ProjectTemplate are announced on Twitter using the hashtag #ProjectTemplate.
