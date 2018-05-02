@@ -47,11 +47,12 @@ create.project <- function(project.name = 'new-project', template = 'full',
 {
 
   .stopifproject(c("Cannot create a new project inside an existing one",
-                           "Please change to another directory and re-run create.project()"))
+                           "Please change to another directory and re-run create.project()"),
+                 path = normalizePath(dirname(project.name)))
 
   .stopifproject(c("Cannot create a new project inside an existing one",
                    "Please change to another directory and re-run create.project()"),
-                 path = dirname(getwd()))
+                 path = dirname(normalizePath(dirname(project.name))))
 
   merge.strategy <- match.arg(merge.strategy)
   if (.is.dir(project.name)) {

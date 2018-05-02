@@ -238,3 +238,22 @@ test_that('Dont create projects inside other projects', {
         setwd(file.path(test_project, 'lib'))
         expect_error(create.project("new_project"))
 })
+
+test_that('Do create projects on an absolute path from inside project', {
+  test_project <- tempfile('test_project')
+  test_project2 <- tempfile('test_project2')
+  suppressMessages(create.project(test_project, template = 'full'))
+  on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
+
+  oldwd <- setwd(test_project)
+  on.exit(setwd(oldwd), add = TRUE)
+
+  # should be able to create a new project outside this one
+  expect_error(create.project(test_project2), NA)
+  on.exit(unlink(test_project2, recursive = TRUE), add = TRUE)
+
+  # But you shouldn't be able to create one inside a sub directory of an
+  # existing project, even on an absolute path outside the current project
+  setwd(file.path(test_project, 'lib'))
+  expect_error(create.project(file.path(test_project2, "munge")))
+})
