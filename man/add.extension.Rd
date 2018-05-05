@@ -9,12 +9,12 @@
 \arguments{
 \item{extension}{The extension of the new data file.}
 
-\item{reader}{The function to use when reading the data file.  It should
-accept three arguments: \code{data.file}, \code{filename} and
-\code{variable.name} (in that order).  The function should read the
-contents of the file \code{filename}, and save it into the workspace
-under the name \code{variable.name}.  The \code{data.file} argument
-is just a relative file name and can be ignored.}
+\item{reader}{The function to use when reading the data file. It MUST accept
+three arguments: \code{filename}, \code{variable.name} and \code{...} (in
+that order and called by those names).  The function should read the
+contents of the file \code{filename}, and save it into the workspace under
+the name \code{variable.name}.  The \code{...} argument is just an optional
+interface for the \code{file.reader} to pass in extra options.}
 }
 \value{
 No value is returned; this function is called for its side effects.
@@ -30,6 +30,7 @@ replaced by a different mechanism in a forthcoming version of this package.
 
 \examples{
 \dontrun{.add.extension('foo', foo.reader)}
+
 }
 \seealso{
 \link{preinstalled.readers}

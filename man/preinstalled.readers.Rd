@@ -5,8 +5,7 @@
 %   R/mtp.reader.R, R/octave.reader.R, R/ppm.reader.R, R/r.reader.R,
 %   R/rdata.reader.R, R/rds.reader.R, R/spss.reader.R, R/sql.reader.R,
 %   R/stata.reader.R, R/systat.reader.R, R/tsv.reader.R, R/url.reader.R,
-%   R/wsv.reader.R, R/xls.reader.R, R/xlsx.reader.R, R/xport.reader.R
-\docType{data}
+%   R/wsv.reader.R, R/xls.reader.R, R/xport.reader.R
 \name{preinstalled.readers}
 \alias{preinstalled.readers}
 \alias{arff.reader}
@@ -32,82 +31,80 @@
 \alias{url.reader}
 \alias{wsv.reader}
 \alias{xls.reader}
-\alias{xlsx.reader}
 \alias{xport.reader}
 \title{Automatically read data into memory}
-\format{An object of class \code{list} of length 55.}
 \usage{
-preinstalled.readers
+preinstalled.readers()
 
-arff.reader(data.file, filename, variable.name)
+arff.reader(filename, variable.name, ...)
 
-csv.reader(data.file, filename, variable.name)
+csv.reader(filename, variable.name, ...)
 
-csv2.reader(data.file, filename, variable.name)
+csv2.reader(filename, variable.name, ...)
 
-db.reader(data.file, filename, variable.name)
+db.reader(filename, variable.name, ...)
 
-dbf.reader(data.file, filename, variable.name)
+dbf.reader(filename, variable.name, ...)
 
-epiinfo.reader(data.file, filename, variable.name)
+epiinfo.reader(filename, variable.name, ...)
 
-feather.reader(data.file, filename, variable.name)
+feather.reader(filename, variable.name, ...)
 
-file.reader(data.file, filename, variable.name)
+file.reader(filename, variable.name, ...)
 
-mp3.reader(data.file, filename, variable.name)
+mp3.reader(filename, variable.name, ...)
 
-mtp.reader(data.file, filename, variable.name)
+mtp.reader(filename, variable.name, ...)
 
-octave.reader(data.file, filename, variable.name)
+octave.reader(filename, variable.name, ...)
 
-ppm.reader(data.file, filename, variable.name)
+ppm.reader(filename, variable.name, ...)
 
-r.reader(data.file, filename, variable.name)
+r.reader(filename, variable.name, ...)
 
-rdata.reader(data.file, filename, variable.name)
+rdata.reader(filename, variable.name, ...)
 
-rds.reader(data.file, filename, variable.name)
+rds.reader(filename, variable.name, ...)
 
-spss.reader(data.file, filename, variable.name)
+spss.reader(filename, variable.name, ...)
 
-sql.reader(data.file, filename, variable.name)
+sql.reader(filename, variable.name, ...)
 
-stata.reader(data.file, filename, variable.name)
+stata.reader(filename, variable.name, ...)
 
-systat.reader(data.file, filename, variable.name)
+systat.reader(filename, variable.name, ...)
 
-tsv.reader(data.file, filename, variable.name)
+tsv.reader(filename, variable.name, ...)
 
-url.reader(data.file, filename, variable.name)
+url.reader(filename, variable.name, ...)
 
-wsv.reader(data.file, filename, variable.name)
+wsv.reader(filename, variable.name, ...)
 
-xls.reader(data.file, filename, workbook.name)
+xls.reader(filename, variable.name, ...)
 
-xlsx.reader(data.file, filename, workbook.name)
-
-xport.reader(data.file, filename, variable.name)
+xport.reader(filename, variable.name, ...)
 }
 \arguments{
-\item{data.file}{The name of the data file to be read.}
-
 \item{filename}{The path to the data set to be loaded.}
 
 \item{variable.name}{The name to be assigned to in the global environment.}
 }
 \value{
-No value is returned; the reader functions are called for its side effects.
+\code{preinstalled.readers} returns a list of the registered
+  extensions. The reader functions return no value, they are called for their
+  side effects.
 }
 \description{
-The preinstalled readers are automatically loaded in the list \code{preinstalled.readers}.
-The reader functions will load a data set stored in the \code{data} directory into
-the specified global variable binding. These functions are not meant to be called directly.
+The preinstalled readers are automatically loaded in an internal environment,
+which can be displayed with \code{preinstalled.readers}. The reader functions
+will load a data set into the specified global variable binding. These
+functions are not meant to be called directly.
 }
 \details{
-Some file formats can contain more than one dataset. In this case all datasets are loaded
-into separate variables in the format \code{<variable.name>.<subset.name>}, where the
-\code{subset.name} is determined by the reader automatically.
+Some file formats can contain more than one dataset. In this case all
+datasets are loaded into separate variables in the format
+\code{<variable.name>.<subset.name>}, where the \code{subset.name} is
+determined by the reader automatically.
 
 The \code{sql.reader} function will load data from a SQL database based on configuration
 information found in the specified .sql file. The .sql file must specify
@@ -216,21 +213,24 @@ query: SELECT *,STDEV(value1) FROM example_table
 
 \item \code{csv.reader}: Read a comma separated values file with the \code{.csv} extension.
 
-\item \code{csv2.reader}: Read a semicolon separated values file with the \code{.csv2} extension.
+\item \code{csv2.reader}: Read a semicolon separated values file with
+  the \code{.csv2} extension.
 
-In May 2018, the default behaviour of the reader for .csv2 files changed to use R's read.csv2(),
-where the field separator is assumed to be ';' and the decimal separator to be ','.
+In May 2018, the default behaviour of the reader for .csv2 files changed to
+use R's read.csv2(), where the field separator is assumed to be ';' and the
+decimal separator to be ','.
 
 \item \code{db.reader}: Read a SQlite3 database with a \code{.db} file extension.
 
 If you want to specify a single table or query to execute against the database,
-move it elsewhere and use a .sql file interpreted by \code{\link{sql.reader}}.
+move it elsewhere and use a .sql file interpreted by \code{sql.reader}.
 
 \item \code{dbf.reader}: Read an XBASE file with a \code{.dbf} file extension.
 
-\item \code{epiinfo.reader}: Read an Epi Info file with a .rec file extension.
+\item \code{epiinfo.reader}: Read an Epi Info file with a \code{.rec} file extension.
 
-\item \code{feather.reader}: Read a feather file in Apache Arrow format with a \code{.feather} file extension.
+\item \code{feather.reader}: Read a feather file in Apache Arrow format
+with a \code{.feather} file extension.
 
 \item \code{file.reader}: Read an arbitrary file described in a \code{.file} file.
 
@@ -249,7 +249,8 @@ This function will load the specified MP3 file into memory using the
 tuneR package. This is useful for working with music files as a data
 set.
 
-\item \code{mtp.reader}: Read a Minitab Portable Worksheet with a \code{.mtp3} file extension.
+\item \code{mtp.reader}: Read a Minitab Portable Worksheet with a
+\code{.mtp3} file extension.
 
 \item \code{octave.reader}: Read an Octave file with a \code{.m} file extension.
 
@@ -260,19 +261,21 @@ This function will load the specified Octave file into memory using the
 
 Data is loaded using the \code{pixmap::read.pnm} function.
 
-\item \code{r.reader}: Read an R source file with a \code{.R} file extension.
+\item \code{r.reader}: Read an R source file with a \code{.R} file
+  extension.
 
-This function will call source on the specified R file, executing the
-code inside of it as a way of generating data sets dynamically, as in
-many Monte Carlo applications.
+This function will call source on the specified R file, executing the code
+inside of it as a way of generating data sets dynamically, as in many Monte
+Carlo applications.
 
-\item \code{rdata.reader}: Read an RData file with a \code{.rdata} or \code{.rda} file extension.
+\item \code{rdata.reader}: Read an RData file with a \code{.rdata} or
+  \code{.rda} file extension.
 
 This function will load the specified RData file into memory using the
-\code{\link{load}} function. This may generate many data sets
-simultaneously.
+\code{\link{load}} function. This may generate many data sets simultaneously.
 
-\item \code{rds.reader}: Read the RDS file format from files with the \code{.rds} extension.
+\item \code{rds.reader}: Read the RDS file format from files with the
+\code{.rds} extension.
 
 \item \code{spss.reader}: Read an SPSS file with a \code{.sav} file extension.
 
@@ -282,40 +285,41 @@ data set into the global environment.
 
 \item \code{sql.reader}: Read a database described in a \code{.sql} file.
 
-\item \code{stata.reader}: Read a Stata file with a \code{.stata} file extension.
+\item \code{stata.reader}: Read a Stata file with a \code{.dta} file
+extension.
 
-\item \code{systat.reader}: Read a Systat file with a \code{.sys} or \code{.syd} file extension.
+\item \code{systat.reader}: Read a Systat file with a \code{.sys} or
+\code{.syd} file extension.
 
-\item \code{tsv.reader}: Read a tab separated values file with the \code{.tsv} or \code{.tab} file extensions.
+\item \code{tsv.reader}: Read a tab separated values file with the
+\code{.tsv} or \code{.tab} file extensions.
 
-\item \code{url.reader}: Read a remote file described in a \code{.url} file.
+\item \code{url.reader}: Read a remote file described in a
+  \code{.url} file.
 
-This function will load data from a remote source accessible through
-HTTP or FTP based on configuration information found in the specified
-.url file. The \code{.url} file must specify the URL of the remote data source
-and the type of data that is available remotely. Only one data source
-per \code{.url} file is supported currently.
+This function will load data from a remote source accessible through HTTP or
+FTP based on configuration information found in the specified .url file. The
+\code{.url} file must specify the URL of the remote data source and the type
+of data that is available remotely. Only one data source per \code{.url} file
+is supported currently.
 
-Examples of the DCF format and settings used in a .url file are shown
-below:
+Examples of the DCF format and settings used in a .url file are shown below:
 
 Example 1
 url: http://www.johnmyleswhite.com/ProjectTemplate/sample_data.csv
 separator: ,
 
-\item \code{wsv.reader}: Read a whitespace separated values file with the \code{.wsv} or \code{.txt} file extensions.
+\item \code{wsv.reader}: Read a whitespace separated values file with
+the \code{.wsv} or \code{.txt} file extensions.
 
-\item \code{xls.reader}: Read an Excel file with a \code{.xls} file extension.
-
-This function will load the specified Excel file into memory using the
-\code{readxl} package.
-
-\item \code{xlsx.reader}: Read an Excel 2007 file with a \code{.xlsx} file extension.
+\item \code{xls.reader}: Read an Excel file with a \code{.xls} file
+  extension.
 
 This function will load the specified Excel file into memory using the
 \code{readxl} package.
 
-\item \code{xport.reader}: Read an XPort file with a \code{.xport} file extension.
+\item \code{xport.reader}: Read an XPort file with a \code{.xport} file
+extension.
 }}
 
 \seealso{

@@ -63,7 +63,10 @@ list.data <- function(...) {
 #' @keywords internal
 #'
 #' @rdname internal.list.data
+#'
+#' @importFrom tibble data_frame
 .list.data <- function(config) {
+  require.package("tibble")
   # Get list of variables in data/, always recursive to exclude cached
   # variables from nested files
   all.files <- list.files(path = 'data', recursive = TRUE, include.dirs = TRUE)
@@ -85,13 +88,12 @@ list.data <- function(...) {
   cache_only <- rep(FALSE, length(varnames))
 
   # Build the final data.frame
-  df <- data.frame(filename = all.files,
-                   varname = varnames,
-                   is_ignored = is_ignored,
-                   is_directory = is_directory,
-                   is_cached = is_cached,
-                   cache_only = cache_only,
-                   stringsAsFactors = FALSE)
+  df <- tibble::data_frame(filename = all.files,
+                           varname = varnames,
+                           is_ignored = is_ignored,
+                           is_directory = is_directory,
+                           is_cached = is_cached,
+                           cache_only = cache_only)
   df$reader <- readers
   # Keep only lines with files that match the configured recursive_loading
   # setting
@@ -113,15 +115,13 @@ list.data <- function(...) {
   # call .is.cached to perform this check
   is_cached <- .is.cached(cached.vars)
 
-  df2 <- data.frame(filename = filenames,
-                    varname = cached.vars,
-                    is_ignored = is_ignored,
-                    is_directory = is_directory,
-                    is_cached = is_cached,
-                    cache_only = cache_only,
-                    reader = readers,
-                    row.names = NULL,
-                    stringsAsFactors = FALSE)
+  df2 <- tibble::data_frame(filename = '',
+                            varname = cached.vars,
+                            is_ignored = FALSE,
+                            is_directory = FALSE,
+                            is_cached = is_cached,
+                            cache_only = TRUE,
+                            reader = list(null_reader))
 
   rbind(df, df2)
 }
@@ -149,6 +149,8 @@ list.data <- function(...) {
     varnames[extension.match] <- clean.variable.name(varnames[extension.match])
   }
 
+  readers <- lapply(readers, function(x) if (is.character(x)) {return(null_reader)} else {return(x)})
+  # readers[readers == ""] <- null_reader
   list(readers = readers, varnames = varnames)
 }
 

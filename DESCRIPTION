@@ -25,6 +25,9 @@ LazyLoad: yes
 Roxygen: list(wrap = FALSE)
 Depends:
     R (>= 2.7)
+Imports:
+    R6,
+    tibble
 Suggests:
     foreign,
     feather,
@@ -50,7 +53,6 @@ Suggests:
     RPostgreSQL,
     GetoptLong,
     whisker,
-    tibble,
     testthat (>= 0.8)
 URL: http://projecttemplate.net
 BugReports: https://github.com/johnmyleswhite/ProjectTemplate/issues

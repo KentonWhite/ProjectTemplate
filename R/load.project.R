@@ -226,20 +226,19 @@ load.project <- function(...)
       cache.files.loaded <- c(cache.files.loaded, variable)
     } else if (config$data_loading) {
       # Check if a reader was found for the file
-      has_reader <- ((class(data.file$reader[[1]]) == "function") || !(data.file$reader[[1]] == ''))
-      if (!has_reader) {
+      if (identical(data.file$reader[[1]], null_reader)) {
         next()
       }
       # Load data from data/
       message(" Loading data set: ", variable)
-      reader.args <- list(data.file$filename,
-                          file.path('data', data.file$filename),
+      reader <- data.file$reader[[1]]$reader
+      reader.args <- list(file.path('data', data.file$filename),
                           variable)
 
       # Register current variables
       vars.old <- .var.diff.from()
       # Actually load the data
-      do.call(data.file$reader[[1]], reader.args)
+      do.call(reader, reader.args)
       # Get new variables introduced by the reader
       vars.new <- .var.diff.from(vars.old)
 
