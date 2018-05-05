@@ -30,15 +30,16 @@
   reader <- match.fun(reader)
   if (!identical(names(formals(reader)),
                  c("filename", "variable.name", "..."))) {
-    warning("A reader with non-standard arguments detected.\n",
-            "Assuming old style arguments, for now will be wrapped in a ",
-            "helper function.\n",
-            "In a future version this will become an error.")
     # Old style reader: define a function with the new style arguments that
     # calls the function that was passed in. Because this happens in a closure
     # the reference to reader will still exist outside once .add_extension
     # finishes. Can't reuse the old name because that causes a recursion error.
     func_store <- function(filename, variable.name, ...) {
+      warning("A reader with non-standard arguments detected.\n",
+              "Assuming old style arguments, for now will be wrapped in a ",
+              "helper function.\n",
+              "In a future version this will become an error, please notify the ",
+              "package developer that built this custom reader.")
       reader(basename(filename), filename, variable.name)
     }
   } else {
