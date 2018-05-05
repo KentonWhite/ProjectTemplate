@@ -5,8 +5,14 @@
 feather.reader <- function(filename, variable.name, ...) {
   .require.package('feather')
 
+  opts = list(...)
+  if ("columns" %in% opts) {
+    columns <- strsplit(opts$columns, "\\s*,\\s*")[[1]]
+  } else {
+    columns <- NULL
+  }
   assign(variable.name,
-         feather::read_feather(filename),
+         feather::read_feather(filename, columns = columns),
          envir = .TargetEnv)
 }
 
