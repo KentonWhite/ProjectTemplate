@@ -3,11 +3,14 @@
 #' This function will load the specified MP3 file into memory using the
 #' tuneR package. This is useful for working with music files as a data
 #' set.
-mp3.reader <- function(data.file, filename, variable.name)
-{
+#'
+#' @include add.extension.R
+mp3.reader <- function(filename, variable.name, ...) {
   .require.package('tuneR')
 
   assign(variable.name,
          tuneR::readMP3(filename),
          envir = .TargetEnv)
 }
+
+.add.extension("mp3", mp3.reader)

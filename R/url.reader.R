@@ -1,20 +1,22 @@
-#' @describeIn preinstalled.readers Read a remote file described in a \code{.url} file.
+#' @describeIn preinstalled.readers Read a remote file described in a
+#'   \code{.url} file.
 #'
-#' This function will load data from a remote source accessible through
-#' HTTP or FTP based on configuration information found in the specified
-#' .url file. The \code{.url} file must specify the URL of the remote data source
-#' and the type of data that is available remotely. Only one data source
-#' per \code{.url} file is supported currently.
+#' This function will load data from a remote source accessible through HTTP or
+#' FTP based on configuration information found in the specified .url file. The
+#' \code{.url} file must specify the URL of the remote data source and the type
+#' of data that is available remotely. Only one data source per \code{.url} file
+#' is supported currently.
 #'
-#' Examples of the DCF format and settings used in a .url file are shown
-#' below:
+#' Examples of the DCF format and settings used in a .url file are shown below:
 #'
 #' Example 1
 #' url: http://www.johnmyleswhite.com/ProjectTemplate/sample_data.csv
 #' separator: ,
+#'
 #' @importFrom utils download.file
-url.reader <- function(data.file, filename, variable.name)
-{
+#'
+#' @include add.extension.R
+url.reader <- function(filename, variable.name, ...) {
   url.info <- translate.dcf(filename)
 
   file.type <- ""
@@ -38,27 +40,29 @@ url.reader <- function(data.file, filename, variable.name)
     if (file.type %in% c("\\.Rdata$", "\\.Rda$"))
     {
       con <- url(url.info[['url']])
-      rdata.reader(data.file, con, variable.name)
+      rdata.reader(basename(filename), con, variable.name)
     }
 
     if (file.type %in% c("\\.xlsx$"))
     {
       download.file(url.info[['url']], file.path(tempdir(), "xlsxtmp.xlsx"))
-      xlsx.reader(data.file, file.path(tempdir(), "xlsxtmp.xlsx"), variable.name)
+      xls.reader(basename(filename), file.path(tempdir(), "xlsxtmp.xlsx"), variable.name)
     }
 
     if (file.type %in% c("\\.sql$"))
     {
       download.file(url.info[['url']], file.path(tempdir(), "sqltmp.sql"))
-      sql.reader(data.file, file.path(tempdir(), "sqltmp.sql"), variable.name)
+      sql.reader(basename(filename), file.path(tempdir(), "sqltmp.sql"), variable.name)
     }
 
     else
     {
       do.call(extensions.dispatch.table[[file.type]],
-              list(data.file,
+              list(basename(filename),
                    url.info[['url']],
                    variable.name))
     }
   }
 }
+
+.add.extension("url", url.reader)

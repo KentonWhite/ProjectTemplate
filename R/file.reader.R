@@ -8,13 +8,19 @@
 #'
 #' path: http://www.johnmyleswhite.com/ProjectTemplate/sample_data.csv
 #' extension: csv
-file.reader <- function(data.file, filename, variable.name)
-{
+#'
+#' @include add.extension.R
+file.reader <- function(filename, variable.name, ...) {
   file.info <- translate.dcf(filename)
   file.type <- paste('\\.', file.info[['extension']], '$', sep = '')
 
-  do.call(extensions.dispatch.table[[file.type]],
-          list(data.file,
-               file.info[['path']],
+  if (is.null(file.type)) {
+    stop("Unknown filetype ", file.type)
+  }
+  reader <- extensions.dispatch.table[[file.type]]$reader
+  do.call(reader,
+          list(file.info[['path']],
                variable.name))
 }
+
+.add.extension("file", file.reader)

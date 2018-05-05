@@ -46,7 +46,6 @@ Suggests:
     RODBC,
     RJDBC,
     readxl,
-    xlsx,
     tuneR,
     pixmap,
     data.table,
@@ -108,6 +107,5 @@ Collate:
     'url.reader.R'
     'wsv.reader.R'
     'xls.reader.R'
-    'xlsx.reader.R'
     'xport.reader.R'
 RoxygenNote: 6.0.1

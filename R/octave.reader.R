@@ -2,11 +2,14 @@
 #'
 #' This function will load the specified Octave file into memory using the
 #' \code{foreign::read.octave} function.
-octave.reader <- function(data.file, filename, variable.name)
-{
+#'
+#' @include add.extension.R
+octave.reader <- function(filename, variable.name, ...) {
   .require.package('foreign')
 
   assign(variable.name,
          foreign::read.octave(filename),
          envir = .TargetEnv)
 }
+
+.add.extension("m", octave.reader)

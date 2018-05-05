@@ -102,8 +102,9 @@
 #' query: SELECT *,STDEV(value1) FROM example_table
 #'
 #' @importFrom utils modifyList
-sql.reader <- function(data.file, filename, variable.name)
-{
+#'
+#' @include add.extension.R
+sql.reader <- function(filename, variable.name, ...) {
   database.info <- translate.dcf(filename)
 
   if (! is.null(database.info[['connection']]))
@@ -371,3 +372,5 @@ sql.reader <- function(data.file, filename, variable.name)
     return()
   }
 }
+
+.add.extension("sql", sql.reader)
