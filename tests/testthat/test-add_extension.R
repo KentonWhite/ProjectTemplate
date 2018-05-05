@@ -42,8 +42,7 @@ test_that("Test 2: Add an old style extension", {
           add = TRUE)
 
   # Expect the deprecation warning
-  expect_warning(.add.extension("foo1", test_reader_old_style),
-                 "reader with non-standard arguments")
+  .add.extension("foo1", test_reader_old_style)
 
   # Expect the extension was added to the dispatch table
   expect_true("\\.foo1$" %in% names(extensions.dispatch.table))
@@ -52,9 +51,10 @@ test_that("Test 2: Add an old style extension", {
   expect_identical(reader$name, "test_reader_old_style")
   expect_is(reader$reader, "function")
 
-  output <- reader$reader(filename = 'data/example.foo1',
-                          variable.name = 'example',
-                          test = 'testing ...')
+  expect_warning(output <- reader$reader(filename = 'data/example.foo1',
+                                         variable.name = 'example',
+                                         test = 'testing ...'),
+                 "reader with non-standard arguments")
   test_output <- list(data.file = 'example.foo1',
                       filename = 'data/example.foo1',
                       variable.name = 'example')
