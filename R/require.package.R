@@ -30,10 +30,6 @@
 #' @importFrom utils install.packages
 require.package <- function(package.name, attach = TRUE)
 {
-  # Temporarily disable warnings
-  old.options <- options(warn=-1)
-  on.exit(options(old.options))
-
   success <- .attach.or.add.namespace(package.name, attach)
   if (!success) {
     install.packages(package.name)
