@@ -25,6 +25,9 @@ LazyLoad: yes
 Roxygen: list(wrap = FALSE)
 Depends:
     R (>= 2.7)
+Imports:
+    R6,
+    tibble
 Suggests:
     foreign,
     feather,
@@ -43,14 +46,12 @@ Suggests:
     RODBC,
     RJDBC,
     readxl,
-    xlsx,
     tuneR,
     pixmap,
     data.table,
     RPostgreSQL,
     GetoptLong,
     whisker,
-    tibble,
     testthat (>= 0.8)
 URL: http://projecttemplate.net
 BugReports: https://github.com/johnmyleswhite/ProjectTemplate/issues
@@ -106,6 +107,5 @@ Collate:
     'url.reader.R'
     'wsv.reader.R'
     'xls.reader.R'
-    'xlsx.reader.R'
     'xport.reader.R'
 RoxygenNote: 6.0.1

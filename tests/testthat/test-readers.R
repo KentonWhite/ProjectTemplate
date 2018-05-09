@@ -9,13 +9,12 @@ test_that('Test 1: CSV Data file', {
   on.exit(setwd(oldwd), add = TRUE)
   suppressMessages(load.project())
 
-  data.file <- 'example_01.csv'
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_01.csv')
   variable.name <- clean.variable.name('example_01')
 
-  csv.reader(data.file, filename, variable.name)
+  csv.reader(filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
@@ -35,13 +34,12 @@ test_that('Test 2: .csv.bz2', {
   on.exit(setwd(oldwd), add = TRUE)
   suppressMessages(load.project())
 
-  data.file <- 'example_02.csv.bz2'
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_02.csv.bz2')
   variable.name <- clean.variable.name('example_02')
 
-  csv.reader(data.file, filename, variable.name)
+  csv.reader(filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
@@ -62,13 +60,12 @@ test_that('Test 3: csv.zip data', {
   on.exit(setwd(oldwd), add = TRUE)
   suppressMessages(load.project())
 
-  data.file <- 'example_03.csv.zip'
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_03.csv.zip')
   variable.name <- clean.variable.name('example_03')
 
-  csv.reader(data.file, filename, variable.name)
+  csv.reader(filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
@@ -89,13 +86,12 @@ test_that('Example 04: CSV Data File with GZip Compression', {
   on.exit(setwd(oldwd), add = TRUE)
   suppressMessages(load.project())
 
-  data.file <- 'example_04.csv.gz'
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_04.csv.gz')
   variable.name <- clean.variable.name('example_04')
 
-  csv.reader(data.file, filename, variable.name)
+  csv.reader(filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
@@ -116,13 +112,12 @@ test_that('Example 05: TSV Data File', {
   on.exit(setwd(oldwd), add = TRUE)
   suppressMessages(load.project())
 
-  data.file <- 'example_05.tsv'
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_05.tsv')
   variable.name <- clean.variable.name('example_05')
 
-  tsv.reader(data.file, filename, variable.name)
+  tsv.reader(filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
@@ -143,13 +138,12 @@ test_that('Example 06: TSV Data File with BZip2 Compression', {
   on.exit(setwd(oldwd), add = TRUE)
   suppressMessages(load.project())
 
-  data.file <- 'example_06.tsv.bz2'
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_06.tsv.bz2')
   variable.name <- clean.variable.name('example_06')
 
-  tsv.reader(data.file, filename, variable.name)
+  tsv.reader(filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
@@ -170,13 +164,12 @@ test_that('Example 07: TSV Data File with Zip Compression', {
   on.exit(setwd(oldwd), add = TRUE)
   suppressMessages(load.project())
 
-  data.file <- 'example_07.tsv.zip'
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_07.tsv.zip')
   variable.name <- clean.variable.name('example_07')
 
-  tsv.reader(data.file, filename, variable.name)
+  tsv.reader(filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
@@ -197,13 +190,12 @@ test_that('Example 08: TSV Data File with GZip Compression', {
   on.exit(setwd(oldwd), add = TRUE)
   suppressMessages(load.project())
 
-  data.file <- 'example_08.tsv.gz'
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_08.tsv.gz')
   variable.name <- clean.variable.name('example_08')
 
-  tsv.reader(data.file, filename, variable.name)
+  tsv.reader(filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
@@ -223,13 +215,12 @@ test_that('Example 09: WSV Data File', {
   on.exit(setwd(oldwd), add = TRUE)
   suppressMessages(load.project())
 
-  data.file <- 'example_09.wsv'
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_09.wsv')
   variable.name <- clean.variable.name('example_09')
 
-  wsv.reader(data.file, filename, variable.name)
+  wsv.reader(filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
@@ -251,13 +242,12 @@ test_that('Example 10: WSV Data File with BZip2 Compression', {
   on.exit(setwd(oldwd), add = TRUE)
   suppressMessages(load.project())
 
-  data.file <- 'example_10.wsv.bz2'
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_10.wsv.bz2')
   variable.name <- clean.variable.name('example_10')
 
-  wsv.reader(data.file, filename, variable.name)
+  wsv.reader(filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
@@ -278,13 +268,12 @@ test_that('Example 11: WSV Data File with Zip Compression', {
   on.exit(setwd(oldwd), add = TRUE)
   suppressMessages(load.project())
 
-  data.file <- 'example_11.wsv.zip'
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_11.wsv.zip')
   variable.name <- clean.variable.name('example_11')
 
-  wsv.reader(data.file, filename, variable.name)
+  wsv.reader(filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
@@ -304,13 +293,12 @@ test_that('Example 12: WSV Data File with GZip Compression', {
   on.exit(setwd(oldwd), add = TRUE)
   suppressMessages(load.project())
 
-  data.file <- 'example_12.wsv.gz'
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_12.wsv.gz')
   variable.name <- clean.variable.name('example_12')
 
-  wsv.reader(data.file, filename, variable.name)
+  wsv.reader(filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
@@ -331,13 +319,12 @@ test_that('Example 13: RData Data File with .RData Extension', {
   on.exit(setwd(oldwd), add = TRUE)
   suppressMessages(load.project())
 
-  data.file <- 'example_13.RData'
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_13.RData')
   variable.name <- clean.variable.name('example_13')
 
-  rdata.reader(data.file, filename, variable.name)
+  rdata.reader(filename, variable.name)
 
   expect_that(exists('m'), is_true())
   expect_that(names(get('m')), equals(c('N', 'Prime')))
@@ -358,13 +345,12 @@ test_that('Example 14: RData Data File with .rda Extension', {
   on.exit(setwd(oldwd), add = TRUE)
   suppressMessages(load.project())
 
-  data.file <- 'example_14.rda'
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_14.rda')
   variable.name <- clean.variable.name('example_14')
 
-  rdata.reader(data.file, filename, variable.name)
+  rdata.reader(filename, variable.name)
 
   expect_that(exists('n'), is_true())
   expect_that(names(get('n')), equals(c('N', 'Prime')))
@@ -390,13 +376,12 @@ test_that('Example 16: TSV File with .tab Extension', {
   on.exit(setwd(oldwd), add = TRUE)
   suppressMessages(load.project())
 
-  data.file <- 'example_16.tab'
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_16.tab')
   variable.name <- clean.variable.name('example_16')
 
-  tsv.reader(data.file, filename, variable.name)
+  tsv.reader(filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
@@ -416,13 +401,12 @@ test_that('Example 17: TSV File with .tab Extension and BZip2 Compression', {
   on.exit(setwd(oldwd), add = TRUE)
   suppressMessages(load.project())
 
-  data.file <- 'example_17.tab.bz2'
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_17.tab.bz2')
   variable.name <- clean.variable.name('example_17')
 
-  tsv.reader(data.file, filename, variable.name)
+  tsv.reader(filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
@@ -442,13 +426,12 @@ test_that('Example 18: TSV File with .tab Extension and Zip Compression', {
   on.exit(setwd(oldwd), add = TRUE)
   suppressMessages(load.project())
 
-  data.file <- 'example_18.tab.zip'
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_18.tab.zip')
   variable.name <- clean.variable.name('example_18')
 
-  tsv.reader(data.file, filename, variable.name)
+  tsv.reader(filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
@@ -468,13 +451,12 @@ test_that('Example 19: TSV File with .tab Extension and GZip Compression', {
   on.exit(setwd(oldwd), add = TRUE)
   suppressMessages(load.project())
 
-  data.file <- 'example_19.tab.gz'
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_19.tab.gz')
   variable.name <- clean.variable.name('example_19')
 
-  tsv.reader(data.file, filename, variable.name)
+  tsv.reader(filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
@@ -495,13 +477,12 @@ test_that('Example 20: WSV File with .txt Extension', {
   on.exit(setwd(oldwd), add = TRUE)
   suppressMessages(load.project())
 
-  data.file <- 'example_20.txt'
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_20.txt')
   variable.name <- clean.variable.name('example_20')
 
-  wsv.reader(data.file, filename, variable.name)
+  wsv.reader(filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
@@ -522,13 +503,12 @@ test_that('Example 21: WSV File with .txt Extension and BZip2 Compression', {
   on.exit(setwd(oldwd), add = TRUE)
   suppressMessages(load.project())
 
-  data.file <- 'example_21.txt.bz2'
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_21.txt.bz2')
   variable.name <- clean.variable.name('example_21')
 
-  wsv.reader(data.file, filename, variable.name)
+  wsv.reader(filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
@@ -549,13 +529,12 @@ test_that('Example 22: WSV File with .txt Extension and Zip Compression', {
   on.exit(setwd(oldwd), add = TRUE)
   suppressMessages(load.project())
 
-  data.file <- 'example_22.txt.zip'
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_22.txt.zip')
   variable.name <- clean.variable.name('example_22')
 
-  wsv.reader(data.file, filename, variable.name)
+  wsv.reader(filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
@@ -576,13 +555,12 @@ test_that('Example 23: WSV File with .txt Extension and GZip Compression', {
   on.exit(setwd(oldwd), add = TRUE)
   suppressMessages(load.project())
 
-  data.file <- 'example_23.txt.gz'
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_23.txt.gz')
   variable.name <- clean.variable.name('example_23')
 
-  wsv.reader(data.file, filename, variable.name)
+  wsv.reader(filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
@@ -603,13 +581,12 @@ test_that('Example 24: R File with .R Extension', {
   on.exit(setwd(oldwd), add = TRUE)
   suppressMessages(load.project())
 
-  data.file <- 'example_24.R'
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_24.R')
   variable.name <- clean.variable.name('example_24')
 
-  r.reader(data.file, filename, variable.name)
+  r.reader(filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
@@ -630,13 +607,12 @@ test_that('Example 25: R File with .r Extension', {
   on.exit(setwd(oldwd), add = TRUE)
   suppressMessages(load.project())
 
-  data.file <- 'example_25.r'
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_25.r')
   variable.name <- clean.variable.name('example_25')
 
-  r.reader(data.file, filename, variable.name)
+  r.reader(filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
@@ -657,13 +633,12 @@ test_that('Example 26: Excel 2007 File with .xls Extension', {
   on.exit(setwd(oldwd), add = TRUE)
   suppressMessages(load.project())
 
-  data.file <- 'example_26.xls'
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_26.xls')
   variable.name <- clean.variable.name('example_26')
 
-  xls.reader(data.file, filename, variable.name)
+  xls.reader(filename, variable.name)
 
   variable.name <- paste(variable.name, '.Sheet1', sep = '')
 
@@ -679,22 +654,21 @@ test_that('Example 26: Excel 2007 File with .xls Extension', {
 
 test_that('Example 27: Excel 2011 File with .xlsx Extension', {
 
-  #data.file <- 'example_27.xlsx'
-  #filename <- file.path(system.file('example_data',
-  #                                  package = 'ProjectTemplate'),
-  #                      'example_27.xlsx')
-  #variable.name <- clean.variable.name('example_27')
-  #
-  #xlsx.reader(data.file, filename, variable.name)
-  #
-  #variable.name <- paste(variable.name, '.Sheet1', sep = '')
-  #
-  #expect_that(exists(variable.name), is_true())
-  #expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
-  #expect_that(nrow(get(variable.name)), equals(5))
-  #expect_that(ncol(get(variable.name)), equals(2))
-  #expect_that(get(variable.name)[5, 2], equals(11))
-  #rm(example.27.Sheet1, envir = .TargetEnv)
+  filename <- file.path(system.file('example_data',
+                                   package = 'ProjectTemplate'),
+                       'example_27.xlsx')
+  variable.name <- clean.variable.name('example_27')
+
+  xls.reader(filename, variable.name)
+
+  variable.name <- paste(variable.name, '.Sheet1', sep = '')
+
+  expect_that(exists(variable.name), is_true())
+  expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
+  expect_that(nrow(get(variable.name)), equals(5))
+  expect_that(ncol(get(variable.name)), equals(2))
+  expect_that(get(variable.name)[5, 2], equals(11))
+  rm(example.27.Sheet1, envir = .TargetEnv)
 
 })
 
@@ -715,11 +689,10 @@ test_that('Example 28: SQLite3 Support with .sql Extension with table = "..."', 
                          table = 'example_28')
   write.dcf(sql.file, file = 'example_28.sql', width = 1000)
 
-  data.file <- 'example_28.sql'
   filename <- 'example_28.sql'
   variable.name <- clean.variable.name('example_28')
 
-  sql.reader(data.file, filename, variable.name)
+  sql.reader(filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
@@ -748,11 +721,10 @@ test_that('Example 29: SQLite3 Support with .sql Extension with query = "SELECT 
                          query = 'SELECT * FROM example_29')
   write.dcf(sql.file, file = 'example_29.sql', width = 1000)
 
-  data.file <- 'example_29.sql'
   filename <- 'example_29.sql'
   variable.name <- clean.variable.name('example_29')
 
-  sql.reader(data.file, filename, variable.name)
+  sql.reader(filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
@@ -781,11 +753,10 @@ test_that('Example 30: SQLite3 Support with .sql Extension and table = "*"', {
                          table = '*')
   write.dcf(sql.file, file = 'example_30.sql', width = 1000)
 
-  data.file <- 'example_30.sql'
   filename <- 'example_30.sql'
   variable.name <- clean.variable.name('example_30')
 
-  sql.reader(data.file, filename, variable.name)
+  sql.reader(filename, variable.name)
 
   variable1.name <- clean.variable.name('example_30a')
   variable2.name <- clean.variable.name('example_30b')
@@ -816,13 +787,12 @@ test_that('Example 31: SQLite3 Support with .db Extension', {
   on.exit(setwd(oldwd), add = TRUE)
   suppressMessages(load.project())
 
-  data.file <- 'example_31.db'
   filename <- file.path(system.file('example_data',
                                   package = 'ProjectTemplate'),
                         'example_31.db')
   variable.name <- clean.variable.name('example_31')
 
-  db.reader(data.file, filename, variable.name)
+  db.reader(filename, variable.name)
 
   variable1.name <- clean.variable.name('example_31a')
   variable2.name <- clean.variable.name('example_31b')
@@ -850,13 +820,12 @@ test_that('Example 32: Weka Support with .arff Extension', {
   on.exit(setwd(oldwd), add = TRUE)
   suppressMessages(load.project())
 
-  data.file <- 'example_32.arff'
   filename <- file.path(system.file('example_data',
                                   package = 'ProjectTemplate'),
                         'example_32.arff')
   variable.name <- clean.variable.name('example_32')
 
-  arff.reader(data.file, filename, variable.name)
+  arff.reader(filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
@@ -883,11 +852,10 @@ test_that('Example 33: Arbitary File Support with .file File Pointing to .db Fil
                          extension = 'db')
   write.dcf(info.file, file = 'example_33.file', width = 1000)
 
-  data.file <- 'example_33.file'
   filename <- 'example_33.file'
   variable.name <- clean.variable.name('example_28')
 
-  file.reader(data.file, filename, variable.name)
+  file.reader(filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
@@ -914,14 +882,13 @@ test_that('Example 35: PPM Support with .ppm Extension', {
   on.exit(setwd(oldwd), add = TRUE)
   suppressMessages(load.project())
 
-  data.file <- 'example_35.ppm'
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_35.ppm')
   variable.name <- clean.variable.name('example_35')
 
   expect_warning(
-    ppm.reader(data.file, filename, variable.name),
+    ppm.reader(filename, variable.name),
     " is NULL so the result will be NULL")
 
   expect_that(exists(variable.name), is_true())
@@ -940,13 +907,12 @@ test_that('Example 36: dBase Support with .dbf Extension', {
   on.exit(setwd(oldwd), add = TRUE)
   suppressMessages(load.project())
 
-  data.file <- 'example_36.dbf'
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_36.dbf')
   variable.name <- clean.variable.name('example_36')
 
-  dbf.reader(data.file, filename, variable.name)
+  dbf.reader(filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
@@ -967,13 +933,12 @@ test_that('Example 37: SPSS Support with .sav Extension', {
   on.exit(setwd(oldwd), add = TRUE)
   suppressMessages(load.project())
 
-  data.file <- 'example_37.sav'
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_37.sav')
   variable.name <- clean.variable.name('example_37')
 
-  spss.reader(data.file, filename, variable.name)
+  spss.reader(filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
@@ -994,13 +959,12 @@ test_that('Example 38: SPSS Support with .sav Extension / Alternative Generation
   on.exit(setwd(oldwd), add = TRUE)
   suppressMessages(load.project())
 
-  data.file <- 'example_38.sav'
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_38.sav')
   variable.name <- clean.variable.name('example_38')
 
-  spss.reader(data.file, filename, variable.name)
+  spss.reader(filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
@@ -1021,13 +985,12 @@ test_that('Example 39: Stata Support with .dta Extension', {
   on.exit(setwd(oldwd), add = TRUE)
   suppressMessages(load.project())
 
-  data.file <- 'example_39.dta'
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_39.dta')
   variable.name <- clean.variable.name('example_39')
 
-  stata.reader(data.file, filename, variable.name)
+  stata.reader(filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
@@ -1048,13 +1011,12 @@ test_that('Example 40: Stata Support with .dta Extension / Alternative Generatio
   on.exit(setwd(oldwd), add = TRUE)
   suppressMessages(load.project())
 
-  data.file <- 'example_40.dta'
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_40.dta')
   variable.name <- clean.variable.name('example_40')
 
-  stata.reader(data.file, filename, variable.name)
+  stata.reader(filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
@@ -1075,13 +1037,12 @@ test_that('Example 41: SAS Support with .xport Extension', {
   on.exit(setwd(oldwd), add = TRUE)
   suppressMessages(load.project())
 
-  data.file <- 'example_41.xport'
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_41.xport')
   variable.name <- clean.variable.name('example_41')
 
-  xport.reader(data.file, filename, variable.name)
+  xport.reader(filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'PRIME')))
@@ -1102,13 +1063,12 @@ test_that('Example 42: SAS Support with .xpt Extension', {
   on.exit(setwd(oldwd), add = TRUE)
   suppressMessages(load.project())
 
-  data.file <- 'example_42.xpt'
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_42.xpt')
   variable.name <- clean.variable.name('example_42')
 
-  xport.reader(data.file, filename, variable.name)
+  xport.reader(filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'PRIME')))
@@ -1133,13 +1093,12 @@ test_that('Example 44: Single Object Serialization Support with .rds Extension',
   on.exit(setwd(oldwd), add = TRUE)
   suppressMessages(load.project())
 
-  data.file <- 'example_44.rds'
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_44.rds')
   variable.name <- clean.variable.name('example_44')
 
-  rds.reader(data.file, filename, variable.name)
+  rds.reader(filename, variable.name)
 
   expect_that(exists(variable.name), is_true())
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
@@ -1158,13 +1117,12 @@ test_that('Example 45: Feather support with .feather extension', {
   on.exit(setwd(oldwd), add = TRUE)
   suppressMessages(load.project())
 
-  data.file <- 'example_45.feather'
   filename <- file.path(system.file('example_data',
                                     package = 'ProjectTemplate'),
                         'example_45.feather')
   variable.name <- clean.variable.name('example_45')
 
-  feather.reader(data.file, filename, variable.name)
+  feather.reader(filename, variable.name)
 
   expect_true(exists(variable.name))
   expect_equal(names(get(variable.name)), c('N', 'Prime'))

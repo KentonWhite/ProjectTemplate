@@ -76,7 +76,9 @@ test_that('available data is listed correctly with default configuration', {
     stringsAsFactors = FALSE
   )
 
-  test.df$reader <- list('csv.reader', '', '')
+  test.df$reader <- list(extensions.dispatch.table[['\\.csv$']],
+                         null_reader,
+                         null_reader)
 
   # Sort data.frame according to collation of the testing process (for example
   # LC_COLLATE=C and LC_COLLATE=en_US.UTF-8 return different order)
@@ -131,7 +133,9 @@ test_that('available data is listed correctly with recursive_loading = TRUE', {
     cache_only = c(FALSE, FALSE, FALSE),
     stringsAsFactors = FALSE
   )
-  test.df$reader <- list("csv.reader", "", "csv.reader")
+  test.df$reader <- list(extensions.dispatch.table[['\\.csv$']],
+                         null_reader,
+                         extensions.dispatch.table[['\\.csv$']])
 
   # Sort data.frame according to collation of the testing process (for example
   # LC_COLLATE=C and LC_COLLATE=en_US.UTF-8 return different order)

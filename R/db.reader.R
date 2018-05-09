@@ -1,9 +1,10 @@
 #' @describeIn preinstalled.readers Read a SQlite3 database with a \code{.db} file extension.
 #'
 #' If you want to specify a single table or query to execute against the database,
-#' move it elsewhere and use a .sql file interpreted by \code{\link{sql.reader}}.
-db.reader <- function(data.file, filename, variable.name)
-{
+#' move it elsewhere and use a .sql file interpreted by \code{sql.reader}.
+#'
+#' @include add.extension.R
+db.reader <- function(filename, variable.name, ...) {
   .require.package('RSQLite')
 
   sqlite.driver <- DBI::dbDriver("SQLite")
@@ -25,3 +26,5 @@ db.reader <- function(data.file, filename, variable.name)
            envir = .TargetEnv)
   }
 }
+
+.add.extension("db", db.reader)

@@ -10,5 +10,7 @@
 ^Makefile$
 ^cran-comments\.md$
 ^ISSUE_TEMPLATE\.md$
+^PULL_REQUEST_TEMPLATE\.md$
+^CODE_OF_CONDUCT\.md$
 ^_site$
 ^docs$
