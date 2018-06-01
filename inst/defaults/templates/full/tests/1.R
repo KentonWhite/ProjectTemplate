@@ -1,3 +1,3 @@
 # Example Unit Testing Script
-
-expect_that(1, equals(1))
+context("Example tests")
+expect_equal(1, 1)
