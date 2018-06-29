@@ -229,5 +229,5 @@ create.project <- function(project.name = 'new-project', template = 'full',
 #'
 #' @rdname internal.rstudioprojectfile
 .rstudioprojectfile <- function(){
-  return("Version: 1.0\n\nRestoreWorkspace: DefaultSaveWorkspace: Default\nAlwaysSaveHistory: Default\n\nEnableCodeIndexing: Yes\nUseSpacesForTab: Yes\nNumSpacesForTab: 4\nEncoding: UTF-8\n\nRnwWeave: Sweave\nLaTeX: pdfLaTeX\n\nStripTrailingWhitespace: Yes")
+  return("Version: 1.0\n\nRestoreWorkspace: Default\nSaveWorkspace: Default\nAlwaysSaveHistory: Default\n\nEnableCodeIndexing: Yes\nUseSpacesForTab: Yes\nNumSpacesForTab: 4\nEncoding: UTF-8\n\nRnwWeave: Sweave\nLaTeX: pdfLaTeX\n\nStripTrailingWhitespace: Yes")
 }
