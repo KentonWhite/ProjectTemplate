@@ -243,9 +243,11 @@ load.project <- function(...)
       # Get new variables introduced by the reader
       vars.new <- .var.diff.from(vars.old)
 
-      if (config$data_tables) {
+      if (config$tables_type == 'data_table') {
         .convert.to.data.table(vars.new)
-      } else {
+      }
+
+      if (config$tables_type == 'tibble') {
         .convert.to.tibble(vars.new)
       }
 
