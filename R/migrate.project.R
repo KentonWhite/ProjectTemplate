@@ -120,13 +120,16 @@ migrate.project <- function()
             as.logical(old.config.values$data_tables) 
           ) {
         loaded.config$tables_type <- 'data_table'
+      } else {
+        loaded.config$tables_type <- 'data_frame'
       }
       loaded.config$data_tables <- NULL
       message(paste("",
         "data_tables has been renamed tables_type.  It can take the value 'tibble', ",
         "'data_table', or 'data_frame.  If data_tables is TRUE, tables_type will be",
-        "set to 'data_table', otherwise the default 'tibble' will be used.  if you ",
-        "wish a different default set it manually by editing global.dcf",
+        "set to 'data_table', otherwise the default 'data_frame' will be used.  if you ",
+        "wish a different default set it manually by editing global.dcf.  Future new",
+        "projects will use 'tibble' by default.",
         sep = "\n"))
     }
   }
