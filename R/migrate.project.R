@@ -51,7 +51,9 @@ migrate.project <- function()
   # Detect other migration issues
   doc_not_renamed <- dir.exists("doc") && !dir.exists("docs")
   csv2_files_present <- any(file.exists(Sys.glob("data/*.csv2")))
-  other_conflicts <- any(doc_not_renamed, csv2_files_present)
+  no_cache_dir <- !dir.exists("cache")
+  other_conflicts <- any(doc_not_renamed, csv2_files_present, no_cache_dir)
+  print(no_cache_dir)
 
   # Exit if everything up to date
   if (!any(version_conflict, config_conflicts, other_conflicts)) {
@@ -139,6 +141,17 @@ migrate.project <- function()
       "Please review your code and datafiles.",
       sep = "\n"
     ))
+  }
+
+  if (no_cache_dir) {
+    message(paste("",
+      "Caching has become an integral part of ProjectTemplate.  Even if no files are",
+      "explicitly cached by the user, ProjectTemplate may still create some caches",
+      "for perfroamcen improvement.  The 'cache' directoy is now requireed.  An empty",
+      "cache directory will be created.",
+      sep = "\n"
+    ))
+    dir.create('cache')
   }
 
   # Finally, save the validated configuration with the updated version number
