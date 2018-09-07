@@ -101,12 +101,35 @@ migrate.project <- function()
     if (grepl("cache_loaded_data", config_warnings)) {
       # switch the setting to FALSE so as to not mess up any existing
       # munge script, but warn the user
+
       loaded.config$cache_loaded_data <- FALSE
       message(paste("",
         "There is a new config item called cache_loaded_data which auto-caches data",
         "after it has been loaded from the data directory.  This has been switched",
         "off for this project in case it breaks your scripts.  However you can switch",
         "it on manually by editing global.dcf",
+        sep = "\n"))
+    }
+
+    if (grepl("tables_type", config_warnings)) {
+      # switch the setting to match data_tables and warn the user
+      # first need to get old data_tables value
+      old.config.values <- translate.dcf(.project.config)
+      if (!is.null(old.config.values$data_tables) &&
+            !is.na(as.logical(old.config.values$data_tables)) &&
+            as.logical(old.config.values$data_tables) 
+          ) {
+        loaded.config$tables_type <- 'data_table'
+      } else {
+        loaded.config$tables_type <- 'data_frame'
+      }
+      loaded.config$data_tables <- NULL
+      message(paste("",
+        "data_tables has been renamed tables_type.  It can take the value 'tibble', ",
+        "'data_table', or 'data_frame.  If data_tables is TRUE, tables_type will be",
+        "set to 'data_table', otherwise the default 'data_frame' will be used.  if you ",
+        "wish a different default set it manually by editing global.dcf.  Future new",
+        "projects will use 'tibble' by default.",
         sep = "\n"))
     }
   }

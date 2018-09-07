@@ -66,3 +66,20 @@ test_that('R code in between back ticks is evaluated in config files', {
         expect_warning(load.project(), "compatible with version 0.1")
 
 })
+
+test_that('Replace data_tables with tables_type', {
+
+  test_project <- tempfile('test_project')
+  suppressMessages(create.project(test_project))
+  on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
+
+  oldwd <- setwd(test_project)
+  on.exit(setwd(oldwd), add = TRUE)
+
+  config <- .new.config
+  config$tables_type <- 'tibble'
+  config$data_tables <- NULL
+  write.dcf(config, 'config/global.dcf')
+  expect_warning(load.project(), NA)
+
+})

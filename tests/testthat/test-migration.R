@@ -204,3 +204,65 @@ test_that('migrating a project with a data/*.csv2 file results in a message to u
 
         tidy_up()
 })
+
+test_that('projects without the tables_type config have their migrated config set to data_frame', {
+
+        test_project <- tempfile('test_project')
+        suppressMessages(create.project(test_project))
+        on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
+
+        oldwd <- setwd(test_project)
+        on.exit(setwd(oldwd), add = TRUE)
+
+        # Read the config data and remove the tables_type config
+        config <- .read.config()
+        expect_error(config$tables_type <- NULL, NA)
+        .save.config(config)
+
+        # should get a warning because of the missing tables_type
+        expect_warning(suppressMessages(load.project()), "missing the following entries: tables_type")
+
+        # Migrate the project
+        expect_message(migrate.project(), "data_tables has been renamed tables_type")
+
+        # Read the config data and check tables_type is 'tibble'
+        config <- .read.config()
+        expect_equal(config$tables_type, 'data_frame')
+
+        # Should be a clean load.project
+        expect_warning(suppressMessages(load.project()), NA)
+
+        tidy_up()
+})
+
+test_that('projects without the tables_type config have their migrated config set to data_table', {
+
+        test_project <- tempfile('test_project')
+        suppressMessages(create.project(test_project))
+        on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
+
+        oldwd <- setwd(test_project)
+        on.exit(setwd(oldwd), add = TRUE)
+
+        # Read the config data and remove the tables_type config and set data_tables to TRUE
+        config <- .read.config()
+        expect_error(config$tables_type <- NULL, NA)
+        expect_error(config$data_tables <- TRUE, NA)
+        .save.config(config)
+
+        # should get a warning because of the missing tables_type
+        expect_warning(suppressMessages(load.project()), "missing the following entries: tables_type")
+        expect_warning(suppressMessages(load.project()), "contains the following unused entries: data_tables")
+
+        # Migrate the project
+        expect_message(migrate.project(), "data_tables has been renamed tables_type")
+
+        # Read the config data and check tables_type is 'data_table'
+        config <- .read.config()
+        expect_equal(config$tables_type, 'data_table')
+
+        # Should be a clean load.project
+        expect_warning(suppressMessages(load.project()), NA)
+
+        tidy_up()
+})

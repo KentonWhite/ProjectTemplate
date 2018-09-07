@@ -10,7 +10,7 @@ logging_level: character
 load_libraries: boolean
 libraries: character
 as_factors: boolean
-data_tables: boolean
+tables_type: character
 attach_internal_libraries: boolean
 cache_loaded_data:  boolean
 sticky_variables: character
