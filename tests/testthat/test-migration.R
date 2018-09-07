@@ -205,6 +205,26 @@ test_that('migrating a project with a data/*.csv2 file results in a message to u
         tidy_up()
 })
 
+test_that('migrating a project without a cache directory has a cache directory created', {
+  test_project <- tempfile('test_project')
+  suppressMessages(create.project(test_project))
+  on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
+
+  cache_dir <- file.path(test_project, 'cache')
+  
+  oldwd <- setwd(test_project)
+  on.exit(setwd(oldwd), add = TRUE)
+
+  ## Delete the cache dir
+  unlink(cache_dir, recursive = TRUE)
+  
+  # should be a message to say adding cache directory
+  expect_message(migrate.project(), 'cache')
+
+  # should be a cache directory
+  expect_true(.is.dir(cache_dir))
+})
+
 test_that('projects without the tables_type config have their migrated config set to data_frame', {
 
         test_project <- tempfile('test_project')
