@@ -223,6 +223,7 @@ test_that('migrating a project without a cache directory has a cache directory c
 
   # should be a cache directory
   expect_true(.is.dir(cache_dir))
+})
 
 test_that('projects without the tables_type config have their migrated config set to data_frame', {
 
