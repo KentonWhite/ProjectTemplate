@@ -50,7 +50,7 @@
 #'  importantly, this automatic conversion occurs when reading in data automatically.
 #'  If FALSE, character vectors will remain character vectors. \cr
 #'  \code{tables_type} \tab This is the format for default tables. Values can be 'tibble' (default),
-#' 'data_table', or 'data_frame \cr
+#' 'data_table', or 'data_frame' \cr
 #'  \code{attach_internal_libraries} \tab This can be set to TRUE or FALSE. If
 #' attach_internal_libraries is on, then every time a new package is loaded into memory
 #' during load.project() a warning will be displayed informing that has happened. \cr
