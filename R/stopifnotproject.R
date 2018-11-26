@@ -53,8 +53,8 @@
     message(
       paste0(c(paste0(directory, basename(path),
                       " is not a ProjectTemplate directory.  ", 
-                      "If you believe you are in a ProjectTemplate directory and seeing this message in error, try running migrate_project().  ", 
-                      "migrate_project() will ensure the ProjectTemplate structure is consistent with your version of ProjectTemplate."),
+                      "If you believe you are in a ProjectTemplate directory and seeing this message in error, try running migrate.project().  ", 
+                      "migrate.project() will ensure the ProjectTemplate structure is consistent with your version of ProjectTemplate."),
                additional_message),
              sep = "\n")
     )
