@@ -9,21 +9,18 @@ The list of changes below covers all releases up to and including v0.8.2. It is 
 
 #### 0.8.2 (2018-04-20)
 
-Features
---------
+##### Features
 
 * Uses the Tidyverse packages (#207)
 * Added custom templates (#206)
 * Added support for rds files (#224, #227)
 
 
-Documentation
--------------
+##### Documentation
 
 * Documentation moved to `docs` folder.  Will automatically update on website
 
-Internal
---------
+##### Internal
 
 * Added tibble support (#218)
 * Moved from `xls` package to `readxl` package (#159, #219)
@@ -33,8 +30,7 @@ Internal
 
 #### 0.8.1 (2017-08-28)
 
-Features
---------
+##### Features
 
 * Faster caching (#152, #155, #160, #166)
 * New clear() function to manage global environment (#167, #172, #173, #183)
@@ -44,11 +40,10 @@ Features
 * Change csv2.reader() behavior to act as expected when running  read.csv2() (#195)
 * Add list.data and incorporate in load.project (#187)
 
-Documentation
-------------
+##### Documentation
 
-Internal
---------
+##### Internal
+
 * Moved logger initialisation to before loading helper functions, See issue #150
 * Cleaner exit when running load.project() in the wrong directory (#157)
 * Allow to call RSQLite's initExtension() (#161)
@@ -65,8 +60,7 @@ Internal
 
 #### 0.7 (2016-07-29)
  
-Features
---------
+##### Features
 
 * `create.project()` creates `README.md` files in each subdirectory (#128). The README file in the main directory is now also formatted as Markdown, with the project name as title.
 * Code that creates and runs tests now also allows non-R files in `libs` and `tests` subdirectories.
@@ -77,14 +71,12 @@ Features
 * Use `inherits = FALSE` in `get()` calls within specific environments (#139, @famuvie)
 * The `port` option is now used for `RPostgreSQL` connections.
 
-Documentation
--------------
+##### Documentation
 
 * Update to getting-started/mastering documentation (#142, @matt-jay).
 * Fix typo in error msg (#141, @famuvie).
 
-Internal
---------
+##### Internal
 
 * Isolate tests by using temporary directories and properly undoing `setwd()` calls (#132).
 * `R CMD check` shows no errors, warnings, or notes.
@@ -100,15 +92,12 @@ Internal
 
 #### v0.5-2 (2014-10-01)
 
-Bug fixes
----
+##### Bug fixes
 
 * Fixed error message when `require.package` is called from an anonymous
   function and fails to load a package.  (Using `deparse(nlines = 1)` now.)
 
-
-Features
----
+##### Features
 
 * Added functon `.add.extension()`. This allows users to create custom readers for extensions, either locally in a project or as packages.
 * The configuration now stores the version of ProjectTemplate in the `version`
@@ -130,28 +119,23 @@ Features
   `'on'`/`'off'`.  Input values other than `'on'`/`'off'` are converted using
   `as.logical`, invalid values result in an error (#76).
 
-
-Internal
----
+##### Internal
 
 * Dropped dependency on `Defaults` package (#100).
 * Suppress warnings in tests (#111).
 * Fix CRAN check issues (#117).
 * Improved presentation of available readers in documentation (#119).
 
-
 #### v0.5-1 (2014-03-17)
 
-Bug fixes
----
+##### Bug fixes
 
 * Restore compatibility to R 2.15.3 by avoiding use of the `no..` parameter
   to `list.files()` in our `create.project()` function.
 
 #### v0.5 (2014-03-13)
 
-Features
----
+##### Features
 
 * New function `get.project()` to access `project.info`.
 * Attempting to load a missing package when reading data will lead to a
@@ -160,8 +144,7 @@ Features
 * Add new function `.add.extension.` This allows users to create custom readers
   for extensions, either locally in a project or as packages (#59).
 
-Internal
----
+##### Internal
 
 * Fix CRAN warnings concerning use of `ProjectTemplate:::` qualification
   (#56).
