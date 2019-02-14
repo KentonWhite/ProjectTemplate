@@ -7,9 +7,7 @@ The raw ProjectTemplate source code is always the place to go for ground truth.
 
 The list of changes below covers all releases up to and including v0.8.2. It is not necessarily exhaustive.
 
-# ProjectTemplate 0.8.2 (2018-04-20)
-
-0.8.2 (2018-04-20)
+#### 0.8.2 (2018-04-20)
 
 Features
 --------
@@ -33,7 +31,7 @@ Internal
 * Fixed failing test for `RSQLlite` package (#228)
 
 
-0.8.1 (2017-08-28)
+#### 0.8.1 (2017-08-28)
 
 Features
 --------
@@ -65,7 +63,7 @@ Internal
 * De-deprecated devtools installation command (#193)
 * Bug Fix:  Missing hash file causes failure in subsequent cache() operation (#194)
 
-0.7 (2016-07-29)
+#### 0.7 (2016-07-29)
  
 Features
 --------
@@ -92,18 +90,15 @@ Internal
 * `R CMD check` shows no errors, warnings, or notes.
 
 
-v0.6 (2014-10-05)
-===
+#### v0.6 (2014-10-05)
 
 * Includes all modifications from v0.5-3 and v0.5-2.
 
-v0.5-3 (2014-10-05)
-===
+#### v0.5-3 (2014-10-05)
 
 * Packages required for loading data sources are attached to the search path (with a warning) only if the new compatibility setting `attach_internal_libraries` is set to `TRUE`.  Attaching packages to the search path seems to be unnecessary to achieve proper functionality, but users might rely on this behavior, and so this is the default for migrated projects but turned off for new projects (#104).
 
-v0.5-2 (2014-10-01)
-===
+#### v0.5-2 (2014-10-01)
 
 Bug fixes
 ---
@@ -145,8 +140,7 @@ Internal
 * Improved presentation of available readers in documentation (#119).
 
 
-v0.5-1 (2014-03-17)
-===
+#### v0.5-1 (2014-03-17)
 
 Bug fixes
 ---
@@ -154,8 +148,7 @@ Bug fixes
 * Restore compatibility to R 2.15.3 by avoiding use of the `no..` parameter
   to `list.files()` in our `create.project()` function.
 
-v0.5 (2014-03-13)
-===
+#### v0.5 (2014-03-13)
 
 Features
 ---
@@ -178,8 +171,7 @@ Internal
   the entire directory structure per CRAN request and to avoid having to build
   with the `--keep-empty-dirs` switch (#41).
 
-v0.4-5 (2014-02-11)
-===
+#### v0.4-5 (2014-02-11)
 
 * New maintainers: Kirill Müller  <mail@kirill-mueller.de>, Kenton White  <jkentonwhite@gmail.com>
 * Allow string interpolation of R functions in sql queries
@@ -191,8 +183,7 @@ v0.4-5 (2014-02-11)
 * create.project now works if the directory exists. Merging with a non-empty
   directory is supported by setting the new parameter merge.strategy.
 
-v0.4-4 (2013-08-11)
-===
+#### v0.4-4 (2013-08-11)
 
 * Fix CRAN checks (@krlmlr).
 * project.info is now an active binding to avoid writing to the global
@@ -204,11 +195,11 @@ v0.4-4 (2013-08-11)
   driver (@cortex, #7).
 * Tentative CSV2 support.
 
-v0.4-3 (2012-08-11)
-===
+#### v0.4-3 (2012-08-11)
 
 * Added optional recursive data directory loading using a 'recursive_loading' setting.
 * Added basic Oracle support (with tnsnames, no host/port) (@matteoredaelli, #6).
+
 #### v0.4-2
 
 * Had to disable xlsx.reader temporarily because it does not build for 2.15.
