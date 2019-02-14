@@ -102,9 +102,11 @@ list.data <- function(...) {
   cached.vars <- .cached.variables()
   # Exclude variables already found in data/
   cached.vars <- setdiff(cached.vars, varnames)
+  
 
   filenames <- rep('', length(cached.vars))
-  is_ignored <- rep(FALSE, length(cached.vars))
+  is_ignored <- grepl(.prepare.data.ignore.regex(config$data_ignore),
+                      cached.vars)
   is_directory <- rep(FALSE, length(cached.vars))
   cache_only <- rep(TRUE, length(cached.vars))
   readers <- rep('', length(cached.vars))
