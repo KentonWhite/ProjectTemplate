@@ -216,6 +216,15 @@ test_that('ignored data files are not loaded', {
                                 recursive_loading = TRUE))
   expect_equal(test, test_data)
   expect_false(exists("test.test", envir = .TargetEnv))
+
+  # reload the project, ignore cached var_to_cache
+  rm(list = ls(envir = .TargetEnv), envir = .TargetEnv)
+  assign("var_to_cache", test_data, envir = .TargetEnv)
+  cache("var_to_cache")
+  rm(var_to_cache, envir = .TargetEnv)
+  suppressMessages(load.project(data_ignore = 'Thumbs.db, var_to_cache'))
+  expect_false(exists("var_to_cache", envir = .TargetEnv))
+ 
 })
 
 test_that('data is loaded as data_frame', {
