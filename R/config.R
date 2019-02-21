@@ -47,18 +47,18 @@
 ## File that specifies default config values to be used in load.project() if config items are missing
 ## from a particular ProjectTemplate directory (because e.g. it was created under a previous version of PT and
 ## migrate.project() hasnt been run yet)
-.default.config.file <- system.file('defaults/config/default.dcf', package = 'ProjectTemplate')
+.default.config.file <- function() system.file('defaults', 'config', 'default.dcf', package = 'ProjectTemplate')
 
 ## File that contains the default initial project configuration after create.project()
-.new.config.file <- system.file('defaults/templates/full/config/global.dcf', package = 'ProjectTemplate')
+.new.config.file <- function() system.file('defaults', 'templates', 'full', 'config', 'global.dcf', package = 'ProjectTemplate')
 
 ## File that contains the datatypes for the options in global.dcf
-.config.types.file <- system.file('defaults/config/types.dcf', package = 'ProjectTemplate')
+.config.types.file <- function() system.file('defaults', 'config', 'types.dcf', package = 'ProjectTemplate')
 
 # read the default and new configurations
-.default.config <- translate.dcf(.default.config.file)
-.new.config <- translate.dcf(.new.config.file)
-.config.types <- translate.dcf(.config.types.file)
+.default.config <- translate.dcf(.default.config.file())
+.new.config <- translate.dcf(.new.config.file())
+.config.types <- translate.dcf(.config.types.file())
 
 # load and validate the config and return a config object
 
