@@ -22,46 +22,46 @@ configuration.
 The options that can be configured in the \code{config/global.dcf} are
  shown below
 \tabular{ll}{
- \code{data_loading} \tab This can be set to 'on' or 'off'. If data_loading is on,
+ \code{data_loading} \tab This can be set to TRUE or FALSE. If data_loading is on,
  the system will load data from both the cache and data directories with
  cache taking precedence in the case of name conflict. \cr
- \code{data_loading_header} \tab This can be set to 'on' or 'off'. If data_loading_header is on,
+ \code{data_loading_header} \tab This can be set to TRUE or FALSE. If data_loading_header is on,
  the system will load text data files, such as CSV, TSV, or XLSX, treating the first row as header. \cr
  \code{data_ignore} \tab A comma separated list of files to be ignored when importing
  from the \code{data/} directory. Regular expressions can be used but should be delimited
   (on both sides) by \code{/}. Note that filenames and filepaths should never begin with
   a \code{/}, entire directories under \code{data/} can be ignored by adding a trailing \code{/}. \cr
- \code{cache_loading} \tab This can be set to 'on' or 'off'. If cache_loading is on,
+ \code{cache_loading} \tab This can be set to TRUE or FALSE. If cache_loading is on,
  the system will load data from the cache directory before any attempt to load
  from the data directory. \cr
- \code{recursive_loading} \tab This can be set to 'on' or 'off'. If recursive_loading
+ \code{recursive_loading} \tab This can be set to TRUE or FALSE. If recursive_loading
  is on, the system will load data from the data directory and all its sub
  directories recursively.  \cr
- \code{munging} \tab This can be set to 'on' or 'off'. If munging is on, the system
+ \code{munging} \tab This can be set to TRUE or FALSE. If munging is on, the system
  will execute the files in the munge directory sequentially using the order
- implied by the sort() function. If munging is off, none of the files in the
+ implied by the sort() function. If munging is FALSE, none of the files in the
   munge directory will be executed.  \cr
- \code{logging} \tab This can be set to 'on' or 'off'. If logging is on, a logger
+ \code{logging} \tab This can be set to TRUE or FALSE. If logging is on, a logger
 object using the log4r package is automatically created when you run
 load.project(). This logger will write to the logs directory.  \cr
  \code{logging_level} \tab The value of logging_level is passed to  a logger object
 using the log4r package during logging when when you run load.project(). \cr
- \code{load_libraries} \tab  This can be set to 'on' or 'off'. If load_libraries is on,
+ \code{load_libraries} \tab  This can be set to TRUE or FALSE. If load_libraries is on,
  the system will load all of the R packages listed in the libraries field
  described below. \cr
  \code{libraries} \tab This is a comma separated list of all the R packages that the user
  wants to automatically load when load.project() is called. These packages must
  already be installed before calling load.project().  \cr
- \code{as_factors} \tab This can be set to 'on' or 'off'. If as_factors is on, the system
+ \code{as_factors} \tab This can be set to TRUE or FALSE. If as_factors is on, the system
  will convert every character vector into a factor when creating data frames; most
  importantly, this automatic conversion occurs when reading in data automatically.
- If 'off', character vectors will remain character vectors. \cr
- \code{data_tables} \tab This can be set to 'on' or 'off'. If data_tables is on, the
-system will convert every data set loaded from the data directory into a data.table. \cr
- \code{attach_internal_libraries} \tab This can be set to 'on' or 'off'. If
+ If FALSE, character vectors will remain character vectors. \cr
+ \code{tables_type} \tab This is the format for default tables. Values can be 'tibble' (default),
+'data_table', or 'data_frame' \cr
+ \code{attach_internal_libraries} \tab This can be set to TRUE or FALSE. If
 attach_internal_libraries is on, then every time a new package is loaded into memory
 during load.project() a warning will be displayed informing that has happened. \cr
- \code{cache_loaded_data} \tab This can be set to 'on' or 'off'. If cache_loaded_data is
+ \code{cache_loaded_data} \tab This can be set to TRUE or FALSE. If cache_loaded_data is
  on, then data loaded from the data directory during load.project() will be
  automatically cached (so it won't need to be reloaded next time load.project()
  is called). \cr

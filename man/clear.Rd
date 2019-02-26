@@ -15,7 +15,7 @@ those in \code{keep} will be deleted.  This includes items beginning with \code{
 environment}
 
 \item{force}{If \code{TRUE}, then variables will be deleted even if
-specifed in \code{keep} or \code{config$sticky_variables}}
+specified in \code{keep} or \code{config$sticky_variables}}
 }
 \value{
 The variables kept and removed are reported

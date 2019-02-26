@@ -41,7 +41,7 @@ The returned data.frame contains the following variables, with one
 }
 
 * Note that some readers return more than one variable, usually with the
-  listed variablename as prefix. This is true for for example the
+  listed variable name as prefix. This is true for for example the
   \code{xls.reader} and \code{xlsx.reader}.
 }
 \keyword{internal}

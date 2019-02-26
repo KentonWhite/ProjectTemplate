@@ -10,7 +10,7 @@
 #' @param keep A character vector of variables that should remain in the global
 #'  environment
 #' @param force If \code{TRUE}, then variables will be deleted even if
-#'  specifed in \code{keep} or \code{config$sticky_variables}
+#'  specified in \code{keep} or \code{config$sticky_variables}
 #'
 #' @return The variables kept and removed are reported
 #'

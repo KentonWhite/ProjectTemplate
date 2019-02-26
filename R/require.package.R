@@ -54,7 +54,7 @@ require.package <- function(package.name, attach = TRUE)
 #'
 #' @keywords internal
 #'
-#' @return Boolean indicating whether the package was succesfully loaded
+#' @return Boolean indicating whether the package was successfully loaded
 #'
 #' @rdname internal.attach.or.add.namespace
 .attach.or.add.namespace <- function(package.name, attach) {

@@ -5,8 +5,8 @@
 \title{Create a new project.}
 \usage{
 create.project(project.name = "new-project", template = "full",
-  dump = FALSE, merge.strategy = c("require.empty", "allow.non.conflict"),
-  rstudio.project = FALSE)
+  dump = FALSE, merge.strategy = c("require.empty",
+  "allow.non.conflict"), rstudio.project = FALSE)
 }
 \arguments{
 \item{project.name}{A character vector containing the name for this new

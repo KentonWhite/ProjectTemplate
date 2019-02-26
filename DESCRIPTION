@@ -1,8 +1,8 @@
 Package: ProjectTemplate
 Type: Package
 Title: Automates the Creation of New Statistical Analysis Projects
-Version: 0.8.2
-Date: 2018-04-20
+Version: 0.9.0
+Date: 2019-02-26
 Authors@R: c( person("Aleksandar", "Blagotic", role = "ctb"),
     person("Diego", "Valle-Jones", role = "ctb"),
     person("Jeffrey", "Breen", role = "ctb"),
@@ -23,6 +23,7 @@ Description: Provides functions to
 License: GPL-3 | file LICENSE
 LazyLoad: yes
 Roxygen: list(wrap = FALSE)
+Encoding: UTF-8
 Depends:
     R (>= 2.7)
 Suggests:
@@ -108,4 +109,4 @@ Collate:
     'xls.reader.R'
     'xlsx.reader.R'
     'xport.reader.R'
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1

@@ -1,5 +1,27 @@
 # ProjectTemplate 0.8.2 (2018-04-20)
 
+0.9.0 (2019-02-26)
+
+Features
+--------
+* New for R 3.6, support for staged install (#291)
+* Define default table types using config var `tables_type` (#274)
+* Support for `feather` files (#239)
+* Migration from `csv2.reader` to `read.csv2` (#195)
+* Supports `rstudio.project` files (#201)
+
+Documentation
+-------------
+* Link website documentation current release to News.md
+* Added file types to `dat` directory `README` (#268)
+* Internal functions are now documenter (#243)
+
+Internal
+--------
+* `data_ignore` applies to `cache` vars (#290)
+* More informative error messages if not in a ProjectTemplate Directory (#287)
+* `migrate_project()` creates missing `cache` directory (#275) 
+
 0.8.2 (2018-04-20)
 
 Features
@@ -188,7 +210,7 @@ v0.4-4 (2013-08-11)
 * Fix CRAN checks (@krlmlr).
 * project.info is now an active binding to avoid writing to the global
   environment (@krlmlr).
-* Reenabled xlsx.reader (@krlmlr).
+* Re-enabled xlsx.reader (@krlmlr).
 * Added JDBC support to sql.reader (@joshbode, #12).
 * Various MySQL improvements (@cortex, #10).
 * Fix "Argument port must be an integer value" when using port number for mysql

@@ -12,7 +12,7 @@
 \item{attach}{boolean indicating whether to attach the package in the global namespace}
 }
 \value{
-Boolean indicating whether the package was succesfully loaded
+Boolean indicating whether the package was successfully loaded
 }
 \description{
 Internal method to attach a package or only add the namespace.
