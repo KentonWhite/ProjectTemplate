@@ -113,7 +113,7 @@ test_that('migrating a project with a missing config file results in a message t
         suppressMessages(load.project())
 
         # Get the default config
-        default_config <- .read.config(.default.config.file)
+        default_config <- .read.config(.default.config.file())
         default_config$version <- .package.version()
 
         # check the config is all the default
@@ -145,7 +145,7 @@ test_that('migrating a project with a missing config item results in a message t
         suppressMessages(load.project())
 
         # check the missing config item is the default value
-        default_config <- .read.config(.default.config.file)
+        default_config <- .read.config(.default.config.file())
         expect_equal(get.project()$config$data_loading, default_config$data_loading)
 
         tidy_up()
