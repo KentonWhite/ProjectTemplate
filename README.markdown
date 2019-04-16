@@ -11,8 +11,8 @@ ProjectTemplate is now available on CRAN and can be installed using a simple cal
 
 If you would like access to changes to this package that are not available in the version currently on CRAN, please install this package directly from Github,
 
-		library('devtools')
-		install_github('KentonWhite/ProjectTemplate')
+	library('devtools')
+	install_github('KentonWhite/ProjectTemplate')
 
 For most users, running the bleeding edge version of this package is probably a mistake.
 
