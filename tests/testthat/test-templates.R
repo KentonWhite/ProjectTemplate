@@ -1,11 +1,14 @@
 context('Templates')
 
-expect_file <- function(..., condition = is_true()) {
+expect_file <- function(...) {
   x <- file.path(...)
-  expect_that(file.exists(x), condition, x)
+  expect_true(file.exists(x), x)
 }
 
-expect_no_file <- function(...) expect_file(..., condition = is_false())
+expect_no_file <- function(...) {
+  x <- file.path(...)
+  expect_false(file.exists(x), x)
+}
 
 expect_dir <- function(...) {
   x <- file.path(...)
