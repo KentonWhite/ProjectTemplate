@@ -17,7 +17,7 @@ test_that('Test 1: CSV Data file', {
 
   csv.reader(data.file, filename, variable.name)
 
-  expect_that(exists(variable.name), is_true())
+  expect_true(exists(variable.name))
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
@@ -43,7 +43,7 @@ test_that('Test 2: .csv.bz2', {
 
   csv.reader(data.file, filename, variable.name)
 
-  expect_that(exists(variable.name), is_true())
+  expect_true(exists(variable.name))
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
@@ -70,7 +70,7 @@ test_that('Test 3: csv.zip data', {
 
   csv.reader(data.file, filename, variable.name)
 
-  expect_that(exists(variable.name), is_true())
+  expect_true(exists(variable.name))
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
@@ -97,7 +97,7 @@ test_that('Example 04: CSV Data File with GZip Compression', {
 
   csv.reader(data.file, filename, variable.name)
 
-  expect_that(exists(variable.name), is_true())
+  expect_true(exists(variable.name))
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
@@ -124,7 +124,7 @@ test_that('Example 05: TSV Data File', {
 
   tsv.reader(data.file, filename, variable.name)
 
-  expect_that(exists(variable.name), is_true())
+  expect_true(exists(variable.name))
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
@@ -151,7 +151,7 @@ test_that('Example 06: TSV Data File with BZip2 Compression', {
 
   tsv.reader(data.file, filename, variable.name)
 
-  expect_that(exists(variable.name), is_true())
+  expect_true(exists(variable.name))
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
@@ -178,7 +178,7 @@ test_that('Example 07: TSV Data File with Zip Compression', {
 
   tsv.reader(data.file, filename, variable.name)
 
-  expect_that(exists(variable.name), is_true())
+  expect_true(exists(variable.name))
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
@@ -205,7 +205,7 @@ test_that('Example 08: TSV Data File with GZip Compression', {
 
   tsv.reader(data.file, filename, variable.name)
 
-  expect_that(exists(variable.name), is_true())
+  expect_true(exists(variable.name))
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
@@ -231,7 +231,7 @@ test_that('Example 09: WSV Data File', {
 
   wsv.reader(data.file, filename, variable.name)
 
-  expect_that(exists(variable.name), is_true())
+  expect_true(exists(variable.name))
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
@@ -259,7 +259,7 @@ test_that('Example 10: WSV Data File with BZip2 Compression', {
 
   wsv.reader(data.file, filename, variable.name)
 
-  expect_that(exists(variable.name), is_true())
+  expect_true(exists(variable.name))
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
@@ -286,7 +286,7 @@ test_that('Example 11: WSV Data File with Zip Compression', {
 
   wsv.reader(data.file, filename, variable.name)
 
-  expect_that(exists(variable.name), is_true())
+  expect_true(exists(variable.name))
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
@@ -312,7 +312,7 @@ test_that('Example 12: WSV Data File with GZip Compression', {
 
   wsv.reader(data.file, filename, variable.name)
 
-  expect_that(exists(variable.name), is_true())
+  expect_true(exists(variable.name))
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
@@ -339,7 +339,7 @@ test_that('Example 13: RData Data File with .RData Extension', {
 
   rdata.reader(data.file, filename, variable.name)
 
-  expect_that(exists('m'), is_true())
+  expect_true(exists('m'))
   expect_that(names(get('m')), equals(c('N', 'Prime')))
   expect_that(nrow(get('m')), equals(5))
   expect_that(ncol(get('m')), equals(2))
@@ -366,7 +366,7 @@ test_that('Example 14: RData Data File with .rda Extension', {
 
   rdata.reader(data.file, filename, variable.name)
 
-  expect_that(exists('n'), is_true())
+  expect_true(exists('n'))
   expect_that(names(get('n')), equals(c('N', 'Prime')))
   expect_that(nrow(get('n')), equals(5))
   expect_that(ncol(get('n')), equals(2))
@@ -376,9 +376,9 @@ test_that('Example 14: RData Data File with .rda Extension', {
 })
 
 
-test_that('Example 15: URL File with .url Extension', {
+## test_that('Example 15: URL File with .url Extension', {
 
-})
+## })
 
 
 test_that('Example 16: TSV File with .tab Extension', {
@@ -398,7 +398,7 @@ test_that('Example 16: TSV File with .tab Extension', {
 
   tsv.reader(data.file, filename, variable.name)
 
-  expect_that(exists(variable.name), is_true())
+  expect_true(exists(variable.name))
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
@@ -424,7 +424,7 @@ test_that('Example 17: TSV File with .tab Extension and BZip2 Compression', {
 
   tsv.reader(data.file, filename, variable.name)
 
-  expect_that(exists(variable.name), is_true())
+  expect_true(exists(variable.name))
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
@@ -450,7 +450,7 @@ test_that('Example 18: TSV File with .tab Extension and Zip Compression', {
 
   tsv.reader(data.file, filename, variable.name)
 
-  expect_that(exists(variable.name), is_true())
+  expect_true(exists(variable.name))
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
@@ -476,7 +476,7 @@ test_that('Example 19: TSV File with .tab Extension and GZip Compression', {
 
   tsv.reader(data.file, filename, variable.name)
 
-  expect_that(exists(variable.name), is_true())
+  expect_true(exists(variable.name))
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
@@ -503,7 +503,7 @@ test_that('Example 20: WSV File with .txt Extension', {
 
   wsv.reader(data.file, filename, variable.name)
 
-  expect_that(exists(variable.name), is_true())
+  expect_true(exists(variable.name))
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
@@ -530,7 +530,7 @@ test_that('Example 21: WSV File with .txt Extension and BZip2 Compression', {
 
   wsv.reader(data.file, filename, variable.name)
 
-  expect_that(exists(variable.name), is_true())
+  expect_true(exists(variable.name))
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
@@ -557,7 +557,7 @@ test_that('Example 22: WSV File with .txt Extension and Zip Compression', {
 
   wsv.reader(data.file, filename, variable.name)
 
-  expect_that(exists(variable.name), is_true())
+  expect_true(exists(variable.name))
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
@@ -584,7 +584,7 @@ test_that('Example 23: WSV File with .txt Extension and GZip Compression', {
 
   wsv.reader(data.file, filename, variable.name)
 
-  expect_that(exists(variable.name), is_true())
+  expect_true(exists(variable.name))
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
@@ -611,7 +611,7 @@ test_that('Example 24: R File with .R Extension', {
 
   r.reader(data.file, filename, variable.name)
 
-  expect_that(exists(variable.name), is_true())
+  expect_true(exists(variable.name))
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
@@ -638,7 +638,7 @@ test_that('Example 25: R File with .r Extension', {
 
   r.reader(data.file, filename, variable.name)
 
-  expect_that(exists(variable.name), is_true())
+  expect_true(exists(variable.name))
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
@@ -667,7 +667,7 @@ test_that('Example 26: Excel 2007 File with .xls Extension', {
 
   variable.name <- paste(variable.name, '.Sheet1', sep = '')
 
-  expect_that(exists(variable.name), is_true())
+  expect_true(exists(variable.name))
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
@@ -677,7 +677,7 @@ test_that('Example 26: Excel 2007 File with .xls Extension', {
 })
 
 
-test_that('Example 27: Excel 2011 File with .xlsx Extension', {
+## test_that('Example 27: Excel 2011 File with .xlsx Extension', {
 
   #data.file <- 'example_27.xlsx'
   #filename <- file.path(system.file('example_data',
@@ -696,7 +696,7 @@ test_that('Example 27: Excel 2011 File with .xlsx Extension', {
   #expect_that(get(variable.name)[5, 2], equals(11))
   #rm(example.27.Sheet1, envir = .TargetEnv)
 
-})
+## })
 
 
 test_that('Example 28: SQLite3 Support with .sql Extension with table = "..."', {
@@ -721,7 +721,7 @@ test_that('Example 28: SQLite3 Support with .sql Extension with table = "..."', 
 
   sql.reader(data.file, filename, variable.name)
 
-  expect_that(exists(variable.name), is_true())
+  expect_true(exists(variable.name))
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
@@ -754,7 +754,7 @@ test_that('Example 29: SQLite3 Support with .sql Extension with query = "SELECT 
 
   sql.reader(data.file, filename, variable.name)
 
-  expect_that(exists(variable.name), is_true())
+  expect_true(exists(variable.name))
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
@@ -789,13 +789,13 @@ test_that('Example 30: SQLite3 Support with .sql Extension and table = "*"', {
 
   variable1.name <- clean.variable.name('example_30a')
   variable2.name <- clean.variable.name('example_30b')
-  expect_that(exists(variable1.name), is_true())
+  expect_true(exists(variable1.name))
   expect_that(names(get(variable1.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable1.name)), equals(5))
   expect_that(ncol(get(variable1.name)), equals(2))
   expect_that(get(variable1.name)[5, 2], equals(11))
   rm(example.30a, envir = .TargetEnv)
-  expect_that(exists(variable2.name), is_true())
+  expect_true(exists(variable2.name))
   expect_that(names(get(variable2.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable2.name)), equals(5))
   expect_that(ncol(get(variable2.name)), equals(2))
@@ -826,13 +826,13 @@ test_that('Example 31: SQLite3 Support with .db Extension', {
 
   variable1.name <- clean.variable.name('example_31a')
   variable2.name <- clean.variable.name('example_31b')
-  expect_that(exists(variable1.name), is_true())
+  expect_true(exists(variable1.name))
   expect_that(names(get(variable1.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable1.name)), equals(5))
   expect_that(ncol(get(variable1.name)), equals(2))
   expect_that(get(variable1.name)[5, 2], equals(11))
   rm(example.31a, envir = .TargetEnv)
-  expect_that(exists(variable2.name), is_true())
+  expect_true(exists(variable2.name))
   expect_that(names(get(variable2.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable2.name)), equals(5))
   expect_that(ncol(get(variable2.name)), equals(2))
@@ -858,7 +858,7 @@ test_that('Example 32: Weka Support with .arff Extension', {
 
   arff.reader(data.file, filename, variable.name)
 
-  expect_that(exists(variable.name), is_true())
+  expect_true(exists(variable.name))
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
@@ -889,7 +889,7 @@ test_that('Example 33: Arbitary File Support with .file File Pointing to .db Fil
 
   file.reader(data.file, filename, variable.name)
 
-  expect_that(exists(variable.name), is_true())
+  expect_true(exists(variable.name))
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
@@ -900,9 +900,9 @@ test_that('Example 33: Arbitary File Support with .file File Pointing to .db Fil
 })
 
 
-test_that('Example 34: MP3 Support with .mp3 Extension', {
+## test_that('Example 34: MP3 Support with .mp3 Extension', {
 
-})
+## })
 
 
 test_that('Example 35: PPM Support with .ppm Extension', {
@@ -924,7 +924,7 @@ test_that('Example 35: PPM Support with .ppm Extension', {
     ppm.reader(data.file, filename, variable.name),
     " is NULL so the result will be NULL")
 
-  expect_that(exists(variable.name), is_true())
+  expect_true(exists(variable.name))
   expect_that(as.character(class(get(variable.name))), equals('pixmapRGB'))
   rm(example.35, envir = .TargetEnv)
 
@@ -948,7 +948,7 @@ test_that('Example 36: dBase Support with .dbf Extension', {
 
   dbf.reader(data.file, filename, variable.name)
 
-  expect_that(exists(variable.name), is_true())
+  expect_true(exists(variable.name))
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
@@ -975,7 +975,7 @@ test_that('Example 37: SPSS Support with .sav Extension', {
 
   spss.reader(data.file, filename, variable.name)
 
-  expect_that(exists(variable.name), is_true())
+  expect_true(exists(variable.name))
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
@@ -1002,7 +1002,7 @@ test_that('Example 38: SPSS Support with .sav Extension / Alternative Generation
 
   spss.reader(data.file, filename, variable.name)
 
-  expect_that(exists(variable.name), is_true())
+  expect_true(exists(variable.name))
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
@@ -1029,7 +1029,7 @@ test_that('Example 39: Stata Support with .dta Extension', {
 
   stata.reader(data.file, filename, variable.name)
 
-  expect_that(exists(variable.name), is_true())
+  expect_true(exists(variable.name))
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
@@ -1056,7 +1056,7 @@ test_that('Example 40: Stata Support with .dta Extension / Alternative Generatio
 
   stata.reader(data.file, filename, variable.name)
 
-  expect_that(exists(variable.name), is_true())
+  expect_true(exists(variable.name))
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
@@ -1083,7 +1083,7 @@ test_that('Example 41: SAS Support with .xport Extension', {
 
   xport.reader(data.file, filename, variable.name)
 
-  expect_that(exists(variable.name), is_true())
+  expect_true(exists(variable.name))
   expect_that(names(get(variable.name)), equals(c('N', 'PRIME')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
@@ -1110,7 +1110,7 @@ test_that('Example 42: SAS Support with .xpt Extension', {
 
   xport.reader(data.file, filename, variable.name)
 
-  expect_that(exists(variable.name), is_true())
+  expect_true(exists(variable.name))
   expect_that(names(get(variable.name)), equals(c('N', 'PRIME')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))
@@ -1120,9 +1120,9 @@ test_that('Example 42: SAS Support with .xpt Extension', {
 })
 
 
-test_that('Example 43: ElasticSearch Support with .es Extension', {
+## test_that('Example 43: ElasticSearch Support with .es Extension', {
 
-})
+## })
 
 test_that('Example 44: Single Object Serialization Support with .rds Extension', {
   test_project <- tempfile('test_project')
@@ -1141,7 +1141,7 @@ test_that('Example 44: Single Object Serialization Support with .rds Extension',
 
   rds.reader(data.file, filename, variable.name)
 
-  expect_that(exists(variable.name), is_true())
+  expect_true(exists(variable.name))
   expect_that(names(get(variable.name)), equals(c('N', 'Prime')))
   expect_that(nrow(get(variable.name)), equals(5))
   expect_that(ncol(get(variable.name)), equals(2))

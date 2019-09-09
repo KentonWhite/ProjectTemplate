@@ -1,11 +1,14 @@
 context('Create project')
 
-expect_file <- function(..., condition = is_true()) {
+expect_file <- function(...) {
   x <- file.path(...)
-  expect_that(file.exists(x), condition, x)
+  expect_true(file.exists(x), x)
 }
 
-expect_no_file <- function(...) expect_file(..., condition = is_false())
+expect_no_file <- function(...) {
+  x <- file.path(...)
+  expect_false(file.exists(x), x)
+}
 
 expect_dir <- function(...) {
   x <- file.path(...)
@@ -95,10 +98,10 @@ test_that('Miminal project', {
 test_that('Test full project into existing directory', {
 
   test_project <- tempfile('test_project')
-  expect_that(file.exists(file.path(test_project)), is_false())
+  expect_false(file.exists(file.path(test_project)))
   dir.create(test_project)
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
-  expect_that(file.exists(file.path(test_project)), is_true())
+  expect_true(file.exists(file.path(test_project)))
 
   suppressMessages(create.project(test_project, template = 'full'))
 
@@ -115,10 +118,10 @@ test_that('Test full project into existing directory', {
 test_that('Test minimal project into existing directory with an unrelated entry', {
 
   test_project <- tempfile('test_project')
-  expect_that(file.exists(file.path(test_project)), is_false())
+  expect_false(file.exists(file.path(test_project)))
   dir.create(test_project)
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
-  expect_that(file.exists(file.path(test_project)), is_true())
+  expect_true(file.exists(file.path(test_project)))
 
   suppressMessages(create.project(test_project, template = 'minimal', merge.strategy = "allow.non.conflict"))
 
@@ -134,15 +137,15 @@ test_that('Test minimal project into existing directory with an unrelated entry'
 test_that('Test failure creating project into existing directory with an unrelated entry if merge.existing is not set', {
 
   test_project <- tempfile('test_project')
-  expect_that(file.exists(file.path(test_project)), is_false())
+  expect_false(file.exists(file.path(test_project)))
   dir.create(test_project)
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
-  expect_that(file.exists(file.path(test_project)), is_true())
+  expect_true(file.exists(file.path(test_project)))
 
   file.create(file.path(test_project, '.dummy'))
-  expect_that(file.exists(file.path(test_project, '.dummy')), is_true())
+  expect_true(file.exists(file.path(test_project, '.dummy')))
   dir.create(file.path(test_project, 'dummy_dir'))
-  expect_that(file.exists(file.path(test_project, 'dummy_dir')), is_true())
+  expect_true(file.exists(file.path(test_project, 'dummy_dir')))
 
   expect_error(
     suppressMessages(
@@ -153,13 +156,13 @@ test_that('Test failure creating project into existing directory with an unrelat
 test_that('Test failure creating project in directory with existing empty directory matching the name of a template directory', {
 
   test_project <- tempfile('test_project')
-  expect_that(file.exists(file.path(test_project)), is_false())
+  expect_false(file.exists(file.path(test_project)))
   dir.create(test_project)
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
-  expect_that(file.exists(file.path(test_project)), is_true())
+  expect_true(file.exists(file.path(test_project)))
 
   dir.create(file.path(test_project, 'munge'))
-  expect_that(file.exists(file.path(test_project, 'munge')), is_true())
+  expect_true(file.exists(file.path(test_project, 'munge')))
 
   expect_error(
     suppressMessages(
@@ -171,13 +174,13 @@ test_that('Test failure creating project in directory with existing empty direct
 test_that('Test failure creating project in directory with existing file matching the name of a template directory',{
 
   test_project <- tempfile('test_project')
-  expect_that(file.exists(file.path(test_project)), is_false())
+  expect_false(file.exists(file.path(test_project)))
   dir.create(test_project)
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
-  expect_that(file.exists(file.path(test_project)), is_true())
+  expect_true(file.exists(file.path(test_project)))
 
   file.create(file.path(test_project, 'munge'))
-  expect_that(file.exists(file.path(test_project, 'munge')), is_true())
+  expect_true(file.exists(file.path(test_project, 'munge')))
 
   expect_error(
     suppressMessages(
@@ -189,13 +192,13 @@ test_that('Test failure creating project in directory with existing file matchin
 test_that('Test failure creating project in directory with existing empty directory matching the name of a template file', {
 
   test_project <- tempfile('test_project')
-  expect_that(file.exists(file.path(test_project)), is_false())
+  expect_false(file.exists(file.path(test_project)))
   dir.create(test_project)
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
-  expect_that(file.exists(file.path(test_project)), is_true())
+  expect_true(file.exists(file.path(test_project)))
 
   dir.create(file.path(test_project, 'README.md'))
-  expect_that(file.exists(file.path(test_project, 'README.md')), is_true())
+  expect_true(file.exists(file.path(test_project, 'README.md')))
 
   expect_error(
     suppressMessages(
@@ -208,13 +211,13 @@ test_that('Test failure creating project in directory with existing empty direct
 test_that('Test failure creating project in directory with existing file matching the name of a template file', {
 
   test_project <- tempfile('test_project')
-  expect_that(file.exists(file.path(test_project)), is_false())
+  expect_false(file.exists(file.path(test_project)))
   dir.create(test_project)
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
-  expect_that(file.exists(file.path(test_project)), is_true())
+  expect_true(file.exists(file.path(test_project)))
 
   file.create(file.path(test_project, 'README.md'))
-  expect_that(file.exists(file.path(test_project, 'README.md')), is_true())
+  expect_true(file.exists(file.path(test_project, 'README.md')))
 
   expect_error(
     suppressMessages(

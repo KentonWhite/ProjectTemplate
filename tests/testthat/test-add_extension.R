@@ -21,8 +21,8 @@ test_that('Test 1: Add an extension', {
                                     package = 'ProjectTemplate'),
                         'example.foo'), file.path('data', 'example.foo'))
 
-  expect_that(file.exists(file.path('lib', 'foo.reader.R')), is_true())
-  expect_that(file.exists(file.path('data', 'example.foo')), is_true())
+  expect_true(file.exists(file.path('lib', 'foo.reader.R')))
+  expect_true(file.exists(file.path('data', 'example.foo')))
 
   load.project()
   expect_that(extensions.dispatch.table[['\\.foo$']], equals('foo.reader'))
