@@ -3,7 +3,6 @@
 \docType{package}
 \name{ProjectTemplate}
 \alias{ProjectTemplate}
-\alias{ProjectTemplate-package}
 \title{Automates the creation of new statistical analysis projects.}
 \description{
 ProjectTemplate provides functions to automatically build a directory

@@ -1,4 +1,8 @@
-# ProjectTemplate 0.8.2 (2018-04-20)
+0.9.1 (2020-04-15)
+
+Internal
+-------
+* `as_factor` defaults to `FALSE`.  This is for compatibility with R 4.0, which is deprecating `stringsAsFactors()`
 
 0.9.0 (2019-02-26)
 
@@ -14,7 +18,7 @@ Documentation
 -------------
 * Link website documentation current release to News.md
 * Added file types to `dat` directory `README` (#268)
-* Internal functions are now documenter (#243)
+* Internal functions are now documented (#243)
 
 Internal
 --------
@@ -128,7 +132,7 @@ Bug fixes
 Features
 ---
 
-* Added functon `.add.extension()`. This allows users to create custom readers for extensions, either locally in a project or as packages.
+* Added function `.add.extension()`. This allows users to create custom readers for extensions, either locally in a project or as packages.
 * The configuration now stores the version of ProjectTemplate in the `version`
   field (#90).
 * New function `migrate.project()` that allows upgrading a project to the

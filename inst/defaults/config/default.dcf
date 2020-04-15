@@ -9,7 +9,7 @@ logging: FALSE
 logging_level: INFO
 load_libraries: FALSE
 libraries: reshape2, plyr, tidyverse, stringr, lubridate
-as_factors: TRUE
+as_factors: FALSE
 tables_type: tibble
 attach_internal_libraries: TRUE
 cache_loaded_data:  FALSE

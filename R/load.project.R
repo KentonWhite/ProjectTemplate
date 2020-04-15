@@ -4,9 +4,6 @@
 #' the project from which it is called.  The behaviour can be controlled by
 #' adjusting the \code{\link{project.config}} configuration.
 #'
-#' @param path Path to project template file.  Useful when working in a subdirectory.
-#'   defaults to getwd()
-#'
 #' @param ... Named arguments to override configuration from \code{config/global.dcf}
 #'   and \code{lib/global.R}.
 #'

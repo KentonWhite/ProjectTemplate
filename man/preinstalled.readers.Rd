@@ -35,7 +35,9 @@
 \alias{xlsx.reader}
 \alias{xport.reader}
 \title{Automatically read data into memory}
-\format{An object of class \code{list} of length 55.}
+\format{
+An object of class \code{list} of length 55.
+}
 \usage{
 preinstalled.readers
 

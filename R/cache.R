@@ -201,7 +201,7 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
 #' Create a data.frame with the cache metadata
 #'
 #' @param variable Name of the variable to be cached
-#' @param depends Vector of variable names of depencies for the variable to be cached, optional.
+#' @param depends Vector of variable names of dependencies for the variable to be cached, optional.
 #' @param CODE Code block to generate \code{variable}, registered as a dependency, optional.
 #'
 #' @return \code{data.frame} containing the variable name and its dependencies, with the

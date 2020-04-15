@@ -9,7 +9,7 @@
 \arguments{
 \item{variable}{Name of the variable to be cached}
 
-\item{depends}{Vector of variable names of depencies for the variable to be cached, optional.}
+\item{depends}{Vector of variable names of dependencies for the variable to be cached, optional.}
 
 \item{CODE}{Code block to generate \code{variable}, registered as a dependency, optional.}
 }

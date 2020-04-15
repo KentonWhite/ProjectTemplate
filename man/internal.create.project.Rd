@@ -5,8 +5,12 @@
 \alias{.create.project.new}
 \title{Create a project structure}
 \usage{
-.create.project.existing(project.name, merge.strategy, template,
-  rstudio.project)
+.create.project.existing(
+  project.name,
+  merge.strategy,
+  template,
+  rstudio.project
+)
 
 .create.project.new(project.name, template, rstudio.project)
 }
