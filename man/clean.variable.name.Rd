@@ -4,11 +4,14 @@
 \alias{clean.variable.name}
 \title{Translate a file name into a valid R variable name.}
 \usage{
-clean.variable.name(variable.name)
+clean.variable.name(variable.name, config = .load.config())
 }
 \arguments{
 \item{variable.name}{A character vector containing a variable's proposed
 name that should be standardized.}
+
+\item{config}{A list of configuration variables.  Defaults to those
+loaded by load.project}
 }
 \value{
 A translated variable name.

@@ -8,6 +8,9 @@
 #' @param variable.name A character vector containing a variable's proposed
 #'  name that should be standardized.
 #'
+#' @param config A list of configuration variables.  Defaults to those
+#'  loaded by load.project
+#' 
 #' @return A translated variable name.
 #'
 #' @keywords internal
@@ -16,11 +19,13 @@
 #' library('ProjectTemplate')
 #'
 #' \dontrun{clean.variable.name('example_1')}
-clean.variable.name <- function(variable.name)
+clean.variable.name <- function(variable.name, config = .load.config())
 {
   variable.name <- gsub('^[^a-zA-Z0-9]+', '', variable.name, perl = TRUE)
   variable.name <- gsub('[^a-zA-Z0-9]+$', '', variable.name, perl = TRUE)
-  variable.name <- gsub('_+', '.', variable.name, perl = TRUE)
+  if(!config$underscore_variables) {
+    variable.name <- gsub('_+', '.', variable.name, perl = TRUE)    
+  }
   variable.name <- gsub('-+', '.', variable.name, perl = TRUE)
   variable.name <- gsub('\\s+', '.', variable.name, perl = TRUE)
   variable.name <- gsub('\\.+', '.', variable.name, perl = TRUE)

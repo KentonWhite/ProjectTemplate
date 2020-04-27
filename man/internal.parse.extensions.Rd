@@ -4,7 +4,7 @@
 \alias{.parse.extensions}
 \title{Match readers to the extensions of the data files}
 \usage{
-.parse.extensions(data.files)
+.parse.extensions(data.files, config)
 }
 \arguments{
 \item{data.files}{a vector of paths to data files}

@@ -14,3 +14,4 @@ tables_type: tibble
 attach_internal_libraries: TRUE
 cache_loaded_data:  FALSE
 sticky_variables: NONE
+underscore_variables: FALSE

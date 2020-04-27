@@ -483,7 +483,7 @@ test_that('cached data created during munging listed as cached only', {
   })
 
   expect_error(data.files <- list.data(), NA)
-
+  
   # Check if data.frame has four rows with default config:
   #   - fileXXXXX.csv (test_file1, not cached)
   #   - README.md (not ignored, not cached)
