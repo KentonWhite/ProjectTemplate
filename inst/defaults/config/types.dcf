@@ -14,3 +14,4 @@ tables_type: character
 attach_internal_libraries: boolean
 cache_loaded_data:  boolean
 sticky_variables: character
+underscore_variables: boolean

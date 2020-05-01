@@ -73,7 +73,7 @@ list.data <- function(...) {
                            include.dirs = !config$recursive_loading)
 
   # Get variable name and reader from filenames
-  files.parsed <- .parse.extensions(all.files)
+  files.parsed <- .parse.extensions(all.files, config)
   varnames <- files.parsed$varnames
   readers <- files.parsed$readers
 
@@ -138,7 +138,7 @@ list.data <- function(...) {
 #' @keywords internal
 #'
 #' @rdname internal.parse.extensions
-.parse.extensions <- function(data.files) {
+.parse.extensions <- function(data.files, config) {
   readers <- character(length(data.files))
   varnames <- character(length(data.files))
 
@@ -148,7 +148,7 @@ list.data <- function(...) {
     readers[extension.match] <- list(extensions.dispatch.table[[extension]])
     varnames[extension.match] <- sub(extension, '', data.files[extension.match],
                                      ignore.case = TRUE, perl = TRUE)
-    varnames[extension.match] <- clean.variable.name(varnames[extension.match])
+    varnames[extension.match] <- clean.variable.name(varnames[extension.match], config)
   }
 
   list(readers = readers, varnames = varnames)
