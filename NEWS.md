@@ -1,3 +1,9 @@
+0.9.2 (2020-05-11)
+
+Features
+--------
+* Supports underscores in variable names, replacing the old dot ('.') separator.
+
 0.9.1 (2020-04-15)
 
 Internal
@@ -68,7 +74,7 @@ Documentation
 
 Internal
 --------
-* Moved logger initialisation to before loading helper functions, See issue #150
+* Moved logger initialization to before loading helper functions, See issue #150
 * Cleaner exit when running load.project() in the wrong directory (#157)
 * Allow to call RSQLite's initExtension() (#161)
 * Refactor migrate.project() and fix version tests (#162)

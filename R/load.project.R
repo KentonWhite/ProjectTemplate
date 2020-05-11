@@ -1,7 +1,7 @@
 #' Automatically load data and packages for a project.
 #'
 #' This function automatically load all of the data and packages used by
-#' the project from which it is called.  The behaviour can be controlled by
+#' the project from which it is called.  The behavior can be controlled by
 #' adjusting the \code{\link{project.config}} configuration.
 #'
 #' @param ... Named arguments to override configuration from \code{config/global.dcf}

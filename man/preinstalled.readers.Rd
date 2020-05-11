@@ -220,7 +220,7 @@ query: SELECT *,STDEV(value1) FROM example_table
 
 \item \code{csv2.reader}: Read a semicolon separated values file with the \code{.csv2} extension.
 
-In May 2018, the default behaviour of the reader for .csv2 files changed to use R's read.csv2(),
+In May 2018, the default behavior of the reader for .csv2 files changed to use R's read.csv2(),
 where the field separator is assumed to be ';' and the decimal separator to be ','.
 
 \item \code{db.reader}: Read a SQlite3 database with a \code{.db} file extension.

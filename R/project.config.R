@@ -2,7 +2,7 @@
 #'
 #' Every \code{ProjectTemplate} project has a configuration file found at
 #' \code{config/global.dcf} that contains various options that can be tweaked
-#' to control runtime behaviour.  The valid options are shown below, and must
+#' to control runtime behavior.  The valid options are shown below, and must
 #' be encoded using the \code{DCF} format.
 #'
 #' Calling the \code{project.config()} function will display the current project

@@ -15,7 +15,7 @@ No value is returned; this function is called for its side effects.
 }
 \description{
 This function automatically load all of the data and packages used by
-the project from which it is called.  The behaviour can be controlled by
+the project from which it is called.  The behavior can be controlled by
 adjusting the \code{\link{project.config}} configuration.
 }
 \details{

@@ -1,6 +1,6 @@
 #' Add project specific config to the global config
 #'
-#' Enables project specific configuation to be added to the global config object.  The
+#' Enables project specific configuration to be added to the global config object.  The
 #' allowable format is key value pairs which are appended to the end of the \code{config}
 #' object, which is accessible from the global environment.
 #'

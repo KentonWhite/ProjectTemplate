@@ -21,6 +21,7 @@ Description: Provides functions to
     automates data loading, preprocessing, library
     importing and unit testing.
 License: GPL-3 | file LICENSE
+Language: en-US
 LazyLoad: yes
 Roxygen: list(wrap = FALSE)
 Encoding: UTF-8
