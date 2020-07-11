@@ -328,7 +328,7 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
 #'
 #' @rdname internal.evaluate.code
 .evaluate.code <- function (variable, CODE) {
-        result <- eval(parse(text=CODE), envir = new.env())
+        result <- eval(parse(text=CODE), envir = new.env(parent = .TargetEnv))
         assign(variable, result, envir = .TargetEnv)
 }
 
