@@ -87,6 +87,44 @@ test_that('caching a variable created from CODE caches correctly', {
 
 })
 
+test_that("caching a variable created from CODE using 'data.table' along with
+          non-standard evaluation caches correctly", {
+        # The 'data.table' package has a mechanism to check if the calling
+        # environment is 'data.table' aware
+        # (https://github.com/Rdatatable/data.table/blob/master/R/cedta.R)
+        # and otherwise calls the corresponding 'data.frame' method for at least
+        # the '[' operator instead. This is why the parent environment of the
+        # environment where 'CODE' is evaluated in has to be the global
+        # environment ('.TargetEnv').
+
+        skip_if_not_installed("data.table")
+
+        test_project <- tempfile("test_project")
+        suppressMessages(create.project(test_project))
+        on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
+
+        oldwd <- setwd(test_project)
+        on.exit(setwd(oldwd), add = TRUE)
+
+        var_to_cache <- "foo"
+
+        expect_error(
+          {
+            suppressMessages(cache(var_to_cache, {
+              bar <- data.table::data.table(baz = 1:12)
+              bar[baz <= 6, ]
+            }))
+          },
+          NA
+        )
+
+        expect_identical(
+          get(var_to_cache, envir = .TargetEnv),
+          data.table::data.table(baz = 1:6)
+        )
+
+        tidy_up()
+})
 
 test_that('re-caching is skipped when a cached variable hasnt changed', {
 
