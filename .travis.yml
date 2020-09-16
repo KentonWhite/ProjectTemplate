@@ -1,5 +1,4 @@
 language: r
-sudo: false 
 cache: packages
 warnings_are_errors: true
 addons:
@@ -11,3 +10,5 @@ addons:
       - r-cran-rodbc
 r_github_packages:
   - johnmyleswhite/log4r
+before_install:
+  - sudo $(which R) CMD javareconf
