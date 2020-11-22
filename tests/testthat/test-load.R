@@ -224,7 +224,7 @@ test_that('ignored data files are not loaded', {
   rm(var_to_cache, envir = .TargetEnv)
   suppressMessages(load.project(data_ignore = 'Thumbs.db, var_to_cache'))
   expect_false(exists("var_to_cache", envir = .TargetEnv))
- 
+
 })
 
 test_that('data is loaded as data_frame', {
@@ -239,14 +239,14 @@ test_that('data is loaded as data_frame', {
         rm(list=ls(envir = .TargetEnv), envir = .TargetEnv)
 
         test_data <- data.frame(Names=c("a", "b", "c"), Ages=c(20,30,40))
-        
+
         # save test data as a csv in the data directory
         write.csv(test_data, file="data/test.csv", row.names = FALSE)
 
         config <- .new.config
         config$tables_type <- "data_frame"
         write.dcf(config, 'config/global.dcf')
-        
+
         suppressMessages(load.project())
 
         # and check that the loaded data from the cache is what we saved
@@ -266,14 +266,14 @@ test_that('data is loaded as data_table', {
 
         require('data.table')
         test_data <- data.table::data.table(data.frame(Names=c("a", "b", "c"), Ages=c(20,30,40)))
-        
+
         # save test data as a csv in the data directory
         write.csv(test_data, file="data/test.csv", row.names = FALSE)
 
         config <- .new.config
         config$tables_type <- "data_table"
         write.dcf(config, 'config/global.dcf')
-        
+
         suppressMessages(load.project())
 
         # and check that the loaded data from the cache is what we saved

@@ -163,30 +163,19 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
 
 
 # Cache directory and extension used
-
 .cache.dir <- 'cache'
-if (.has.project()) {
-  .file.ext <- get.project()$config["cache_file_format"]
+.cache.file.ext <- function(escape = FALSE) {
+  config <- .load.config()
 
-  if (.file.ext == "qs") {
+  if (config$cache_file_format == "qs") {
     require.package("qs")
+
+    .file.ext <- "qs"
+  } else {
+    .file.ext <- "RData"
   }
 
-  .cache.file.ext <- function(escape = FALSE) {
-    sprintf(
-      "%s%s",
-      if (escape) {"\\."} else {"."},
-      if (.file.ext == "qs") {.file.ext} else {"RData"}
-    )
-  }
-} else { # cache function should continue to work without a loaded project
-  .cache.file.ext <- function(escape = FALSE) {
-    sprintf(
-      "%s%s",
-      if (escape) {"\\."} else {"."},
-      "RData"
-    )
-  }
+  sprintf("%s%s", if (escape) {"\\."} else {"."}, .file.ext)
 }
 
 #' Write a variable and its metadata to cache

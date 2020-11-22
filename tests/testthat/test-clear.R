@@ -1,11 +1,5 @@
 context('Clearing from memory')
 
-tidy_up <- function () {
-        objs <- setdiff(ls(envir = .TargetEnv), "tidy_up")
-        rm(list = objs, envir = .TargetEnv)
-}
-
-
 test_that('running clear() with default parameters removes everything except config', {
 
   test_project <- tempfile('test_project')

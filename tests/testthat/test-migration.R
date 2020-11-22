@@ -1,12 +1,5 @@
 context('Migration')
 
-# Function to tidy up at the end of tests
-tidy_up <- function () {
-        objs <- setdiff(ls(envir = .TargetEnv), "tidy_up")
-        rm(list = objs, envir = .TargetEnv)
-}
-
-
 expect_defaults <- function(config) {
   expect_true(is.character(config$version))
   expect_true(config$attach_internal_libraries)
@@ -211,13 +204,13 @@ test_that('migrating a project without a cache directory has a cache directory c
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
   cache_dir <- file.path(test_project, 'cache')
-  
+
   oldwd <- setwd(test_project)
   on.exit(setwd(oldwd), add = TRUE)
 
   ## Delete the cache dir
   unlink(cache_dir, recursive = TRUE)
-  
+
   # should be a message to say adding cache directory
   expect_message(migrate.project(), 'cache')
 
