@@ -430,7 +430,7 @@ if (.has.project()) {
 #' @rdname internal.cached.variables
 .cached.variables <- function() {
         # get all relevant cache files
-        cache_files <- list.files("cache", pattern = "\\.(RData|hash)$")
+        cache_files <- list.files("cache", pattern = sprintf("(%s$|\\.hash$)", .cache.file.ext(TRUE)))
         # and return the variable names
         unique(sub("^(.*)\\..*$", "\\1", cache_files))
 }
