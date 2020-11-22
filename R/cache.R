@@ -1,3 +1,6 @@
+#' @include get.project.R
+NULL
+
 #' Cache a data set for faster loading.
 #'
 #' This function will store a copy of the named data set in the \code{cache}
@@ -161,7 +164,29 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
 # Cache directory and extension used
 
 .cache.dir <- 'cache'
-.cache.file.ext <- '.RData'
+if (.has.project()) {
+  .file.ext <- get.project()$config["cache_file_format"]
+
+  if (.file.ext == "qs") {
+    require.package("qs")
+  }
+
+  .cache.file.ext <- function(escape = FALSE) {
+    sprintf(
+      "%s%s",
+      if (escape) {"\\."} else {"."},
+      if (.file.ext == "qs") {.file.ext} else {"RData"}
+    )
+  }
+} else { # cache function should continue to work without a loaded project
+  .cache.file.ext <- function(escape = FALSE) {
+    sprintf(
+      "%s%s",
+      if (escape) {"\\."} else {"."},
+      "RData"
+    )
+  }
+}
 
 #' Write a variable and its metadata to cache
 #'
@@ -352,7 +377,7 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
 #' @rdname internal.cache.filename
 .cache.filename <- function(variable) {
         list(
-                obj=file.path(.cache.dir, paste0(variable, .cache.file.ext)),
+                obj=file.path(.cache.dir, paste0(variable, .cache.file.ext())),
                 hash=file.path(.cache.dir, paste0(variable, '.hash'))
         )
 }
