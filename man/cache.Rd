@@ -17,7 +17,8 @@ cached.}
 \item{depends}{A character vector of other global environment objects that the CODE
 depends upon. Caching will be forced if those objects have changed since last caching}
 
-\item{...}{additional arguments passed to \code{\link{save}}}
+\item{...}{additional arguments passed to \code{\link{save}} or optional to
+\code{\link[qs]{qsave}}}
 }
 \value{
 No value is returned; this function is called for its side effects.
@@ -26,7 +27,7 @@ No value is returned; this function is called for its side effects.
 This function will store a copy of the named data set in the \code{cache}
 directory. This cached copy of the data set will then be given precedence
 at load time when calling \code{\link{load.project}}. Cached data sets are
-stored as \code{.RData} files.
+stored as \code{.RData} or optional as \code{.qs} files.
 }
 \details{
 Usually you will want to cache datasets during munging.  This can be the raw
