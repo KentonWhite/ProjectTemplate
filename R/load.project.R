@@ -221,7 +221,10 @@ load.project <- function(...)
     if (config$cache_loading & data.file$is_cached) {
       # Load data from cache/
       message(" Loading cached data set: ", variable)
-      cache.file <- file.path(.cache.dir, paste0(variable, .cache.file.ext()))
+      cache.file <- file.path(
+        .cache.dir,
+        sprintf("%s%s", variable, .cache.file.ext()[".data.file.ext"])
+      )
       if (config$cache_file_format == "qs") {
         assign(variable, qs::qread(cache.file), .TargetEnv)
       } else {

@@ -32,16 +32,24 @@ clear.cache <- function (...){
         files<-c()
 
         #if no argument, then select everything in the cache
-        if (length(variables)==0) {
+        if (length(variables) == 0) {
+                .file.ext <- .cache.file.ext(TRUE)
+
                 # Get the variable names
-                variables <- gsub(.cache.file.ext(TRUE), "", list.files(.cache.dir, pattern = .cache.file.ext(TRUE)))
+                variables <- gsub(.file.ext[".data.file.ext"], "", list.files(.cache.dir, pattern = .file.ext[".data.file.ext"]))
                 # get the list of files to delete
-                files <- list.files(.cache.dir, pattern = sprintf("(%s$|\\.hash$)", .cache.file.ext(TRUE)))
+                files <- list.files(.cache.dir, pattern = sprintf(
+                        "(%s|%s)",
+                        .file.ext[".data.file.ext"],
+                        .file.ext[".hash.file.ext"]
+                ))
         }
         else {
-                for (var in variables){
-                        files<-c(files, paste0(var, .cache.file.ext()))
-                        files<-c(files, paste0(var, ".hash"))
+                .file.ext <- .cache.file.ext()
+
+                for (var in variables) {
+                        files <- c(files, sprintf("%s%s", var, .file.ext[".data.file.ext"]))
+                        files <- c(files, sprintf("%s%s", var, .file.ext[".hash.file.ext"]))
                 }
         }
 
