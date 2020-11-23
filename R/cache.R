@@ -6,7 +6,7 @@ NULL
 #' This function will store a copy of the named data set in the \code{cache}
 #' directory. This cached copy of the data set will then be given precedence
 #' at load time when calling \code{\link{load.project}}. Cached data sets are
-#' stored as \code{.RData} or optional as \code{.qs} files.
+#' stored as \code{.RData} or optionally as \code{.qs} files.
 #'
 #' Usually you will want to cache datasets during munging.  This can be the raw
 #' data just loaded, or it can be the result of further processing during munge.  Either
@@ -24,8 +24,9 @@ NULL
 #' cached.
 #' @param depends A character vector of other global environment objects that the CODE
 #' depends upon. Caching will be forced if those objects have changed since last caching
-#' @param ... additional arguments passed to \code{\link{save}} or optional to
-#' \code{\link[qs]{qsave}}
+#' @param ... Additional arguments passed on to \code{\link{save}} or optionally
+#' to \code{\link[qs]{qsave}}. See \code{\link{project.config}} for further
+#' information.
 #'
 #' @return No value is returned; this function is called for its side effects.
 #'
@@ -41,6 +42,8 @@ NULL
 #'
 #' setwd('..')
 #' unlink('tmp-project')}
+#'
+#' @seealso \code{\link[qs]{qsave}}, \code{\link{project.config}}
 cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
 {
 
