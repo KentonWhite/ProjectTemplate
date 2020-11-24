@@ -45,12 +45,7 @@ clear.cache <- function (...){
                 ))
         }
         else {
-                .file.ext <- .cache.file.ext()
-
-                for (var in variables) {
-                        files <- c(files, sprintf("%s%s", var, .file.ext[".data.file.ext"]))
-                        files <- c(files, sprintf("%s%s", var, .file.ext[".hash.file.ext"]))
-                }
+                files <- sprintf("%s%s", rep(variables, each = 2), .cache.file.ext())
         }
 
         # Clear the variables from memory (needs to be one at a time)
