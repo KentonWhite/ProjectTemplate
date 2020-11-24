@@ -464,7 +464,7 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
 
   # get all relevant cache files
   cache_files <- list.files("cache", pattern = sprintf(
-    "(%s|%s)",
+    "%s|%s",
     .file.ext[".data.file.ext"],
     .file.ext[".hash.file.ext"]
   ))
