@@ -460,14 +460,8 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
 #'
 #' @rdname internal.cached.variables
 .cached.variables <- function() {
-  .file.ext <- .cache.file.ext(TRUE)
-
   # get all relevant cache files
-  cache_files <- list.files("cache", pattern = sprintf(
-    "%s|%s",
-    .file.ext[".data.file.ext"],
-    .file.ext[".hash.file.ext"]
-  ))
+  cache_files <- list.files("cache", pattern = paste(.cache.file.ext(TRUE), collapse = "|"))
   # and return the variable names
   unique(sub("^(.*)\\..*$", "\\1", cache_files))
 }

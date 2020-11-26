@@ -38,11 +38,7 @@ clear.cache <- function (...){
                 # Get the variable names
                 variables <- sub(.file.ext[".data.file.ext"], "", list.files(.cache.dir, pattern = .file.ext[".data.file.ext"]))
                 # get the list of files to delete
-                files <- list.files(.cache.dir, pattern = sprintf(
-                        "%s|%s",
-                        .file.ext[".data.file.ext"],
-                        .file.ext[".hash.file.ext"]
-                ))
+                files <- list.files(.cache.dir, pattern = paste(.file.ext, collapse = "|"))
         }
         else {
                 files <- sprintf("%s%s", rep(variables, each = 2), .cache.file.ext())
