@@ -29,19 +29,25 @@ clear.cache <- function (...){
                 stop("... must contain names or character strings")
         variables <- vapply(dots, as.character, "")
 
-        files<-c()
+        files <- character()
+        cache_format <- .cache.format()
 
         #if no argument, then select everything in the cache
         if (length(variables) == 0) {
-                .file.ext <- .cache.file.ext(TRUE)
-
                 # Get the variable names
-                variables <- sub(.file.ext[".data.file.ext"], "", list.files(.cache.dir, pattern = .file.ext[".data.file.ext"]))
+                variables <- sub(cache_format[["file_ext"]][2], "", list.files(.cache.dir, pattern = cache_format[["file_ext"]][2]))
                 # get the list of files to delete
-                files <- list.files(.cache.dir, pattern = paste(.file.ext, collapse = "|"))
+                files <- list.files(.cache.dir, pattern = paste(
+                        c(cache_format[["file_ext"]][2], cache_format[["hash_ext"]][2]),
+                        collapse = "|"
+                ))
         }
         else {
-                files <- sprintf("%s%s", rep(variables, each = 2), .cache.file.ext())
+                files <- sprintf(
+                        "%s%s",
+                        rep(variables, each = 2),
+                        c(cache_format[["file_ext"]][1], cache_format[["hash_ext"]][1])
+                )
         }
 
         # Clear the variables from memory (needs to be one at a time)

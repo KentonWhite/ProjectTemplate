@@ -219,17 +219,15 @@ load.project <- function(...)
     }
 
     if (config$cache_loading & data.file$is_cached) {
+      cache_format <- .cache.format()
+
       # Load data from cache/
       message(" Loading cached data set: ", variable)
       cache.file <- file.path(
         .cache.dir,
-        sprintf("%s%s", variable, .cache.file.ext()[".data.file.ext"])
+        sprintf("%s%s", variable, cache_format[["file_ext"]][1])
       )
-      if (config$cache_file_format == "qs") {
-        assign(variable, qs::qread(cache.file), .TargetEnv)
-      } else {
-        load(cache.file, envir = .TargetEnv)
-      }
+      eval(cache_format[["load_expr"]])
       cache.files.loaded <- c(cache.files.loaded, variable)
     } else if (config$data_loading) {
       # Check if a reader was found for the file
