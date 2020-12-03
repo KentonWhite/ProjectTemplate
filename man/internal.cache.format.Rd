@@ -2,15 +2,14 @@
 % Please edit documentation in R/cache.R
 \name{.cache.format}
 \alias{.cache.format}
-\title{Get file extensions of the cache files}
+\title{Get configured cache file format strategy}
 \usage{
 .cache.format()
 }
 \value{
-A named character vector containing the extensions of the data and
-hash file.
+A named object of mode \code{\link{expression}}.
 }
 \description{
-Get file extensions of the cache files
+Get configured cache file format strategy
 }
 \keyword{internal}

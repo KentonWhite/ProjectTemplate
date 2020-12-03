@@ -223,9 +223,11 @@ load.project <- function(...)
 
       # Load data from cache/
       message(" Loading cached data set: ", variable)
-      cache.file <- file.path(
-        .cache.dir,
-        sprintf("%s%s", variable, cache_format[["file_ext"]][1])
+      cache_filename <- list(
+        obj = file.path(
+          .cache.dir,
+          sprintf("%s%s", variable, cache_format[["plain_exts"]]["file"])
+        )
       )
       eval(cache_format[["load_expr"]])
       cache.files.loaded <- c(cache.files.loaded, variable)
