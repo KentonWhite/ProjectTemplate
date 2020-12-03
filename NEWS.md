@@ -1,3 +1,10 @@
+0.9.3 (2020-12-03)
+
+Internal
+--------
+* Fix passing first argument with length greater than 1 to `exists()` (Breaking change in R 4.1.0)
+* Fix issue where some Namespaces where not properly resolved in `cache()` (#303).
+
 0.9.2 (2020-05-11)
 
 Features
