@@ -182,7 +182,7 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
 # * variable: character string providing the name of the (cached) variable
 # * .TargetEnv: environment, in which the variable resides (saving) or has to be
 #   assigned to (loading)
-# * cache_filename$obj: character string providing the full path to the cache
+# * cache_filename$data: character string providing the full path to the cache
 #   file for/of the (cached) variable including its extension
 # * ...: additional arguments passed on from the cache to the respective "save"
 #   function
@@ -190,14 +190,14 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
   RData = expression(
     package = "base",
     file_ext = "RData",
-    save_expr = save(list = variable, envir = .TargetEnv, file = cache_filename$obj, ...),
-    load_expr = load(cache_filename$obj, envir = .TargetEnv)
+    save_expr = save(list = variable, envir = .TargetEnv, file = cache_filename$data, ...),
+    load_expr = load(cache_filename$data, envir = .TargetEnv)
   ),
   qs = expression(
     package = "qs",
     file_ext = "qs",
-    save_expr = qs::qsave(get(variable, envir = .TargetEnv), file = cache_filename$obj, ...),
-    load_expr = assign(variable, qs::qread(cache_filename$obj), .TargetEnv)
+    save_expr = qs::qsave(get(variable, envir = .TargetEnv), file = cache_filename$data, ...),
+    load_expr = assign(variable, qs::qread(cache_filename$data), .TargetEnv)
   )
 )
 
@@ -235,8 +235,8 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
     hash_exts <- sprintf("%s%s%s", dot, cache_format[["file_ext"]], hash_exts)
   }
 
-  cache_format[["plain_exts"]] <- c(file = file_exts[1], hash = hash_exts[1])
-  cache_format[["regex_exts"]] <- c(file = file_exts[2], hash = hash_exts[2])
+  cache_format[["plain_exts"]] <- c(data = file_exts[1], hash = hash_exts[1])
+  cache_format[["regex_exts"]] <- c(data = file_exts[2], hash = hash_exts[2])
 
   cache_format
 }
@@ -370,23 +370,23 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
 #' @rdname internal.read.cache.info
 .read.cache.info <- function (variable) {
 
-        cache_name <- .cache.filename(variable, .cache.format())
+        cache_filename <- .cache.filename(variable, .cache.format())
 
         in.cache <- FALSE
-        if (file.exists(cache_name$obj)) in.cache <- TRUE
+        if (file.exists(cache_filename$data)) in.cache <- TRUE
 
         hash <- FALSE
         cache.hash <- NULL
-        if (file.exists(cache_name$hash) & in.cache) {
+        if (file.exists(cache_filename$hash) & in.cache) {
                 # hash data frame will be loaded into cache.hash
-                load(cache_name$hash, envir = environment())
+                load(cache_filename$hash, envir = environment())
         }
 
         # If the hash file is missing but the cache file is not, delete
         # the cache object which will force a re-cache with a properly generated
         # hash file.
-        if (!file.exists(cache_name$hash) & in.cache) {
-                unlink(cache_name$obj, force=TRUE)
+        if (!file.exists(cache_filename$hash) & in.cache) {
+                unlink(cache_filename$data, force=TRUE)
                 in.cache <- FALSE
         }
 
@@ -417,7 +417,7 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
 #'
 #' @details The returned object is a list with two fields:
 #' \itemize{
-#'   \item \code{obj}: The path to the file in which the
+#'   \item \code{data}: The path to the file in which the
 #'     variable contents will be saved;
 #'   \item \code{hash}: The path to the file in which the cache
 #'     metadata will be stored.
@@ -429,9 +429,9 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
 #'
 #' @rdname internal.cache.filename
 .cache.filename <- function(variable, cache_format) {
-  list(
-    obj  = file.path(.cache.dir, sprintf("%s%s", variable, cache_format[["plain_exts"]]["file"])),
-    hash = file.path(.cache.dir, sprintf("%s%s", variable, cache_format[["plain_exts"]]["hash"]))
+  structure(
+    as.list(file.path(.cache.dir, sprintf("%s%s", variable, cache_format[["plain_exts"]]))),
+    names = names(cache_format[["plain_exts"]])
   )
 }
 

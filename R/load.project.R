@@ -223,12 +223,7 @@ load.project <- function(...)
 
       # Load data from cache/
       message(" Loading cached data set: ", variable)
-      cache_filename <- list(
-        obj = file.path(
-          .cache.dir,
-          sprintf("%s%s", variable, cache_format[["plain_exts"]]["file"])
-        )
-      )
+      cache_filename <- .cache.filename(variable, cache_format)
       eval(cache_format[["load_expr"]])
       cache.files.loaded <- c(cache.files.loaded, variable)
     } else if (config$data_loading) {

@@ -36,9 +36,9 @@ clear.cache <- function (...){
         if (length(variables) == 0) {
                 # Get the variable names
                 variables <- sub(
-                        cache_format[["regex_exts"]]["file"],
+                        cache_format[["regex_exts"]]["data"],
                         "",
-                        list.files(.cache.dir, pattern = cache_format[["regex_exts"]]["file"])
+                        list.files(.cache.dir, pattern = cache_format[["regex_exts"]]["data"])
                 )
                 # get the list of files to delete
                 files <- list.files(.cache.dir, pattern = paste(

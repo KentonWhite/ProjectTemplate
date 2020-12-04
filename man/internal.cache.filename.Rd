@@ -20,7 +20,7 @@ Construct the file names for the cache and hash
 \details{
 The returned object is a list with two fields:
 \itemize{
-  \item \code{obj}: The path to the file in which the
+  \item \code{data}: The path to the file in which the
     variable contents will be saved;
   \item \code{hash}: The path to the file in which the cache
     metadata will be stored.
