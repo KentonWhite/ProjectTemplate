@@ -1,7 +1,7 @@
 Package: ProjectTemplate
 Type: Package
 Title: Automates the Creation of New Statistical Analysis Projects
-Version: 0.9.3
+Version: 0.10.0
 Date: 2020-12-03
 Authors@R: c( person("Aleksandar", "Blagotic", role = "ctb"),
     person("Diego", "Valle-Jones", role = "ctb"),
@@ -35,6 +35,7 @@ Suggests:
     plyr,
     digest,
     formatR,
+    qs,
     stringr,
     ggplot2,
     lubridate,
@@ -63,6 +64,7 @@ Collate:
     'add.extension.R'
     'addins.R'
     'arff.reader.R'
+    'get.project.R'
     'cache.R'
     'cache.name.R'
     'cache.project.R'
@@ -80,7 +82,6 @@ Collate:
     'epiinfo.reader.R'
     'feather.reader.R'
     'file.reader.R'
-    'get.project.R'
     'help.R'
     'list.data.R'
     'load.project.R'

@@ -1,9 +1,12 @@
+#' @include get.project.R
+NULL
+
 #' Cache a data set for faster loading.
 #'
 #' This function will store a copy of the named data set in the \code{cache}
 #' directory. This cached copy of the data set will then be given precedence
 #' at load time when calling \code{\link{load.project}}. Cached data sets are
-#' stored as \code{.RData} files.
+#' stored as \code{.RData} or optionally as \code{.qs} files.
 #'
 #' Usually you will want to cache datasets during munging.  This can be the raw
 #' data just loaded, or it can be the result of further processing during munge.  Either
@@ -21,7 +24,9 @@
 #' cached.
 #' @param depends A character vector of other global environment objects that the CODE
 #' depends upon. Caching will be forced if those objects have changed since last caching
-#' @param ... additional arguments passed to \code{\link{save}}
+#' @param ... Additional arguments passed on to \code{\link{save}} or optionally
+#' to \code{\link[qs]{qsave}}. See \code{\link{project.config}} for further
+#' information.
 #'
 #' @return No value is returned; this function is called for its side effects.
 #'
@@ -37,6 +42,8 @@
 #'
 #' setwd('..')
 #' unlink('tmp-project')}
+#'
+#' @seealso \code{\link[qs]{qsave}}, \code{\link{project.config}}
 cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
 {
 
@@ -158,10 +165,81 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
 }
 
 
-# Cache directory and extension used
+# Cache directory
+.cache.dir <- "cache"
 
-.cache.dir <- 'cache'
-.cache.file.ext <- '.RData'
+# Possible cache file formats
+#
+# Each future cache file format must consist of a named expression and be added
+# to the list below. This expression in turn must contain four "fields":
+# * package: character string naming the required package (don't forget to add
+#   it to the list of suggested packages in DESCRIPTION as well)
+# * file_ext: character string providing the file extension without leading dot
+# * save_expr: expression used to save the file to disk
+# * load_expr: expression used to load the file from disk
+#
+# save_expr and load_expr can make use of the following variables:
+# * variable: character string providing the name of the (cached) variable
+# * .TargetEnv: environment, in which the variable resides (saving) or has to be
+#   assigned to (loading)
+# * cache_filename$data: character string providing the full path to the cache
+#   file for/of the (cached) variable including its extension
+# * ...: additional arguments passed on from the cache to the respective "save"
+#   function
+.cache.formats <- list(
+  RData = expression(
+    package = "base",
+    file_ext = "RData",
+    save_expr = save(list = variable, envir = .TargetEnv, file = cache_filename$data, ...),
+    load_expr = load(cache_filename$data, envir = .TargetEnv)
+  ),
+  qs = expression(
+    package = "qs",
+    file_ext = "qs",
+    save_expr = qs::qsave(get(variable, envir = .TargetEnv), file = cache_filename$data, ...),
+    load_expr = assign(variable, qs::qread(cache_filename$data), .TargetEnv)
+  )
+)
+
+#' Get configured cache file format strategy
+#'
+#' @return A named object of mode \code{\link{expression}}.
+#'
+#' @keywords internal
+#'
+#' @rdname internal.cache.format
+.cache.format <- function() {
+  if (.has.project()) {
+    config <- get.project()$config
+  } else {
+    config <- suppressWarnings(.load.config())
+  }
+
+  if (!config$cache_file_format %in% names(.cache.formats)) {
+    stop(
+      'Cache file format not available. See "?project.config" for further information.',
+      call. = FALSE
+    )
+  }
+
+  dot <- c(".", "\\.")
+  dollar <- c("", "$")
+  hash_exts <- sprintf("%shash%s", dot, dollar)
+
+  cache_format <- .cache.formats[[config$cache_file_format]]
+
+  require.package(cache_format[["package"]])
+
+  file_exts <- sprintf("%s%s%s", dot, cache_format[["file_ext"]], dollar)
+  if (config$cache_file_format != "RData") {
+    hash_exts <- sprintf("%s%s%s", dot, cache_format[["file_ext"]], hash_exts)
+  }
+
+  cache_format[["plain_exts"]] <- c(data = file_exts[1], hash = hash_exts[1])
+  cache_format[["regex_exts"]] <- c(data = file_exts[2], hash = hash_exts[2])
+
+  cache_format
+}
 
 #' Write a variable and its metadata to cache
 #'
@@ -180,14 +258,13 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
 #'
 #' @rdname internal.write.cache
 .write.cache <- function(cache.hash, ...){
+        cache_format <- .cache.format()
+
         variable <- as.character(cache.hash["VAR",]$variable)
-        cache_filename <- .cache.filename(variable)
+        cache_filename <- .cache.filename(variable, cache_format)
 
         # cache the variable
-        save(list = variable,
-             envir = .TargetEnv,
-             file = cache_filename$obj,
-             ...)
+        eval(cache_format[["save_expr"]])
 
         # hash information is stored in a separate file to the data is so
         # it can be retrieved quickly when things need to be read from the cache
@@ -293,23 +370,23 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
 #' @rdname internal.read.cache.info
 .read.cache.info <- function (variable) {
 
-        cache_name <- .cache.filename(variable)
+        cache_filename <- .cache.filename(variable, .cache.format())
 
         in.cache <- FALSE
-        if (file.exists(cache_name$obj)) in.cache <- TRUE
+        if (file.exists(cache_filename$data)) in.cache <- TRUE
 
         hash <- FALSE
         cache.hash <- NULL
-        if (file.exists(cache_name$hash) & in.cache) {
+        if (file.exists(cache_filename$hash) & in.cache) {
                 # hash data frame will be loaded into cache.hash
-                load(cache_name$hash, envir = environment())
+                load(cache_filename$hash, envir = environment())
         }
 
         # If the hash file is missing but the cache file is not, delete
         # the cache object which will force a re-cache with a properly generated
         # hash file.
-        if (!file.exists(cache_name$hash) & in.cache) {
-                unlink(cache_name$obj, force=TRUE)
+        if (!file.exists(cache_filename$hash) & in.cache) {
+                unlink(cache_filename$data, force=TRUE)
                 in.cache <- FALSE
         }
 
@@ -336,10 +413,11 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
 #' Construct the file names for the cache and hash
 #'
 #' @param variable Variable name for which to construct file names
+#' @param cache_format \code{\link{expression}} as returned by \code{\link{.cache.format}}
 #'
 #' @details The returned object is a list with two fields:
 #' \itemize{
-#'   \item \code{obj}: The path to the file in which the
+#'   \item \code{data}: The path to the file in which the
 #'     variable contents will be saved;
 #'   \item \code{hash}: The path to the file in which the cache
 #'     metadata will be stored.
@@ -350,11 +428,11 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
 #' @keywords internal
 #'
 #' @rdname internal.cache.filename
-.cache.filename <- function(variable) {
-        list(
-                obj=file.path(.cache.dir, paste0(variable, .cache.file.ext)),
-                hash=file.path(.cache.dir, paste0(variable, '.hash'))
-        )
+.cache.filename <- function(variable, cache_format) {
+  structure(
+    as.list(file.path(.cache.dir, sprintf("%s%s", variable, cache_format[["plain_exts"]]))),
+    names = names(cache_format[["plain_exts"]])
+  )
 }
 
 
@@ -404,10 +482,15 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
 #'
 #' @rdname internal.cached.variables
 .cached.variables <- function() {
-        # get all relevant cache files
-        cache_files <- list.files("cache", pattern = "\\.(RData|hash)$")
-        # and return the variable names
-        unique(sub("^(.*)\\..*$", "\\1", cache_files))
+  cache_format <- .cache.format()
+
+  # get all relevant cache files
+  cache_files <- list.files("cache", pattern = paste(
+    cache_format[["regex_exts"]],
+    collapse = "|"
+  ))
+  # and return the variable names
+  unique(sub("^(.*)\\..*$", "\\1", cache_files))
 }
 
 

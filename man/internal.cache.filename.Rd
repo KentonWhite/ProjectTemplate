@@ -4,10 +4,12 @@
 \alias{.cache.filename}
 \title{Construct the file names for the cache and hash}
 \usage{
-.cache.filename(variable)
+.cache.filename(variable, cache_format)
 }
 \arguments{
 \item{variable}{Variable name for which to construct file names}
+
+\item{cache_format}{\code{\link{expression}} as returned by \code{\link{.cache.format}}}
 }
 \value{
 A list with file names
@@ -18,7 +20,7 @@ Construct the file names for the cache and hash
 \details{
 The returned object is a list with two fields:
 \itemize{
-  \item \code{obj}: The path to the file in which the
+  \item \code{data}: The path to the file in which the
     variable contents will be saved;
   \item \code{hash}: The path to the file in which the cache
     metadata will be stored.

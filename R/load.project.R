@@ -219,10 +219,12 @@ load.project <- function(...)
     }
 
     if (config$cache_loading & data.file$is_cached) {
+      cache_format <- .cache.format()
+
       # Load data from cache/
       message(" Loading cached data set: ", variable)
-      cache.file <- file.path(.cache.dir, paste0(variable, .cache.file.ext))
-      load(cache.file, envir = .TargetEnv)
+      cache_filename <- .cache.filename(variable, cache_format)
+      eval(cache_format[["load_expr"]])
       cache.files.loaded <- c(cache.files.loaded, variable)
     } else if (config$data_loading) {
       # Check if a reader was found for the file
