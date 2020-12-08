@@ -23,7 +23,8 @@ test_that('running clear() with default parameters removes everything except con
   expect_message(clear(), "clear from memory:.*?config.*?helper\\.function.*project.info.*")
 
   # check they don't exist
-  expect_true(!exists(c("project.info", "helper.function"), envir = .TargetEnv))
+  expect_true(!exists(c("project.info"), envir = .TargetEnv))
+  expect_true(!exists(c("helper.function"), envir = .TargetEnv))
 
   # check config does not exist
   expect_true(!exists("config", envir = .TargetEnv))
@@ -79,7 +80,8 @@ test_that('running clear() removes everything except the config$sticky_variables
         expect_true(!exists("project.info", envir = .TargetEnv))
 
         # check that config and helper.function does exist
-        expect_true(exists(c("config", "helper.function"), envir = .TargetEnv))
+        expect_true(exists(c("config"), envir = .TargetEnv))
+        expect_true(exists(c("helper.function"), envir = .TargetEnv))
 
         tidy_up()
 })
