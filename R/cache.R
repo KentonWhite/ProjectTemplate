@@ -212,7 +212,7 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
   if (.has.project()) {
     config <- get.project()$config
   } else {
-    config <- .load.config()
+    config <- suppressWarnings(.load.config())
   }
 
   if (!config$cache_file_format %in% names(.cache.formats)) {
