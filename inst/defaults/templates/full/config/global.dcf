@@ -1,4 +1,4 @@
-version: 0.9.3
+version: 0.10.0
 data_loading: TRUE
 data_loading_header: TRUE
 data_ignore:
@@ -15,3 +15,4 @@ attach_internal_libraries: FALSE
 cache_loaded_data:  TRUE
 sticky_variables: NONE
 underscore_variables: TRUE
+cache_file_format: RData

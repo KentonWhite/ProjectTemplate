@@ -1,11 +1,5 @@
 context('Caching')
 
-tidy_up <- function () {
-        objs <- setdiff(ls(envir = .TargetEnv), "tidy_up")
-        rm(list = objs, envir = .TargetEnv)
-}
-
-
 test_that('caching a variable that doesnt exist fails with correct message', {
 
   test_project <- tempfile('test_project')

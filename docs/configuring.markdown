@@ -28,6 +28,7 @@ The current `ProjectTemplate` configuration settings exist in the `config/global
 * `cache_loaded_data`: This can be set to 'on' or 'off'. If `cache_loaded_data` is on, then data loaded from the `data` directory during `load.project()` will be automatically cached (so it won't need to be reloaded next time `load.project()` is called).  By default, `cache_loaded_data` is on for newly created projects.  Existing projects created without this configuration setting will default to off.  Similarly, when `migrate.project()` is called in those cases, the default will be off.
 * `sticky_variables`: This is a comma separated list of any project-specific  variables that should remain in the global environment after a `clear()` command.  This can be used to clear the global environment, but keep any large datasets in place so they are not unnecessarily re-generated during `load.project()`.  Note that any this will be over-ridden if the `force=TRUE` parameter is passed to `clear()`. By default, `sticky_variables` is NONE
 * `underscore_variables`:  This can be set to TRUE to use underscores (`_`) in variable names or FALSE to replace underscores (`_`) with dots (`.`).  The default is TRUE.  When migrating old projects, `underscore_variables` is set to FALSE
+* `cache_file_format`: The default file format for cached data is 'RData'.  This can be set to 'qs' in order to benefit from the quick serialization of R objects provided by the `qs` package.
 
 You can override the values in `global.dcf` when loading the project by providing the option with the new setting:
 
