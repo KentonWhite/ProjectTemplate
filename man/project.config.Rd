@@ -71,9 +71,13 @@ during load.project() a warning will be displayed informing that has happened. \
    place so they are not unnecessarily re-generated during \code{load.project()}.
    Note that any this will be over-ridden if the \code{force=TRUE} parameter is passed
     to \code{clear()}`.  \cr
+ \code{underscore_variables} \tab This can be set to \code{TRUE} to use
+   underscores ('_') in variable names or \code{FALSE} to replace underscores
+   ('_') with dots ('.'). The default is \code{TRUE}. When migrating old
+   projects, \code{underscore_variables} is set to \code{FALSE}. \cr
  \code{cache_file_format} \tab The default file format for cached data is
- 'RData'. This can be set to 'qs' in order to benefit from the quick
- serialization of R objects provided by \pkg{qs}.
+   'RData'. This can be set to 'qs' in order to benefit from the quick
+   serialization of R objects provided by \pkg{qs}.
 }
 
    If the \code{config/globals.dcf} is missing some items (for example because it was created under an
