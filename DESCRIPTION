@@ -2,7 +2,7 @@ Package: ProjectTemplate
 Type: Package
 Title: Automates the Creation of New Statistical Analysis Projects
 Version: 0.10.0
-Date: 2020-12-03
+Date: 2021-01-08
 Authors@R: c( person("Aleksandar", "Blagotic", role = "ctb"),
     person("Diego", "Valle-Jones", role = "ctb"),
     person("Jeffrey", "Breen", role = "ctb"),
@@ -112,4 +112,4 @@ Collate:
     'xls.reader.R'
     'xlsx.reader.R'
     'xport.reader.R'
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1

@@ -1,3 +1,13 @@
+0.10.0 (2021-01-08)
+
+Features
+--------
+* Support qs cache format in addition to rdata (#304)
+
+Documentation
+-------------
+* Added documentation for `underscore_variables` in `project.config.R` (#306)
+
 0.9.3 (2020-12-03)
 
 Internal
