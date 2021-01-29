@@ -339,14 +339,18 @@ load.project <- function(...)
 #' @rdname internal.munge.data
 .munge.data <- function(config, my.project.info) {
   message('Munging data')
-  for (preprocessing.script in sort(dir('munge', pattern = '[.][rR]$')))
+  if("munge_sub_dir" %in% names(config$.override.config)){
+    dir_name= file.path("munge",config$.override.config[["munge_sub_dir"]])
+  } else {
+    dir_name='munge'
+  }
+  for (preprocessing.script in sort(dir(dir_name, pattern = '[.][rR]$')))
   {
     message(' Running preprocessing script: ', preprocessing.script)
-    source(file.path('munge', preprocessing.script), local = .TargetEnv)
+    source(file.path(dir_name, preprocessing.script), local = .TargetEnv)
   }
   return(my.project.info)
 }
-
 
 # Auxiliary functions for loading/unloading projects -------------------------
 
