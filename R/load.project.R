@@ -128,7 +128,11 @@ load.project <- function(...)
   logger <- log4r::create.logger()
   .provide.directory('logs')
 
-  log4r::logfile(logger) <- file.path('logs', 'project.log')
+  if("logs_sub_dir" %in% names(config$.override.config)){
+    log4r::logfile(logger) <- file.path('logs',config$.override.config$logs_sub_dir, 'project.log')
+  } else {
+    log4r::logfile(logger) <- file.path('logs', 'project.log')
+  }
   log4r::level(logger) <- config$logging_level
   assign('logger', logger, envir = .TargetEnv)
   return(my.project.info)
@@ -364,6 +368,14 @@ load.project <- function(...)
     warning("Creating missing directory ", name)
     dir.create(name)
   }
+  if("logs_sub_dir" %in% names(config$.override.config)){
+    is.dir <- file.info(file.path(name,config$.override.config$logs_sub_dir))$isdir
+    if (is.na(is.dir) || !is.dir) {
+      warning("Creating missing directory ", name)
+      dir.create(file.path(name,config$.override.config$logs_sub_dir))
+    }
+  }
+
 }
 
 
