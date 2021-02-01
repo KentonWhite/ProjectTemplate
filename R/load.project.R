@@ -351,12 +351,8 @@ load.project <- function(...)
     } else{
       munge.files <- '[.][rR]$'
     }
-
-    munge.files
-
     return(munge.files)
   }
-
 
   for (preprocessing.script in sort(dir(dir_name, pattern = munge_files())))
   {
