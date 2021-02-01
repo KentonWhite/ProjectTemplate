@@ -340,11 +340,25 @@ load.project <- function(...)
 .munge.data <- function(config, my.project.info) {
   message('Munging data')
   if("munge_sub_dir" %in% names(config$.override.config)){
-    dir_name= file.path("munge",config$.override.config[["munge_sub_dir"]])
+    dir_name <- file.path("munge",config$.override.config[["munge_sub_dir"]])
   } else {
-    dir_name='munge'
+    dir_name <-'munge'
   }
-  for (preprocessing.script in sort(dir(dir_name, pattern = '[.][rR]$')))
+
+  munge_files <- function(dir_name){
+    if("munge_files" %in% names(config$.override.config)){
+      munge.files <- paste0(config$.override.config[["munge_files"]], collapse="|")
+    } else{
+      munge.files <- '[.][rR]$'
+    }
+
+    munge.files
+
+    return(munge.files)
+  }
+
+
+  for (preprocessing.script in sort(dir(dir_name, pattern = munge_files())))
   {
     message(' Running preprocessing script: ', preprocessing.script)
     source(file.path(dir_name, preprocessing.script), local = .TargetEnv)
