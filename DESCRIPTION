@@ -1,8 +1,8 @@
 Package: ProjectTemplate
 Type: Package
 Title: Automates the Creation of New Statistical Analysis Projects
-Version: 0.10.0
-Date: 2021-01-08
+Version: 0.10.1
+Date: 2021-02-08
 Authors@R: c( person("Aleksandar", "Blagotic", role = "ctb"),
     person("Diego", "Valle-Jones", role = "ctb"),
     person("Jeffrey", "Breen", role = "ctb"),
@@ -15,7 +15,8 @@ Authors@R: c( person("Aleksandar", "Blagotic", role = "ctb"),
     person("Noah", "Lorang", role = "ctb"),
     person("Patrick", "Schalk", role = "ctb"),
     person("Dominik", "Schneider", role="ctb"),
-    person("Gerold", "Hepp", role="ctb"))
+    person("Gerold", "Hepp", role="ctb"),
+    person("Zunaira", "Jamile", role="ctb"))
 Description: Provides functions to
     automatically build a directory structure for a new R
     project. Using this structure, 'ProjectTemplate'

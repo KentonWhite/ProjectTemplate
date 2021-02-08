@@ -1,3 +1,11 @@
+0.10.1 (2021-02-08)
+
+Features
+--------
+* Support for multiple loggin directores
+* Support for multiple munge directories
+* Support for list of munge files
+
 0.10.0 (2021-01-08)
 
 Features
