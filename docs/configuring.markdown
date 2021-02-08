@@ -66,3 +66,21 @@ This only works for calls to `add.config` with the parameter `apply.override` se
 to `TRUE`, for the moment this parameter defaults to `FALSE`. The `globals.R` file
 in the standard `full` template therefore includes two calls to `add.config` with
 an explanation which section could be overridden.
+
+
+###Additional parameters
+* `munge_files`: passing munge_files to load_project allows you to run a givien list of munge files in the munge directory
+
+    > load.project(munge_files=c("01-preprocess.R", "03-output.R"))
+
+* `logs_sub_dir`: logs_sub_dir can be set to maintain multiple log files for every run of the project. this will create a  subdirectory under logs directory. the logs will then be written to logs/<subdirectory_name>/project.log
+
+    > load.project(logs_sub_dir= "08-02-2021")
+
+* `munge_sub_dir`: munge_sub_dir can be set to run files from a subdirectory under munge. e.g. munge folder contains directories for multiple experiments, munge/experiment1 , munge/experiment2 , then set munge_sub_dir="experiment1" to run only those files in munge/experiment1
+
+    > load.project(munge_sub_dir = "experiment1")
+
+Running the command below will run files from munge/experiment1 and write logs to logs/experiment1/project.log
+
+    > load.project(munge_sub_dir="experiment1", logs_sub_dir="experiment1")
