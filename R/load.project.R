@@ -128,7 +128,11 @@ load.project <- function(...)
   logger <- log4r::create.logger()
   .provide.directory('logs')
 
-  log4r::logfile(logger) <- file.path('logs', 'project.log')
+  if("logs_sub_dir" %in% names(config$.override.config)){
+    log4r::logfile(logger) <- file.path('logs',config$.override.config$logs_sub_dir, 'project.log')
+  } else {
+    log4r::logfile(logger) <- file.path('logs', 'project.log')
+  }
   log4r::level(logger) <- config$logging_level
   assign('logger', logger, envir = .TargetEnv)
   return(my.project.info)
@@ -335,14 +339,28 @@ load.project <- function(...)
 #' @rdname internal.munge.data
 .munge.data <- function(config, my.project.info) {
   message('Munging data')
-  for (preprocessing.script in sort(dir('munge', pattern = '[.][rR]$')))
+  if("munge_sub_dir" %in% names(config$.override.config)){
+    dir_name <- file.path("munge",config$.override.config[["munge_sub_dir"]])
+  } else {
+    dir_name <-'munge'
+  }
+
+  munge_files <- function(dir_name){
+    if("munge_files" %in% names(config$.override.config)){
+      munge.files <- paste0(config$.override.config[["munge_files"]], collapse="|")
+    } else{
+      munge.files <- '[.][rR]$'
+    }
+    return(munge.files)
+  }
+
+  for (preprocessing.script in sort(dir(dir_name, pattern = munge_files())))
   {
     message(' Running preprocessing script: ', preprocessing.script)
-    source(file.path('munge', preprocessing.script), local = .TargetEnv)
+    source(file.path(dir_name, preprocessing.script), local = .TargetEnv)
   }
   return(my.project.info)
 }
-
 
 # Auxiliary functions for loading/unloading projects -------------------------
 
@@ -364,6 +382,14 @@ load.project <- function(...)
     warning("Creating missing directory ", name)
     dir.create(name)
   }
+  if("logs_sub_dir" %in% names(config$.override.config)){
+    is.dir <- file.info(file.path(name,config$.override.config$logs_sub_dir))$isdir
+    if (is.na(is.dir) || !is.dir) {
+      warning("Creating missing directory ", name)
+      dir.create(file.path(name,config$.override.config$logs_sub_dir))
+    }
+  }
+
 }
 
 

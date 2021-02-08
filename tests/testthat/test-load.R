@@ -279,3 +279,96 @@ test_that('data is loaded as data_table', {
         # and check that the loaded data from the cache is what we saved
         expect_equal(test, test_data)
 })
+
+test_that('logs are written to a logs subdirectory',{
+  test_project <- tempfile('test_project')
+  suppressMessages(create.project(test_project))
+  on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
+
+  oldwd <- setwd(test_project)
+  on.exit(setwd(oldwd), add = TRUE)
+
+  config <- .new.config
+  config$logging <- TRUE
+  write.dcf(config, 'config/global.dcf')
+
+  # Create some R code and put in data directory
+  CODE <- paste0(deparse(substitute({
+    require.package('log4r')
+    info(logger,"this is a test file")
+  })), collapse ="\n")
+
+  # save R code in the munge directory
+  writeLines(CODE, "munge/test.R")
+
+  #load the project and R code
+  suppressMessages(load.project(logs_sub_dir="test_logs"))
+
+  expect_false(file.exists(file.path("logs","project.log")))
+  expect_true(file.exists(file.path("logs","test_logs","project.log")))
+
+})
+
+
+test_that('read from munge subdirectory',{
+  test_project <- tempfile('test_project')
+  suppressMessages(create.project(test_project))
+  on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
+
+  oldwd <- setwd(test_project)
+  on.exit(setwd(oldwd), add = TRUE)
+
+  # Create some R code and put in munge subdirectory directory
+  CODE <- paste0(deparse(substitute({
+    test_data <- tibble::as_tibble(data.frame(Names=c("a", "b", "c"), Ages=c(20,30,40)))
+  })), collapse ="\n")
+
+  dir.create(file.path("munge","test_munge"))
+  writeLines(CODE, file.path("munge","test_munge","02-test_data.R")  )
+
+  #load the project and R code
+  suppressMessages(load.project(munge_sub_dir="test_munge"))
+
+  expect_true(exists("test_data"))
+
+})
+
+test_that('pass munge files to run',{
+  test_project <- tempfile('test_project')
+  suppressMessages(create.project(test_project))
+  on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
+
+  oldwd <- setwd(test_project)
+  on.exit(setwd(oldwd), add = TRUE)
+
+  # Create some R code and put in munge subdirectory directory
+  CODE <- paste0(deparse(substitute({
+    test_data_1 <- tibble::as_tibble(data.frame(Names=c("a", "b", "c"), Ages=c(20,30,40)))
+  })), collapse ="\n")
+
+  writeLines(CODE, file.path("munge","01-test_data.R"))
+
+  CODE <- paste0(deparse(substitute({
+    test_data_2 <- tibble::as_tibble(data.frame(Names=c("d", "e", "f"), Ages=c(50,60,70)))
+  })), collapse ="\n")
+
+  writeLines(CODE, file.path("munge","02-test_data.R"))
+
+  CODE <- paste0(deparse(substitute({
+    test_data_3 <- tibble::as_tibble(data.frame(Names=c("d", "e", "f"), Ages=c(50,60,70)))
+  })), collapse ="\n")
+
+  writeLines(CODE, file.path("munge","03-test_data.R"))
+
+  #load the project and R code
+  suppressMessages(load.project(munge_files=c("02-test_data.R")))
+
+  expect_false(exists("test_data_1"))
+  expect_true(exists("test_data_2"))
+  expect_false(exists("test_data_3"))
+
+  suppressMessages(load.project(munge_files=c("03-test_data.R" ,"02-test_data.R")))
+  expect_false(exists("test_data_1"))
+  expect_true(exists("test_data_2"))
+  expect_true(exists("test_data_3"))
+})
