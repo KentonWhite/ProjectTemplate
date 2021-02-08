@@ -291,6 +291,7 @@ test_that('logs are written to a logs subdirectory',{
   config <- .new.config
   config$logging <- TRUE
   write.dcf(config, 'config/global.dcf')
+  dir.create("logs/test_logs") # Don't want to trigger warning - causes problems with CRAN
 
   # Create some R code and put in data directory
   CODE <- paste0(deparse(substitute({

@@ -385,7 +385,7 @@ load.project <- function(...)
   if("logs_sub_dir" %in% names(config$.override.config)){
     is.dir <- file.info(file.path(name,config$.override.config$logs_sub_dir))$isdir
     if (is.na(is.dir) || !is.dir) {
-      warning("Creating missing directory ", name)
+      warning("Creating missing directory ", config$.override.config$logs_sub_dir)
       dir.create(file.path(name,config$.override.config$logs_sub_dir))
     }
   }
