@@ -6,6 +6,26 @@ qsCacheFileFormat <- function() {
   .save.config(config)
 }
 
+test_that("cached variable names are assessed correctly", {
+  test_project <- tempfile("test_project")
+  suppressMessages(create.project(test_project))
+  on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
+  oldwd <- setwd(test_project)
+  on.exit(setwd(oldwd), add = TRUE)
+
+  qsCacheFileFormat()
+
+  var_to_cache <- "cache.qs"
+  cache(var_to_cache, iris[1:3, ])
+
+  expect_identical(
+    .cached.variables(),
+    var_to_cache
+  )
+
+  tidy_up()
+})
+
 #### from test-cache.R ####
 test_that('re-caching is skipped when a cached variable hasnt changed', {
   test_project <- tempfile('test_project')
