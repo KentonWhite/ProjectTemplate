@@ -1,5 +1,7 @@
 context("qs cache file format")
 
+skip_if_not_installed("qs")
+
 qsCacheFileFormat <- function() {
   config <- .read.config()
   config$cache_file_format <- "qs"
