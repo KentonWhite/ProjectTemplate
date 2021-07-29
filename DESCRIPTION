@@ -28,13 +28,13 @@ LazyLoad: yes
 Roxygen: list(wrap = FALSE)
 Encoding: UTF-8
 Depends:
-    R (>= 2.7)
+    R (>= 2.7),
+    digest
 Suggests:
     foreign,
     feather,
     reshape,
     plyr,
-    digest,
     formatR,
     qs,
     stringr,
