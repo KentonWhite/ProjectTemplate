@@ -281,6 +281,8 @@ test_that('data is loaded as data_table', {
 })
 
 test_that('logs are written to a logs subdirectory',{
+  skip_if_not_installed("log4r")
+  
   test_project <- tempfile('test_project')
   suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
