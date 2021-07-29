@@ -1168,6 +1168,8 @@ test_that('Example 44: Single Object Serialization Support with .rds Extension',
 })
 
 test_that('Example 45: Feather support with .feather extension', {
+  skip_if_not_installed("feather")
+  
   test_project <- tempfile('test_project')
   suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
