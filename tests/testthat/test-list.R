@@ -453,6 +453,8 @@ test_that('cached data is listed correctly as already cached', {
 })
 
 test_that('cached data created during munging listed as cached only', {
+  skip_if_not_installed("formatR")
+  
   # Create temporary project
   test_project <- tempfile('test_project')
   suppressMessages(create.project(test_project))

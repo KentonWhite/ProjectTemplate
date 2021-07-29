@@ -16,7 +16,10 @@ test_that("cached variable names are assessed correctly", {
   qsCacheFileFormat()
 
   var_to_cache <- "cache.qs"
-  cache(var_to_cache, iris[1:3, ])
+  test_data <- data.frame(Names=c("a", "b", "c"), Ages=c(20,30,40))
+  assign(var_to_cache, test_data, envir = .TargetEnv)
+
+  cache(var_to_cache)
 
   expect_identical(
     .cached.variables(),
@@ -152,6 +155,7 @@ test_that('re-caching fails with correct message if cached variable is not in gl
 })
 
 test_that('re-caching a variable created from CODE only happens if code changes, not comments or white space', {
+  skip_if_not_installed("formatR")
   test_project <- tempfile('test_project')
   suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
