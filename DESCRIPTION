@@ -29,7 +29,8 @@ Roxygen: list(wrap = FALSE)
 Encoding: UTF-8
 Depends:
     R (>= 2.7),
-    digest
+    digest,
+    tibble
 Suggests:
     foreign,
     feather,
@@ -55,7 +56,6 @@ Suggests:
     RPostgreSQL,
     GetoptLong,
     whisker,
-    tibble,
     testthat (>= 0.8)
 URL: http://projecttemplate.net
 BugReports: https://github.com/KentonWhite/ProjectTemplate/issues
