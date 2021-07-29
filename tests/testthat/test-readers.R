@@ -649,6 +649,8 @@ test_that('Example 25: R File with .r Extension', {
 
 
 test_that('Example 26: Excel 2007 File with .xls Extension', {
+  skip_if_not_installed("readxl")
+  
   test_project <- tempfile('test_project')
   suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
@@ -919,6 +921,8 @@ test_that('Example 33: Arbitary File Support with .file File Pointing to .db Fil
 
 
 test_that('Example 35: PPM Support with .ppm Extension', {
+  skip_if_not_installed("pixmap")
+  
   test_project <- tempfile('test_project')
   suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
