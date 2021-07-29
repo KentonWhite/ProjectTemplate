@@ -649,6 +649,8 @@ test_that('Example 25: R File with .r Extension', {
 
 
 test_that('Example 26: Excel 2007 File with .xls Extension', {
+  skip_if_not_installed("readxl")
+  
   test_project <- tempfile('test_project')
   suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
@@ -700,6 +702,8 @@ test_that('Example 26: Excel 2007 File with .xls Extension', {
 
 
 test_that('Example 28: SQLite3 Support with .sql Extension with table = "..."', {
+  skip_if_not_installed("RSQLite")
+
   test_project <- tempfile('test_project')
   suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
@@ -733,6 +737,8 @@ test_that('Example 28: SQLite3 Support with .sql Extension with table = "..."', 
 
 
 test_that('Example 29: SQLite3 Support with .sql Extension with query = "SELECT * FROM ..."', {
+  skip_if_not_installed("RSQLite")
+
   test_project <- tempfile('test_project')
   suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
@@ -766,6 +772,8 @@ test_that('Example 29: SQLite3 Support with .sql Extension with query = "SELECT 
 
 
 test_that('Example 30: SQLite3 Support with .sql Extension and table = "*"', {
+  skip_if_not_installed("RSQLite")
+  
   test_project <- tempfile('test_project')
   suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
@@ -808,6 +816,8 @@ test_that('Example 30: SQLite3 Support with .sql Extension and table = "*"', {
 
 
 test_that('Example 31: SQLite3 Support with .db Extension', {
+  skip_if_not_installed("RSQLite")
+
   test_project <- tempfile('test_project')
   suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
@@ -842,6 +852,9 @@ test_that('Example 31: SQLite3 Support with .db Extension', {
 
 
 test_that('Example 32: Weka Support with .arff Extension', {
+
+  skip_if_not_installed("foreign")
+  
   test_project <- tempfile('test_project')
   suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
@@ -869,6 +882,8 @@ test_that('Example 32: Weka Support with .arff Extension', {
 
 
 test_that('Example 33: Arbitary File Support with .file File Pointing to .db File', {
+  skip_if_not_installed("RSQLite")
+
   test_project <- tempfile('test_project')
   suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
@@ -906,6 +921,8 @@ test_that('Example 33: Arbitary File Support with .file File Pointing to .db Fil
 
 
 test_that('Example 35: PPM Support with .ppm Extension', {
+  skip_if_not_installed("pixmap")
+  
   test_project <- tempfile('test_project')
   suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
@@ -932,6 +949,8 @@ test_that('Example 35: PPM Support with .ppm Extension', {
 
 
 test_that('Example 36: dBase Support with .dbf Extension', {
+
+  skip_if_not_installed("foreign")
   test_project <- tempfile('test_project')
   suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
@@ -959,6 +978,8 @@ test_that('Example 36: dBase Support with .dbf Extension', {
 
 
 test_that('Example 37: SPSS Support with .sav Extension', {
+  skip_if_not_installed("foreign")
+
   test_project <- tempfile('test_project')
   suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
@@ -986,6 +1007,9 @@ test_that('Example 37: SPSS Support with .sav Extension', {
 
 
 test_that('Example 38: SPSS Support with .sav Extension / Alternative Generation', {
+
+  skip_if_not_installed("foreign")
+  
   test_project <- tempfile('test_project')
   suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
@@ -1013,6 +1037,8 @@ test_that('Example 38: SPSS Support with .sav Extension / Alternative Generation
 
 
 test_that('Example 39: Stata Support with .dta Extension', {
+  skip_if_not_installed("foreign")
+
   test_project <- tempfile('test_project')
   suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
@@ -1040,6 +1066,8 @@ test_that('Example 39: Stata Support with .dta Extension', {
 
 
 test_that('Example 40: Stata Support with .dta Extension / Alternative Generation', {
+  skip_if_not_installed("foreign")
+
   test_project <- tempfile('test_project')
   suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
@@ -1067,6 +1095,8 @@ test_that('Example 40: Stata Support with .dta Extension / Alternative Generatio
 
 
 test_that('Example 41: SAS Support with .xport Extension', {
+  skip_if_not_installed("foreign")
+
   test_project <- tempfile('test_project')
   suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
@@ -1094,6 +1124,8 @@ test_that('Example 41: SAS Support with .xport Extension', {
 
 
 test_that('Example 42: SAS Support with .xpt Extension', {
+  skip_if_not_installed("foreign")
+
   test_project <- tempfile('test_project')
   suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
@@ -1150,6 +1182,8 @@ test_that('Example 44: Single Object Serialization Support with .rds Extension',
 })
 
 test_that('Example 45: Feather support with .feather extension', {
+  skip_if_not_installed("feather")
+  
   test_project <- tempfile('test_project')
   suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)

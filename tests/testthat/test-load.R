@@ -254,33 +254,37 @@ test_that('data is loaded as data_frame', {
 })
 
 test_that('data is loaded as data_table', {
-        test_project <- tempfile('test_project')
-        suppressMessages(create.project(test_project))
-        on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
+  skip_if_not_installed("data.table")
+  
+  test_project <- tempfile('test_project')
+  suppressMessages(create.project(test_project))
+  on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
+  
+  oldwd <- setwd(test_project)
+  on.exit(setwd(oldwd), add = TRUE)
 
-        oldwd <- setwd(test_project)
-        on.exit(setwd(oldwd), add = TRUE)
+  # clear the global environment
+  rm(list=ls(envir = .TargetEnv), envir = .TargetEnv)
 
-        # clear the global environment
-        rm(list=ls(envir = .TargetEnv), envir = .TargetEnv)
+  require('data.table')
+  test_data <- data.table::data.table(data.frame(Names=c("a", "b", "c"), Ages=c(20,30,40)))
 
-        require('data.table')
-        test_data <- data.table::data.table(data.frame(Names=c("a", "b", "c"), Ages=c(20,30,40)))
+  # save test data as a csv in the data directory
+  write.csv(test_data, file="data/test.csv", row.names = FALSE)
 
-        # save test data as a csv in the data directory
-        write.csv(test_data, file="data/test.csv", row.names = FALSE)
+  config <- .new.config
+  config$tables_type <- "data_table"
+  write.dcf(config, 'config/global.dcf')
 
-        config <- .new.config
-        config$tables_type <- "data_table"
-        write.dcf(config, 'config/global.dcf')
+  suppressMessages(load.project())
 
-        suppressMessages(load.project())
-
-        # and check that the loaded data from the cache is what we saved
-        expect_equal(test, test_data)
+  # and check that the loaded data from the cache is what we saved
+  expect_equal(test, test_data)
 })
 
 test_that('logs are written to a logs subdirectory',{
+  skip_if_not_installed("log4r")
+  
   test_project <- tempfile('test_project')
   suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
