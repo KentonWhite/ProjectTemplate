@@ -700,6 +700,8 @@ test_that('Example 26: Excel 2007 File with .xls Extension', {
 
 
 test_that('Example 28: SQLite3 Support with .sql Extension with table = "..."', {
+  skip_if_not_installed("RSQLite")
+
   test_project <- tempfile('test_project')
   suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
@@ -733,6 +735,8 @@ test_that('Example 28: SQLite3 Support with .sql Extension with table = "..."', 
 
 
 test_that('Example 29: SQLite3 Support with .sql Extension with query = "SELECT * FROM ..."', {
+  skip_if_not_installed("RSQLite")
+
   test_project <- tempfile('test_project')
   suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
@@ -766,6 +770,8 @@ test_that('Example 29: SQLite3 Support with .sql Extension with query = "SELECT 
 
 
 test_that('Example 30: SQLite3 Support with .sql Extension and table = "*"', {
+  skip_if_not_installed("RSQLite")
+  
   test_project <- tempfile('test_project')
   suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
@@ -808,6 +814,8 @@ test_that('Example 30: SQLite3 Support with .sql Extension and table = "*"', {
 
 
 test_that('Example 31: SQLite3 Support with .db Extension', {
+  skip_if_not_installed("RSQLite")
+
   test_project <- tempfile('test_project')
   suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
@@ -872,6 +880,8 @@ test_that('Example 32: Weka Support with .arff Extension', {
 
 
 test_that('Example 33: Arbitary File Support with .file File Pointing to .db File', {
+  skip_if_not_installed("RSQLite")
+
   test_project <- tempfile('test_project')
   suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
