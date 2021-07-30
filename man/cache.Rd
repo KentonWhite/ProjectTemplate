@@ -12,7 +12,7 @@ be saved.  If the CODE parameter is defined, it is evaluated and saved, otherwis
 the variable with that name in the global environment is used.}
 
 \item{CODE}{A sequence of R statements enclosed in \code{\{..\}} which produce the object to be
-cached.}
+cached.  Requires suggested package formatR}
 
 \item{depends}{A character vector of other global environment objects that the CODE
 depends upon. Caching will be forced if those objects have changed since last caching}

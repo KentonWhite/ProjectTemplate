@@ -1,3 +1,16 @@
+0.10.2 (2021-07-30)
+
+Internal
+--------
+* Fix pattern not intended for file extensions like qs.hash
+* Skip tests using suggested packages that are not installed
+
+Features
+--------
+* Support for multiple loggin directores
+* Support for multiple munge directories
+* Support for list of munge files
+
 0.10.1 (2021-02-08)
 
 Features
