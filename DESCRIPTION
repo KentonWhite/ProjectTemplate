@@ -75,6 +75,7 @@ Collate:
     'translate.dcf.R'
     'config.R'
     'create.project.R'
+    'create.project.rstudio.R'
     'create.template.R'
     'csv.reader.R'
     'csv2.reader.R'

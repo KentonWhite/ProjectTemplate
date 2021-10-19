@@ -1,0 +1,21 @@
+Binding: create_project_rstudio
+Title: ProjectTemplate project
+OpenFiles: src/eda.R
+
+Parameter: template
+Widget: TextInput
+Label: Template name
+Default: full
+Position: left
+
+Parameter: dump
+Widget: CheckboxInput
+Label: Dump ProjectTemplate files
+Default: Off
+Position: left
+
+Parameter: merge
+Widget: CheckboxInput
+Label: Allow non-conflicting files in directory
+Default: Off
+Position: left
