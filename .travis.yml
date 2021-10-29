@@ -8,7 +8,6 @@ addons:
     packages:
       - unixodbc-dev
       - r-cran-rodbc
-r_github_packages:
-  - johnmyleswhite/log4r
+      - log4r
 before_install:
   - sudo $(which R) CMD javareconf
