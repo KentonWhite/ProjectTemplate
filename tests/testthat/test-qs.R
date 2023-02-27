@@ -279,8 +279,7 @@ test_that('auto loaded data is not cached when cached_loaded_data is FALSE', {
   suppressMessages(load.project())
 
   # check that the the test variable has not been cached
-  expect_error(suppressWarnings(qs::qload("cache/test.qs", env = environment())),
-               "Failed to open cache/test.qs. Check file path.")
+  expect_error(suppressWarnings(qs::qload("cache/test.qs", env = environment())))
 })
 
 test_that('auto loaded data from an R script is cached correctly', {
@@ -317,10 +316,8 @@ test_that('auto loaded data from an R script is cached correctly', {
   expect_error(qs::qload("cache/test_data22.qs", env = environment()), NA)
 
   # check that the other test variables have not been cached
-  expect_error(suppressWarnings(qs::qload("cache/test_data11.qs", env = environment())),
-               "Failed to open cache/test_data11.qs. Check file path.")
-  expect_error(suppressWarnings(qs::qload("cache/test_data21.qs", env = environment())),
-               "Failed to open cache/test_data21.qs. Check file path.")
+  expect_error(suppressWarnings(qs::qload("cache/test_data11.qs", env = environment())))
+  expect_error(suppressWarnings(qs::qload("cache/test_data21.qs", env = environment())))
 })
 
 #### from test-migration.R ####
@@ -352,8 +349,7 @@ test_that('projects without the cached_loaded_data config have their migrated co
   # because the default should be FALSE if the cache_loaded_data is missing before migrate.project
   # is called
   expect_warning(suppressMessages(load.project()), "missing the following entries: cache_loaded_data")
-  expect_error(suppressWarnings(qs::qload("cache/test.qs", env = environment())),
-               "Failed to open cache/test.qs. Check file path.")
+  expect_error(suppressWarnings(qs::qload("cache/test.qs", env = environment())))
 
   # Migrate the project
   expect_message(migrate.project(), "new config item called cache_loaded_data")
@@ -366,6 +362,5 @@ test_that('projects without the cached_loaded_data config have their migrated co
   expect_warning(suppressMessages(load.project()), NA)
 
   # check that the the test variable has not been cached
-  expect_error(suppressWarnings(qs::qload("cache/test.qs", env = environment())),
-               "Failed to open cache/test.qs. Check file path.")
+  expect_error(suppressWarnings(qs::qload("cache/test.qs", env = environment())))
 })

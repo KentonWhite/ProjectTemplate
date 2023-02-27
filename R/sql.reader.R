@@ -339,7 +339,7 @@ sql.reader <- function(data.file, filename, variable.name)
     data.parcel <- try(DBI::dbGetQuery(connection, query))
     suppressWarnings(err <- DBI::dbGetException(connection))
 
-    if (class(data.parcel) == 'data.frame' && (length(err) == 0 || err$errorNum == 0))
+    if (is(data.parcel, 'data.frame') && (length(err) == 0 || err$errorNum == 0))
     {
       assign(variable.name,
              data.parcel,

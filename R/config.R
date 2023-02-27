@@ -149,7 +149,7 @@
   }
   if ('override.config' %in% names(args)) {
     args <- args[['override.config']]
-  } else if (length(args) == 1 && class(args[[1]]) == 'list' && is.null(names(args))) {
+  } else if (length(args) == 1 && is(args[[1]], 'list') && is.null(names(args))) {
     args <- args[[1]]
   } else if (is.null(names(args)) || any(names(args) == "")) {
     stop('All options should be named')

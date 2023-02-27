@@ -1,3 +1,11 @@
+0.10.3 (2023-02-27)
+
+Internal
+--------
+
+* Fix change in error messages from package qs
+* Fixed if() conditions comparing class() to string Note
+
 0.10.2 (2021-07-30)
 
 Internal
