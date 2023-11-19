@@ -1,3 +1,10 @@
+0.10.4 (2023-11-19)
+
+Internal
+--------
+
+* Added documentation sentinel file ProjectTemplate-package 
+
 0.10.3 (2023-02-27)
 
 Internal
@@ -11,7 +18,7 @@ Internal
 Internal
 --------
 * Fix pattern not intended for file extensions like qs.hash
-* Skip tests using suggested packages that are not installed
+* Skip tests using suggested packages that are not installed\
 
 Features
 --------

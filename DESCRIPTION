@@ -1,8 +1,8 @@
 Package: ProjectTemplate
 Type: Package
 Title: Automates the Creation of New Statistical Analysis Projects
-Version: 0.10.3
-Date: 2023-02-27
+Version: 0.10.4
+Date: 2023-11-19
 Authors@R: c( person("Aleksandar", "Blagotic", role = "ctb"),
     person("Diego", "Valle-Jones", role = "ctb"),
     person("Jeffrey", "Breen", role = "ctb"),
@@ -30,7 +30,8 @@ Encoding: UTF-8
 Depends:
     R (>= 2.7),
     digest,
-    tibble,
+    tibble
+Imports:
     methods
 Suggests:
     foreign,
@@ -61,6 +62,7 @@ Suggests:
 URL: http://projecttemplate.net
 BugReports: https://github.com/KentonWhite/ProjectTemplate/issues
 Collate: 
+    'ProjectTemplate-package.R'
     'add.config.R'
     'preinstalled.readers.R'
     'add.extension.R'
@@ -85,7 +87,6 @@ Collate:
     'epiinfo.reader.R'
     'feather.reader.R'
     'file.reader.R'
-    'help.R'
     'list.data.R'
     'load.project.R'
     'migrate.project.R'
@@ -115,4 +116,4 @@ Collate:
     'xls.reader.R'
     'xlsx.reader.R'
     'xport.reader.R'
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.3
