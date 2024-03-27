@@ -16,7 +16,7 @@
 #'   unnamed an error is raised.
 #'
 #' @export
-#' 
+#'
 #' @import digest tibble
 #'
 #' @seealso \code{\link{create.project}}, \code{\link{get.project}},
@@ -351,7 +351,7 @@ load.project <- function(...)
     if("munge_files" %in% names(config$.override.config)){
       munge.files <- paste0(config$.override.config[["munge_files"]], collapse="|")
     } else{
-      munge.files <- '[.][rR]$'
+      munge.files <- '[.][rR]|[.][pP][yY]$' # Add .py files
     }
     return(munge.files)
   }
