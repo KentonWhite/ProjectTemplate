@@ -341,6 +341,8 @@ load.project <- function(...)
 #' @rdname internal.munge.data
 .munge.data <- function(config, my.project.info) {
   message('Munging data')
+  .require.package("reticulate") # Load the reticulate package
+
   if("munge_sub_dir" %in% names(config$.override.config)){
     dir_name <- file.path("munge",config$.override.config[["munge_sub_dir"]])
   } else {
@@ -351,7 +353,7 @@ load.project <- function(...)
     if("munge_files" %in% names(config$.override.config)){
       munge.files <- paste0(config$.override.config[["munge_files"]], collapse="|")
     } else{
-      munge.files <- '[.][rR]|[.][pP][yY]$' # Add .py files
+      munge.files <- '[.][rR]| [.][pP][yY]$' # Add .py files
     }
     return(munge.files)
   }
@@ -359,7 +361,15 @@ load.project <- function(...)
   for (preprocessing.script in sort(dir(dir_name, pattern = munge_files())))
   {
     message(' Running preprocessing script: ', preprocessing.script)
+
+  # Check for Python extension using tolower() for case-insensitivity
+  if (tolower(tools::file_ext(preprocessing.script)) == "py") {
+    message(' Sourcing Python script: ', preprocessing.script)
+    reticulate::source_python(file.path(dir_name, preprocessing.script))
+  } else {
+    message(' Sourcing R script: ', preprocessing.script)
     source(file.path(dir_name, preprocessing.script), local = .TargetEnv)
+    }
   }
   return(my.project.info)
 }
