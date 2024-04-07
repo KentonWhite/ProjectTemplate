@@ -348,7 +348,6 @@ load.project <- function(...)
   }
 
   munge_files <- function(dir_name){
-    browser()
     if("munge_files" %in% names(config$.override.config)){
       munge.files <- paste0(config$.override.config[["munge_files"]], collapse="|")
     } else{
@@ -356,10 +355,8 @@ load.project <- function(...)
     }
     return(munge.files)
   }
-  browser()
   for (preprocessing.script in sort(dir(dir_name, pattern = munge_files())))
   {
-    browser()
     message(' Running preprocessing script: ', preprocessing.script)
     # Check for Python extension using tolower() for case-insensitivity
     if (tolower(tools::file_ext(preprocessing.script)) == "py") {
