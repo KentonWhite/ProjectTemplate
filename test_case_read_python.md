@@ -46,7 +46,7 @@
 
 **4. Expected Results:**
 
-* All alphanumerically interspersed Python and R scripts should be loaded successfully without errors.
+* All interspersed Python and R scripts should be alphanumerically loaded successfully without errors.
 * The Python script (`01-test_data.py`) should capture the expected result from the Python calculation and the `expect_true`, `file.exists` assertion should pass.
 * The Python script (`02-test_data.py`) should capture the expected result from the Python environment and the `expect_true`, `file.exists` assertion should pass.
 * The R script (`01-test_data.R`) should capture the expected result from the R calculation and the `expect_true`, `file.exists` assertion should pass.
