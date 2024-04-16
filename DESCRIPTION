@@ -58,7 +58,8 @@ Suggests:
     RPostgreSQL,
     GetoptLong,
     whisker,
-    testthat (>= 0.8)
+    testthat (>= 3.0.0),
+    reticulate
 URL: http://projecttemplate.net
 BugReports: https://github.com/KentonWhite/ProjectTemplate/issues
 Collate: 
@@ -117,3 +118,4 @@ Collate:
     'xlsx.reader.R'
     'xport.reader.R'
 RoxygenNote: 7.2.3
+Config/testthat/edition: 3
