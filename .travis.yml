@@ -8,8 +8,12 @@ addons:
     packages:
       - unixodbc-dev
       - r-cran-rodbc
+      - g++-7
 before_install:
   - sudo $(which R) CMD javareconf
+  - mkdir -p ~/.R
+  - echo 'CXX17 = g++-7 -std=gnu++17 -fPIC' > ~/.R/Makevars
+
 env:
   global:
     - _R_CHECK_FORCE_SUGGESTS_: false
