@@ -9,6 +9,7 @@ addons:
       - unixodbc-dev
       - r-cran-rodbc
       - g++-7
+      - python-pandas
 before_install:
   - sudo $(which R) CMD javareconf
   - mkdir -p ~/.R
