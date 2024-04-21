@@ -11,7 +11,6 @@ addons:
 #       - g++-7
 #       - python-pandas
 before_install:
-  - sudo apt install python-is-python3
   - pip install pandas
 #   - sudo $(which R) CMD javareconf
 #   - mkdir -p ~/.R
@@ -20,6 +19,7 @@ before_install:
 env:
   global:
     - _R_CHECK_FORCE_SUGGESTS_: false
+    - RETICULATE_PYTHON: /usr/bin/python3
 
 r_binary_packages:
   - reticulate
