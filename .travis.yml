@@ -13,6 +13,7 @@ addons:
 #       - python-pandas
 before_install:
   - pip3 install pandas
+  - sudo $(which R) CMD javareconf
 #   - sudo $(which R) CMD javareconf
 #   - mkdir -p ~/.R
 #   - echo 'CXX17 = g++-7 -std=gnu++17 -fPIC' > ~/.R/Makevars
@@ -24,4 +25,5 @@ env:
 
 r_binary_packages:
   - reticulate
-  - rcppparallel 
+  - rcppparallel
+  - tibble
