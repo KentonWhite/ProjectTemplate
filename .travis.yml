@@ -19,6 +19,6 @@ before_install:
 env:
   r_binary_packages:
     - reticulate
-    - RcppParallel 
+    - rcppparallel 
   global:
     - _R_CHECK_FORCE_SUGGESTS_: false
