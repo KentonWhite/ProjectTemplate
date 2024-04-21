@@ -8,13 +8,16 @@ addons:
     packages:
       - unixodbc-dev
       - r-cran-rodbc
-      - g++-7
-      - python-pandas
+#       - g++-7
+#       - python-pandas
 before_install:
-  - sudo $(which R) CMD javareconf
-  - mkdir -p ~/.R
-  - echo 'CXX17 = g++-7 -std=gnu++17 -fPIC' > ~/.R/Makevars
+  - pip install pandas
+#   - sudo $(which R) CMD javareconf
+#   - mkdir -p ~/.R
+#   - echo 'CXX17 = g++-7 -std=gnu++17 -fPIC' > ~/.R/Makevars
 
 env:
+  r_packages:
+    - reticulate
   global:
     - _R_CHECK_FORCE_SUGGESTS_: false
