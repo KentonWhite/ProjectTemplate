@@ -3,7 +3,7 @@ dist: bionic
 cache: packages
 warnings_are_errors: true
 R:
-  - release
+  - 4.4
 addons:
   apt:
     sources:
