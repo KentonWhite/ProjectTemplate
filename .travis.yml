@@ -11,7 +11,9 @@ addons:
 #       - g++-7
 #       - python-pandas
 before_install:
-  - pip install pandas
+  - sudo apt-get install python3
+  - sudo apt-get install python3-pip
+  - pip3 install pandas
 #   - sudo $(which R) CMD javareconf
 #   - mkdir -p ~/.R
 #   - echo 'CXX17 = g++-7 -std=gnu++17 -fPIC' > ~/.R/Makevars
