@@ -8,7 +8,7 @@ addons:
     packages:
       - unixodbc-dev
       - r-cran-rodbc
-      - python3
+      - python-is-python3
 #       - g++-7
 #       - python-pandas
 before_install:
