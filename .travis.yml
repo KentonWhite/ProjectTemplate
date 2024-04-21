@@ -17,8 +17,9 @@ before_install:
 #   - echo 'CXX17 = g++-7 -std=gnu++17 -fPIC' > ~/.R/Makevars
 
 env:
-  r_binary_packages:
-    - reticulate
-    - rcppparallel 
   global:
     - _R_CHECK_FORCE_SUGGESTS_: false
+
+r_binary_packages:
+  - reticulate
+  - rcppparallel 
