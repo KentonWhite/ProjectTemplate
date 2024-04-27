@@ -2,8 +2,6 @@ language: r
 dist: bionic
 cache: packages
 warnings_are_errors: true
-r:
-  - 4.1
 addons:
   apt:
     sources:
@@ -31,6 +29,6 @@ env:
     - RETICULATE_PYTHON: /usr/bin/python3
 
 r_binary_packages:
-  - reticulate
-  - rcppparallel
-  - tibble
+  # - reticulate
+  # - rcppparallel
+  # - tibble
