@@ -1,4 +1,5 @@
 context('Load project')
+reticulate::py_install("pandas")
 
 test_that('All elements have length 1', {
   test_project <- tempfile('test_project')
