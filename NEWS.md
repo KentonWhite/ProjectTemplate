@@ -1,3 +1,9 @@
+0.11.0 (2024-05-20)
+
+Features
+--------
+* Runs python code in munge folder using reticulate package
+
 0.10.4 (2023-11-19)
 
 Internal

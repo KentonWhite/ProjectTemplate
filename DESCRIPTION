@@ -1,8 +1,8 @@
 Package: ProjectTemplate
 Type: Package
 Title: Automates the Creation of New Statistical Analysis Projects
-Version: 0.10.4
-Date: 2023-11-19
+Version: 0.11.0
+Date: 2024-05-20
 Authors@R: c( person("Aleksandar", "Blagotic", role = "ctb"),
     person("Diego", "Valle-Jones", role = "ctb"),
     person("Jeffrey", "Breen", role = "ctb"),
@@ -16,7 +16,8 @@ Authors@R: c( person("Aleksandar", "Blagotic", role = "ctb"),
     person("Patrick", "Schalk", role = "ctb"),
     person("Dominik", "Schneider", role="ctb"),
     person("Gerold", "Hepp", role="ctb"),
-    person("Zunaira", "Jamile", role="ctb"))
+    person("Zunaira", "Jamil", role="ctb"),
+    person("Glen", "Falk", role="ctb"))
 Description: Provides functions to
     automatically build a directory structure for a new R
     project. Using this structure, 'ProjectTemplate'
@@ -25,7 +26,7 @@ Description: Provides functions to
 License: GPL-3 | file LICENSE
 Language: en-US
 LazyLoad: yes
-Roxygen: list(wrap = FALSE)
+Roxygen: list()
 Encoding: UTF-8
 Depends:
     R (>= 2.7),
@@ -117,5 +118,5 @@ Collate:
     'xls.reader.R'
     'xlsx.reader.R'
     'xport.reader.R'
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
 Config/testthat/edition: 3

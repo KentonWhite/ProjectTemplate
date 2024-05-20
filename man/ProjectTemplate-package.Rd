@@ -37,7 +37,8 @@ Other contributors:
   \item Patrick Schalk [contributor]
   \item Dominik Schneider [contributor]
   \item Gerold Hepp [contributor]
-  \item Zunaira Jamile [contributor]
+  \item Zunaira Jamil [contributor]
+  \item Glen Falk [contributor]
 }
 
 }
