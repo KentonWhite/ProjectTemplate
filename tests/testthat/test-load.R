@@ -382,37 +382,47 @@ test_that('pass munge files to run',{
     "print('  ')",
     "print('01-test_data.py start')",
     "",  # Empty line for readability
-    "import pandas as pd",
+    "import csv",
     "import os",
-    "data = pd.DataFrame({'col1': [1, 2, 3], 'col2': ['a', 'b', 'c']})",
+    "# create a dictionary with the base package collections",
+    "data = {'col1': [1, 2, 3], 'col2': ['a', 'b', 'c']}",
     "# Write data to CSV file in munge directory (adjust path if needed)",
-    "data.to_csv('munge/test_data_py.csv', index=False)",
+    "with open('munge/test_data_py.csv', 'w', newline='') as f:",
+    "writer = csv.writer(f)",
+    "writer.writerows([[row['col1'], row['col2']] for row in data.items()])",
     "",  # Empty line for readability
     "# Print data sum for testing purposes",
     "print(data.sum())",
     "print('01-test_data.py finish')"
   )
-  # ------------------------------------------------------------------------------
-  # Write the Python code to a .py file
-  # ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
+# Write the Python code to a .py file
+# ------------------------------------------------------------------------------
   writeLines(python_code, file.path("munge","01-test_data.py"))
-  # ------------------------------------------------------------------------------
-  # Check if python dataframe exists
-  # ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
+# Check if python dataframe exists
+# ------------------------------------------------------------------------------
   check_py_data <- c(
     "print('  ')",
     "print('02-test_data.py start')",
+    "import collections",
+    "import csv",
     "import os",
-    "import pandas as pd",
     "import sys",
-    # ------------------------------------------------------------------------------
-    "df_csv = pd.read_csv('munge/test_data_py.csv')",
-    "df_csv.to_csv('munge/write_test_data_py.csv', index=False)",
-    # ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
+    "with open('munge/test_data_py.csv', 'r') as f:",
+    "df_csv = csv.reader(f)",
+    "for row in df_csv:",
+    "print(row)",
+# ------------------------------------------------------------------------------
+    "with open('munge/write_test_data_py.csv', 'w', newline='') as f:",
+    "writer = csv.writer(f)",
+    "writer.writerows([[row['col1'], row['col2']] for row in data.items()])",
+# ------------------------------------------------------------------------------
     "",
     "py_data = pd.DataFrame({'col1': [1, 2, 3], 'col2': ['a', 'b', 'c']})",
     "subdirectory = 'munge'",
-    # ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
     "",
     "if 'subdirectory' in globals():",
     "    data = 'y'",
@@ -420,9 +430,11 @@ test_that('pass munge files to run',{
     "else:",
     "    data = 'n'",
     "    print('Python data NOT in the environment')",
-    # ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
     "",
-    "df = pd.DataFrame([[data]], columns=['text'])",
+    "data = {'text': ['Hello, world!']}",
+    "df = collections.defaultdict(dict)",
+    "df['text'] = [data['text']]",
     "print(df)",
     "",
     "full_file_path = os.path.join(subdirectory, f'{data}.csv')",
@@ -449,7 +461,7 @@ test_that('pass munge files to run',{
   expect_true(file.exists(file.path("munge", "test_data_py.csv")))
   expect_true(file.exists(file.path("munge", "write_test_data_py.csv")))
 # ------------------------------------------------------------------------------
-# validate if entry defined in python environmen (created by 02-test_data.py)
+# validate if entry defined in python environment (created by 02-test_data.py)
 # ------------------------------------------------------------------------------
   expect_true(file.exists(file.path( "munge", "y.csv")))
   expect_false(file.exists(file.path("munge", "n.csv")))
