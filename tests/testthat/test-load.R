@@ -51,7 +51,7 @@ test_that('auto loaded data is cached by default', {
         oldwd <- setwd(test_project)
         on.exit(setwd(oldwd), add = TRUE)
 
-        # clear the global environment
+        # clear the global environmentre
         rm(list=ls(envir = .TargetEnv), envir = .TargetEnv)
 
         test_data <- tibble::as_tibble(data.frame(Names=c("a", "b", "c"), Ages=c(20,30,40)))
@@ -385,14 +385,14 @@ test_that('pass munge files to run',{
     "import csv",
     "import os",
     "# create a dictionary with the base package collections",
-    "data = {'col1': [1, 2, 3], 'col2': ['a', 'b', 'c']}",
+    "data = {'Names': [1, 2, 3], 'Ages': [20, 30, 40]}",
     "# Write data to CSV file in munge directory (adjust path if needed)",
     "with open('munge/test_data_py.csv', 'w', newline='') as f:",
-    "writer = csv.writer(f)",
-    "writer.writerows([[row['col1'], row['col2']] for row in data.items()])",
+    "    writer = csv.writer(f)",
+    "    writer.writerows(zip(data['Names'], data['Ages']))",
     "",  # Empty line for readability
     "# Print data sum for testing purposes",
-    "print(data.sum())",
+    "# print(data.sum())",
     "print('01-test_data.py finish')"
   )
 # ------------------------------------------------------------------------------
@@ -411,16 +411,15 @@ test_that('pass munge files to run',{
     "import sys",
 # ------------------------------------------------------------------------------
     "with open('munge/test_data_py.csv', 'r') as f:",
-    "df_csv = csv.reader(f)",
-    "for row in df_csv:",
-    "print(row)",
+    "    df_csv = csv.reader(f)",
+    "    for row in df_csv:",
+    "        print(row)",
 # ------------------------------------------------------------------------------
     "with open('munge/write_test_data_py.csv', 'w', newline='') as f:",
-    "writer = csv.writer(f)",
-    "writer.writerows([[row['col1'], row['col2']] for row in data.items()])",
+    "    writer = csv.writer(f)",
+    "    writer.writerows(zip(data['Names'], data['Ages']))",
 # ------------------------------------------------------------------------------
     "",
-    "py_data = pd.DataFrame({'col1': [1, 2, 3], 'col2': ['a', 'b', 'c']})",
     "subdirectory = 'munge'",
 # ------------------------------------------------------------------------------
     "",
@@ -433,12 +432,9 @@ test_that('pass munge files to run',{
 # ------------------------------------------------------------------------------
     "",
     "data = {'text': ['Hello, world!']}",
-    "df = collections.defaultdict(dict)",
-    "df['text'] = [data['text']]",
-    "print(df)",
+    "print(data)",
     "",
     "full_file_path = os.path.join(subdirectory, f'{data}.csv')",
-    "df.to_csv(full_file_path, sep=',', index=False)",
 # ------------------------------------------------------------------------------
     "",
     "print('02-test_data.py finish')"
