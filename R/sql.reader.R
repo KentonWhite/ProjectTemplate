@@ -102,6 +102,8 @@
 #' query: SELECT *,STDEV(value1) FROM example_table
 #'
 #' @importFrom utils modifyList
+#' @importFrom methods is
+
 sql.reader <- function(data.file, filename, variable.name)
 {
   database.info <- translate.dcf(filename)

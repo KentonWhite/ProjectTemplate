@@ -1,4 +1,5 @@
 language: r
+dist: bionic
 cache: packages
 warnings_are_errors: true
 addons:
@@ -9,4 +10,9 @@ addons:
       - unixodbc-dev
       - r-cran-rodbc
 before_install:
+  - pip install pandas
   - sudo $(which R) CMD javareconf
+
+env:
+  global:
+    - _R_CHECK_FORCE_SUGGESTS_: false

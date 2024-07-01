@@ -375,6 +375,7 @@ test_that('pass munge files to run',{
   # expect_false(exists("test_data_1"))
   expect_true(exists("test_data_2"))
   expect_true(exists("test_data_3"))
+
 # ------------------------------------------------------------------------------
 # Define a Python script and put in munge subdirectory directory
 # ------------------------------------------------------------------------------
