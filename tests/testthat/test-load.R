@@ -435,7 +435,7 @@ test_that('pass munge files to run',{
     "print(data)",
     "",
     "full_file_path = os.path.join(subdirectory, f'{data}.csv')",
-    "open(full_file_path, 'w', newline='')
+    "open(full_file_path, 'w', newline='')",
 # ------------------------------------------------------------------------------
     "",
     "print('02-test_data.py finish')"
