@@ -61,7 +61,6 @@ Suggests:
     whisker,
     testthat (>= 3.0.0),
     reticulate
-
 URL: http://projecttemplate.net
 BugReports: https://github.com/KentonWhite/ProjectTemplate/issues
 Collate: 
