@@ -432,7 +432,6 @@ test_that('pass munge files to run',{
     "    print('Python data NOT in the environment')",
 # ------------------------------------------------------------------------------
     "",
-    "data = {'text': ['Hello, world!']}",
     "print(data)",
     "",
     "full_file_path = os.path.join(subdirectory, f'{data}.csv')",
