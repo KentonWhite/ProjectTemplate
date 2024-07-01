@@ -19,3 +19,7 @@ BuildType: Package
 PackageUseDevtools: Yes
 PackageInstallArgs: --no-multiarch --with-keep.source
 PackageRoxygenize: rd,collate,namespace
+
+PythonType: virtualenv
+PythonVersion: 3.12.3
+PythonPath: .venv/Scripts/python.exe
