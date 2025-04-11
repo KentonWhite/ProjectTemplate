@@ -52,13 +52,13 @@ test_that('caching a variable not already in cache caches correctly', {
 test_that('caching a variable created from CODE caches correctly', {
 
   # CODE caching requires suggested package formatR
-  
+
   skip_if_not_installed("formatR")
-  
+
   test_project <- tempfile('test_project')
   suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
-  
+
   oldwd <- setwd(test_project)
   on.exit(setwd(oldwd), add = TRUE)
 
@@ -97,13 +97,13 @@ test_that("caching a variable created from CODE using 'data.table' along with
 
   skip_if_not_installed("data.table")
   # CODE caching requires suggested package formatR
-  
+
   skip_if_not_installed("formatR")
 
   test_project <- tempfile("test_project")
   suppressMessages(create.project(test_project))
   on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
-  
+
   oldwd <- setwd(test_project)
   on.exit(setwd(oldwd), add = TRUE)
 
@@ -127,202 +127,202 @@ test_that("caching a variable created from CODE using 'data.table' along with
   tidy_up()
 })
 
-test_that('re-caching is skipped when a cached variable hasnt changed', {
+for (cache_file_format in cache_file_formats) {
+  test_that('re-caching is skipped when a cached variable hasnt changed', {
+    test_project <- tempfile('test_project')
+    suppressMessages(create.project(test_project))
+    on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
-        test_project <- tempfile('test_project')
-        suppressMessages(create.project(test_project))
-        on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
+    oldwd <- setwd(test_project)
+    on.exit(setwd(oldwd), add = TRUE)
 
-        oldwd <- setwd(test_project)
-        on.exit(setwd(oldwd), add = TRUE)
+    set_cache_file_format(cache_file_format)
 
-        var_to_cache <- "xxxx"
-        test_data <- data.frame(Names=c("a", "b", "c"), Ages=c(20,30,40))
-        assign(var_to_cache, test_data, envir = .TargetEnv)
+    var_to_cache <- "xxxx"
+    test_data <- data.frame(Names = c("a", "b", "c"), Ages = c(20, 30, 40))
+    assign(var_to_cache, test_data, envir = .TargetEnv)
 
-        # Create initial cached version
-        cache(var_to_cache, CODE = NULL, depends = NULL)
-        initial_mtime <- file.info(file.path('cache', paste0(var_to_cache, ".RData")))$mtime
+    # Create initial cached version
+    cache(var_to_cache, CODE = NULL, depends = NULL)
+    initial_mtime <- file.info(file.path('cache', paste(var_to_cache, cache_file_format, sep = ".")))$mtime
 
-        # wait two seconds
-        Sys.sleep(2)
+    # wait two seconds
+    Sys.sleep(2)
 
-        # Remove it from Global Environment
-        rm(list=var_to_cache, envir = .TargetEnv)
+    # Remove it from Global Environment
+    rm(list=var_to_cache, envir = .TargetEnv)
 
-        # Load up from cache and attempt to re-cache
-        suppressMessages(load.project())
-        expect_message(cache(var_to_cache, CODE = NULL, depends = NULL),
-                       "Skipping cache update for")
+    # Load up from cache and attempt to re-cache
+    suppressMessages(load.project())
+    expect_message(cache(var_to_cache, CODE = NULL, depends = NULL),
+                   "Skipping cache update for")
 
-        # Check that modification time hasn't changed
-        new_mtime <- file.info(file.path('cache', paste0(var_to_cache, ".RData")))$mtime
+    # Check that modification time hasn't changed
+    new_mtime <- file.info(file.path('cache', paste(var_to_cache, cache_file_format, sep = ".")))$mtime
 
-        expect_equal(initial_mtime, new_mtime)
+    expect_equal(initial_mtime, new_mtime)
 
-        tidy_up()
+    tidy_up()
+  })
 
-})
+  test_that('re-caching is done again when a cached variable has changed', {
+    test_project <- tempfile('test_project')
+    suppressMessages(create.project(test_project))
+    on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
-test_that('re-caching is done again when a cached variable has changed', {
+    oldwd <- setwd(test_project)
+    on.exit(setwd(oldwd), add = TRUE)
 
-        test_project <- tempfile('test_project')
-        suppressMessages(create.project(test_project))
-        on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
+    set_cache_file_format(cache_file_format)
 
-        oldwd <- setwd(test_project)
-        on.exit(setwd(oldwd), add = TRUE)
+    var_to_cache <- "xxxx"
+    test_data <- data.frame(Names=c("a", "b", "c"), Ages=c(20,30,40))
+    assign(var_to_cache, test_data, envir = .TargetEnv)
 
-        var_to_cache <- "xxxx"
-        test_data <- data.frame(Names=c("a", "b", "c"), Ages=c(20,30,40))
-        assign(var_to_cache, test_data, envir = .TargetEnv)
+    # Create initial cached version
+    cache(var_to_cache, CODE = NULL, depends = NULL)
+    initial_mtime <- file.info(file.path('cache', paste(var_to_cache, cache_file_format, sep = ".")))$mtime
 
-        # Create initial cached version
-        cache(var_to_cache, CODE = NULL, depends = NULL)
-        initial_mtime <- file.info(file.path('cache', paste0(var_to_cache, ".RData")))$mtime
+    # wait two seconds
+    Sys.sleep(2)
 
-        # wait two seconds
-        Sys.sleep(2)
+    # Remove it from Global Environment
+    rm(list=var_to_cache, envir = .TargetEnv)
 
-        # Remove it from Global Environment
-        rm(list=var_to_cache, envir = .TargetEnv)
+    # Load up from cache
+    suppressMessages(load.project())
 
-        # Load up from cache
-        suppressMessages(load.project())
+    # change the variable and attempt to re-cache
+    test_data2 <- data.frame(Names=c("aaa", "b", "c"), Ages=c(20,30,40))
+    assign(var_to_cache, test_data2, envir = .TargetEnv)
 
-        # change the variable and attempt to re-cache
-        test_data2 <- data.frame(Names=c("aaa", "b", "c"), Ages=c(20,30,40))
-        assign(var_to_cache, test_data2, envir = .TargetEnv)
+    expect_message(cache(var_to_cache, CODE = NULL, depends = NULL),
+                   "Updating existing cache entry from global environment")
 
-        expect_message(cache(var_to_cache, CODE = NULL, depends = NULL),
-                       "Updating existing cache entry from global environment")
+    # Check that modification time has changed
+    new_mtime <- file.info(file.path('cache', paste(var_to_cache, cache_file_format, sep = ".")))$mtime
+    expect_false(isTRUE(all.equal(initial_mtime, new_mtime)))
 
-        # Check that modification time has changed
-        new_mtime <- file.info(file.path('cache', paste0(var_to_cache, ".RData")))$mtime
-        expect_false(isTRUE(all.equal(initial_mtime, new_mtime)))
+    # Reload and check that re-cached value is different
+    rm(list=var_to_cache, envir = .TargetEnv)
+    suppressMessages(load.project())
 
-        # Reload and check that re-cached value is different
-        rm(list=var_to_cache, envir = .TargetEnv)
-        suppressMessages(load.project())
+    expect_false(isTRUE(all.equal(get(var_to_cache, envir = .TargetEnv) , test_data)))
 
-        expect_false(isTRUE(all.equal(get(var_to_cache, envir = .TargetEnv) , test_data)))
+    tidy_up()
+  })
 
-        tidy_up()
+  test_that('re-caching fails with correct message if cached variable is not in global env', {
+    test_project <- tempfile('test_project')
+    suppressMessages(create.project(test_project))
+    on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
-})
+    oldwd <- setwd(test_project)
+    on.exit(setwd(oldwd), add = TRUE)
 
-test_that('re-caching fails with correct message if cached variable is not in global env', {
+    set_cache_file_format(cache_file_format)
 
-        test_project <- tempfile('test_project')
-        suppressMessages(create.project(test_project))
-        on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
+    var_to_cache <- "xxxx"
+    test_data <- data.frame(Names=c("a", "b", "c"), Ages=c(20,30,40))
+    assign(var_to_cache, test_data, envir = .TargetEnv)
 
-        oldwd <- setwd(test_project)
-        on.exit(setwd(oldwd), add = TRUE)
+    # Create initial cached version
+    cache(var_to_cache, CODE = NULL, depends = NULL)
+    initial_mtime <- file.info(file.path('cache', paste(var_to_cache, cache_file_format, sep = ".")))$mtime
 
-        var_to_cache <- "xxxx"
-        test_data <- data.frame(Names=c("a", "b", "c"), Ages=c(20,30,40))
-        assign(var_to_cache, test_data, envir = .TargetEnv)
+    # wait two seconds
+    Sys.sleep(2)
 
-        # Create initial cached version
-        cache(var_to_cache, CODE = NULL, depends = NULL)
-        initial_mtime <- file.info(file.path('cache', paste0(var_to_cache, ".RData")))$mtime
+    # Remove it from Global Environment
+    rm(list=var_to_cache, envir = .TargetEnv)
 
-        # wait two seconds
-        Sys.sleep(2)
+    # Load up from cache
+    suppressMessages(load.project())
 
-        # Remove it from Global Environment
-        rm(list=var_to_cache, envir = .TargetEnv)
+    # And remove it from Global Environment again
+    rm(list=var_to_cache, envir = .TargetEnv)
 
-        # Load up from cache
-        suppressMessages(load.project())
+    expect_message(cache(var_to_cache, CODE = NULL, depends = NULL),
+                   "Unable to update cache for")
 
-        # And remove it from Global Environment again
-        rm(list=var_to_cache, envir = .TargetEnv)
+    # Check that modification time hasn't changed
+    new_mtime <- file.info(file.path('cache', paste(var_to_cache, cache_file_format, sep = ".")))$mtime
+    expect_equal(initial_mtime, new_mtime)
 
-        expect_message(cache(var_to_cache, CODE = NULL, depends = NULL),
-                       "Unable to update cache for")
+    tidy_up()
+  })
 
-        # Check that modification time hasn't changed
-        new_mtime <- file.info(file.path('cache', paste0(var_to_cache, ".RData")))$mtime
-        expect_equal(initial_mtime, new_mtime)
+  test_that('re-caching a variable created from CODE only happens if code changes, not comments or white space', {
+    # CODE caching requires suggested package formatR
+    skip_if_not_installed("formatR")
 
-        tidy_up()
+    test_project <- tempfile('test_project')
+    suppressMessages(create.project(test_project))
+    on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
-})
+    oldwd <- setwd(test_project)
+    on.exit(setwd(oldwd), add = TRUE)
 
-test_that('re-caching a variable created from CODE only happens if code changes, not comments or white space', {
+    set_cache_file_format(cache_file_format)
 
-  # CODE caching requires suggested package formatR
-  
-  skip_if_not_installed("formatR")
+    var_to_cache <- "xxxx"
+    test_data <- data.frame(Names=c("a", "b", "c"),
+                            Ages=c(20000000,300,400))
 
-  test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project))
-  on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
+    # Create a cached version created from CODE
+    expect_message(cache(var_to_cache, depends = NULL, CODE = {
+      data.frame(Names=c("a", "b", "c"),
+                 Ages=c(200,300,400))
+    }),
+    "Creating cache entry from CODE")
 
-  oldwd <- setwd(test_project)
-  on.exit(setwd(oldwd), add = TRUE)
+    initial_mtime <- file.info(file.path('cache', paste(var_to_cache, cache_file_format, sep = ".")))$mtime
 
-  var_to_cache <- "xxxx"
-  test_data <- data.frame(Names=c("a", "b", "c"),
-                                Ages=c(20000000,300,400))
+    # wait two seconds
+    Sys.sleep(2)
 
+    # Remove it from Global Environment (rm will fail if it's not created from CODE)
+    expect_error(rm(list=var_to_cache, envir = .TargetEnv), NA)
 
-  # Create a cached version created from CODE
-  expect_message(cache(var_to_cache, depends = NULL, CODE = {
-    data.frame(Names=c("a", "b", "c"),
-               Ages=c(200,300,400))
-  }),
-  "Creating cache entry from CODE")
+    # Load up from cache again
+    suppressMessages(load.project())
 
-  initial_mtime <- file.info(file.path('cache', paste0(var_to_cache, ".RData")))$mtime
+    # re-cache, this time adding some comments and whitespace, but not changing code
+    # should skip re-caching
+    expect_message(cache(var_to_cache, depends = NULL, CODE = {
+      #  New comments add in
+      data.frame(Names=c("a", "b", "c"),
+                 Ages=c(200,300,400))    # but code remains the same
 
-  # wait two seconds
-  Sys.sleep(2)
+      # extra new lines added for good measure
+    }),
+    "Skipping cache update for ")
 
-  # Remove it from Global Environment (rm will fail if it's not created from CODE)
-  expect_error(rm(list=var_to_cache, envir = .TargetEnv), NA)
+    # Check that modification time hasn't changed
+    new_mtime <- file.info(file.path('cache', paste(var_to_cache, cache_file_format, sep = ".")))$mtime
 
-  # Load up from cache again
-  suppressMessages(load.project())
+    expect_equal(initial_mtime, new_mtime)
 
-  # re-cache, this time adding some comments and whitespace, but not changing code
-  # should skip re-caching
-  expect_message(cache(var_to_cache, depends = NULL, CODE = {
-    #  New comments add in
-    data.frame(Names=c("a", "b", "c"),
-               Ages=c(200,300,400))    # but code remains the same
-               
-               # extra new lines added for good measure
-  }),
-  "Skipping cache update for ")
+    # re-cache agin, keeping the comments and whitespace, but changing the code
+    expect_message(cache(var_to_cache, depends = NULL, CODE = {
+      #  New comments add in
+      data.frame(Names=c("a", "b", "c"),
+                 Ages=c(20000000,300,400))    # but code remains the same
 
-  # Check that modification time hasn't changed
-  new_mtime <- file.info(file.path('cache', paste0(var_to_cache, ".RData")))$mtime
+      # extra new lines added for good measure
+    }),
+    "Updating existing cache entry from CODE")
 
-  expect_equal(initial_mtime, new_mtime)
+    # Check that modification time has also changed
+    new_mtime <- file.info(file.path('cache', paste(var_to_cache, cache_file_format, sep = ".")))$mtime
+    expect_false(isTRUE(all.equal(initial_mtime, new_mtime)))
 
-  # re-cache agin, keeping the comments and whitespace, but changing the code
-  expect_message(cache(var_to_cache, depends = NULL, CODE = {
-    #  New comments add in
-    data.frame(Names=c("a", "b", "c"),
-               Ages=c(20000000,300,400))    # but code remains the same
+    # Finally check that the new code evaluated correctly
+    expect_equal(get(var_to_cache, envir = .TargetEnv) , test_data)
 
-               # extra new lines added for good measure
-  }),
-  "Updating existing cache entry from CODE")
-  
-  # Check that modification time has also changed
-  new_mtime <- file.info(file.path('cache', paste0(var_to_cache, ".RData")))$mtime
-  expect_false(isTRUE(all.equal(initial_mtime, new_mtime)))
-
-  # Finally check that the new code evaluated correctly
-  expect_equal(get(var_to_cache, envir = .TargetEnv) , test_data)
-
-  tidy_up()
-
-})
+    tidy_up()
+  })
+}
 
 test_that('caching a variable with an underscore is not unnecessarily loaded next load.project()', {
 
@@ -457,7 +457,7 @@ test_that('multiple items are cleared correctly from the cache', {
 
 test_that('caching a variable using CODE doesnt leave variables in globalenv', {
   # CODE caching requires suggested package formatR
-  
+
   skip_if_not_installed("formatR")
 
   test_project <- tempfile('test_project')
@@ -490,7 +490,7 @@ test_that('caching a variable using CODE doesnt leave variables in globalenv', {
   # Make sure local variables don't exist in global env
   expect_true(!exists("aaa"))
   expect_true(!exists("bbb"))
-  
+
   tidy_up()
 })
 

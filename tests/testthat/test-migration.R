@@ -39,53 +39,58 @@ test_that('migrating a project which doesnt need config update results in an Up 
         tidy_up()
 })
 
+for (cache_file_format in cache_file_formats) {
+  test_that('projects without the cached_loaded_data config have their migrated config set to FALSE', {
+    test_project <- tempfile('test_project')
+    suppressMessages(create.project(test_project))
+    on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
+    oldwd <- setwd(test_project)
+    on.exit(setwd(oldwd), add = TRUE)
 
-test_that('projects without the cached_loaded_data config have their migrated config set to FALSE ', {
+    set_cache_file_format(cache_file_format)
 
-        test_project <- tempfile('test_project')
-        suppressMessages(create.project(test_project))
-        on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
+    # Read the config data and remove the cache_loaded_data flag
+    config <- .read.config()
+    expect_error(config$cache_loaded_data <- NULL, NA)
+    .save.config(config)
 
-        oldwd <- setwd(test_project)
-        on.exit(setwd(oldwd), add = TRUE)
+    # should get a warning because of the missing cache_loaded_data
+    expect_warning(suppressMessages(load.project()), "missing the following entries")
 
-        # Read the config data and remove the cache_loaded_data flag
-        config <- .read.config()
-        expect_error(config$cache_loaded_data <- NULL, NA)
-        .save.config(config)
+    test_data <- data.frame(Names=c("a", "b", "c"), Ages=c(20,30,40))
 
-        # should get a warning because of the missing cache_loaded_data
-        expect_warning(suppressMessages(load.project()), "missing the following entries")
+    # save test data as a csv in the data directory
+    write.csv(test_data, file="data/test.csv", row.names = FALSE)
 
-        test_data <- data.frame(Names=c("a", "b", "c"), Ages=c(20,30,40))
+    # run load.project again and check that the the test variable has not been cached
+    # because the default should be FALSE if the cache_loaded_data is missing before migrate.project
+    # is called
+    expect_warning(suppressMessages(load.project()), "missing the following entries: cache_loaded_data")
+    switch(
+      cache_file_format,
+      RData = expect_error(suppressWarnings(load("cache/test.RData", envir = environment())), "cannot open the connection"),
+      qs = expect_error(qs::qload("cache/test.qs", env = environment()), "Failed to open for reading")
+    )
 
-        # save test data as a csv in the data directory
-        write.csv(test_data, file="data/test.csv", row.names = FALSE)
+    # Migrate the project
+    expect_message(migrate.project(), "new config item called cache_loaded_data")
 
+    # Read the config data and check cached_loaded_data is FALSE
+    config <- .read.config()
+    expect_equal(config$cache_loaded_data, FALSE)
 
-        # run load.project again and check that the the test variable has not been cached
-        # because the default should be FALSE if the cache_loaded_data is missing before migrate.project
-        # is called
-        expect_warning(suppressMessages(load.project()), "missing the following entries: cache_loaded_data")
-        expect_error(suppressWarnings(load("cache/test.RData", envir = environment())), "cannot open the connection")
+    # Should be a clean load.project
+    expect_warning(suppressMessages(load.project()), NA)
 
-        # Migrate the project
-        expect_message(migrate.project(), "new config item called cache_loaded_data")
-
-        # Read the config data and check cached_loaded_data is FALSE
-        config <- .read.config()
-        expect_equal(config$cache_loaded_data, FALSE)
-
-        # Should be a clean load.project
-        expect_warning(suppressMessages(load.project()), NA)
-
-        # check that the the test variable has not been cached
-        expect_error(suppressWarnings(load("cache/test.RData", envir = environment())), "cannot open the connection")
-
-
-})
-
+    # check that the the test variable has not been cached
+    switch(
+      cache_file_format,
+      RData = expect_error(suppressWarnings(load("cache/test.RData", envir = environment())), "cannot open the connection"),
+      qs = expect_error(qs::qload("cache/test.qs", env = environment()), "Failed to open for reading")
+    )
+  })
+}
 
 test_that('migrating a project with a missing config file results in a message to user', {
 
