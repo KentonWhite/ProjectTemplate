@@ -21,7 +21,7 @@ NULL
 #'  be saved.  If the CODE parameter is defined, it is evaluated and saved, otherwise
 #'  the variable with that name in the global environment is used.
 #' @param CODE A sequence of R statements enclosed in \code{\{..\}} which produce the object to be
-#' cached.  Requires suggested package formatR 
+#' cached.  Requires suggested package formatR.
 #' @param depends A character vector of other global environment objects that the CODE
 #' depends upon. Caching will be forced if those objects have changed since last caching
 #' @param ... Additional arguments passed on to \code{\link{save}} or optionally
