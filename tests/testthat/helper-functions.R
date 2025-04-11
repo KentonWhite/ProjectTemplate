@@ -6,7 +6,7 @@ tidy_up <- function() {
 
 # Determine available cache file formats
 cache_file_formats <- "RData"
-if (!requireNamespace("qs", quietly = TRUE)) {
+if (requireNamespace("qs", quietly = TRUE)) {
   cache_file_formats <- c(cache_file_formats, "qs")
 }
 
