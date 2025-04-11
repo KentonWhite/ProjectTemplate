@@ -154,12 +154,12 @@ for (cache_file_format in cache_file_formats) {
     switch(
       cache_file_format,
       RData = {
-        expect_error(suppressWarnings(load("cache/test_data12.RData", envir = environment())), "cannot open the connection")
-        expect_error(suppressWarnings(load("cache/test_data22.RData", envir = environment())), "cannot open the connection")
+        expect_error(suppressWarnings(load("cache/test_data11.RData", envir = environment())), "cannot open the connection")
+        expect_error(suppressWarnings(load("cache/test_data21.RData", envir = environment())), "cannot open the connection")
       },
       qs = {
-        expect_error(qs::qload("cache/test_data12.qs", env = environment()), "Failed to open for reading")
-        expect_error(qs::qload("cache/test_data22.qs", env = environment()), "Failed to open for reading")
+        expect_error(qs::qload("cache/test_data11.qs", env = environment()), "Failed to open for reading")
+        expect_error(qs::qload("cache/test_data21.qs", env = environment()), "Failed to open for reading")
       }
     )
   })
