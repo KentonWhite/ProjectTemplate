@@ -4,7 +4,7 @@
 \alias{cache}
 \title{Cache a data set for faster loading.}
 \usage{
-cache(variable = NULL, CODE = NULL, depends = NULL, ...)
+cache(variable = NULL, CODE = NULL, depends = NULL, tidyCODE = TRUE, ...)
 }
 \arguments{
 \item{variable}{A character string containing the name of the variable to
@@ -16,6 +16,13 @@ cached.  Requires suggested package formatR.}
 
 \item{depends}{A character vector of other global environment objects that the CODE
 depends upon. Caching will be forced if those objects have changed since last caching}
+
+\item{tidyCODE}{A logical scalar specifying if the CODE shall be tidied with
+the help of \code{\link[formatR]{tidy_source}}. As, for example, whitespace
+changes do not change the meaning of the code and therefore should not
+invalidate the cache, this usually is a desired feature. However, in case
+the CODE contains, for example, complex SQL statements this might fail and
+skipping this step is an even more desirable feature.}
 
 \item{...}{Additional arguments passed on to \code{\link{save}} or optionally
 to \code{\link[qs]{qsave}}. See \code{\link{project.config}} for further
