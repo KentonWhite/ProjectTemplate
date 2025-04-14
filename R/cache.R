@@ -24,6 +24,12 @@ NULL
 #' cached.  Requires suggested package formatR 
 #' @param depends A character vector of other global environment objects that the CODE
 #' depends upon. Caching will be forced if those objects have changed since last caching
+#' @param tidyCODE A logical scalar specifying if the CODE shall be tidied with
+#' the help of \code{\link[formatR]{tidy_source}}. As, for example, whitespace
+#' changes do not change the meaning of the code and therefore should not
+#' invalidate the cache, this usually is a desired feature. However, in case
+#' the CODE contains, for example, complex SQL statements this might fail and
+#' skipping this step is an even more desirable feature.
 #' @param ... Additional arguments passed on to \code{\link{save}} or optionally
 #' to \code{\link[qs]{qsave}}. See \code{\link{project.config}} for further
 #' information.
@@ -44,7 +50,7 @@ NULL
 #' unlink('tmp-project')}
 #'
 #' @seealso \code{\link[qs]{qsave}}, \code{\link{project.config}}
-cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
+cache <- function(variable=NULL, CODE=NULL, depends=NULL, tidyCODE=TRUE,  ...)
 {
 
   project_name <- .stopifnotproject("Change to a valid ProjectTemplate directory and run cache() again.")
@@ -52,6 +58,7 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
   if (is.null(variable)) return(.cache.status())
 
   stopifnot(length(variable) == 1)
+  stopifnot(is.logical(tidyCODE) && length(tidyCODE) == 1)
 
   CODE <- paste0(deparse(substitute(CODE)), collapse ="\n")
   if (CODE=="NULL") CODE <- NULL
@@ -60,11 +67,14 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
   # don't force a re-evaluation of CODE unncessarily.
 
   if (!is.null(CODE)){
-    .require.package("formatR")
+    if (tidyCODE) {
+      .require.package("formatR")
 
-    CODE <- formatR::tidy_source(text = CODE, comment = FALSE,
-                                 blank = FALSE, brace.newline = FALSE,
-                                 output = FALSE, width.cutoff = 500)
+      CODE <- formatR::tidy_source(text = CODE, comment = FALSE,
+                                   blank = FALSE, brace.newline = FALSE,
+                                   output = FALSE, width.cutoff = 500)
+    }
+
     CODE <- paste(CODE$text.tidy, sep="", collapse="\n")
   }
 
