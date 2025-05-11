@@ -16,6 +16,8 @@ the project version is older than the installed version of ProjectTemplate.}
 \code{0} if the numbers are equal, \code{-1} if \code{b} is later
   and \code{1} if \code{a} is later (analogous to the C function
   \code{strcmp}).
+
+  Gives an \R error on malformed inputs.
 }
 \description{
 Compare the project version with the current ProjectTemplate version
