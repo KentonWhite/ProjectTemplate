@@ -10,6 +10,7 @@
 #'
 #' @param project.name A character vector containing the name for this new
 #'   project. Must be a valid directory name for your file system.
+#' @param project.directory A character vector containing the full path of the project directory up to and excluding the project.name.
 #' @param template A character vector containing the name of the template to
 #'   use for this project. By default a \code{full} and \code{minimal} template
 #'   are provided, but custom templates can be created using
@@ -41,24 +42,30 @@
 #' library('ProjectTemplate')
 #'
 #' \dontrun{create.project('MyProject')}
-create.project <- function(project.name = 'new-project', template = 'full',
-                           dump = FALSE, merge.strategy = c("require.empty", "allow.non.conflict"),
-                           rstudio.project = FALSE)
+create.project <- function(project.name = 'new-project',
+                           project.directory = getwd(),
+                           template = 'full',
+                           dump = FALSE,
+                           merge.strategy = c("require.empty", "allow.non.conflict"),
+                           rstudio.project = FALSE
+                           )
 {
+
+  project.path <- file.path(project_directory, project.name)
 
   .stopifproject(c("Cannot create a new project inside an existing one",
                            "Please change to another directory and re-run create.project()"),
-                 path = normalizePath(dirname(project.name)))
+                 path = normalizePath(dirname(project.path)))
 
   .stopifproject(c("Cannot create a new project inside an existing one",
                    "Please change to another directory and re-run create.project()"),
-                 path = dirname(normalizePath(dirname(project.name))))
+                 path = dirname(normalizePath(dirname(project.path))))
 
   merge.strategy <- match.arg(merge.strategy)
-  if (.is.dir(project.name)) {
-    .create.project.existing(project.name, merge.strategy, template, rstudio.project)
+  if (.is.dir(project.path)) {
+    .create.project.existing(project.name, project.directory, merge.strategy, template, rstudio.project)
   } else
-    .create.project.new(project.name, template, rstudio.project)
+    .create.project.new(project.name, project.directory, template, rstudio.project)
 
   if (dump)
   {
@@ -73,7 +80,7 @@ create.project <- function(project.name = 'new-project', template = 'full',
     for (item in pt.contents)
     {
       cat(deparse(get(item, envir = e, inherits = FALSE)),
-          file = file.path(project.name, paste(item, '.R', sep = '')))
+          file = file.path(project.path, paste(item, '.R', sep = '')))
     }
   }
 
@@ -87,6 +94,7 @@ create.project <- function(project.name = 'new-project', template = 'full',
 #' an existing directory with the default files from a given template.
 #'
 #' @param project.name Character vector with the name of the project directory
+#' @param project.directory Character vector with the full path of the project directory up to and excluding the project.name
 #' @param merge.strategy Character vector determining whether the directory
 #'   should be empty or is allowed to contain non-conflicting files
 #' @param template Name of the template from which the project should be created
@@ -99,11 +107,11 @@ create.project <- function(project.name = 'new-project', template = 'full',
 #' @keywords internal
 #'
 #' @rdname internal.create.project
-.create.project.existing <- function(project.name, merge.strategy, template, rstudio.project) {
+.create.project.existing <- function(project.name, project.directory, merge.strategy, template, rstudio.project) {
   template.path <- .get.template(template)
   template.files <- .list.files.and.dirs(path = template.path)
 
-  project.path <- file.path(project.name)
+  project.path <- file.path(project_directory, project.name)
 
   switch(
     merge.strategy,
@@ -132,7 +140,7 @@ create.project <- function(project.name = 'new-project', template = 'full',
 
   # Add RProj file to the project directory if the user has requested an RStudio project
   if(rstudio.project){
-    rstudiopath <- file.path(project.path, paste0(project.name,'.Rproj'))
+    rstudiopath <- paste0(project.path,'.Rproj')
     writeLines(.rstudioprojectfile(), rstudiopath)
   }
 }
@@ -149,19 +157,22 @@ create.project <- function(project.name = 'new-project', template = 'full',
 #' @keywords internal
 #'
 #' @rdname internal.create.project
-.create.project.new <- function(project.name, template, rstudio.project) {
-  if (file.exists(project.name)) {
-    stop(paste("Cannot run create.project() from a directory containing", project.name))
+.create.project.new <- function(project.name, project.directory, template, rstudio.project) {
+  project.path <- file.path(project_directory, project.name)
+
+  if (file.exists(project.path)) {
+    stop(paste("Cannot run create.project() at a directory containing", project.name))
   }
 
-  dir.create(project.name)
+  dir.create(project.path)
   tryCatch(
     .create.project.existing(project.name = project.name,
+                             project.directory = project.directory,
                              merge.strategy = "require.empty",
                              template = template,
                              rstudio.project = rstudio.project),
     error = function(e) {
-      unlink(project.name, recursive = TRUE)
+      unlink(project.path, recursive = TRUE)
       stop(e)
     }
   )
