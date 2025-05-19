@@ -51,7 +51,7 @@ create.project <- function(project.name = 'new-project',
                            )
 {
 
-  project.path <- file.path(project_directory, project.name)
+  project.path <- file.path(project.directory, project.name)
 
   .stopifproject(c("Cannot create a new project inside an existing one",
                            "Please change to another directory and re-run create.project()"),
@@ -111,7 +111,7 @@ create.project <- function(project.name = 'new-project',
   template.path <- .get.template(template)
   template.files <- .list.files.and.dirs(path = template.path)
 
-  project.path <- file.path(project_directory, project.name)
+  project.path <- file.path(project.directory, project.name)
 
   switch(
     merge.strategy,
@@ -158,7 +158,7 @@ create.project <- function(project.name = 'new-project',
 #'
 #' @rdname internal.create.project
 .create.project.new <- function(project.name, project.directory, template, rstudio.project) {
-  project.path <- file.path(project_directory, project.name)
+  project.path <- file.path(project.directory, project.name)
 
   if (file.exists(project.path)) {
     stop(paste("Cannot run create.project() at a directory containing", project.name))
