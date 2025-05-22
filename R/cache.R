@@ -235,7 +235,10 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL, tidyCODE=TRUE,  ...)
 
   cache_format <- .cache.formats[[config$cache_file_format]]
 
-  require.package(cache_format[["package"]], attach = FALSE)
+  require.package(
+    cache_format[["package"]],
+    attach = config$attach_internal_libraries
+  )
 
   file_exts <- sprintf("%s%s%s", dot, cache_format[["file_ext"]], dollar)
   if (config$cache_file_format != "RData") {
