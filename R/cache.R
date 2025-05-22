@@ -213,7 +213,7 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL, tidyCODE=TRUE,  ...)
 
 #' Get configured cache file format strategy
 #'
-#' @return A named object of mode \code{\link{expression}}.
+#' @return A named object of class \code{\link{expression}}.
 #'
 #' @keywords internal
 #'
@@ -226,10 +226,7 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL, tidyCODE=TRUE,  ...)
   }
 
   if (!config$cache_file_format %in% names(.cache.formats)) {
-    stop(
-      'Cache file format not available. See "?project.config" for further information.',
-      call. = FALSE
-    )
+    stop('Cache file format not available. See "?project.config" for further information.')
   }
 
   dot <- c(".", "\\.")
@@ -238,7 +235,10 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL, tidyCODE=TRUE,  ...)
 
   cache_format <- .cache.formats[[config$cache_file_format]]
 
-  require.package(cache_format[["package"]])
+  require.package(
+    cache_format[["package"]],
+    attach = config$attach_internal_libraries
+  )
 
   file_exts <- sprintf("%s%s%s", dot, cache_format[["file_ext"]], dollar)
   if (config$cache_file_format != "RData") {

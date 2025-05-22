@@ -7,7 +7,7 @@
 .cache.format()
 }
 \value{
-A named object of mode \code{\link{expression}}.
+A named object of class \code{\link{expression}}.
 }
 \description{
 Get configured cache file format strategy
