@@ -1,85 +1,79 @@
-context('Configuration')
+context("Configuration")
 
-test_that('Unknown fields give a warning, except if start with hash', {
+test_that("Unknown fields give a warning, except if start with hash", {
+    test_project <- tempfile("test_project")
+    suppressMessages(create.project(basename(test_project), project.directory = dirname(test_project)))
+    on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
-  test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project))
-  on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
+    oldwd <- setwd(test_project)
+    on.exit(setwd(oldwd), add = TRUE)
 
-  oldwd <- setwd(test_project)
-  on.exit(setwd(oldwd), add = TRUE)
+    config <- .new.config
+    config$dummy <- "dummy"
+    write.dcf(config, "config/global.dcf")
+    expect_that(load.project(), gives_warning("Your configuration contains the following unused entries"))
 
-  config <- .new.config
-  config$dummy <- 'dummy'
-  write.dcf(config, 'config/global.dcf')
-  expect_that(load.project(), gives_warning("Your configuration contains the following unused entries"))
-
-  config <- .new.config
-  write.dcf(config, 'config/global.dcf')
-  # write.dcf won't allow writing fields that start with a hash
-  config.dcf <- readLines('config/global.dcf')
-  config.dcf <- c(config.dcf, "# comment: A comment",
-                  "#: Yet another comment")
-  writeLines(config.dcf, 'config/global.dcf')
-  expect_warning(load.project(), NA)
-
+    config <- .new.config
+    write.dcf(config, "config/global.dcf")
+    # write.dcf won't allow writing fields that start with a hash
+    config.dcf <- readLines("config/global.dcf")
+    config.dcf <- c(
+        config.dcf, "# comment: A comment",
+        "#: Yet another comment"
+    )
+    writeLines(config.dcf, "config/global.dcf")
+    expect_warning(load.project(), NA)
 })
 
-test_that('project.config() displays config correctly', {
+test_that("project.config() displays config correctly", {
+    test_project <- tempfile("test_project")
+    suppressMessages(create.project(basename(test_project), project.directory = dirname(test_project)))
+    on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
-        test_project <- tempfile('test_project')
-        suppressMessages(create.project(test_project))
-        on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
+    oldwd <- setwd(test_project)
+    on.exit(setwd(oldwd), add = TRUE)
 
-        oldwd <- setwd(test_project)
-        on.exit(setwd(oldwd), add = TRUE)
+    # Read the config and flip a value
+    config <- .read.config()
+    flipped_value <- !config$as_factors
+    config$as_factors <- flipped_value
+    .save.config(config)
 
-        # Read the config and flip a value
-        config <- .read.config()
-        flipped_value <- !config$as_factors
-        config$as_factors <- flipped_value
-        .save.config(config)
-
-        # check that the flipped value is displayed
-        expect_message(project.config(), paste0("as_factors[ ]+", as.character(flipped_value)))
-
+    # check that the flipped value is displayed
+    expect_message(project.config(), paste0("as_factors[ ]+", as.character(flipped_value)))
 })
 
-test_that('R code in between back ticks is evaluated in config files', {
+test_that("R code in between back ticks is evaluated in config files", {
+    test_project <- tempfile("test_project")
+    suppressMessages(create.project(basename(test_project), project.directory = dirname(test_project)))
+    on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
-        test_project <- tempfile('test_project')
-        suppressMessages(create.project(test_project))
-        on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
+    oldwd <- setwd(test_project)
+    on.exit(setwd(oldwd), add = TRUE)
 
-        oldwd <- setwd(test_project)
-        on.exit(setwd(oldwd), add = TRUE)
+    # Set an environment variable to an old version number
+    Sys.setenv(version = "0.1")
+    on.exit(Sys.unsetenv("version"))
 
-        # Set an environment variable to an old version number
-        Sys.setenv(version="0.1")
-        on.exit(Sys.unsetenv("version"))
+    config <- .load.config()
+    # change the version number field to be some R code to retrieve the environment variable
+    config$version <- '`Sys.getenv("version")`'
+    write.dcf(config, .project.config)
 
-        config <- .load.config()
-        #change the version number field to be some R code to retrieve the environment variable
-        config$version <- '`Sys.getenv("version")`'
-        write.dcf(config, .project.config)
-
-        expect_warning(load.project(), "compatible with version 0.1")
-
+    expect_warning(load.project(), "compatible with version 0.1")
 })
 
-test_that('Replace data_tables with tables_type', {
+test_that("Replace data_tables with tables_type", {
+    test_project <- tempfile("test_project")
+    suppressMessages(create.project(basename(test_project), project.directory = dirname(test_project)))
+    on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
-  test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project))
-  on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
+    oldwd <- setwd(test_project)
+    on.exit(setwd(oldwd), add = TRUE)
 
-  oldwd <- setwd(test_project)
-  on.exit(setwd(oldwd), add = TRUE)
-
-  config <- .new.config
-  config$tables_type <- 'tibble'
-  config$data_tables <- NULL
-  write.dcf(config, 'config/global.dcf')
-  expect_warning(load.project(), NA)
-
+    config <- .new.config
+    config$tables_type <- "tibble"
+    config$data_tables <- NULL
+    write.dcf(config, "config/global.dcf")
+    expect_warning(load.project(), NA)
 })
