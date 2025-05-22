@@ -282,7 +282,9 @@ for (cache_file_format in cache_file_formats) {
         skip_if_not_installed("formatR")
 
         test_project <- tempfile("test_project")
-        suppressMessages(create.project(test_project))
+        suppressMessages(create.project(basename(test_project),
+                                        project.directory = dirname(test_project)
+                                        ))
         on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
         oldwd <- setwd(test_project)
