@@ -148,7 +148,9 @@ test_that("Test failure creating project into existing directory with an unrelat
 
     expect_error(
         suppressMessages(
-            create.project(test_project, template = "minimal"), "not empty"
+            create.project(basename(test_project),
+                           project.directory = dirname(test_project),
+                           template = "minimal"), "not empty"
         )
     )
 })
@@ -165,10 +167,11 @@ test_that("Test failure creating project in directory with existing empty direct
 
     expect_error(
         suppressMessages(
-            create.project(test_project,
-                template = "minimal",
-                merge.strategy = "allow.non.conflict"
-            ), "overwrite"
+          create.project(basename(test_project),
+                         project.directory = dirname(test_project),
+                         template = "minimal",
+                         merge.strategy = "allow.non.conflict"
+                         ), "overwrite"
         )
     )
 })
@@ -185,10 +188,11 @@ test_that("Test failure creating project in directory with existing file matchin
 
     expect_error(
         suppressMessages(
-            create.project(test_project,
-                template = "minimal",
-                merge.strategy = "allow.non.conflict"
-            ), "overwrite"
+          create.project(basename(test_project),
+                         project.directory = dirname(test_project),
+                         template = "minimal",
+                         merge.strategy = "allow.non.conflict"
+                         ), "overwrite"
         )
     )
 })
@@ -205,10 +209,11 @@ test_that("Test failure creating project in directory with existing empty direct
 
     expect_error(
         suppressMessages(
-            create.project(test_project,
-                template = "minimal",
-                merge.strategy = "allow.non.conflict"
-            ), "overwrite"
+          create.project(basename(test_project),
+                         project.directory = dirname(test_project),
+                         template = "minimal",
+                         merge.strategy = "allow.non.conflict"
+                         ), "overwrite"
         )
     )
 })
@@ -225,10 +230,11 @@ test_that("Test failure creating project in directory with existing file matchin
 
     expect_error(
         suppressMessages(
-            create.project(test_project,
-                template = "minimal",
-                merge.strategy = "allow.non.conflict"
-            ), "overwrite"
+          create.project(basename(test_project),
+                         project.directory = dirname(test_project),
+                         template = "minimal",
+                         merge.strategy = "allow.non.conflict"
+                         ), "overwrite"
         )
     )
 })
@@ -273,5 +279,7 @@ test_that("Do create projects on an absolute path from inside project", {
     # But you shouldn't be able to create one inside a sub directory of an
     # existing project, even on an absolute path outside the current project
     setwd(file.path(test_project, "lib"))
-    expect_error(create.project(file.path(test_project2, "munge")))
+    expect_error(
+      create.project(basename(test_project2))
+      )
 })
