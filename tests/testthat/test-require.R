@@ -1,24 +1,23 @@
-context('Require package')
+test_that(".require.package warns if compat setting is set", {
+    test_project <- tempfile("test_project")
+    suppressMessages(create.project(basename(test_project),
+                                    project.directory = dirname(test_project)
+    ))
+    on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
-test_that('.require.package warns if compat setting is set', {
+    oldwd <- setwd(test_project)
+    on.exit(setwd(oldwd), add = TRUE)
 
-  test_project <- tempfile('test_project')
-  suppressMessages(create.project(test_project))
-  on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
+    suppressMessages(.unload.project())
+    expect_false(.has.project())
+    suppressMessages(load.project())
+    expect_true(.has.project())
 
-  oldwd <- setwd(test_project)
-  on.exit(setwd(oldwd), add = TRUE)
+    expect_false(project.info$config$attach_internal_libraries)
+    expect_warning(.require.package("ProjectTemplate"), NA)
 
-  suppressMessages(.unload.project())
-  expect_false(.has.project())
-  suppressMessages(load.project())
-  expect_true(.has.project())
-
-  expect_false(project.info$config$attach_internal_libraries)
-  expect_warning(.require.package('ProjectTemplate'), NA)
-
-  project.info$config[['attach_internal_libraries']] <<- TRUE
-  expect_true(project.info$config[['attach_internal_libraries']])
-  expect_true(get.project()$config$attach_internal_libraries)
-  expect_that(.require.package('ProjectTemplate'), gives_warning('attach_internal_libraries'))
+    project.info$config[["attach_internal_libraries"]] <<- TRUE
+    expect_true(project.info$config[["attach_internal_libraries"]])
+    expect_true(get.project()$config$attach_internal_libraries)
+    expect_warning(.require.package("ProjectTemplate"), "attach_internal_libraries")
 })
