@@ -1,5 +1,3 @@
-context("Caching")
-
 test_that("caching a variable that doesnt exist fails with correct message", {
     test_project <- tempfile("test_project")
     suppressMessages(create.project(basename(test_project),

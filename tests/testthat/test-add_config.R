@@ -1,5 +1,3 @@
-context("Add custom configuration")
-
 test_that("Custom configuration is added to config", {
     test_project <- tempfile("test_project")
 

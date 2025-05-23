@@ -1,5 +1,3 @@
-context("List data")
-
 temp_csv_file <- function(dir = "") {
     gsub("^[/\\\\]", "", tempfile(pattern = "file", tmpdir = dir, fileext = ".csv"))
 }

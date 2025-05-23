@@ -1,5 +1,3 @@
-context("Reload project")
-
 test_that("Options are passed through correctly to load.project", {
     test_project <- tempfile("test_project")
     suppressMessages(create.project(basename(test_project), project.directory = dirname(test_project)))

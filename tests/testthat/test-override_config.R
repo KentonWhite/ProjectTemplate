@@ -1,5 +1,3 @@
-context("Override configuration")
-
 test_that("Overridden configuration is stored in config", {
     test_project <- tempfile("test_project")
     suppressMessages(create.project(basename(test_project), project.directory = dirname(test_project)))

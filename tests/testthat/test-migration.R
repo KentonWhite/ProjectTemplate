@@ -1,5 +1,3 @@
-context("Migration")
-
 expect_defaults <- function(config) {
     expect_true(is.character(config$version))
     expect_true(config$attach_internal_libraries)

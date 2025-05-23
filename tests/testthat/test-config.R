@@ -1,5 +1,3 @@
-context("Configuration")
-
 test_that("Unknown fields give a warning, except if start with hash", {
     test_project <- tempfile("test_project")
     suppressMessages(create.project(basename(test_project), project.directory = dirname(test_project)))

@@ -1,5 +1,3 @@
-context("Require package")
-
 test_that(".require.package warns if compat setting is set", {
     test_project <- tempfile("test_project")
     suppressMessages(create.project(basename(test_project),

@@ -1,5 +1,3 @@
-context("Templates")
-
 expect_file <- function(...) {
     x <- file.path(...)
     expect_true(file.exists(x), x)

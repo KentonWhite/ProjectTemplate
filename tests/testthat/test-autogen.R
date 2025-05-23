@@ -1,5 +1,3 @@
-context("Testing Autogeneration")
-
 test_that("stub.tests", {
     test_project <- tempfile("test_project")
     suppressMessages(create.project(basename(test_project),

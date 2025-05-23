@@ -1,5 +1,3 @@
-context("Clean variable names")
-
 test_that("Cleans variable names with underscore when underscore_variables = TRUE", {
     test_project <- tempfile("test_project")
     suppressMessages(create.project(basename(test_project), project.directory = dirname(test_project)))

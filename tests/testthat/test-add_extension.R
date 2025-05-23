@@ -1,5 +1,3 @@
-context("AddExtension")
-
 test_that("Test 1: Add an extension", {
     foo1.reader <- function() {}
 

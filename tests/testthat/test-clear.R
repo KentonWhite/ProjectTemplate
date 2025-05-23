@@ -1,5 +1,3 @@
-context("Clearing from memory")
-
 test_that("running clear() with default parameters removes everything except config", {
     test_project <- tempfile("test_project")
     suppressMessages(create.project(basename(test_project),
