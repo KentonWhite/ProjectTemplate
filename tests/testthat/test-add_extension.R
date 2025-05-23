@@ -5,7 +5,7 @@ test_that("Test 1: Add an extension", {
 
     .add.extension("foo1", "foo1.reader")
     on.exit(rm(foo1.reader), add = TRUE)
-    expect_that(extensions.dispatch.table[["\\.foo1$"]], equals("foo1.reader"))
+    expect_equal(extensions.dispatch.table[["\\.foo1$"]], "foo1.reader")
 
     test_project <- tempfile("test_project")
     suppressMessages(create.project(basename(test_project),
@@ -33,6 +33,6 @@ test_that("Test 1: Add an extension", {
     expect_true(file.exists(file.path("data", "example.foo")))
 
     load.project()
-    expect_that(extensions.dispatch.table[["\\.foo$"]], equals("foo.reader"))
-    expect_that(get("example", envir = .GlobalEnv), equals("bar"))
+    expect_equal(extensions.dispatch.table[["\\.foo$"]], "foo.reader")
+    expect_equal(get("example", envir = .GlobalEnv), "bar")
 })

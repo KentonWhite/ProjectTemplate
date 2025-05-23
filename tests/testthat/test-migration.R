@@ -15,7 +15,7 @@ lapply(
             oldwd <- setwd(projdir)
             on.exit(setwd(oldwd), add = TRUE)
 
-            expect_that(suppressMessages(load.project()), gives_warning("migrate.project"))
+            expect_warning(suppressMessages(load.project()),"migrate.project")
             on.exit(.unload.project(), add = TRUE)
 
             expect_message(migrate.project(), "file was missing entries")

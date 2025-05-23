@@ -23,7 +23,7 @@ test_that("Test too old version of ProjectTemplate", {
     config$version <- paste0("1", config$version)
     write.dcf(config, "config/global.dcf")
 
-    expect_that(suppressMessages(load.project()), throws_error("Please upgrade ProjectTemplate"))
+    expect_error(suppressMessages(load.project()), "Please upgrade ProjectTemplate")
 })
 
 test_that("Test new version of ProjectTemplate", {
@@ -38,9 +38,9 @@ test_that("Test new version of ProjectTemplate", {
     config$version <- "0.4"
     write.dcf(config, "config/global.dcf")
 
-    expect_that(
+    expect_warning(
         suppressMessages(load.project()),
-        gives_warning("ProjectTemplate::migrate.project()")
+        "ProjectTemplate::migrate.project()"
     )
 })
 

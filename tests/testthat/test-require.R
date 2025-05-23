@@ -21,5 +21,5 @@ test_that(".require.package warns if compat setting is set", {
     project.info$config[["attach_internal_libraries"]] <<- TRUE
     expect_true(project.info$config[["attach_internal_libraries"]])
     expect_true(get.project()$config$attach_internal_libraries)
-    expect_that(.require.package("ProjectTemplate"), gives_warning("attach_internal_libraries"))
+    expect_warning(.require.package("ProjectTemplate"), "attach_internal_libraries")
 })

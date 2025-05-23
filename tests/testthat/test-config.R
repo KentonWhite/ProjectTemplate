@@ -11,7 +11,7 @@ test_that("Unknown fields give a warning, except if start with hash", {
     config <- .new.config
     config$dummy <- "dummy"
     write.dcf(config, "config/global.dcf")
-    expect_that(load.project(), gives_warning("Your configuration contains the following unused entries"))
+    expect_warning(load.project(), "Your configuration contains the following unused entries")
 
     config <- .new.config
     write.dcf(config, "config/global.dcf")

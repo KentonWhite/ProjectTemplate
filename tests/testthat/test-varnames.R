@@ -13,11 +13,11 @@ test_that("Cleans variable names with underscore when underscore_variables = TRU
 
     suppressMessages(load.project())
 
-    expect_that(clean.variable.name("test_me"), equals("test_me"))
-    expect_that(clean.variable.name("test-me"), equals("test.me"))
-    expect_that(clean.variable.name("test..me"), equals("test.me"))
-    expect_that(clean.variable.name("test me"), equals("test.me"))
-    expect_that(clean.variable.name("1990"), equals("X1990"))
+    expect_equal(clean.variable.name("test_me"), "test_me")
+    expect_equal(clean.variable.name("test-me"), "test.me")
+    expect_equal(clean.variable.name("test..me"), "test.me")
+    expect_equal(clean.variable.name("test me"), "test.me")
+    expect_equal(clean.variable.name("1990"), "X1990")
 })
 
 test_that("Cleans variable names without underscore when underscore_variables = FALSE", {
@@ -33,9 +33,9 @@ test_that("Cleans variable names without underscore when underscore_variables = 
 
     suppressMessages(load.project(underscore_variables = FALSE))
 
-    expect_that(clean.variable.name("test_me"), equals("test.me"))
-    expect_that(clean.variable.name("test-me"), equals("test.me"))
-    expect_that(clean.variable.name("test..me"), equals("test.me"))
-    expect_that(clean.variable.name("test me"), equals("test.me"))
-    expect_that(clean.variable.name("1990"), equals("X1990"))
+    expect_equal(clean.variable.name("test_me"), "test.me")
+    expect_equal(clean.variable.name("test-me"), "test.me")
+    expect_equal(clean.variable.name("test..me"), "test.me")
+    expect_equal(clean.variable.name("test me"), "test.me")
+    expect_equal(clean.variable.name("1990"), "X1990")
 })
