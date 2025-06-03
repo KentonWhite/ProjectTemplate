@@ -179,7 +179,7 @@ for (cache_file_format in cache_file_formats) {
         on.exit(setwd(oldwd), add = TRUE)
 
         set_cache_file_format(cache_file_format)
-      
+
         var_to_cache <- "xxxx"
         test_data <- data.frame(Names = c("a", "b", "c"), Ages = c(20, 30, 40))
         assign(var_to_cache, test_data, envir = .TargetEnv)
@@ -260,6 +260,7 @@ for (cache_file_format in cache_file_formats) {
 
         tidy_up()
     })
+    }
 
 test_that('re-caching a variable created from CODE only happens if code changes, not comments or white space', {
   # CODE caching requires suggested package formatR
@@ -559,3 +560,5 @@ test_that("caching a variable already in cache with no hash file re-caches corre
 
     tidy_up()
 })
+
+
