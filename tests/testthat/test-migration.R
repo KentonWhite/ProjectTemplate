@@ -14,8 +14,8 @@ lapply(
             oldwd <- setwd(projdir)
             on.exit(setwd(oldwd), add = TRUE)
 
-            expect_warning(suppressMessages(load.project()), "migrate.project") |>
-              expect_warning("configuration file is missing the following entries") |>
+            expect_warning(suppressMessages(load.project()), "migrate.project") %>%
+              expect_warning("configuration file is missing the following entries") %>%
               expect_warning("configuration contains the following unused entries")
 
             on.exit(.unload.project(), add = TRUE)
@@ -262,7 +262,7 @@ test_that("projects without the tables_type config have their migrated config se
     .save.config(config)
 
     # should get a warning because of the missing tables_type
-    expect_warning(suppressMessages(load.project()), "missing the following entries: tables_type") |>
+    expect_warning(suppressMessages(load.project()), "missing the following entries: tables_type") %>%
     expect_warning("contains the following unused entries: data_tables")
 
     # Migrate the project
