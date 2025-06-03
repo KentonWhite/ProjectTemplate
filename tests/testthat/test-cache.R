@@ -1,8 +1,6 @@
 test_that("caching a variable that doesnt exist fails with correct message", {
     test_project <- tempfile("test_project")
-    suppressMessages(create.project(basename(test_project),
-        project.directory = dirname(test_project)
-    ))
+    suppressMessages(create.project(basename(test_project), project.directory = dirname(test_project)))
     on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
     oldwd <- setwd(test_project)
@@ -24,9 +22,7 @@ test_that("caching a variable that doesnt exist fails with correct message", {
 
 test_that("caching a variable not already in cache caches correctly", {
     test_project <- tempfile("test_project")
-    suppressMessages(create.project(basename(test_project),
-        project.directory = dirname(test_project)
-    ))
+    suppressMessages(create.project(basename(test_project), project.directory = dirname(test_project)))
     on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
     oldwd <- setwd(test_project)
@@ -58,9 +54,7 @@ test_that("caching a variable created from CODE caches correctly", {
     skip_if_not_installed("formatR")
 
     test_project <- tempfile("test_project")
-    suppressMessages(create.project(basename(test_project),
-        project.directory = dirname(test_project)
-    ))
+    suppressMessages(create.project(basename(test_project), project.directory = dirname(test_project)))
     on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
     oldwd <- setwd(test_project)
@@ -110,9 +104,7 @@ test_that("caching a variable created from CODE using 'data.table' along with
     skip_if_not_installed("formatR")
 
     test_project <- tempfile("test_project")
-    suppressMessages(create.project(basename(test_project),
-        project.directory = dirname(test_project)
-    ))
+    suppressMessages(create.project(basename(test_project),project.directory = dirname(test_project)))
     on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
     oldwd <- setwd(test_project)
@@ -141,9 +133,7 @@ test_that("caching a variable created from CODE using 'data.table' along with
 for (cache_file_format in cache_file_formats) {
     test_that("re-caching is skipped when a cached variable hasnt changed", {
         test_project <- tempfile("test_project")
-        suppressMessages(create.project(basename(test_project),
-            project.directory = dirname(test_project)
-        ))
+        suppressMessages(create.project(basename(test_project),project.directory = dirname(test_project)))
         on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
         oldwd <- setwd(test_project)
@@ -182,9 +172,7 @@ for (cache_file_format in cache_file_formats) {
 
     test_that("re-caching is done again when a cached variable has changed", {
         test_project <- tempfile("test_project")
-        suppressMessages(create.project(basename(test_project),
-            project.directory = dirname(test_project)
-        ))
+        suppressMessages(create.project(basename(test_project),project.directory = dirname(test_project)))
         on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
         oldwd <- setwd(test_project)
@@ -233,9 +221,7 @@ for (cache_file_format in cache_file_formats) {
 
     test_that("re-caching fails with correct message if cached variable is not in global env", {
         test_project <- tempfile("test_project")
-        suppressMessages(create.project(basename(test_project),
-            project.directory = dirname(test_project)
-        ))
+        suppressMessages(create.project(basename(test_project), project.directory = dirname(test_project)))
         on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
         oldwd <- setwd(test_project)
@@ -280,9 +266,7 @@ for (cache_file_format in cache_file_formats) {
         skip_if_not_installed("formatR")
 
         test_project <- tempfile("test_project")
-        suppressMessages(create.project(basename(test_project),
-                                        project.directory = dirname(test_project)
-                                        ))
+        suppressMessages(create.project(basename(test_project), project.directory = dirname(test_project)))
         on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
         oldwd <- setwd(test_project)
@@ -364,9 +348,7 @@ for (cache_file_format in cache_file_formats) {
 
     test_that("cached variable names are assessed correctly", {
         test_project <- tempfile("test_project")
-        suppressMessages(create.project(basename(test_project),
-            project.directory = dirname(test_project)
-        ))
+        suppressMessages(create.project(basename(test_project), project.directory = dirname(test_project)))
         on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
         oldwd <- setwd(test_project)
@@ -391,9 +373,7 @@ for (cache_file_format in cache_file_formats) {
 
 test_that("caching a variable with an underscore is not unnecessarily loaded next load.project()", {
     test_project <- tempfile("test_project")
-    suppressMessages(create.project(basename(test_project),
-        project.directory = dirname(test_project)
-    ))
+    suppressMessages(create.project(basename(test_project), project.directory = dirname(test_project)))
     on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
     oldwd <- setwd(test_project)
@@ -418,9 +398,7 @@ test_that("caching a variable with an underscore is not unnecessarily loaded nex
 
 test_that("cache and memory is cleared correctly", {
     test_project <- tempfile("test_project")
-    suppressMessages(create.project(basename(test_project),
-        project.directory = dirname(test_project)
-    ))
+    suppressMessages(create.project(basename(test_project), project.directory = dirname(test_project)))
     on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
     oldwd <- setwd(test_project)
@@ -472,9 +450,7 @@ test_that("cache and memory is cleared correctly", {
 
 test_that("multiple items are cleared correctly from the cache", {
     test_project <- tempfile("test_project")
-    suppressMessages(create.project(basename(test_project),
-        project.directory = dirname(test_project)
-    ))
+    suppressMessages(create.project(basename(test_project), project.directory = dirname(test_project)))
     on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
     oldwd <- setwd(test_project)
@@ -534,9 +510,7 @@ test_that("caching a variable using CODE doesnt leave variables in globalenv", {
     skip_if_not_installed("formatR")
 
     test_project <- tempfile("test_project")
-    suppressMessages(create.project(basename(test_project),
-        project.directory = dirname(test_project)
-    ))
+    suppressMessages(create.project(basename(test_project), project.directory = dirname(test_project)))
     on.exit(unlink(test_project, recursive = TRUE), add = TRUE)
 
     oldwd <- setwd(test_project)
