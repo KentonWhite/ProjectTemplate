@@ -9,15 +9,19 @@ lapply(
         test_that(paste("Version", version), {
             projdir <- tempfile("PT-test-")
             dir.create(projdir)
+
             file.copy(dir(file.path("migration", version), full.names = T), projdir, recursive = TRUE)
             oldwd <- setwd(projdir)
             on.exit(setwd(oldwd), add = TRUE)
 
-            expect_warning(suppressMessages(load.project()),"migrate.project")
+            expect_warning(suppressMessages(load.project()), "migrate.project") |>
+              expect_warning("configuration file is missing the following entries") |>
+              expect_warning("configuration contains the following unused entries")
+
             on.exit(.unload.project(), add = TRUE)
 
             expect_message(migrate.project(), "file was missing entries")
-            expect_warning(suppressMessages(load.project()), NA)
+            expect_no_warning(suppressMessages(load.project()))
             expect_defaults(get.project()$config)
         })
     }
@@ -253,13 +257,13 @@ test_that("projects without the tables_type config have their migrated config se
 
     # Read the config data and remove the tables_type config and set data_tables to TRUE
     config <- .read.config()
-    expect_error(config$tables_type <- NULL, NA)
-    expect_error(config$data_tables <- TRUE, NA)
+    expect_no_error(config$tables_type <- NULL)
+    expect_no_error(config$data_tables <- TRUE)
     .save.config(config)
 
     # should get a warning because of the missing tables_type
-    expect_warning(suppressMessages(load.project()), "missing the following entries: tables_type")
-    expect_warning(suppressMessages(load.project()), "contains the following unused entries: data_tables")
+    expect_warning(suppressMessages(load.project()), "missing the following entries: tables_type") |>
+    expect_warning("contains the following unused entries: data_tables")
 
     # Migrate the project
     expect_message(migrate.project(), "data_tables has been renamed tables_type")
