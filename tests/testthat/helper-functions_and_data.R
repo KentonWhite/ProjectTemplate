@@ -4,14 +4,14 @@
 #'
 #' @keywords tests
 tidy_up <- function() {
-  objs <- ls(envir = .TargetEnv)
-  rm(list = objs, envir = .TargetEnv)
+    objs <- ls(envir = .TargetEnv)
+    rm(list = objs, envir = .TargetEnv)
 }
 
 # Character vector holding the available cache file formats for testing
 cache_file_formats <- "RData"
 if (requireNamespace("qs", quietly = TRUE)) {
-  cache_file_formats <- c(cache_file_formats, "qs")
+    cache_file_formats <- c(cache_file_formats, "qs")
 }
 
 #' Set cache file format for testing
@@ -22,11 +22,11 @@ if (requireNamespace("qs", quietly = TRUE)) {
 #'
 #' @keywords tests
 set_cache_file_format <- function(cache_file_format) {
-  if (cache_file_format != "RData") {
-    config <- .read.config()
-    config$cache_file_format <- cache_file_format
-    .save.config(config)
-  }
+    if (cache_file_format != "RData") {
+        config <- .read.config()
+        config$cache_file_format <- cache_file_format
+        .save.config(config)
+    }
 
   invisible(cache_file_format)
 }
