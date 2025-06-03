@@ -43,8 +43,6 @@ load.project <- function(...)
   assign('config', config, envir = .TargetEnv)
   my.project.info$config <- config
 
-  options(stringsAsFactors = config$as_factors)
-
   if (config$load_libraries) {
     my.project.info <- .load.libraries(config, my.project.info)
   }
