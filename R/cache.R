@@ -21,9 +21,15 @@ NULL
 #'  be saved.  If the CODE parameter is defined, it is evaluated and saved, otherwise
 #'  the variable with that name in the global environment is used.
 #' @param CODE A sequence of R statements enclosed in \code{\{..\}} which produce the object to be
-#' cached.  Requires suggested package formatR 
+#' cached.  Requires suggested package formatR.
 #' @param depends A character vector of other global environment objects that the CODE
 #' depends upon. Caching will be forced if those objects have changed since last caching
+#' @param tidyCODE A logical scalar specifying if the CODE shall be tidied with
+#' the help of \code{\link[formatR]{tidy_source}}. As, for example, whitespace
+#' changes do not change the meaning of the code and therefore should not
+#' invalidate the cache, this usually is a desired feature. However, in case
+#' the CODE contains, for example, complex SQL statements this might fail and
+#' skipping this step is an even more desirable feature.
 #' @param ... Additional arguments passed on to \code{\link{save}} or optionally
 #' to \code{\link[qs]{qsave}}. See \code{\link{project.config}} for further
 #' information.
@@ -44,7 +50,7 @@ NULL
 #' unlink('tmp-project')}
 #'
 #' @seealso \code{\link[qs]{qsave}}, \code{\link{project.config}}
-cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
+cache <- function(variable=NULL, CODE=NULL, depends=NULL, tidyCODE=TRUE,  ...)
 {
 
   project_name <- .stopifnotproject("Change to a valid ProjectTemplate directory and run cache() again.")
@@ -52,6 +58,7 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
   if (is.null(variable)) return(.cache.status())
 
   stopifnot(length(variable) == 1)
+  stopifnot(is.logical(tidyCODE) && length(tidyCODE) == 1)
 
   CODE <- paste0(deparse(substitute(CODE)), collapse ="\n")
   if (CODE=="NULL") CODE <- NULL
@@ -60,11 +67,14 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
   # don't force a re-evaluation of CODE unncessarily.
 
   if (!is.null(CODE)){
-    .require.package("formatR")
+    if (tidyCODE) {
+      .require.package("formatR")
 
-    CODE <- formatR::tidy_source(text = CODE, comment = FALSE,
-                                 blank = FALSE, brace.newline = FALSE,
-                                 output = FALSE, width.cutoff = 500)
+      CODE <- formatR::tidy_source(text = CODE, comment = FALSE,
+                                   blank = FALSE, brace.newline = FALSE,
+                                   output = FALSE, width.cutoff = 500)
+    }
+
     CODE <- paste(CODE$text.tidy, sep="", collapse="\n")
   }
 
@@ -203,7 +213,7 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
 
 #' Get configured cache file format strategy
 #'
-#' @return A named object of mode \code{\link{expression}}.
+#' @return A named object of class \code{\link{expression}}.
 #'
 #' @keywords internal
 #'
@@ -216,10 +226,7 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
   }
 
   if (!config$cache_file_format %in% names(.cache.formats)) {
-    stop(
-      'Cache file format not available. See "?project.config" for further information.',
-      call. = FALSE
-    )
+    stop('Cache file format not available. See "?project.config" for further information.')
   }
 
   dot <- c(".", "\\.")
@@ -228,7 +235,10 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL,  ...)
 
   cache_format <- .cache.formats[[config$cache_file_format]]
 
-  require.package(cache_format[["package"]])
+  require.package(
+    cache_format[["package"]],
+    attach = config$attach_internal_libraries
+  )
 
   file_exts <- sprintf("%s%s%s", dot, cache_format[["file_ext"]], dollar)
   if (config$cache_file_format != "RData") {

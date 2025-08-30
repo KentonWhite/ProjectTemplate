@@ -17,6 +17,12 @@ Once you've got both of those things done, you can open up R and type
     > library('ProjectTemplate')
     > create.project('letters')
 
+If you are running ProjectTemplate with RStudio, add the flag `rstudio.project=TRUE`:
+
+    > create.project('letters', rstudio.project=TRUE)
+
+This will create an `.RProj` file called `letter.RProj` in the directory.
+
 You can now exit R and change into the directory `letters` that you just set up:
 
     $ cd letters
