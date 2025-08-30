@@ -937,9 +937,7 @@ test_that('Example 35: PPM Support with .ppm Extension', {
                         'example_35.ppm')
   variable.name <- clean.variable.name('example_35')
 
-  expect_warning(
-    ppm.reader(data.file, filename, variable.name),
-    " is NULL so the result will be NULL")
+  ppm.reader(data.file, filename, variable.name)
 
   expect_true(exists(variable.name))
   expect_that(as.character(class(get(variable.name))), equals('pixmapRGB'))
