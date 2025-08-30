@@ -1,4 +1,4 @@
-version: 0.11.0
+version: 0.11.1
 data_loading: TRUE
 data_loading_header: TRUE
 data_ignore:

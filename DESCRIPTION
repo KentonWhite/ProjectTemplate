@@ -1,8 +1,8 @@
 Package: ProjectTemplate
 Type: Package
 Title: Automates the Creation of New Statistical Analysis Projects
-Version: 0.11.0
-Date: 2024-07-01
+Version: 0.11.1
+Date: 2025-08-30
 Authors@R: c( person("Aleksandar", "Blagotic", role = "ctb"),
     person("Diego", "Valle-Jones", role = "ctb"),
     person("Jeffrey", "Breen", role = "ctb"),

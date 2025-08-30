@@ -1,3 +1,9 @@
+0.11.1 (2025-08-30)
+
+Internal
+--------
+* Various refactoring of tests
+
 0.11.0 (2024-05-20)
 
 Features
