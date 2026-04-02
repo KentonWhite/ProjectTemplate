@@ -2,6 +2,10 @@ language: r
 dist: bionic
 cache: packages
 warnings_are_errors: true
+
+r_packages:
+  - testthat
+
 addons:
   apt:
     sources:
