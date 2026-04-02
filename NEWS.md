@@ -1,3 +1,9 @@
+0.11.2 (2026-04-02)
+
+Internal
+--------
+* Safeguards around reticulate for systems lacking this function
+
 0.11.1 (2025-08-30)
 
 Internal

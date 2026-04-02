@@ -361,7 +361,22 @@ load.project <- function(...)
     # Check for Python extension using tolower() for case-insensitivity
     if (tolower(tools::file_ext(preprocessing.script)) == "py") {
       message(' Sourcing Python script: ', preprocessing.script)
-      reticulate::source_python(file.path(dir_name, preprocessing.script))
+      if (!requireNamespace("reticulate", quietly = TRUE)) {
+        stop(
+          "Found Python munge script '", preprocessing.script,
+          "' but the 'reticulate' package is not installed."
+        )
+      }
+
+      tryCatch(
+        reticulate::source_python(file.path(dir_name, preprocessing.script)),
+        error = function(e) {
+          stop(
+            "Failed to run Python munge script '", preprocessing.script,
+            "'. Underlying reticulate/Python error: ", conditionMessage(e)
+          )
+        }
+      )
     } else {
       message(' Sourcing R script: ', preprocessing.script)
       source(file.path(dir_name, preprocessing.script), local = .TargetEnv)

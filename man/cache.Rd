@@ -25,8 +25,7 @@ the CODE contains, for example, complex SQL statements this might fail and
 skipping this step is an even more desirable feature.}
 
 \item{...}{Additional arguments passed on to \code{\link{save}} or optionally
-to \code{\link[qs]{qsave}}. See \code{\link{project.config}} for further
-information.}
+to \code{qs::qsave}. See \code{\link{project.config}} for further#' information.}
 }
 \value{
 No value is returned; this function is called for its side effects.
@@ -61,5 +60,5 @@ unlink('tmp-project')}
 
 }
 \seealso{
-\code{\link[qs]{qsave}}, \code{\link{project.config}}
+\code{qs::qsave}, \code{\link{project.config}}
 }

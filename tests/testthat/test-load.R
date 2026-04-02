@@ -402,6 +402,19 @@ test_that('pass munge files to run',{
   expect_true(exists("test_data_2"))
   expect_true(exists("test_data_3"))
 
+  skip_on_cran()
+  skip_if_not_installed("reticulate")
+
+  ok_python <- FALSE
+  ok_python <- tryCatch({
+    reticulate::py_config()
+    TRUE
+  }, error = function(e) FALSE)
+
+  if (!ok_python) {
+    skip("reticulate/Python not usable on this platform")
+  }
+   
 # ------------------------------------------------------------------------------
 # Define a Python script and put in munge subdirectory directory
 # ------------------------------------------------------------------------------

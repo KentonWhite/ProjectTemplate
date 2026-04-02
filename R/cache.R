@@ -31,8 +31,7 @@ NULL
 #' the CODE contains, for example, complex SQL statements this might fail and
 #' skipping this step is an even more desirable feature.
 #' @param ... Additional arguments passed on to \code{\link{save}} or optionally
-#' to \code{\link[qs]{qsave}}. See \code{\link{project.config}} for further
-#' information.
+#' to \code{qs::qsave}. See \code{\link{project.config}} for further#' information.
 #'
 #' @return No value is returned; this function is called for its side effects.
 #'
@@ -49,7 +48,7 @@ NULL
 #' setwd('..')
 #' unlink('tmp-project')}
 #'
-#' @seealso \code{\link[qs]{qsave}}, \code{\link{project.config}}
+#' @seealso \code{qs::qsave}, \code{\link{project.config}}
 cache <- function(variable=NULL, CODE=NULL, depends=NULL, tidyCODE=TRUE,  ...)
 {
 
