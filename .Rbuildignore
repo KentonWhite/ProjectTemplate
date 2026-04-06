@@ -16,3 +16,4 @@
 ^_site$
 ^docs$
 ^CRAN-SUBMISSION$
+^\.github$
