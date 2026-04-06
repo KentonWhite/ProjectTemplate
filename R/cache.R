@@ -205,8 +205,23 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL, tidyCODE=TRUE,  ...)
   qs = expression(
     package = "qs",
     file_ext = "qs",
-    save_expr = qs::qsave(get(variable, envir = .TargetEnv), file = cache_filename$data, ...),
-    load_expr = assign(variable, qs::qread(cache_filename$data), .TargetEnv)
+    save_expr = {
+      if (!requireNamespace("qs", quietly = TRUE)) {
+        stop(
+          "cache_file_format = 'qs' requires the archived 'qs' package to be installed locally. ",
+          "Use cache_file_format = 'RData' if 'qs' is unavailable."
+        )
+      }
+      qs::qsave(get(variable, envir = .TargetEnv), file = cache_filename$data, ...)
+    },
+    load_expr = {
+      if (!requireNamespace("qs", quietly = TRUE)) {
+        stop(
+          "Reading '.qs' cache files requires the archived 'qs' package to be installed locally."
+        )
+      }
+      assign(variable, qs::qread(cache_filename$data), .TargetEnv)
+    }
   )
 )
 

@@ -40,7 +40,6 @@ Suggests:
     reshape,
     plyr,
     formatR,
-    qs,
     stringr,
     ggplot2,
     lubridate,
