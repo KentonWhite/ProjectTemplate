@@ -1,4 +1,4 @@
-# ProjectTemplate [![Travis-CI build status](https://api.travis-ci.com/KentonWhite/ProjectTemplate.png?branch=master)](https://app.travis-ci.com/github/KentonWhite/ProjectTemplate)
+# ProjectTemplate [![R-CMD-check](https://github.com/KentonWhite/ProjectTemplate/actions/workflows/R-CMD-check.yml/badge.svg)](https://github.com/KentonWhite/ProjectTemplate/actions/workflows/R-CMD-check.yml)
 
 The ProjectTemplate package lets you automatically build a directory for a new R project with a standardized subdirectory structure. Using this structure, ProjectTemplate automates data and package loading. The hope is that standardized data loading, automatic importing of best practice packages, integrated unit testing and useful nudges towards keeping a cleanly organized codebase will improve the quality of R coding.
 
