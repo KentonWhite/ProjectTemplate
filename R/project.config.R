@@ -68,9 +68,11 @@
 #'    underscores ('_') in variable names or \code{FALSE} to replace underscores
 #'    ('_') with dots ('.'). The default is \code{TRUE}. When migrating old
 #'    projects, \code{underscore_variables} is set to \code{FALSE}. \cr
-#'  \code{cache_file_format} \tab The default file format for cached data is
-#'    'RData'. This can be set to 'qs2' in order to benefit from the optimized
-#'    compression format provided by \pkg{qs2}.
+#' \code{cache_file_format} \tab The default file format for cached data is
+#' 'RData'. This can be set to 'qs2' in order to benefit from the optimized
+#' compression format provided by \pkg{qs2}. For legacy reasons, 'qs' from the
+#' deprecated \pkg{qs} package is still available, but not recommended for new
+#' projects.
 #' }
 #'
 #'    If the \code{config/globals.dcf} is missing some items (for example because it was created under an
