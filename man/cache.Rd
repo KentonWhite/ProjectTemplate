@@ -25,7 +25,8 @@ the CODE contains, for example, complex SQL statements this might fail and
 skipping this step is an even more desirable feature.}
 
 \item{...}{Additional arguments passed on to \code{\link{save}} or optionally
-to \code{qs::qsave}. See \code{\link{project.config}} for further#' information.}
+to \code{qs2::qs_save}. See \code{\link{project.config}} for further
+information.}
 }
 \value{
 No value is returned; this function is called for its side effects.
@@ -34,7 +35,7 @@ No value is returned; this function is called for its side effects.
 This function will store a copy of the named data set in the \code{cache}
 directory. This cached copy of the data set will then be given precedence
 at load time when calling \code{\link{load.project}}. Cached data sets are
-stored as \code{.RData} or optionally as \code{.qs} files.
+stored as \code{.RData} or optionally as \code{.qs2} files.
 }
 \details{
 Usually you will want to cache datasets during munging.  This can be the raw
@@ -60,5 +61,5 @@ unlink('tmp-project')}
 
 }
 \seealso{
-\code{qs::qsave}, \code{\link{project.config}}
+\code{qs2::qs_save}, \code{\link{project.config}}
 }

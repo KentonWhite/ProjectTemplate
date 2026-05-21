@@ -68,7 +68,7 @@ for (cache_file_format in cache_file_formats) {
     switch(
       cache_file_format,
       RData = expect_no_error(load("cache/test.RData", envir = environment())),
-      qs = expect_no_error(qs::qload("cache/test.qs", env = environment()))
+      qs2 = expect_no_error(qs2::qs_readm("cache/test.qs2", env = environment()))
     )
 
     # and check that the loaded data from the cache is what we saved
@@ -104,7 +104,7 @@ for (cache_file_format in cache_file_formats) {
     switch(
       cache_file_format,
       RData = expect_error(suppressWarnings(load("cache/test.RData", envir = environment())), "cannot open the connection"),
-      qs = expect_error(qs::qload("cache/test.qs", env = environment()), "Failed to open for reading")
+      qs2 = expect_error(qs2::qs_readm("cache/test.qs2", env = environment()), "Failed to open for reading")
     )
   })
 
@@ -144,9 +144,9 @@ for (cache_file_format in cache_file_formats) {
         expect_no_error(load("cache/test_data12.RData", envir = environment()))
         expect_no_error(load("cache/test_data22.RData", envir = environment()))
       },
-      qs = {
-        expect_no_error(qs::qload("cache/test_data12.qs", env = environment()))
-        expect_no_error(qs::qload("cache/test_data22.qs", env = environment()))
+      qs2 = {
+        expect_no_error(qs2::qs_readm("cache/test_data12.qs2", env = environment()))
+        expect_no_error(qs2::qs_readm("cache/test_data22.qs2", env = environment()))
       }
     )
 
@@ -157,9 +157,9 @@ for (cache_file_format in cache_file_formats) {
         expect_error(suppressWarnings(load("cache/test_data11.RData", envir = environment())), "cannot open the connection")
         expect_error(suppressWarnings(load("cache/test_data21.RData", envir = environment())), "cannot open the connection")
       },
-      qs = {
-        expect_error(qs::qload("cache/test_data11.qs", env = environment()), "Failed to open for reading")
-        expect_error(qs::qload("cache/test_data21.qs", env = environment()), "Failed to open for reading")
+      qs2 = {
+        expect_error(qs2::qs_readm("cache/test_data11.qs2", env = environment()), "Failed to open for reading")
+        expect_error(qs2::qs_readm("cache/test_data21.qs2", env = environment()), "Failed to open for reading")
       }
     )
   })
@@ -414,7 +414,7 @@ test_that('pass munge files to run',{
   if (!ok_python) {
     skip("reticulate/Python not usable on this platform")
   }
-   
+
 # ------------------------------------------------------------------------------
 # Define a Python script and put in munge subdirectory directory
 # ------------------------------------------------------------------------------

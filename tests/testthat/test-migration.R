@@ -70,7 +70,7 @@ for (cache_file_format in cache_file_formats) {
     switch(
       cache_file_format,
       RData = expect_error(suppressWarnings(load("cache/test.RData", envir = environment())), "cannot open the connection"),
-      qs = expect_error(qs::qload("cache/test.qs", env = environment()), "Failed to open for reading")
+      qs2 = expect_error(qs2::qs_readm("cache/test.qs2", env = environment()), "Failed to open for reading")
     )
 
     # Migrate the project
@@ -87,7 +87,7 @@ for (cache_file_format in cache_file_formats) {
     switch(
       cache_file_format,
       RData = expect_error(suppressWarnings(load("cache/test.RData", envir = environment())), "cannot open the connection"),
-      qs = expect_error(qs::qload("cache/test.qs", env = environment()), "Failed to open for reading")
+      qs2 = expect_error(qs2::qs_readm("cache/test.qs2", env = environment()), "Failed to open for reading")
     )
   })
 }

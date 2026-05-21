@@ -6,7 +6,7 @@ NULL
 #' This function will store a copy of the named data set in the \code{cache}
 #' directory. This cached copy of the data set will then be given precedence
 #' at load time when calling \code{\link{load.project}}. Cached data sets are
-#' stored as \code{.RData} or optionally as \code{.qs} files.
+#' stored as \code{.RData} or optionally as \code{.qs2} files.
 #'
 #' Usually you will want to cache datasets during munging.  This can be the raw
 #' data just loaded, or it can be the result of further processing during munge.  Either
@@ -31,7 +31,8 @@ NULL
 #' the CODE contains, for example, complex SQL statements this might fail and
 #' skipping this step is an even more desirable feature.
 #' @param ... Additional arguments passed on to \code{\link{save}} or optionally
-#' to \code{qs::qsave}. See \code{\link{project.config}} for further#' information.
+#'   to \code{qs2::qs_save}. See \code{\link{project.config}} for further
+#'   information.
 #'
 #' @return No value is returned; this function is called for its side effects.
 #'
@@ -48,7 +49,7 @@ NULL
 #' setwd('..')
 #' unlink('tmp-project')}
 #'
-#' @seealso \code{qs::qsave}, \code{\link{project.config}}
+#' @seealso \code{qs2::qs_save}, \code{\link{project.config}}
 cache <- function(variable=NULL, CODE=NULL, depends=NULL, tidyCODE=TRUE,  ...)
 {
 
@@ -202,26 +203,17 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL, tidyCODE=TRUE,  ...)
     save_expr = save(list = variable, envir = .TargetEnv, file = cache_filename$data, ...),
     load_expr = load(cache_filename$data, envir = .TargetEnv)
   ),
+  qs2 = expression(
+    package = "qs2",
+    file_ext = "qs2",
+    save_expr = qs2::qs_save(get(variable, envir = .TargetEnv), file = cache_filename$data, ...),
+    load_expr = assign(variable, qs2::qs_read(cache_filename$data), .TargetEnv)
+  ),
   qs = expression(
     package = "qs",
     file_ext = "qs",
-    save_expr = {
-      if (!requireNamespace("qs", quietly = TRUE)) {
-        stop(
-          "cache_file_format = 'qs' requires the archived 'qs' package to be installed locally. ",
-          "Use cache_file_format = 'RData' if 'qs' is unavailable."
-        )
-      }
-      qs::qsave(get(variable, envir = .TargetEnv), file = cache_filename$data, ...)
-    },
-    load_expr = {
-      if (!requireNamespace("qs", quietly = TRUE)) {
-        stop(
-          "Reading '.qs' cache files requires the archived 'qs' package to be installed locally."
-        )
-      }
-      assign(variable, qs::qread(cache_filename$data), .TargetEnv)
-    }
+    save_expr = qs::qsave(get(variable, envir = .TargetEnv), file = cache_filename$data, ...),
+    load_expr = assign(variable, qs::qread(cache_filename$data), .TargetEnv)
   )
 )
 

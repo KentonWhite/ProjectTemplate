@@ -10,8 +10,8 @@ tidy_up <- function() {
 
 # Character vector holding the available cache file formats for testing
 cache_file_formats <- "RData"
-if (requireNamespace("qs", quietly = TRUE)) {
-  cache_file_formats <- c(cache_file_formats, "qs")
+if (requireNamespace("qs2", quietly = TRUE)) {
+  cache_file_formats <- c(cache_file_formats, "qs2")
 }
 
 #' Set cache file format for testing
