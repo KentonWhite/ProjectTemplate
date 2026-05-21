@@ -53,7 +53,6 @@ migrate.project <- function()
   csv2_files_present <- any(file.exists(Sys.glob("data/*.csv2")))
   no_cache_dir <- !dir.exists("cache")
   other_conflicts <- any(doc_not_renamed, csv2_files_present, no_cache_dir)
-  print(no_cache_dir)
 
   # Exit if everything up to date
   if (!any(version_conflict, config_conflicts, other_conflicts)) {
@@ -119,7 +118,7 @@ migrate.project <- function()
       old.config.values <- translate.dcf(.project.config)
       if (!is.null(old.config.values$data_tables) &&
             !is.na(as.logical(old.config.values$data_tables)) &&
-            as.logical(old.config.values$data_tables) 
+            as.logical(old.config.values$data_tables)
           ) {
         loaded.config$tables_type <- 'data_table'
       } else {
@@ -170,7 +169,7 @@ migrate.project <- function()
     message(paste("",
       "Caching has become an integral part of ProjectTemplate.  Even if no files are",
       "explicitly cached by the user, ProjectTemplate may still create some caches",
-      "for perfroamcen improvement.  The 'cache' directoy is now requireed.  An empty",
+      "for performance improvement.  The 'cache' directoy is now required.  An empty",
       "cache directory will be created.",
       sep = "\n"
     ))
