@@ -64,7 +64,7 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL, tidyCODE=TRUE,  ...)
   if (CODE=="NULL") CODE <- NULL
 
   # strip out comments and newlines from CODE so that changes to those
-  # don't force a re-evaluation of CODE unncessarily.
+  # don't force a re-evaluation of CODE unnecessarily.
 
   if (!is.null(CODE)){
     if (tidyCODE) {
@@ -73,9 +73,10 @@ cache <- function(variable=NULL, CODE=NULL, depends=NULL, tidyCODE=TRUE,  ...)
       CODE <- formatR::tidy_source(text = CODE, comment = FALSE,
                                    blank = FALSE, brace.newline = FALSE,
                                    output = FALSE, width.cutoff = 500)
+      CODE <- paste(CODE$text.tidy, sep="", collapse="\n")
+    } else {
+      CODE <- paste(trimws(CODE), collapse = "\n")
     }
-
-    CODE <- paste(CODE$text.tidy, sep="", collapse="\n")
   }
 
   # Check what's already in the cache for variable
